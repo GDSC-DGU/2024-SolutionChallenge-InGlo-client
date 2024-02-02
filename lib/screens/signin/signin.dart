@@ -8,15 +8,21 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(),
       body: Column(
         children: [
+          // 입력 폼
           Form(
+            // 색상
             child: Theme(
               data: ThemeData(
+                // 메인 컬러
                 primaryColor: Colors.grey,
                 inputDecorationTheme: InputDecorationTheme(
+                  // input color, font-size css
                   labelStyle: TextStyle(color: Colors.teal, fontSize: 15.0),
                 ),
               ),
+              // 내부 컨테이너
               child: Container(
+                // 패딩
                 padding: EdgeInsets.all(40.0),
                 child: SingleChildScrollView(
                   child: Column(
