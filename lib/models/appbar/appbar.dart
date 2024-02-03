@@ -9,25 +9,31 @@ class NavigationAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      // bottom navigation bar의 items로 index를 관리한다.
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.search),
-          label: 'Search',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle),
-          label: 'Profile',
-        ),
-      ],
-      currentIndex: currentIndex, // 선택된 index
-      selectedItemColor: Colors.blue, // 선택 item color
-      onTap: onItemTapped, // 콜백 함수
+    // 아래 네비게이션 바
+    return Scaffold(
+      bottomNavigationBar: NavigationBar(
+        destinations: [
+          NavigationDestination(
+            icon: Icon(Icons.home),
+            label: 'issue',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.search),
+            label: 'home',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.account_circle),
+            label: 'board',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.home),
+            label: 'my',
+          ),
+        ],
+        height: 80.0, // height
+        selectedIndex: currentIndex, // 선택 index
+        onDestinationSelected: onItemTapped, // tab event
+      ),
     );
   }
 }
