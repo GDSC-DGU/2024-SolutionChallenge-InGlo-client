@@ -11,7 +11,7 @@ class NavigationAppBar extends StatelessWidget {
         title: const Text('sample'),
         leading: IconButton(
           icon: const Icon(Icons.home),
-          tooltip: 'naviagate home',
+          tooltip: 'home',
           onPressed: () {
             // 홈으로 이동
           },
@@ -20,7 +20,7 @@ class NavigationAppBar extends StatelessWidget {
         actions: <Widget>[
           IconButton(
               icon: const Icon(Icons.notifications),
-              tooltip: 'show users alert', // icon 설명 tooltip
+              tooltip: 'alert', // icon 설명 tooltip
               onPressed: () {
 // 클릭 이벤트 추가 필요
               }),
