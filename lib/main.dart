@@ -31,6 +31,10 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _pages = [
     // 각 탭에 해당하는 페이지 위젯 추가
+    /**
+     *
+     * 여기에 페이지 추가하면서 확인하면 됨!!
+     */
   ];
 
   void _onItemTapped(int index) {
