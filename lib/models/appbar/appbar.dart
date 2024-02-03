@@ -23,8 +23,7 @@ class NavigationAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
 
     // 아래 네비게이션 바
-    return Scaffold(
-      bottomNavigationBar: NavigationBar(
+    return NavigationBar(
         destinations: [
           NavigationDestination(
             icon: getIconColor('assets/icon/navigation/news_icon.svg', 0), // 이미지 경로
@@ -48,7 +47,6 @@ class NavigationAppBar extends StatelessWidget {
         onDestinationSelected: onItemTapped, // tab event
         indicatorColor: Colors.transparent, // 선택된 경우 버튼 색상(기본)
         backgroundColor: Colors.white, // 배경색
-      ),
-    );
+      );
   }
 }
