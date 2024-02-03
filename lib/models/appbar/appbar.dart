@@ -47,7 +47,7 @@ class NavigationAppBar extends StatelessWidget {
         selectedIndex: currentIndex, // 선택 index
         onDestinationSelected: onItemTapped, // tab event
         indicatorColor: Colors.transparent, // 선택된 경우 버튼 색상(기본)
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white, // 배경색
       ),
     );
   }
