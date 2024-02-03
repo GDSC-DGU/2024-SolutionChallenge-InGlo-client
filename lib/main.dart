@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/signin/signin.dart';
 import 'models/appbar/appbar.dart';
 
 void main() => runApp(MyApp());
@@ -22,7 +23,7 @@ class _MainScreenState extends State<MainScreen> {
 
   // 각 탭에 해당하는 페이지 위젯
   final List<Widget> _pages = [
-    HomePage(),
+    LoginPage(),
     NotificationsPage(),
     MessagesPage(),
     MessagesPage(),
