@@ -5,7 +5,6 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Using Scaffold as the base widget for the page layout.
     return Container(
       // 배경 이미지를 넣기 위해 Scaffold를 Container로 감싸준다.
       decoration: BoxDecoration(
@@ -20,54 +19,65 @@ class LoginPage extends StatelessWidget {
       child: Scaffold(
         // 배경 이미지를 위해 Scaffold의 배경색을 투명으로 한다.
         backgroundColor: Colors.transparent,
-        // Utilizing SingleChildScrollView to ensure the page is scrollable when the keyboard appears.
+        // 수직 스크롤이 된다고 한다.
+        // 나중에 빼도 될 것 같다!
         body: SingleChildScrollView(
           child: Padding(
-            // Consistent padding around the form for better layout.
-            padding: const EdgeInsets.all(30.0),
+            // 전체 padding
+            padding: const EdgeInsets.fromLTRB(80, 220, 80, 0),
             child: Form(
               child: Theme(
-                // Custom Theme data for the form elements.
                 data: ThemeData(
-                  primaryColor: Colors.teal, // Adjusting primaryColor to match the overall theme.
+                  primaryColor: Color(0xFFFFD691),
                   inputDecorationTheme: InputDecorationTheme(
-                    labelStyle: TextStyle(color: Colors.teal, fontSize: 15.0),
+                    labelStyle: TextStyle(color: Color(0xFFFFD691), fontSize: 15.0),
                   ),
                 ),
                 child: Column(
                   children: [
+                    Text(
+                      "SIGNIN",
+                      style: TextStyle(fontSize: 30, color: Colors.black),
+                    ),
+                    SizedBox(height: 40.0),
                     // Email TextField
                     TextField(
                       decoration: InputDecoration(
                         labelText: 'Email',
                         hintText: 'Enter your email',
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8)
+                        ),
+                        contentPadding: EdgeInsets.all(8), // padding
                       ),
                       keyboardType: TextInputType.emailAddress,
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 35.0),
                     // Password TextField
                     TextField(
                       decoration: InputDecoration(
                         labelText: 'Password',
                         hintText: 'Enter your password',
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8)
+                        ),
+                        contentPadding: EdgeInsets.all(8), // padding
                       ),
-                      obscureText: true, // Ensures text is obscured for password entry.
+                      obscureText: true, // 경고 표시 OX
                     ),
-                    SizedBox(height: 50.0),
+                    SizedBox(height: 120.0),
                     // Login Button
                     ElevatedButton(
                       onPressed: () {
                         // Placeholder for login logic.
-                        print('Login button pressed'); // Example action to replace with actual login logic.
+                        print('Login button pressed');
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.orangeAccent, // Button background color.
-                        minimumSize: Size(100, 50), // Button size.
+                        backgroundColor: Color(0xFFFFD691), // Button 배경색
+                        minimumSize: Size(400, 50), // Button 사이즈
                       ),
                       child: Text(
-                        "로그인",
+                        "SIGNIN",
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),
