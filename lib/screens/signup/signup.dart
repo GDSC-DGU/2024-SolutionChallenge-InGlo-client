@@ -11,7 +11,7 @@ class AccountPage extends StatelessWidget {
           image: DecorationImage(
             repeat: ImageRepeat.noRepeat,
             image: Svg(
-              'assets/image/background/background.svg',
+              'assets/image/background/background_2.svg',
               // size: Size(10, 10), // size 지정 하던 안 하던 동일하다.
             ),
           )),
