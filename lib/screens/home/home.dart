@@ -7,6 +7,16 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+              image: Svg(
+                'assets/image/home/background.svg',
+                // size: Size(10, 10), // size 지정 하던 안 하던 동일하다.
+              ),
+            )),
+        child: const Scaffold(
+
+        ));
   }
 }
