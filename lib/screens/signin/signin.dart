@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
-// LoginPage 클래스 예시
+// LoginPage 클래스
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -30,42 +30,63 @@ class LoginPage extends StatelessWidget {
                 data: ThemeData(
                   primaryColor: Color(0xFFFFD691),
                   inputDecorationTheme: InputDecorationTheme(
-                    labelStyle: TextStyle(color: Color(0xFFFFD691), fontSize: 15.0),
+                    labelStyle: TextStyle(color: Color(0xFFFFD691), fontSize: 47.0),
+                    // border 스타일
+                    border: OutlineInputBorder( // 기본 테두리 스타일
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                        color: Colors.white, // 테두리 색상
+                        width: 1.0, // 테두리 두께
+                      ),
+                    ),
                   ),
                 ),
                 child: Column(
+                  // crossAxis : 수평축을 따라 자식들을 어떻게 배치할 지
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // mainAxis : column 수직축을 따라 자식 위젯들을 어떻게 배치할 지
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "SIGNIN",
-                      style: TextStyle(fontSize: 30, color: Colors.black),
+                    // title만 중앙 정렬, 나머지는 flex-start
+                    Center(
+                      child: Text(
+                        "SIGNIN",
+                        style: TextStyle(fontSize: 30, color: Colors.black, fontWeight: FontWeight.bold),
+                      ),
                     ),
                     SizedBox(height: 40.0),
+                  // label에 padding 추가
+                    // lable에 animation을 넣고 싶다면 labeltext를 추가하자.
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(11, 0, 0, 5),
+                    child: Text("email",
+                        style: TextStyle(
+                            color: Colors.black,)),
+                  ),
                     // Email TextField
-                    TextField(
+                    TextFormField(
                       decoration: InputDecoration(
-                        labelText: 'Email',
-                        hintText: 'Enter your email',
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8)
-                        ),
+                        hintText: 'email',
                         contentPadding: EdgeInsets.all(8), // padding
                       ),
                       keyboardType: TextInputType.emailAddress,
                     ),
-                    SizedBox(height: 35.0),
-                    // Password TextField
-                    TextField(
+                    SizedBox(height: 20.0),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(7, 0, 0, 3),
+                      child: Text("password",
+                          style: TextStyle(
+                            color: Colors.black,)),
+                    ),
+                    // passowrd textfield
+                    TextFormField(
                       decoration: InputDecoration(
-                        labelText: 'Password',
-                        hintText: 'Enter your password',
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8)
-                        ),
+                        hintText: 'password',
                         contentPadding: EdgeInsets.all(8), // padding
                       ),
-                      obscureText: true, // 경고 표시 OX
+                      obscureText: true, // 비밀번호와 같은 민감한 정보용
                     ),
-                    SizedBox(height: 120.0),
+                    SizedBox(height: 100.0),
                     // Login Button
                     ElevatedButton(
                       onPressed: () {
@@ -78,7 +99,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       child: Text(
                         "SIGNIN",
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+                        style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],
