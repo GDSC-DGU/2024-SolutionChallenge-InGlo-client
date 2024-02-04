@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inglo/screens/signup/signup.dart';
 import 'screens/signin/signin.dart';
 import 'models/appbar/appbar.dart';
 
@@ -23,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
 
   // 각 탭에 해당하는 페이지 위젯
   final List<Widget> _pages = [
-    LoginPage(),
+    AccountPage(),
     NotificationsPage(),
     MessagesPage(),
     MessagesPage(),
