@@ -21,6 +21,7 @@ dependencies:
   google_maps_flutter: ^2.5.3
   google_maps_flutter_web: ^0.5.4+3
   flutter_dotenv: ^5.1.0
+  flutter_config: ^2.0.2
 
 dev_dependencies:
   flutter_test:
@@ -35,3 +36,4 @@ flutter:
     - assets/icon/navigation/
     - assets/image/background/
     - assets/image/home/
+    - .env

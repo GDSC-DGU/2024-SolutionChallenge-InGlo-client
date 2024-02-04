@@ -4,7 +4,12 @@ import 'package:inglo/screens/signup/signup.dart';
 import 'screens/signin/signin.dart';
 import 'models/appbar/appbar.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  // dotenv용 code
+  WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -25,9 +30,9 @@ class _MainScreenState extends State<MainScreen> {
 
   // 각 탭에 해당하는 페이지 위젯
   final List<Widget> _pages = [
-    HomePage(),
-    NotificationsPage(),
-    MessagesPage(),
+    AppMap(),
+    LoginPage(),
+    AccountPage(),
     MessagesPage(),
     // 참고 페이지(나중에 삭제)
   ];
