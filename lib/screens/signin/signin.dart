@@ -14,6 +14,7 @@ class LoginPage extends StatelessWidget {
           'assets/image/background/background.svg',
           // size: Size(10, 10), // size 지정 하던 안 하던 동일하다.
         ),
+        fit: BoxFit.fill, // 배경이미지 fit 하게 하기
       )),
       child: Scaffold(
         // 배경 이미지를 위해 Scaffold의 배경색을 투명으로 한다.
@@ -23,7 +24,7 @@ class LoginPage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Padding(
             // 전체 padding
-            padding: const EdgeInsets.fromLTRB(80, 220, 80, 0),
+            padding: const EdgeInsets.fromLTRB(40, 220, 40, 0),
             child: Theme(
               data: ThemeData(
                 primaryColor: Color(0xFFFFD691),
@@ -36,6 +37,14 @@ class LoginPage extends StatelessWidget {
                     borderSide: BorderSide(
                       color: Color(0xFFC4C4C4), // 테두리 색상
                       width: 1.0, // 테두리 두께
+                    ),
+                  ),
+                  // 포커스 시 스타일
+                  focusedBorder: OutlineInputBorder( // 포커스를 받았을 때의 테두리 스타일
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(
+                      color: Color(0xFFFFD691), // 포커스 받았을 때의 테두리 색상
+                      width: 2.0, // 포커스 받았을 때의 테두리 두께
                     ),
                   ),
                 ),
@@ -71,9 +80,11 @@ class LoginPage extends StatelessWidget {
                     TextFormField(
                       decoration: InputDecoration(
                         hintText: 'email',
-                        contentPadding: EdgeInsets.all(8), // padding
+                        isDense: true, // textformfield를 타이트하게 만든다.
+                        contentPadding: EdgeInsets.all(10), // padding
                       ),
                       keyboardType: TextInputType.emailAddress,
+                      style: TextStyle(fontSize: 14), // textsize 조정
                     ),
                     SizedBox(height: 20.0),
                     Padding(
@@ -87,11 +98,13 @@ class LoginPage extends StatelessWidget {
                     TextFormField(
                       decoration: InputDecoration(
                         hintText: 'password',
-                        contentPadding: EdgeInsets.all(8), // padding
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(10), // padding
                       ),
                       obscureText: true, // 비밀번호와 같은 민감한 정보용
+                      style: TextStyle(fontSize: 14),
                     ),
-                    SizedBox(height: 100.0),
+                    SizedBox(height: 120.0),
                     // Login Button
                     ElevatedButton(
                       onPressed: () {
@@ -100,7 +113,7 @@ class LoginPage extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFFFFD691), // Button 배경색
-                        minimumSize: Size(400, 50), // Button 사이즈
+                        minimumSize: Size(400, 40), // Button 사이즈
                       ),
                       child: Text(
                         "SIGNIN",
