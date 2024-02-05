@@ -83,7 +83,7 @@ final List<Widget> itemListData = itemData
               ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                 child: Image.network(item["image"]!,
-                    fit: BoxFit.cover, width: 100.0),
+                    fit: BoxFit.cover, width: 100.0, height: 80.0,),
               ),
             ],
           ),
