@@ -11,10 +11,15 @@ class _IssueSearchState extends State<IssueSearch> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      child: const Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text("검색 버튼"),
+          Icon(
+            Icons.search,
+            color: Color(0xFFD7A859),
+            size: 30.0,
+          ),
         ],
       ),
     );
