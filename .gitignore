@@ -385,4 +385,78 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
+# Firebase 구성 파일
+GoogleService-Info.plist
+
+# 개인 키 및 인증서
+*.p12
+
+# 프로비저닝 프로파일
+*.mobileprovision
+
+# Xcode 관련
+xcuserdata/
+*.xcworkspace
+!default.xcworkspace
+DerivedData/
+*.hmap
+*.ipa
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# 빌드된 제품
+*.app
+*.appex
+*.bundle
+
+# 시스템 파일
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# 아이콘 파일
+*.icns
+*.ico
+
+# 키체인 접근
+*.keychain
+
+# 스크린샷
+*.png
+*.gif
+
+# 사용자 설정
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+# 사용하지 않는 파일
+*.moved-aside
+
+# 로그 파일
+*.log
+
+# CocoaPods 키
+Pods/Keys
+
+# fastlane 보고서
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# Yarn
+.yarn/
+.yarn-cache/
+
+# 스위프트 패키지 관리자
+.build/
+
+# Package.resolved 파일은 소스 제어에 포함
+!/Package.resolved
+
+
 # End of https://www.toptal.com/developers/gitignore/api/flutter,android,androidstudio,swift,dart,darteditor
