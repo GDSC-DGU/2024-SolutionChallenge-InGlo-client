@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 // LoginPage 클래스
-class LoginPage extends StatelessWidget {
+class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
       // 배경 이미지를 넣기 위해 Scaffold를 Container로 감싸준다.
       decoration: BoxDecoration(
           image: DecorationImage(
-        repeat: ImageRepeat.noRepeat,
-        image: Svg(
-          'assets/image/background/background.svg',
-          // size: Size(10, 10), // size 지정 하던 안 하던 동일하다.
-        ),
-      )),
+            repeat: ImageRepeat.noRepeat,
+            image: Svg(
+              'assets/image/background/background_2.svg',
+              // size: Size(10, 10), // size 지정 하던 안 하던 동일하다.
+            ),
+          )),
       child: Scaffold(
         // 배경 이미지를 위해 Scaffold의 배경색을 투명으로 한다.
         backgroundColor: Colors.transparent,
@@ -23,13 +23,13 @@ class LoginPage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Padding(
             // 전체 padding
-            padding: const EdgeInsets.fromLTRB(80, 220, 80, 0),
+            padding: const EdgeInsets.fromLTRB(80, 180, 80, 0),
             child: Theme(
               data: ThemeData(
                 primaryColor: Color(0xFFFFD691),
                 inputDecorationTheme: InputDecorationTheme(
                   labelStyle:
-                      TextStyle(color: Color(0xFFFFD691), fontSize: 47.0),
+                  TextStyle(color: Color(0xFFFFD691), fontSize: 47.0),
                   // border 스타일
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -50,7 +50,7 @@ class LoginPage extends StatelessWidget {
                     // title만 중앙 정렬, 나머지는 flex-start
                     Center(
                       child: Text(
-                        "SIGNIN",
+                        "ACCOUNT",
                         style: TextStyle(
                             fontSize: 30,
                             color: Colors.black,
@@ -62,7 +62,7 @@ class LoginPage extends StatelessWidget {
                     // lable에 animation을 넣고 싶다면 labeltext를 추가하자.
                     Padding(
                       padding: const EdgeInsets.fromLTRB(11, 0, 0, 5),
-                      child: Text("email",
+                      child: Text("name",
                           style: TextStyle(
                             color: Colors.black,
                           )),
@@ -70,12 +70,28 @@ class LoginPage extends StatelessWidget {
                     // Email TextField
                     TextFormField(
                       decoration: InputDecoration(
-                        hintText: 'email',
+                        hintText: 'name',
                         contentPadding: EdgeInsets.all(8), // padding
                       ),
                       keyboardType: TextInputType.emailAddress,
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 10.0),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(7, 0, 0, 3),
+                      child: Text("email",
+                          style: TextStyle(
+                            color: Colors.black,
+                          )),
+                    ),
+                    // passowrd textfield
+                    TextFormField(
+                      decoration: InputDecoration(
+                        hintText: 'email',
+                        contentPadding: EdgeInsets.all(8), // padding
+                      ),
+                      obscureText: true, // 비밀번호와 같은 민감한 정보용
+                    ),
+                    SizedBox(height: 10.0),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(7, 0, 0, 3),
                       child: Text("password",
@@ -91,7 +107,39 @@ class LoginPage extends StatelessWidget {
                       ),
                       obscureText: true, // 비밀번호와 같은 민감한 정보용
                     ),
-                    SizedBox(height: 100.0),
+                    SizedBox(height: 10.0),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(7, 0, 0, 3),
+                      child: Text("country",
+                          style: TextStyle(
+                            color: Colors.black,
+                          )),
+                    ),
+                    // passowrd textfield
+                    TextFormField(
+                      decoration: InputDecoration(
+                        hintText: 'country',
+                        contentPadding: EdgeInsets.all(8), // padding
+                      ),
+                      obscureText: true, // 비밀번호와 같은 민감한 정보용
+                    ),
+                    SizedBox(height: 10.0),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(7, 0, 0, 3),
+                      child: Text("language",
+                          style: TextStyle(
+                            color: Colors.black,
+                          )),
+                    ),
+                    // passowrd textfield
+                    TextFormField(
+                      decoration: InputDecoration(
+                        hintText: 'language',
+                        contentPadding: EdgeInsets.all(8), // padding
+                      ),
+                      obscureText: true, // 비밀번호와 같은 민감한 정보용
+                    ),
+                    SizedBox(height: 60.0),
                     // Login Button
                     ElevatedButton(
                       onPressed: () {
@@ -103,7 +151,7 @@ class LoginPage extends StatelessWidget {
                         minimumSize: Size(400, 50), // Button 사이즈
                       ),
                       child: Text(
-                        "SIGNIN",
+                        "SIGNUP",
                         style: TextStyle(
                             fontSize: 18,
                             color: Colors.white,
