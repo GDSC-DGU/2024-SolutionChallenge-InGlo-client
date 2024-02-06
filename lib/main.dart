@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:inglo/screens/signup/signup.dart';
+import 'screens/signin/signin.dart';
 import 'package:inglo/screens/issuelist/issulist.dart';
 import 'models/appbar/appbar.dart';
 
@@ -25,6 +27,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _pages = [
     IssueListPage(),
     HomePage(),
+    AccountPage(),
     NotificationsPage(),
     MessagesPage(),
     // MessagesPage(),
