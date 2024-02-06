@@ -20,7 +20,6 @@ dependencies:
   firebase_storage: 11.6.4
 # 2024 2 3 기준 version
   cupertino_icons: ^1.0.2
-  flutter_svg: ^2.0.9
   carousel_slider:
   flutter_svg: ^2.0.9 # svg icon으로 사용
   flutter_svg_provider: ^1.0.7 # svg backgorund image로 사용
