@@ -46,4 +46,5 @@ app.*.map.json
 *.env
 
 # lock file
-*pubspec.lock
+.gitignore
+pubspec.lock
