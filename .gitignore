@@ -48,3 +48,4 @@ app.*.map.json
 # lock file
 .gitignore
 pubspec.lock
+*pubspec.lock
