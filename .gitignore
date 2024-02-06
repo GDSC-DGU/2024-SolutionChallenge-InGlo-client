@@ -49,3 +49,7 @@ app.*.map.json
 .gitignore
 pubspec.lock
 *pubspec.lock
+
+# api key
+
+/android/app/google-services.json
