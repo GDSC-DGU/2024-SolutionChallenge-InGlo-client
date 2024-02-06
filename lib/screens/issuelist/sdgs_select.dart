@@ -24,11 +24,8 @@ class SDGSSelectPage extends StatelessWidget {
           ),
     ],
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: SafeArea(
+      body: SafeArea(
           child: SDGSList(),
-        ),
       ),
     );
   }
