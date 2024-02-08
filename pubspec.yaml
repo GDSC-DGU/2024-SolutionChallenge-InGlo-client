@@ -24,6 +24,10 @@ dependencies:
   carousel_slider:
   flutter_svg: ^2.0.9 # svg icon으로 사용
   flutter_svg_provider: ^1.0.7 # svg backgorund image로 사용
+  google_maps_flutter: ^2.5.3
+  google_maps_flutter_web: ^0.5.4+3
+  flutter_dotenv: ^5.1.0
+  flutter_config: ^2.0.2
 
 dev_dependencies:
   flutter_test:
@@ -37,4 +41,6 @@ flutter:
   assets:
     - assets/icon/navigation/
     - assets/image/background/
+    - assets/image/home/
+    - .env
     - assets/image/

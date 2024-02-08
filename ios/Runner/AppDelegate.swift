@@ -1,5 +1,7 @@
 import UIKit
 import Flutter
+import GoogleMaps  // Add this import
+import flutter_config // add env
 import Firebase
 import FirebaseMessaging
 
@@ -33,8 +35,16 @@ import FirebaseMessaging
     Messaging.messaging().delegate = self
     
     GeneratedPluginRegistrant.register(with: self)
+
+    // TODO: Add your Google Maps API key
+    // env 파일 사용
+        GMSServices.provideAPIKey(FlutterConfigPlugin.env(for: "MAP_KEY"))
+
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
+<<<<<<< HEAD
+}
+=======
   
   // MARK: UNUserNotificationCenterDelegate
   
@@ -55,3 +65,4 @@ import FirebaseMessaging
     NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
   }
 }
+>>>>>>> main

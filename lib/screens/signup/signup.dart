@@ -9,12 +9,13 @@ class AccountPage extends StatelessWidget {
       // 배경 이미지를 넣기 위해 Scaffold를 Container로 감싸준다.
       decoration: BoxDecoration(
           image: DecorationImage(
-            repeat: ImageRepeat.noRepeat,
-            image: Svg(
-              'assets/image/background/background_2.svg',
-              // size: Size(10, 10), // size 지정 하던 안 하던 동일하다.
-            ),
-          )),
+        repeat: ImageRepeat.noRepeat,
+        image: Svg(
+          'assets/image/background/background_2.svg',
+          // size: Size(10, 10), // size 지정 하던 안 하던 동일하다.
+        ),
+        fit: BoxFit.fill, // 배경이미지 fit 하게 하기
+      )),
       child: Scaffold(
         // 배경 이미지를 위해 Scaffold의 배경색을 투명으로 한다.
         backgroundColor: Colors.transparent,
@@ -23,19 +24,27 @@ class AccountPage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Padding(
             // 전체 padding
-            padding: const EdgeInsets.fromLTRB(80, 180, 80, 0),
+            padding: const EdgeInsets.fromLTRB(40, 180, 40, 0),
             child: Theme(
               data: ThemeData(
                 primaryColor: Color(0xFFFFD691),
                 inputDecorationTheme: InputDecorationTheme(
                   labelStyle:
-                  TextStyle(color: Color(0xFFFFD691), fontSize: 47.0),
+                      TextStyle(color: Color(0xFFFFD691), fontSize: 47.0),
                   // border 스타일
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide(
                       color: Color(0xFFC4C4C4), // 테두리 색상
                       width: 1.0, // 테두리 두께
+                    ),
+                  ),
+                  // 포커스 시 스타일
+                  focusedBorder: OutlineInputBorder( // 포커스를 받았을 때의 테두리 스타일
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(
+                      color: Color(0xFFFFD691), // 포커스 받았을 때의 테두리 색상
+                      width: 2.0, // 포커스 받았을 때의 테두리 두께
                     ),
                   ),
                 ),
@@ -71,9 +80,10 @@ class AccountPage extends StatelessWidget {
                     TextFormField(
                       decoration: InputDecoration(
                         hintText: 'name',
+                        isDense: true,
                         contentPadding: EdgeInsets.all(8), // padding
                       ),
-                      keyboardType: TextInputType.emailAddress,
+                      style: TextStyle(fontSize: 14),
                     ),
                     SizedBox(height: 10.0),
                     Padding(
@@ -87,9 +97,11 @@ class AccountPage extends StatelessWidget {
                     TextFormField(
                       decoration: InputDecoration(
                         hintText: 'email',
-                        contentPadding: EdgeInsets.all(8), // padding
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(10), // padding
                       ),
-                      obscureText: true, // 비밀번호와 같은 민감한 정보용
+                      keyboardType: TextInputType.emailAddress,
+                      style: TextStyle(fontSize: 14),
                     ),
                     SizedBox(height: 10.0),
                     Padding(
@@ -103,7 +115,8 @@ class AccountPage extends StatelessWidget {
                     TextFormField(
                       decoration: InputDecoration(
                         hintText: 'password',
-                        contentPadding: EdgeInsets.all(8), // padding
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(10), // padding
                       ),
                       obscureText: true, // 비밀번호와 같은 민감한 정보용
                     ),
@@ -119,9 +132,10 @@ class AccountPage extends StatelessWidget {
                     TextFormField(
                       decoration: InputDecoration(
                         hintText: 'country',
-                        contentPadding: EdgeInsets.all(8), // padding
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(10), // padding
                       ),
-                      obscureText: true, // 비밀번호와 같은 민감한 정보용
+                      style: TextStyle(fontSize: 14),
                     ),
                     SizedBox(height: 10.0),
                     Padding(
@@ -135,9 +149,10 @@ class AccountPage extends StatelessWidget {
                     TextFormField(
                       decoration: InputDecoration(
                         hintText: 'language',
-                        contentPadding: EdgeInsets.all(8), // padding
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(10), // padding
                       ),
-                      obscureText: true, // 비밀번호와 같은 민감한 정보용
+                      style: TextStyle(fontSize: 14),
                     ),
                     SizedBox(height: 60.0),
                     // Login Button
@@ -148,7 +163,7 @@ class AccountPage extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFFFFD691), // Button 배경색
-                        minimumSize: Size(400, 50), // Button 사이즈
+                        minimumSize: Size(400, 40), // Button 사이즈
                       ),
                       child: Text(
                         "SIGNUP",
