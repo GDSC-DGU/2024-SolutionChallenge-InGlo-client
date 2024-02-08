@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class IssueComment extends StatelessWidget {
   const IssueComment({super.key});
@@ -26,8 +27,10 @@ class IssueComment extends StatelessWidget {
             children: [
               Text(
                 "6 comments",
-                style: TextStyle(
+                style: GoogleFonts.notoSans(
                   color: Color(0xFFD7A859),
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
               Container(
@@ -37,20 +40,37 @@ class IssueComment extends StatelessWidget {
                   children: [
                     // 원형 이미지
                     CircleAvatar(
-                      radius: 20,
-                      backgroundColor: Colors.transparent,
-                      backgroundImage: NetworkImage("https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80")
+                        radius: 20,
+                        backgroundColor: Colors.transparent,
+                        backgroundImage: NetworkImage(
+                            "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80")),
+                    SizedBox(
+                      width: 10,
                     ),
-                    SizedBox(width: 10,),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 10,),
-                          Text("writer's name"),
-                          SizedBox(height: 10,),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Text(
-                              "Clean Energy Technological Innovation Reshapes the Future Energy Market"),
+                            "writer's name",
+                            style: GoogleFonts.notoSans(
+                              color: Colors.black,
+                              fontSize: 13,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "Clean Energy Technological Innovation Reshapes the Future Energy Market",
+                            style: GoogleFonts.notoSans(
+                              color: Colors.black,
+                              fontSize: 13,
+                            ),
+                          ),
                         ],
                       ),
                     ),

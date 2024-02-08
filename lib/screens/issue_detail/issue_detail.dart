@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/issue_detail/widgets/issue_comment.dart';
 import 'package:inglo/screens/issue_detail/widgets/issue_content.dart';
 
@@ -72,7 +73,7 @@ class IssueDetailPage extends StatelessWidget {
                                 children: [
                                   Text(
                                     "2024.01.01",
-                                    style: TextStyle(
+                                    style: GoogleFonts.notoSans(
                                         color: Colors.white, fontSize: 15),
                                   ),
                                   SizedBox(
@@ -80,16 +81,22 @@ class IssueDetailPage extends StatelessWidget {
                                   ),
                                   Text(
                                     "Title~~~~",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20),
+                                    style: GoogleFonts.notoSans(
+                                      color: Colors.white,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w700,
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
                                   ),
                                   Text(
                                     "#description~~",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 15),
+                                    style: GoogleFonts.notoSans(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ],
                               ),
