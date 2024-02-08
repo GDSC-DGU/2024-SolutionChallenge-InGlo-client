@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inglo/screens/home/home.dart';
 import 'package:inglo/screens/signup/signup.dart';
 import 'screens/signin/signin.dart';
 import 'package:inglo/screens/issuelist/issulist.dart';
@@ -57,15 +58,6 @@ class _MainScreenState extends State<MainScreen> {
         currentIndex: _selectedIndex, // index 전송
         onItemTapped: _onItemTapped, // 함수 전송),
       ),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Home Page'),
     );
   }
 }
