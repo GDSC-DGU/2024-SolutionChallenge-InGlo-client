@@ -3,20 +3,14 @@ import 'package:inglo/screens/signup/signup.dart';
 import 'screens/signin/signin.dart';
 import 'package:inglo/screens/issuelist/issulist.dart';
 import 'models/appbar/appbar.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // Define your app UI here
+      home: MainScreen(),
     );
   }
 }
