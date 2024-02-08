@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  await WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
 }
@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // Define your app UI here
+      //  debugShowCheckedModeBanner: false, //오른쪽 상단에 배너 띠를 없애준다.
+      home: MainScreen(), // 화면의 표시될 스크린
     );
   }
 }
@@ -32,7 +33,6 @@ class _MainScreenState extends State<MainScreen> {
   // 각 탭에 해당하는 페이지 위젯
   final List<Widget> _pages = [
     IssueListPage(),
-    HomePage(),
     AccountPage(),
     NotificationsPage(),
     MessagesPage(),
