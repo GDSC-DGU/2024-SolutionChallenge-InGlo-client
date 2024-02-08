@@ -17,7 +17,10 @@ class IssueContent extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          Text("container"),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+            child: Text("The world is currently witnessing a significant focus on clean energy technologies. Recent studies indicate a rapid development in renewable energy sources such as solar, wind, and geothermal energy.Numerous countries are implementing policies to support this transition and investment in clean energy technologies is on the rise. Experts predict that these changes will bring long-term economic and environmental benefits...."),
+          ),
           Positioned(
             right: 20,
             top: -40,
