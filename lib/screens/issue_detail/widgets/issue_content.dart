@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class IssueContent extends StatelessWidget {
   const IssueContent({super.key});
@@ -19,7 +20,13 @@ class IssueContent extends StatelessWidget {
         children: [
           Container(
             padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
-            child: Text("The world is currently witnessing a significant focus on clean energy technologies. Recent studies indicate a rapid development in renewable energy sources such as solar, wind, and geothermal energy.Numerous countries are implementing policies to support this transition and investment in clean energy technologies is on the rise. Experts predict that these changes will bring long-term economic and environmental benefits...."),
+            child: Text(
+              "The world is currently witnessing a significant focus on clean energy technologies. Recent studies indicate a rapid development in renewable energy sources such as solar, wind, and geothermal energy.Numerous countries are implementing policies to support this transition and investment in clean energy technologies is on the rise. Experts predict that these changes will bring long-term economic and environmental benefits....",
+              style: GoogleFonts.notoSans(
+                color: Colors.black,
+                fontSize: 15,
+              ),
+            ),
           ),
           Positioned(
             right: 20,
