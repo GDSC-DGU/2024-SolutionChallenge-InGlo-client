@@ -14,11 +14,10 @@ flutter_launcher_name:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: ^2.25.3
-  firebase_auth: ^4.17.3
-  cloud_firestore: ^4.15.3
-  firebase_storage: ^11.6.4
-  firebase_messaging: ^14.7.15
+  firebase_core: 2.25.3
+  firebase_auth: 4.17.3
+  cloud_firestore: 4.15.3
+  firebase_storage: 11.6.4
 # 2024 2 3 기준 version
   cupertino_icons: ^1.0.2
   carousel_slider:
