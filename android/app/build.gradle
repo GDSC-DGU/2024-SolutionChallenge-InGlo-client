@@ -50,6 +50,9 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        // 멀티덱스 활성화
+        multiDexEnabled true
     }
 
     buildTypes {
