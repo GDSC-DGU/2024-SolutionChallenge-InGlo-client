@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:inglo/screens/home/home.dart';
 import 'package:inglo/screens/signup/signup.dart';
 import 'screens/signin/signin.dart';
+import 'package:inglo/screens/issuelist/issulist.dart';
 import 'models/appbar/appbar.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
-  // dotenv용 code
-  WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
-
+  await WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -15,7 +17,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MainScreen(),
+      //  debugShowCheckedModeBanner: false, //오른쪽 상단에 배너 띠를 없애준다.
+      home: MainScreen(), // 화면의 표시될 스크린
     );
   }
 }
@@ -30,10 +33,11 @@ class _MainScreenState extends State<MainScreen> {
 
   // 각 탭에 해당하는 페이지 위젯
   final List<Widget> _pages = [
-    AppMap(),
-    LoginPage(),
+    IssueListPage(),
     AccountPage(),
+    NotificationsPage(),
     MessagesPage(),
+    // MessagesPage(),
     // 참고 페이지(나중에 삭제)
   ];
 
