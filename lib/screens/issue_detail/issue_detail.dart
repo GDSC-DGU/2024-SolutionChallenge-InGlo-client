@@ -4,8 +4,15 @@ import 'package:inglo/screens/issue_detail/widgets/issue_comment.dart';
 import 'package:inglo/screens/issue_detail/widgets/issue_content.dart';
 import 'package:inglo/screens/issue_detail/widgets/issue_input.dart';
 
-class IssueDetailPage extends StatelessWidget {
+class IssueDetailPage extends StatefulWidget {
   const IssueDetailPage({super.key});
+
+  @override
+  State<IssueDetailPage> createState() => _IssueDetailPageState();
+}
+
+class _IssueDetailPageState extends State<IssueDetailPage> {
+  bool isBookMarked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +53,9 @@ class IssueDetailPage extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
                                     icon: Icon(
                                       Icons.arrow_back_ios,
                                       size: 30,
@@ -54,9 +63,13 @@ class IssueDetailPage extends StatelessWidget {
                                     ),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      setState(() {
+                                        isBookMarked = !isBookMarked;
+                                      });
+                                    },
                                     icon: Icon(
-                                      Icons.bookmark,
+                                      isBookMarked ? Icons.bookmark : Icons.bookmark_outline,
                                       size: 30,
                                       color: Color(0xFFFF6280),
                                     ),
