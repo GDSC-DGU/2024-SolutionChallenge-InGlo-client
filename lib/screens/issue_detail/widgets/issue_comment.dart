@@ -7,15 +7,16 @@ class IssueComment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
-      minChildSize: 0.25,
-      initialChildSize: 0.25,
+      minChildSize: 0.15,
+      initialChildSize: 0.3,
       builder: (context, scrollController) => SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
         controller: scrollController,
         child: Container(
           constraints: BoxConstraints(
             minHeight: MediaQuery.of(context).size.height,
           ),
-          padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
           decoration: const BoxDecoration(
             color: Color(0xFFF7EEDE),
             borderRadius: BorderRadius.vertical(
@@ -25,6 +26,22 @@ class IssueComment extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 80,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: Color(0xFFD7A859),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
               Text(
                 "6 comments",
                 style: GoogleFonts.notoSans(
@@ -32,6 +49,9 @@ class IssueComment extends StatelessWidget {
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                 ),
+              ),
+              SizedBox(
+                height: 10,
               ),
               Container(
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
@@ -48,30 +68,42 @@ class IssueComment extends StatelessWidget {
                       width: 10,
                     ),
                     Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "writer's name",
-                            style: GoogleFonts.notoSans(
-                              color: Colors.black,
-                              fontSize: 13,
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
+                        decoration: BoxDecoration(
+                          //color: Color(0xFFF7EEDE),
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Color(0xFFD7A859),
+                              width: 1.0,
                             ),
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "Clean Energy Technological Innovation Reshapes the Future Energy Market",
-                            style: GoogleFonts.notoSans(
-                              color: Colors.black,
-                              fontSize: 13,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 10,
                             ),
-                          ),
-                        ],
+                            Text(
+                              "writer's name",
+                              style: GoogleFonts.notoSans(
+                                color: Colors.black,
+                                fontSize: 13,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "Clean Energy Technological Innovation Reshapes the Future Energy Market",
+                              style: GoogleFonts.notoSans(
+                                color: Colors.black,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
