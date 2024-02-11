@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/issue_detail/widgets/issue_comment.dart';
 import 'package:inglo/screens/issue_detail/widgets/issue_content.dart';
+import 'package:inglo/screens/issue_detail/widgets/issue_input.dart';
 
 class IssueDetailPage extends StatelessWidget {
   const IssueDetailPage({super.key});
@@ -116,6 +117,7 @@ class IssueDetailPage extends StatelessWidget {
           IssueComment(),
         ],
       ),
+      bottomSheet: IssueInput(),
     );
   }
 }
