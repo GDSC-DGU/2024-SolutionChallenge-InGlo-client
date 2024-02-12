@@ -37,4 +37,5 @@ flutter:
   assets:
     - assets/icon/navigation/
     - assets/image/background/
+    - assets/image/design/
     - assets/image/

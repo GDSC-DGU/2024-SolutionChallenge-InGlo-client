@@ -17,7 +17,7 @@ class DesignSteps extends StatelessWidget {
         Container(
           width: MediaQuery.of(context).size.width,
           height: 3,
-          margin: EdgeInsets.fromLTRB(40, 25, 40, 50),
+          margin: EdgeInsets.fromLTRB(30, 25, 30, 50),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
             color: Color(0xFFC4C4C4),
@@ -25,7 +25,7 @@ class DesignSteps extends StatelessWidget {
         ),
         Positioned(
           top: 3,
-          left: 0,
+          left: -10,
           child: Container(
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
