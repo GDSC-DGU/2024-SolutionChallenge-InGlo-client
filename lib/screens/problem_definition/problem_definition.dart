@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/screens/problem_definition/problem_write.dart';
+import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
 import 'package:inglo/widgets/design_steps.dart';
 
 class ProblemDefinitionPage extends StatefulWidget {
@@ -10,18 +12,42 @@ class ProblemDefinitionPage extends StatefulWidget {
 }
 
 class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
+  // 더미데이터
+  final List<Map<String, String>> problemList = [
+    {"content": "choose 3-5 problems"},
+    {
+      "content":
+          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+    },
+    {"content": "choose 3-5 problems"},
+    {
+      "content":
+          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+    },
+    {"content": "choose 3-5 problems"},
+    {
+      "content":
+          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+    },
+    {"content": "choose 3-5 problems"},
+    {
+      "content":
+          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           "Problem definition",
-          style: TextStyle(
+          style: GoogleFonts.notoSans(
               color: Color(0xFF233A66),
-              fontSize: 25,
-              fontWeight: FontWeight.bold),
+              fontSize: 20,
+              fontWeight: FontWeight.w700),
         ),
         backgroundColor: Color(0xFFF7EEDE),
         actions: <Widget>[
@@ -40,11 +66,59 @@ class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
         ],
       ),
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            DesignSteps(step: 1),
-          ],
+        child: SingleChildScrollView(
+          padding: EdgeInsets.fromLTRB(10, 0, 10, 50),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              DesignSteps(step: 1),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: GridView.builder(
+                  physics: BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: problemList.length + 1,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 20.0,
+                    mainAxisSpacing: 10.0,
+                  ),
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const ProblemWrite(),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            //maximumSize: Size(30, 30),
+                            backgroundColor: Colors.white,
+                            shape: CircleBorder(),
+                            // padding도 넣을 수 있음!
+                            padding: EdgeInsets.all(10.0),
+                            side: BorderSide(
+                              color: Color(0xFF233A66),
+                              width: 1,
+                            ),
+                            shadowColor: Colors.transparent,
+                          ),
+                          child: const Icon(
+                            Icons.edit_outlined,
+                            size: 25,
+                            color: Color(0xFF233A66),
+                          ),
+                        );
+                    } else {
+                      return DesignCard(content: problemList[index - 1]["content"]!);
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButtonLocation:
@@ -76,7 +150,7 @@ class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
                   'choose 3-5 problems',
                   style: GoogleFonts.notoSans(
                     color: Color(0xFF233A66),
-                    fontSize: 18.0,
+                    fontSize: 20.0,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
