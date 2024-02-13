@@ -5,25 +5,42 @@ class CreatePost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // MediaQuery를 사용하여 화면의 너비를 얻음
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Icon(Icons.arrow_back),
-                const SizedBox(
-                  width: 20,
-                ),
-                Text('Create Post'),
-                Spacer(),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
-                  onPressed: () {},
-                  child: Text('Post'),
-                )
-              ],
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+              child: Row(
+                children: [
+                  Icon(Icons.arrow_back),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Text('Create Post',
+                    style: TextStyle(
+                      fontSize: 16, // 폰트 크기 설정
+                      fontWeight: FontWeight.bold, // 폰트 굵기 설정
+                      color: Colors.black, // 텍스트 색상 설정
+                    ),),
+                  Spacer(),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(backgroundColor: Color(0xFFFFD691)),
+                    onPressed: () {},
+                    child: Text('Post',
+                      style: TextStyle(
+                        fontSize: 16, // 폰트 크기 설정
+                        fontWeight: FontWeight.bold, // 폰트 굵기 설정
+                        color: Colors.black, // 텍스트 색상 설정
+                      ),),
+                  )
+                ],
+              ),
             ),
             Divider(
               thickness: 1,
@@ -34,7 +51,7 @@ class CreatePost extends StatelessWidget {
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 140, // 너비
+                      width: screenWidth * 0.7, // 화면의 최대 너비로 설정
                         child: OutlinedButton.icon(
                           style: OutlinedButton.styleFrom(
                               foregroundColor: Colors.grey),
@@ -43,6 +60,7 @@ class CreatePost extends StatelessWidget {
                           label: Row(
                             children: [
                               Text('Sketch'),
+                              Spacer(), // 남은 공간 모두 차지
                               Icon(
                                   Icons.arrow_drop_down,
                                 ),
@@ -50,10 +68,6 @@ class CreatePost extends StatelessWidget {
                           ),
                         ),
                     ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Text("sketch title"),
                   ],
                 ),
               ),
