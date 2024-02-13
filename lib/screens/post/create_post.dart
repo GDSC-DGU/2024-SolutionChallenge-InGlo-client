@@ -8,9 +8,6 @@ class CreatePost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // MediaQuery를 사용하여 화면의 너비를 얻음
-    double screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -21,7 +18,7 @@ class CreatePost extends StatelessWidget {
               child: Row(
                 children: [
                   IconButton(
-                    icon: Icon(Icons.arrow_back),
+                    icon: Icon(Icons.arrow_back_ios),
                     onPressed: () {
                       Navigator.pop(context); // 이전 페이지로 이동
                     },
