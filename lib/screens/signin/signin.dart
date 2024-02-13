@@ -9,12 +9,12 @@ class LoginPage extends StatelessWidget {
       // 배경 이미지를 넣기 위해 Scaffold를 Container로 감싸준다.
       decoration: BoxDecoration(
           image: DecorationImage(
+            fit: BoxFit.fill,
         repeat: ImageRepeat.noRepeat,
         image: Svg(
           'assets/image/background/background.svg',
           // size: Size(10, 10), // size 지정 하던 안 하던 동일하다.
         ),
-        fit: BoxFit.fill, // 배경이미지 fit 하게 하기
       )),
       child: Scaffold(
         // 배경 이미지를 위해 Scaffold의 배경색을 투명으로 한다.
