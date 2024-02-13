@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:inglo/screens/signin/signin.dart';
 import 'package:inglo/widgets/dropdown/borderdropdownbutton.dart';
 import 'package:inglo/util/options/country_data.dart';
 import 'package:inglo/util/options/language_data.dart';
@@ -22,7 +23,7 @@ class AccountPage extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomInset: false, // 스크롤이 scaffold 영역을 건드리지 않는다.
         // 배경 이미지를 위해 Scaffold의 배경색을 투명으로 한다.
-        backgroundColor: Colors.transparent,
+        // backgroundColor: Colors.transparent,
         // 수직 스크롤이 된다고 한다.
         // 나중에 빼도 될 것 같다!
         body: Stack(
@@ -151,14 +152,15 @@ class AccountPage extends StatelessWidget {
                       child: BorderCustomDropdown(options: languageData),),
                     SizedBox(height: 40.0),
                     // Login Button
-                    ElevatedButton(
+                    FilledButton(
                       onPressed: () {
-                        // Placeholder for login logic.
-                        print('Login button pressed');
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (context) => LoginPage()),
+                        );
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFFFD691), // Button 배경색
-                        minimumSize: Size(400, 40), // Button 사이즈
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Color(0xFFFFD691)), // 버튼 배경색
+                        minimumSize: MaterialStateProperty.all(Size(400, 40)), // 버튼 사이즈
                       ),
                       child: Text(
                         "SIGNUP",
