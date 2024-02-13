@@ -1,15 +1,15 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-class BorderCustomDropdown extends StatefulWidget {
+class WritingCustomDropdown extends StatefulWidget {
   final List<String> options; // 이 위젯으로 전달될 데이터
-  const BorderCustomDropdown({Key? key, required this.options}) : super(key: key);
+  const WritingCustomDropdown({Key? key, required this.options}) : super(key: key);
 
   @override
-  State<BorderCustomDropdown> createState() => _BorderCustomDropdownState();
+  State<WritingCustomDropdown> createState() => _WritingCustomDropdownState();
 }
 
-class _BorderCustomDropdownState extends State<BorderCustomDropdown> {
+class _WritingCustomDropdownState extends State<WritingCustomDropdown> {
   String? selectedValue;
 
   @override
@@ -56,10 +56,10 @@ class _BorderCustomDropdownState extends State<BorderCustomDropdown> {
             });
           },
           buttonStyleData: ButtonStyleData(
-            width: MediaQuery.of(context).size.width * 1,
-            padding: const EdgeInsets.all(8.0),
+            width: MediaQuery.of(context).size.width * 0.6,
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(30),
               border: Border.all(
                 color: Color(0xFFC4C4C4), // 테두리 색상
                 width: 1.0, // 테두리 두께
@@ -77,8 +77,8 @@ class _BorderCustomDropdownState extends State<BorderCustomDropdown> {
             iconDisabledColor: Colors.grey,
           ),
           dropdownStyleData: DropdownStyleData(
-            maxHeight: 300,
-            width: MediaQuery.of(context).size.width * 0.8,
+            maxHeight: 500,
+            width: MediaQuery.of(context).size.width * 0.6,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
