@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inglo/screens/post/create_post.dart';
-import 'package:inglo/screens/postlist/widgets/dropdownbutton.dart';
-import 'package:inglo/screens/postlist/widgets/newdropdownbutton.dart';
+import 'package:inglo/widgets/dropdown/dropdownbutton.dart';
 import 'package:inglo/screens/postlist/widgets/post_item.dart';
 
 
