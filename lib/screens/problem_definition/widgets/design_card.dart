@@ -15,7 +15,7 @@ class DesignCard extends StatelessWidget {
       children: [
         Container(
           //width: 150,
-          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -31,7 +31,7 @@ class DesignCard extends StatelessWidget {
                 color: Color(0xFFFFD691),
                 blurRadius: 0.0,
                 spreadRadius: 0.0,
-                offset: Offset(4, 4),
+                offset: Offset(6, 6),
               ),
             ],
           ),
@@ -47,7 +47,7 @@ class DesignCard extends StatelessWidget {
         ),
         Positioned(
           top: -5,
-          left: -25,
+          left: -15,
           child: Image(
             width: 200,
             image: Svg('assets/image/design/card_spring.svg'),
