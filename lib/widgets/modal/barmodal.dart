@@ -33,7 +33,7 @@ class BarModal extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
                       children: [
-                        Icon(Icons.comment, color: Color(0xFFD7A859), size: 30,), // 댓글 아이콘
+                        Icon(Icons.comment, color: Color(0xFFD7A859),), // 댓글 아이콘
                       ],
                     ),
                   ),
