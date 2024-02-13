@@ -18,9 +18,11 @@ class CreatePost extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
               child: Row(
                 children: [
-                  Icon(Icons.arrow_back),
-                  const SizedBox(
-                    width: 20,
+                  IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () {
+                      Navigator.pop(context); // 이전 페이지로 이동
+                    },
                   ),
                   Text('Create Post',
                     style: TextStyle(
