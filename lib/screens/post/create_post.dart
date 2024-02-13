@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:inglo/util/dummy/users_sketch.dart';
+import 'package:inglo/widgets/dropdown/writingdropdown.dart';
 
 class CreatePost extends StatelessWidget {
   const CreatePost({super.key});
@@ -38,7 +40,7 @@ class CreatePost extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16, // 폰트 크기 설정
                         fontWeight: FontWeight.bold, // 폰트 굵기 설정
-                        color: Colors.black, // 텍스트 색상 설정
+                        color: Colors.white, // 텍스트 색상 설정
                       ),),
                   )
                 ],
@@ -48,40 +50,16 @@ class CreatePost extends StatelessWidget {
               thickness: 1,
             ),
             Container(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: screenWidth * 0.7, // 화면의 최대 너비로 설정
-                        child: OutlinedButton.icon(
-                          style: OutlinedButton.styleFrom(
-                              foregroundColor: Colors.grey),
-                          onPressed: () {},
-                          icon: Icon(Icons.select_all, size: 20,),
-                          label: Row(
-                            children: [
-                              Text('Sketch'),
-                              Spacer(), // 남은 공간 모두 차지
-                              Icon(
-                                  Icons.arrow_drop_down,
-                                ),
-                            ],
-                          ),
-                        ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              padding: const EdgeInsets.all(20), // form 패딩 설정
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
               child: Form(
                 child: Column(
                   children: [
+                    SizedBox(
+                      height: 45.0,
+                      child: WritingCustomDropdown(options: usersSketchData),),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     TextFormField(
                       maxLines: null,
                       maxLength: 50, // 사용자가 입력할 수 있는 최대 문자 수
