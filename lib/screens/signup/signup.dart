@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:inglo/widgets/dropdown/borderdropdownbutton.dart';
+import 'package:inglo/util/options/country_data.dart';
+import 'package:inglo/util/options/language_data.dart';
 
 // LoginPage 클래스
 class AccountPage extends StatelessWidget {
@@ -9,22 +12,25 @@ class AccountPage extends StatelessWidget {
       // 배경 이미지를 넣기 위해 Scaffold를 Container로 감싸준다.
       decoration: BoxDecoration(
           image: DecorationImage(
+            fit: BoxFit.fill, // 배경이미지 fit 하게 하기
         repeat: ImageRepeat.noRepeat,
         image: Svg(
           'assets/image/background/background_2.svg',
           // size: Size(10, 10), // size 지정 하던 안 하던 동일하다.
         ),
-        fit: BoxFit.fill, // 배경이미지 fit 하게 하기
       )),
       child: Scaffold(
+        resizeToAvoidBottomInset: false, // 스크롤이 scaffold 영역을 건드리지 않는다.
         // 배경 이미지를 위해 Scaffold의 배경색을 투명으로 한다.
         backgroundColor: Colors.transparent,
         // 수직 스크롤이 된다고 한다.
         // 나중에 빼도 될 것 같다!
-        body: SingleChildScrollView(
+        body: Stack(
+          children: <Widget>[
+    SingleChildScrollView(
           child: Padding(
             // 전체 padding
-            padding: const EdgeInsets.fromLTRB(40, 180, 40, 0),
+            padding: const EdgeInsets.fromLTRB(40, 80, 40, 0),
             child: Theme(
               data: ThemeData(
                 primaryColor: Color(0xFFFFD691),
@@ -66,7 +72,7 @@ class AccountPage extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    SizedBox(height: 40.0),
+                    SizedBox(height: 20.0),
                     // label에 padding 추가
                     // lable에 animation을 넣고 싶다면 labeltext를 추가하자.
                     Padding(
@@ -119,6 +125,7 @@ class AccountPage extends StatelessWidget {
                         contentPadding: EdgeInsets.all(10), // padding
                       ),
                       obscureText: true, // 비밀번호와 같은 민감한 정보용
+                      style: TextStyle(fontSize: 14),
                     ),
                     SizedBox(height: 10.0),
                     Padding(
@@ -128,15 +135,9 @@ class AccountPage extends StatelessWidget {
                             color: Colors.black,
                           )),
                     ),
-                    // passowrd textfield
-                    TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'country',
-                        isDense: true,
-                        contentPadding: EdgeInsets.all(10), // padding
-                      ),
-                      style: TextStyle(fontSize: 14),
-                    ),
+                    SizedBox(
+                        height: 45.0,
+                    child: BorderCustomDropdown(options: countryData),),
                     SizedBox(height: 10.0),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(7, 0, 0, 3),
@@ -145,16 +146,10 @@ class AccountPage extends StatelessWidget {
                             color: Colors.black,
                           )),
                     ),
-                    // passowrd textfield
-                    TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'language',
-                        isDense: true,
-                        contentPadding: EdgeInsets.all(10), // padding
-                      ),
-                      style: TextStyle(fontSize: 14),
-                    ),
-                    SizedBox(height: 60.0),
+                    SizedBox(
+                      height: 45.0,
+                      child: BorderCustomDropdown(options: languageData),),
+                    SizedBox(height: 40.0),
                     // Login Button
                     ElevatedButton(
                       onPressed: () {
@@ -178,6 +173,8 @@ class AccountPage extends StatelessWidget {
               ),
             ),
           ),
+        ),
+    ]
         ),
       ),
     );
