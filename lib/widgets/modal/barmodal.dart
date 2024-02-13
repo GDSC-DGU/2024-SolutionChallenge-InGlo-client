@@ -18,22 +18,18 @@ class BarModal extends StatelessWidget {
                 builder: (context) => CommentPage(),
               ),
               child: Container(
-                width: 60, // 화면 너비에서 양쪽 여백을 뺀 크기
+                width: 70, // 화면 너비에서 양쪽 여백을 뺀 크기
                 height: 60, // 높이 설정
                 decoration: BoxDecoration(
-                  color: Color(0xFFF7EEDE), // 배경색은 노란색
+                  color: Color(0xFF233A66), // 배경색은 노란색
                   borderRadius: BorderRadius.all(Radius.circular(20)),
-                  border: Border.all(
-                    color: Color(0xFFD7A859),
-                    width: 1,
-                  )
                 ),
                 child: Container(
                   child: Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
                       children: [
-                        Icon(Icons.comment, color: Color(0xFFD7A859),), // 댓글 아이콘
+                        Icon(Icons.comment, color: Colors.white,), // 댓글 아이콘
                       ],
                     ),
                   ),
