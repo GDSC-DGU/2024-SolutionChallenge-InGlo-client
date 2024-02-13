@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inglo/screens/home/home.dart';
 import 'package:inglo/screens/post/create_post.dart';
+import 'package:inglo/screens/postlist/post_board.dart';
 import 'package:inglo/screens/signup/signup.dart';
 import 'screens/signin/signin.dart';
 import 'package:inglo/screens/issuelist/issulist.dart';
@@ -37,7 +38,7 @@ class _MainScreenState extends State<MainScreen> {
     IssueListPage(),
     AccountPage(),
     CreatePost(),
-    MessagesPage(),
+    PostBoardPage(),
     // MessagesPage(),
     // 참고 페이지(나중에 삭제)
   ];
