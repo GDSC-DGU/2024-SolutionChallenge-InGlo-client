@@ -93,11 +93,11 @@ class DetailPost extends StatelessWidget {
               ),
             ),
             Positioned(
-              bottom: -20,
+              bottom: 20,
               left: 0,
-              right: 0,
+              right: 20,
               child: SizedBox(
-                height: 100,
+                height: 60,
                 child: BarModal(),
               ),// 여기서 BarModalWidget은 바텀 모달의 컨텐츠를 표시하는 위젯입니다.
             ),
