@@ -12,19 +12,22 @@ class AccountPage extends StatelessWidget {
       // 배경 이미지를 넣기 위해 Scaffold를 Container로 감싸준다.
       decoration: BoxDecoration(
           image: DecorationImage(
+            fit: BoxFit.fill, // 배경이미지 fit 하게 하기
         repeat: ImageRepeat.noRepeat,
         image: Svg(
           'assets/image/background/background_2.svg',
           // size: Size(10, 10), // size 지정 하던 안 하던 동일하다.
         ),
-        fit: BoxFit.fill, // 배경이미지 fit 하게 하기
       )),
       child: Scaffold(
+        resizeToAvoidBottomInset: false, // 스크롤이 scaffold 영역을 건드리지 않는다.
         // 배경 이미지를 위해 Scaffold의 배경색을 투명으로 한다.
         backgroundColor: Colors.transparent,
         // 수직 스크롤이 된다고 한다.
         // 나중에 빼도 될 것 같다!
-        body: SingleChildScrollView(
+        body: Stack(
+          children: <Widget>[
+    SingleChildScrollView(
           child: Padding(
             // 전체 padding
             padding: const EdgeInsets.fromLTRB(40, 80, 40, 0),
@@ -170,6 +173,8 @@ class AccountPage extends StatelessWidget {
               ),
             ),
           ),
+        ),
+    ]
         ),
       ),
     );
