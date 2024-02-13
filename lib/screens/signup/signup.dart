@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:inglo/widgets/dropdown/borderdropdownbutton.dart';
+import 'package:inglo/util/options/country_data.dart';
+import 'package:inglo/util/options/language_data.dart';
 
 // LoginPage 클래스
 class AccountPage extends StatelessWidget {
@@ -24,7 +27,7 @@ class AccountPage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Padding(
             // 전체 padding
-            padding: const EdgeInsets.fromLTRB(40, 180, 40, 0),
+            padding: const EdgeInsets.fromLTRB(40, 80, 40, 0),
             child: Theme(
               data: ThemeData(
                 primaryColor: Color(0xFFFFD691),
@@ -66,7 +69,7 @@ class AccountPage extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    SizedBox(height: 40.0),
+                    SizedBox(height: 20.0),
                     // label에 padding 추가
                     // lable에 animation을 넣고 싶다면 labeltext를 추가하자.
                     Padding(
@@ -119,6 +122,7 @@ class AccountPage extends StatelessWidget {
                         contentPadding: EdgeInsets.all(10), // padding
                       ),
                       obscureText: true, // 비밀번호와 같은 민감한 정보용
+                      style: TextStyle(fontSize: 14),
                     ),
                     SizedBox(height: 10.0),
                     Padding(
@@ -128,15 +132,9 @@ class AccountPage extends StatelessWidget {
                             color: Colors.black,
                           )),
                     ),
-                    // passowrd textfield
-                    TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'country',
-                        isDense: true,
-                        contentPadding: EdgeInsets.all(10), // padding
-                      ),
-                      style: TextStyle(fontSize: 14),
-                    ),
+                    SizedBox(
+                        height: 45.0,
+                    child: BorderCustomDropdown(options: countryData),),
                     SizedBox(height: 10.0),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(7, 0, 0, 3),
@@ -145,16 +143,10 @@ class AccountPage extends StatelessWidget {
                             color: Colors.black,
                           )),
                     ),
-                    // passowrd textfield
-                    TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'language',
-                        isDense: true,
-                        contentPadding: EdgeInsets.all(10), // padding
-                      ),
-                      style: TextStyle(fontSize: 14),
-                    ),
-                    SizedBox(height: 60.0),
+                    SizedBox(
+                      height: 45.0,
+                      child: BorderCustomDropdown(options: languageData),),
+                    SizedBox(height: 40.0),
                     // Login Button
                     ElevatedButton(
                       onPressed: () {
