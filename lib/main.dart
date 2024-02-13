@@ -37,7 +37,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _pages = [
     IssueListPage(),
     AccountPage(),
-    CreatePost(),
+    LoginPage(),
     PostBoardPage(),
     // MessagesPage(),
     // 참고 페이지(나중에 삭제)

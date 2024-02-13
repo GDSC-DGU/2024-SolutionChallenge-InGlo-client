@@ -9,12 +9,12 @@ class LoginPage extends StatelessWidget {
       // 배경 이미지를 넣기 위해 Scaffold를 Container로 감싸준다.
       decoration: BoxDecoration(
           image: DecorationImage(
+            fit: BoxFit.fill,
         repeat: ImageRepeat.noRepeat,
         image: Svg(
           'assets/image/background/background.svg',
           // size: Size(10, 10), // size 지정 하던 안 하던 동일하다.
         ),
-        fit: BoxFit.fill, // 배경이미지 fit 하게 하기
       )),
       child: Scaffold(
         // 배경 이미지를 위해 Scaffold의 배경색을 투명으로 한다.
@@ -24,7 +24,7 @@ class LoginPage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Padding(
             // 전체 padding
-            padding: const EdgeInsets.fromLTRB(40, 220, 40, 0),
+            padding: const EdgeInsets.fromLTRB(40, 160, 40, 0),
             child: Theme(
               data: ThemeData(
                 primaryColor: Color(0xFFFFD691),
@@ -66,7 +66,7 @@ class LoginPage extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    SizedBox(height: 40.0),
+                    SizedBox(height: 20.0),
                     // label에 padding 추가
                     // lable에 animation을 넣고 싶다면 labeltext를 추가하자.
                     Padding(
@@ -86,7 +86,7 @@ class LoginPage extends StatelessWidget {
                       keyboardType: TextInputType.emailAddress,
                       style: TextStyle(fontSize: 14), // textsize 조정
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 10.0),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(7, 0, 0, 3),
                       child: Text("password",
@@ -104,7 +104,7 @@ class LoginPage extends StatelessWidget {
                       obscureText: true, // 비밀번호와 같은 민감한 정보용
                       style: TextStyle(fontSize: 14),
                     ),
-                    SizedBox(height: 120.0),
+                    SizedBox(height: 80.0),
                     // Login Button
                     ElevatedButton(
                       onPressed: () {
