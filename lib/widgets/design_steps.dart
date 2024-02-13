@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/screens/solution_sketch/solution_sketch.dart';
 
 class DesignSteps extends StatelessWidget {
   final int step;
@@ -37,6 +38,7 @@ class DesignSteps extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
+                        elevation: 0,
                         backgroundColor:
                             step == 1 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
                         shape: CircleBorder(),
@@ -66,6 +68,7 @@ class DesignSteps extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
+                        elevation: 0,
                         backgroundColor:
                         step == 2 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
                         shape: CircleBorder(),
@@ -95,6 +98,7 @@ class DesignSteps extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
+                        elevation: 0,
                         backgroundColor:
                         step == 3 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
                         shape: CircleBorder(),
@@ -122,8 +126,15 @@ class DesignSteps extends StatelessWidget {
                 Column(
                   children: [
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const SolutionSketchPage(),
+                          ),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
+                        elevation: 0,
                         backgroundColor:
                         step == 4 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
                         shape: CircleBorder(),
