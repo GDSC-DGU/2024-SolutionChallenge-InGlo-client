@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/screens/problem_definition/problem_choose.dart';
 import 'package:inglo/screens/problem_definition/problem_write.dart';
 import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
 import 'package:inglo/widgets/design_steps.dart';
@@ -67,6 +69,7 @@ class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           padding: EdgeInsets.fromLTRB(10, 0, 10, 50),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -74,43 +77,44 @@ class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
               DesignSteps(step: 1),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
-                child: GridView.builder(
+                child: MasonryGridView.count(
                   physics: BouncingScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: problemList.length + 1,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 20.0,
-                    mainAxisSpacing: 10.0,
-                  ),
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 5.0,
+                  mainAxisSpacing: 5.0,
                   itemBuilder: (context, index) {
                     if (index == 0) {
-                      return ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const ProblemWrite(),
+                      return Container(
+                        margin: EdgeInsets.all(40),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => const ProblemWrite(),
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              //fixedSize: Size(30, 30),
+                              backgroundColor: Colors.white,
+                              shape: CircleBorder(),
+                              // padding도 넣을 수 있음!
+                              padding: EdgeInsets.all(10.0),
+                              side: BorderSide(
+                                color: Color(0xFF233A66),
+                                width: 1,
                               ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            //maximumSize: Size(30, 30),
-                            backgroundColor: Colors.white,
-                            shape: CircleBorder(),
-                            // padding도 넣을 수 있음!
-                            padding: EdgeInsets.all(10.0),
-                            side: BorderSide(
-                              color: Color(0xFF233A66),
-                              width: 1,
+                              shadowColor: Colors.transparent,
                             ),
-                            shadowColor: Colors.transparent,
+                            child: const Icon(
+                              Icons.edit_outlined,
+                              size: 25,
+                              color: Color(0xFF233A66),
+                            ),
                           ),
-                          child: const Icon(
-                            Icons.edit_outlined,
-                            size: 25,
-                            color: Color(0xFF233A66),
-                          ),
-                        );
+                      );
                     } else {
                       return DesignCard(content: problemList[index - 1]["content"]!);
                     }
@@ -133,11 +137,11 @@ class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
               child: FloatingActionButton.extended(
                 onPressed: () {
                   // Add your onPressed code here!
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //     builder: (context) => const SDGSSelectPage(),
-                  //   ),
-                  // );
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ProblemChoosePage(),
+                    ),
+                  );
                 },
                 backgroundColor: Colors.white,
                 shape: StadiumBorder(
