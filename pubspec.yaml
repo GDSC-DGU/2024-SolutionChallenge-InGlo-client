@@ -29,6 +29,7 @@ dependencies:
   flutter_dotenv: ^5.1.0
   flutter_config: ^2.0.2
   dropdown_button2: ^2.3.9
+  modal_bottom_sheet: ^3.0.0-pre
 
 dev_dependencies:
   flutter_test:
