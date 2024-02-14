@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/crazy/crazy_8s.dart';
+import 'package:inglo/screens/hmw/hmw_list.dart';
 import 'package:inglo/screens/solution_sketch/solution_sketch.dart';
 
 class DesignSteps extends StatelessWidget {
@@ -67,7 +68,13 @@ class DesignSteps extends StatelessWidget {
                 Column(
                   children: [
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const HMWListPage(),
+                          ),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                         backgroundColor:
