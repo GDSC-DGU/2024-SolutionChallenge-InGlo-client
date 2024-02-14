@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inglo/screens/solution_sketch/solution_drawing.dart';
 
 class SolutionSketchBtn extends StatelessWidget {
   const SolutionSketchBtn({super.key});
@@ -7,7 +8,11 @@ class SolutionSketchBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return RawMaterialButton(
       onPressed: () {
-        // check값 바꾸기
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const SolutionDrawingPage(),
+          ),
+        );
       },
       constraints: BoxConstraints(
         maxHeight: 100,

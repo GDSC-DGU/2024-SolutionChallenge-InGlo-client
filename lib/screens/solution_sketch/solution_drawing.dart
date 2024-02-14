@@ -1,23 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:inglo/screens/solution_sketch/widgets/solution_sketch_btn.dart';
-import 'package:inglo/screens/solution_sketch/widgets/solution_sketch_img.dart';
-import 'package:inglo/screens/solution_sketch/widgets/solution_sketch_input.dart';
+import 'package:inglo/screens/solution_sketch/widgets/solution_drawing_board.dart';
 import 'package:inglo/widgets/design_steps.dart';
 
-class SolutionSketchPage extends StatefulWidget {
-  const SolutionSketchPage({super.key});
-
-  @override
-  State<SolutionSketchPage> createState() => _SolutionSketchPageState();
-}
-
-class _SolutionSketchPageState extends State<SolutionSketchPage> {
-  // 더미데이터
-  final drawingData = [
-    'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-    'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-  ];
+class SolutionDrawingPage extends StatelessWidget {
+  const SolutionDrawingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +13,7 @@ class _SolutionSketchPageState extends State<SolutionSketchPage> {
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
         title: Text(
-          "Solution sketch",
+          "Solution Drawing",
           style: GoogleFonts.notoSans(
               color: Color(0xFF233A66),
               fontSize: 20,
@@ -55,36 +42,7 @@ class _SolutionSketchPageState extends State<SolutionSketchPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              DesignSteps(step: 4),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SolutionSketchBtn(),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    SolutionSketchBtn(),
-                  ],
-                ),
-              ),
-              if (drawingData.length > 0)
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: drawingData
-                        .map(
-                          (item) => SolutionSketchImg(
-                            imageData: item,
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
-              SolutionSketchInput(),
-              // Submit 버튼
+              SolutionDrawingBoard(),
               Container(
                 margin:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
