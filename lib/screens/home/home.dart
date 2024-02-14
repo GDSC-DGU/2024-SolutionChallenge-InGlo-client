@@ -1,34 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
-class AppMap extends StatefulWidget {
-  const AppMap({Key? key}) : super(key: key);
-
+class WebViewMap extends StatefulWidget {
   @override
-  _AppMapState createState() => _AppMapState();
+  _WebViewMapState createState() => _WebViewMapState();
 }
 
-class _AppMapState extends State<AppMap> {
-  late GoogleMapController mapController;
-
-  final LatLng _center = const LatLng(45.521563, -122.677433);
-
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
+class _WebViewMapState extends State<WebViewMap> {
+  late WebViewController? _controller;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-        body: GoogleMap(
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(
-            target: _center,
-            zoom: 11.0,
-          ),
-        ),
-      ),
+    return WebView(
+      initialUrl: 'https://inglo-3dmap.vercel.app/',
+      javascriptMode: JavascriptMode.unrestricted,
+      onPageFinished: (url) {
+        // 입력 기능을 유지하기 위한 자바스크립트 주입
+        final script = '''
+          var inputs = document.querySelectorAll("input");
+          inputs.forEach(function(input) {
+            input.disabled = false;
+          });
+        ''';
+        // WebView에 자바스크립트 주입
+        _controller!.evaluateJavascript(script);
+      },
     );
   }
 }
