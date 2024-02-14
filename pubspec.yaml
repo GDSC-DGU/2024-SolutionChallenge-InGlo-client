@@ -30,6 +30,7 @@ dependencies:
   flutter_config: ^2.0.2
   dropdown_button2: ^2.3.9
   modal_bottom_sheet: ^3.0.0-pre
+  webview_flutter: ^3.0.4
 
 dev_dependencies:
   flutter_test:
