@@ -37,9 +37,9 @@ class _MainScreenState extends State<MainScreen> {
   // 각 탭에 해당하는 페이지 위젯
   final List<Widget> _pages = [
     IssueListPage(),
+    WebViewMap(),
     StartPage(),
     PostBoardPage(),
-    MessagesPage(),
     // MessagesPage(),
     // 참고 페이지(나중에 삭제)
   ];
