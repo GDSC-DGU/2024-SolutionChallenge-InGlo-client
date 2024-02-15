@@ -2,18 +2,16 @@ import 'package:flutter/material.dart';
 
 class NumbersWidget extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => Row(
-    mainAxisAlignment: MainAxisAlignment.center,
+  Widget build(BuildContext context) => Column(
+    mainAxisAlignment: MainAxisAlignment.start,
     children: <Widget>[
-      buildButton(context, '4.8', 'Drawing'),
-      buildDivider(),
+      buildButton(context, '30', 'Liked'),
       buildButton(context, '35', 'Posting'),
-      buildDivider(),
       buildButton(context, '50', 'Feedbacks'),
     ],
   );
   Widget buildDivider() => Container(
-    height: 24,
+    height: 12,
     child: VerticalDivider(),
   );
 
@@ -22,18 +20,18 @@ class NumbersWidget extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 4),
         onPressed: () {},
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        child: Column(
+        child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Text(
-              value,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-            ),
-            SizedBox(height: 2),
-            Text(
               text,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+              style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
+            ),
+            buildDivider(),
+            Text(
+              value,
+              style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
             ),
           ],
         ),

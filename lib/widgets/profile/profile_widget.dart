@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inglo/widgets/gauge/range_pointer/range_pointer.dart';
 
 class ProfileWidget extends StatelessWidget {
   final String imagePath;
@@ -10,18 +11,37 @@ class ProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Center(
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.white, width: 3),
-          borderRadius: BorderRadius.circular(50),
-        ),
-        child: Stack(
-          children: [
-            buildImage(),
-          ],
-        ),
+      child: Stack(
+        children: [
+          Container(
+            width: 110, // 첫 번째 컨테이너의 크기를 명시적으로 지정해야 한다.
+            height: 110,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100),
+              color: Colors.white,
+            ),
+            padding: EdgeInsets.all(10), // 원하는 패딩 설정
+          ),
+          Positioned(
+            left: 5, // 상위 width 차이 10의 절반
+            top: 5,
+            child: Container(
+              width: 100,
+              height: 100,
+              child: buildImage(),
+            ),
+          ),
+          Positioned(
+            left: 5,
+            top: 5,
+            child: Container(
+              width: 100,
+              height: 100,
+              child: RangePointerExample(),
+            ),
+          ),
+        ],
       ),
     );
   }

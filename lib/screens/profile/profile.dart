@@ -6,6 +6,7 @@ import 'package:inglo/screens/profile/widgets/my_sketch.dart';
 import 'package:inglo/screens/profile/widgets/select_langauge.dart';
 import 'package:inglo/util/profile/user_preferences.dart';
 import 'package:inglo/widgets/profile/numbers_widget.dart';
+import 'package:inglo/widgets/profile/percent.dart';
 import 'package:inglo/widgets/profile/profile_widget.dart';
 import 'package:inglo/widgets/profile/button_widget.dart';
 
@@ -25,14 +26,31 @@ class _ProfilePageState extends State<ProfilePage> {
         child: ListView(
           physics: BouncingScrollPhysics(),
           children: [
-            const SizedBox(height: 24),
-            ProfileWidget(
-              imagePath: user.imagePath,
+            const SizedBox(height: 50),
+            Container(
+              padding: EdgeInsets.only(
+                left: 30.0,
+                top: 0,
+                right: 30.0,
+                bottom: 0,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  NumbersWidget(),
+                  Column(
+                    children: [
+                      ProfileWidget(
+                        imagePath: user.imagePath,
+                      ),
+                    ],
+                  ),
+                  PercentWidget(),
+                ],
+              ),
             ),
             const SizedBox(height: 24),
             buildName(user),
-            const SizedBox(height: 10),
-            NumbersWidget(),
             const SizedBox(height: 20),
             buildAbout(user),
           ],
@@ -45,7 +63,7 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           Text(
             user.name,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
           ),
         ],
       );
