@@ -49,10 +49,22 @@ class _CreatePostState extends State<CreatePost> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              TextFormField(
+                maxLines: null,
+                maxLength: 50, // 사용자가 입력할 수 있는 최대 문자 수
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Title",
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  hintStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  isDense: true,
+                  counterText: "", // 문자 수 표시 없애기
+                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold), // 내부 텍스트 스타일 지정
+              ),
               HtmlEditor(
                 controller: controller,
                 htmlEditorOptions: HtmlEditorOptions(
-                  hint: 'Add content',
                   shouldEnsureVisible: true,
                   //initialText: "<p>text content initial, if any</p>",
                 ),
