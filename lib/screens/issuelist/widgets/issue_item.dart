@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inglo/screens/issue_detail/issue_detail.dart';
 
 // 더미데이터
 final List<Map<String, String>> itemData = [
@@ -23,8 +24,36 @@ final List<Map<String, String>> itemData = [
         "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80"
   },
 ];
-final List<Widget> itemListData = itemData
-    .map((item) => Container(
+
+class IssueItem extends StatelessWidget {
+  const IssueItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      child: const IssueListData(),
+    );
+  }
+}
+
+
+class IssueListData extends StatelessWidget {
+  const IssueListData({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: itemData
+          .map((item) => InkWell(
+        onTap: (){
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const IssueDetailPage(),
+            ),
+          );
+        },
+        child: Container(
           margin: const EdgeInsets.symmetric(vertical: 10),
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           decoration: const BoxDecoration(
@@ -83,23 +112,14 @@ final List<Widget> itemListData = itemData
               ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                 child: Image.network(item["image"]!,
-                    fit: BoxFit.cover, width: 100.0, height: 80.0,),
+                  fit: BoxFit.cover, width: 100.0, height: 80.0,),
               ),
             ],
           ),
-        ))
-    .toList();
-
-class IssueItem extends StatelessWidget {
-  const IssueItem({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      child: Column(
-        children: itemListData,
-      ),
+        ),
+      ))
+          .toList(),
     );
   }
 }
+
