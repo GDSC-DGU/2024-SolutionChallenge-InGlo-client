@@ -50,6 +50,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                         style: GoogleFonts.notoSans(
                           color: Colors.black,
                           fontSize: 16,
+                          fontWeight: FontWeight.w500,
                         )),
                   ],
                 ),
