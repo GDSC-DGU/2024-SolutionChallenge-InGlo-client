@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inglo/screens/post/detail_post.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // 더미데이터
 final List<Map<String, String>> itemData = [
@@ -99,15 +100,15 @@ class PostItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(item["title"]!, style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),),
+                      Text(item["title"]!, style: GoogleFonts.notoSans(fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Icon(Icons.favorite, color: Color(0xFFFF6E80), size: 10.0,),
-                          Text("12", style: TextStyle(fontSize: 10,),),
+                          Text("12", style: GoogleFonts.notoSans(fontSize: 10,),),
                           SizedBox(width: 5),
                           Icon(Icons.visibility, color: Color(0xFFD7A859), size: 10.0,),
-                          Text("12", style: TextStyle(fontSize: 10,),),
+                          Text("12", style: GoogleFonts.notoSans(fontSize: 10,),),
                         ],
                       ),
                     ],

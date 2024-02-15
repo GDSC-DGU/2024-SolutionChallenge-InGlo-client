@@ -4,6 +4,7 @@ import 'package:inglo/screens/signin/signin.dart';
 import 'package:inglo/widgets/dropdown/borderdropdownbutton.dart';
 import 'package:inglo/util/options/country_data.dart';
 import 'package:inglo/util/options/language_data.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // LoginPage 클래스
 class AccountPage extends StatelessWidget {
@@ -37,7 +38,10 @@ class AccountPage extends StatelessWidget {
                 primaryColor: Color(0xFFFFD691),
                 inputDecorationTheme: InputDecorationTheme(
                   labelStyle:
-                      TextStyle(color: Color(0xFFFFD691), fontSize: 47.0),
+                  GoogleFonts.notoSans(
+                      color: Color(0xFFFFD691),
+                      fontSize: 47.0,
+                      fontWeight: FontWeight.w700),
                   // border 스타일
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -67,7 +71,7 @@ class AccountPage extends StatelessWidget {
                     Center(
                       child: Text(
                         "ACCOUNT",
-                        style: TextStyle(
+                        style: GoogleFonts.notoSans(
                             fontSize: 30,
                             color: Colors.black,
                             fontWeight: FontWeight.bold),
@@ -79,7 +83,7 @@ class AccountPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(11, 0, 0, 5),
                       child: Text("name",
-                          style: TextStyle(
+                          style: GoogleFonts.notoSans(
                             color: Colors.black,
                           )),
                     ),
@@ -90,13 +94,13 @@ class AccountPage extends StatelessWidget {
                         isDense: true,
                         contentPadding: EdgeInsets.all(8), // padding
                       ),
-                      style: TextStyle(fontSize: 14),
+                      style: GoogleFonts.notoSans(fontSize: 14),
                     ),
                     SizedBox(height: 10.0),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(7, 0, 0, 3),
                       child: Text("email",
-                          style: TextStyle(
+                          style: GoogleFonts.notoSans(
                             color: Colors.black,
                           )),
                     ),
@@ -108,13 +112,13 @@ class AccountPage extends StatelessWidget {
                         contentPadding: EdgeInsets.all(10), // padding
                       ),
                       keyboardType: TextInputType.emailAddress,
-                      style: TextStyle(fontSize: 14),
+                      style: GoogleFonts.notoSans(fontSize: 14),
                     ),
                     SizedBox(height: 10.0),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(7, 0, 0, 3),
                       child: Text("password",
-                          style: TextStyle(
+                          style: GoogleFonts.notoSans(
                             color: Colors.black,
                           )),
                     ),
@@ -126,13 +130,13 @@ class AccountPage extends StatelessWidget {
                         contentPadding: EdgeInsets.all(10), // padding
                       ),
                       obscureText: true, // 비밀번호와 같은 민감한 정보용
-                      style: TextStyle(fontSize: 14),
+                      style: GoogleFonts.notoSans(fontSize: 14),
                     ),
                     SizedBox(height: 10.0),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(7, 0, 0, 3),
                       child: Text("country",
-                          style: TextStyle(
+                          style: GoogleFonts.notoSans(
                             color: Colors.black,
                           )),
                     ),
@@ -143,7 +147,7 @@ class AccountPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(7, 0, 0, 3),
                       child: Text("language",
-                          style: TextStyle(
+                          style: GoogleFonts.notoSans(
                             color: Colors.black,
                           )),
                     ),
@@ -164,7 +168,7 @@ class AccountPage extends StatelessWidget {
                       ),
                       child: Text(
                         "SIGNUP",
-                        style: TextStyle(
+                        style: GoogleFonts.notoSans(
                             fontSize: 18,
                             color: Colors.white,
                             fontWeight: FontWeight.bold),

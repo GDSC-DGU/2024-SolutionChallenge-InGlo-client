@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:inglo/screens/post/create_post.dart';
 import 'package:inglo/widgets/dropdown/dropdownbutton.dart';
 import 'package:inglo/screens/postlist/widgets/post_item.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 
 class PostBoardPage extends StatefulWidget {
-  static const titleStyle = TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.w700);
-
   @override
   State<PostBoardPage> createState() => _PostBoardPageState();
 }
@@ -18,7 +16,8 @@ class _PostBoardPageState extends State<PostBoardPage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),
-          child: Stack( // Stack 위젯을 사용하여 겹치는 효과 구현
+          child: Stack(
+            // Stack 위젯을 사용하여 겹치는 효과 구현
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,7 +27,13 @@ class _PostBoardPageState extends State<PostBoardPage> {
                     child: CustomDropdown(),
                   ),
                   Container(
-                    child: const Text("Recents", style: PostBoardPage.titleStyle),
+                    child: Text(
+                      "Recents",
+                      style: GoogleFonts.notoSans(
+                          fontSize: 25,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700),
+                    ),
                   ),
                   SizedBox(
                     height: 10,
@@ -46,7 +51,8 @@ class _PostBoardPageState extends State<PostBoardPage> {
                   ),
                 ],
               ),
-              Positioned( // FloatingActionButton을 Positioned로 배치하여 위치 조정
+              Positioned(
+                // FloatingActionButton을 Positioned로 배치하여 위치 조정
                 right: 0,
                 bottom: 0,
                 child: FloatingActionButton.extended(
