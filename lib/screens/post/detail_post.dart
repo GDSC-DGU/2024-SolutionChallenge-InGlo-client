@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inglo/screens/post/widgets/image_slider.dart';
 import 'package:inglo/screens/post/widgets/post_user.dart';
 import 'package:inglo/widgets/modal/barmodal.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class DetailPost extends StatefulWidget {
   @override
@@ -22,7 +22,6 @@ class _DetailPostState extends State<DetailPost> {
             SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                // This ensures alignment starts from the left
                 children: [
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -64,7 +63,7 @@ class _DetailPostState extends State<DetailPost> {
                         SizedBox(height: 20),
                         Text(
                           'Title',
-                          style: TextStyle(
+                          style: GoogleFonts.notoSans(
                             fontSize: 26, // 폰트 크기 설정
                             fontWeight: FontWeight.bold, // 폰트 굵기 설정
                             color: Colors.black, // 텍스트 색상 설정
@@ -72,7 +71,7 @@ class _DetailPostState extends State<DetailPost> {
                         ),
                         Text(
                           'description',
-                          style: TextStyle(
+                          style: GoogleFonts.notoSans(
                             fontSize: 14,
                             color: Colors.black, // 텍스트 색상 설정
                           ),
@@ -89,7 +88,7 @@ class _DetailPostState extends State<DetailPost> {
                         ),
                         Text(
                           'content',
-                          style: TextStyle(
+                          style: GoogleFonts.notoSans(
                             fontSize: 14,
                             color: Colors.black, // 텍스트 색상 설정
                           ),
@@ -107,7 +106,7 @@ class _DetailPostState extends State<DetailPost> {
               child: SizedBox(
                 height: 60,
                 child: BarModal(),
-              ),// 여기서 BarModalWidget은 바텀 모달의 컨텐츠를 표시하는 위젯입니다.
+              ),
             ),
           ],
         ),

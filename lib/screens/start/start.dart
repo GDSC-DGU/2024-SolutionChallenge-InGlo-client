@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:inglo/screens/signin/signin.dart';
 import 'package:inglo/screens/signup/signup.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // LoginPage 클래스
 class StartPage extends StatelessWidget {
@@ -43,7 +44,7 @@ class StartPage extends StatelessWidget {
                     ),
                     child: Text(
                       "SIGNUP",
-                      style: TextStyle(
+                      style: GoogleFonts.notoSans(
                           fontSize: 16,
                           color: Colors.white,),
                     ),
@@ -63,7 +64,7 @@ class StartPage extends StatelessWidget {
                     ),
                     child: Text(
                       "SIGNIN",
-                      style: TextStyle(
+                      style: GoogleFonts.notoSans(
                           fontSize: 16,
                           color: Colors.black,),
                     ),
@@ -83,7 +84,7 @@ class StartPage extends StatelessWidget {
                     ),
                     child: Text(
                       "SIGNIN WITH GOOGLE",
-                      style: TextStyle(
+                      style: GoogleFonts.notoSans(
                           fontSize: 16,
                           color: Colors.black,),
                     ),

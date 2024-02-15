@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CreatePost extends StatefulWidget {
   const CreatePost({super.key});
@@ -31,7 +31,7 @@ class _CreatePostState extends State<CreatePost> {
             style: ElevatedButton.styleFrom(backgroundColor: Color(0xFFFFD691)),
             onPressed: () {},
             child: Text('Post',
-              style: TextStyle(
+              style: GoogleFonts.notoSans(
                 fontSize: 16, // 폰트 크기 설정
                 fontWeight: FontWeight.bold, // 폰트 굵기 설정
                 color: Colors.white, // 텍스트 색상 설정
@@ -56,11 +56,11 @@ class _CreatePostState extends State<CreatePost> {
                   border: InputBorder.none,
                   hintText: "Title",
                   contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  hintStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  hintStyle: GoogleFonts.notoSans(fontSize: 20, fontWeight: FontWeight.bold),
                   isDense: true,
                   counterText: "", // 문자 수 표시 없애기
                 ),
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold), // 내부 텍스트 스타일 지정
+                style: GoogleFonts.notoSans(fontSize: 20, fontWeight: FontWeight.bold), // 내부 텍스트 스타일 지정
               ),
               HtmlEditor(
                 controller: controller,
@@ -70,7 +70,7 @@ class _CreatePostState extends State<CreatePost> {
                 ),
                 htmlToolbarOptions: HtmlToolbarOptions(
                   defaultToolbarButtons: [
-                    FontButtons(clearAll: false, ), // font style
+                    FontButtons(clearAll: false,), // font style
                     StyleButtons(), // h1, h2...
                     InsertButtons(audio: false, video: false, otherFile: false, table: true, hr: true),
                   ],

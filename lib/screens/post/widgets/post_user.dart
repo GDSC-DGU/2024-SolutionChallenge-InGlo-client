@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PostUser extends StatelessWidget {
   @override
@@ -25,7 +26,7 @@ class PostUser extends StatelessWidget {
                   SizedBox(width: 5,),
                   Text(
                     "name",
-                    style: TextStyle(
+                    style: GoogleFonts.notoSans(
                       fontSize: 12,
                       color: Colors.black,),
                   ),
@@ -40,7 +41,7 @@ class PostUser extends StatelessWidget {
                   ),
                   Text(
                     "12",
-                    style: TextStyle(
+                    style: GoogleFonts.notoSans(
                       fontSize: 10,
                     ),
                   ),
@@ -51,7 +52,7 @@ class PostUser extends StatelessWidget {
                   ),
                   Text(
                     "12",
-                    style: TextStyle(
+                    style: GoogleFonts.notoSans(
                       fontSize: 10,
                     ),
                   ),
