@@ -46,10 +46,13 @@ android {
         applicationId "com.example.inglo"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 20
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        // 멀티덱스 활성화
+        multiDexEnabled true
     }
 
     buildTypes {
