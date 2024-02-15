@@ -68,6 +68,9 @@ class _DetailPostState extends State<DetailPost> {
                           ),
                         ),
                         SizedBox(
+                          height: 10,
+                        ),
+                        SizedBox(
                           height: 20,
                           child: PostUser(),
                         ),
