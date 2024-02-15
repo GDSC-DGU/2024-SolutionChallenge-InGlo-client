@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:inglo/screens/issuelist/issulist.dart';
 
 // LoginPage 클래스
 class LoginPage extends StatelessWidget {
@@ -9,6 +10,7 @@ class LoginPage extends StatelessWidget {
       // 배경 이미지를 넣기 위해 Scaffold를 Container로 감싸준다.
       decoration: BoxDecoration(
           image: DecorationImage(
+            fit: BoxFit.fill,
         repeat: ImageRepeat.noRepeat,
         image: Svg(
           'assets/image/background/background.svg',
@@ -17,13 +19,13 @@ class LoginPage extends StatelessWidget {
       )),
       child: Scaffold(
         // 배경 이미지를 위해 Scaffold의 배경색을 투명으로 한다.
-        backgroundColor: Colors.transparent,
+       //  backgroundColor: Colors.transparent,
         // 수직 스크롤이 된다고 한다.
         // 나중에 빼도 될 것 같다!
         body: SingleChildScrollView(
           child: Padding(
             // 전체 padding
-            padding: const EdgeInsets.fromLTRB(80, 220, 80, 0),
+            padding: const EdgeInsets.fromLTRB(40, 160, 40, 0),
             child: Theme(
               data: ThemeData(
                 primaryColor: Color(0xFFFFD691),
@@ -36,6 +38,14 @@ class LoginPage extends StatelessWidget {
                     borderSide: BorderSide(
                       color: Color(0xFFC4C4C4), // 테두리 색상
                       width: 1.0, // 테두리 두께
+                    ),
+                  ),
+                  // 포커스 시 스타일
+                  focusedBorder: OutlineInputBorder( // 포커스를 받았을 때의 테두리 스타일
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(
+                      color: Color(0xFFFFD691), // 포커스 받았을 때의 테두리 색상
+                      width: 2.0, // 포커스 받았을 때의 테두리 두께
                     ),
                   ),
                 ),
@@ -57,7 +67,7 @@ class LoginPage extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    SizedBox(height: 40.0),
+                    SizedBox(height: 20.0),
                     // label에 padding 추가
                     // lable에 animation을 넣고 싶다면 labeltext를 추가하자.
                     Padding(
@@ -71,11 +81,13 @@ class LoginPage extends StatelessWidget {
                     TextFormField(
                       decoration: InputDecoration(
                         hintText: 'email',
-                        contentPadding: EdgeInsets.all(8), // padding
+                        isDense: true, // textformfield를 타이트하게 만든다.
+                        contentPadding: EdgeInsets.all(10), // padding
                       ),
                       keyboardType: TextInputType.emailAddress,
+                      style: TextStyle(fontSize: 14), // textsize 조정
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 10.0),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(7, 0, 0, 3),
                       child: Text("password",
@@ -87,20 +99,23 @@ class LoginPage extends StatelessWidget {
                     TextFormField(
                       decoration: InputDecoration(
                         hintText: 'password',
-                        contentPadding: EdgeInsets.all(8), // padding
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(10), // padding
                       ),
                       obscureText: true, // 비밀번호와 같은 민감한 정보용
+                      style: TextStyle(fontSize: 14),
                     ),
-                    SizedBox(height: 100.0),
+                    SizedBox(height: 80.0),
                     // Login Button
-                    ElevatedButton(
+                    FilledButton(
                       onPressed: () {
-                        // Placeholder for login logic.
-                        print('Login button pressed');
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (context) => IssueListPage()),
+                        );
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFFFD691), // Button 배경색
-                        minimumSize: Size(400, 50), // Button 사이즈
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Color(0xFFFFD691)), // 버튼 배경색
+                        minimumSize: MaterialStateProperty.all(Size(400, 40)), // 버튼 사이즈
                       ),
                       child: Text(
                         "SIGNIN",
