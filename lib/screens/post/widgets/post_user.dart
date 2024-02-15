@@ -20,10 +20,9 @@ class PostUser extends StatelessWidget {
                     child: Icon(
                       Icons.person_2_outlined,
                       color: Colors.black,
-                      size: 20,
+                      size: 12,
                     ),
                   ),
-                  SizedBox(width: 5,),
                   Text(
                     "name",
                     style: GoogleFonts.notoSans(
