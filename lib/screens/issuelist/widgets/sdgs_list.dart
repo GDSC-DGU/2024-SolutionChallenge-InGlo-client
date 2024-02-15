@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inglo/screens/problem_definition/problem_definition.dart';
 
 // 더미데이터
 final List<Map<String, String>> itemData = [
@@ -56,15 +57,25 @@ class SDGSList extends StatelessWidget {
         mainAxisSpacing: 10.0,
       ),
       itemBuilder: (context, index) {
-        return Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage(itemData[index]["image"]!),
+        return InkWell(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const ProblemDefinitionPage(),
+              ),
+            );
+          }
+          ,
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage(itemData[index]["image"]!),
+              ),
             ),
-          ),
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+            ),
           ),
         );
       },
