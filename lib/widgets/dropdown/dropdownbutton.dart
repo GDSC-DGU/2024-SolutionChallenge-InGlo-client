@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomDropdown extends StatefulWidget {
   const CustomDropdown({super.key});
@@ -20,12 +21,12 @@ class _CustomDropdownState extends State<CustomDropdown> {
       body: DropdownButtonHideUnderline(
           child: DropdownButton2<String>(
             isExpanded: true,
-            hint: const Row(
+            hint: Row(
               children: [
                 Expanded(
                   child: Text(
                     'select SDGS',
-                    style: TextStyle(
+                    style: GoogleFonts.notoSans(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -40,7 +41,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
               value: item,
               child: Text(
                 item,
-                style: const TextStyle(
+                style: GoogleFonts.notoSans(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
