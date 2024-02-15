@@ -73,14 +73,14 @@ class PostItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Widget> itemListData = itemData.map((item) {
       return InkWell(
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => DetailPost(),
-            ),
-          );
-        },
-        child: Container(
+          onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => DetailPost(),
+          ),
+        );
+      },
+      child: Container(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -88,27 +88,25 @@ class PostItem extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(5.0),
-                child: Image.network(item["image"]!,
-                  fit: BoxFit.cover, width: 40.0, height: 40.0,),
-              ),
-              SizedBox(width: 10),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(4, 0, 0, 4),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
                     children: [
-                      Text(item["title"]!, style: GoogleFonts.notoSans(fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Icon(Icons.favorite, color: Color(0xFFFF6E80), size: 10.0,),
-                          Text("12", style: GoogleFonts.notoSans(fontSize: 10,),),
-                          SizedBox(width: 5),
-                          Icon(Icons.visibility, color: Color(0xFFD7A859), size: 10.0,),
-                          Text("12", style: GoogleFonts.notoSans(fontSize: 10,),),
+                          Text(item["title"]!, style: GoogleFonts.notoSans(fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(Icons.favorite, color: Color(0xFFFF6E80), size: 10.0,),
+                              Text("12", style: GoogleFonts.notoSans(fontSize: 10,),),
+                              SizedBox(width: 5),
+                              Icon(Icons.visibility, color: Color(0xFFD7A859), size: 10.0,),
+                              Text("12", style: GoogleFonts.notoSans(fontSize: 10,),),
+                            ],
+                          ),
                         ],
                       ),
                     ],
