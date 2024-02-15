@@ -75,7 +75,7 @@ class PostItem extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => const DetailPost(),
+              builder: (context) => DetailPost(),
             ),
           );
         },

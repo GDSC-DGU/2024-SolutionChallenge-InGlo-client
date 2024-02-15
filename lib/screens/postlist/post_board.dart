@@ -54,7 +54,7 @@ class _PostBoardPageState extends State<PostBoardPage> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const CreatePost(),
+                        builder: (context) => CreatePost(),
                       ),
                     );
                   },
