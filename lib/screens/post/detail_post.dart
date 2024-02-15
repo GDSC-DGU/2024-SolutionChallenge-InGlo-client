@@ -127,11 +127,11 @@ String _getHtmlContent() {
           body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
-            font-size: 16px;
+            font-size: 24px;
             color: #333;
           }
           h1 {
-            font-size: 26px;
+            font-size: 32px;
             font-weight: bold;
             color: #000;
           }

@@ -82,7 +82,7 @@ class _CommentsState extends State<Comments> {
           child: commentChild(filedata),
           labelText: 'Send Feedbacks',
           errorText: 'Comment cannot be blank',
-          withBorder: true,
+          withBorder: false,
           sendButtonMethod: () {
             if (formKey.currentState!.validate()) {
               print(commentController.text);
@@ -105,7 +105,7 @@ class _CommentsState extends State<Comments> {
           formKey: formKey,
           commentController: commentController,
           backgroundColor: Color(0xFFF7EEDE),
-          textColor: Color(0xFFB9B9B9),
+          textColor: Colors.black,
           sendWidget: Icon(Icons.send_sharp, size: 30, color: Color(0xFFD7A859)),
         ),
       ),
