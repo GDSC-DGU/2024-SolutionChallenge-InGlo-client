@@ -4,8 +4,13 @@ import 'package:inglo/screens/post/widgets/post_user.dart';
 import 'package:inglo/widgets/modal/barmodal.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-class DetailPost extends StatelessWidget {
-  const DetailPost({super.key});
+class DetailPost extends StatefulWidget {
+  @override
+  _DetailPostState createState() => _DetailPostState();
+}
+
+class _DetailPostState extends State<DetailPost> {
+  bool isBookmarked = false; // 북마크 상태
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +36,13 @@ class DetailPost extends StatelessWidget {
                         ),
                         Spacer(),
                         IconButton(
-                          icon: Icon(Icons.bookmark), // 여기서 원하는 아이콘을 선택합니다.
+                          icon: isBookmarked ? Icon(Icons.bookmark) : Icon(Icons.bookmark_border), // 채워진 이미지와 outlined 이미지를 번갈아가며 표시
                           color: Color(0xFFFF6280), // 아이콘 색상
                           onPressed: () {
-                            // 버튼이 눌렸을 때 수행할 작업
+                            setState(() {
+                              // 버튼이 눌릴 때마다 상태 변경
+                              isBookmarked = !isBookmarked;
+                            });
                           },
                           iconSize: 30.0,
                         ),
