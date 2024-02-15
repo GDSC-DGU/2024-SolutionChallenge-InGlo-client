@@ -36,6 +36,7 @@ dependencies:
   scribble: ^0.9.1
   flutter_state_notifier: ^0.7.1
   html_editor_enhanced: ^2.5.1
+  comment_box: ^0.0.18
 
 dev_dependencies:
   flutter_test:

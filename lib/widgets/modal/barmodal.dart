@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inglo/screens/comment/widgets/comment.dart';
+import 'package:inglo/widgets/comment/comment_box.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 
@@ -15,13 +15,13 @@ class BarModal extends StatelessWidget {
                 expand: false,
                 context: context,
                 backgroundColor: Colors.transparent,
-                builder: (context) => CommentPage(),
+                builder: (context) => Comments(),
               ),
               child: Container(
                 width: 70, // 화면 너비에서 양쪽 여백을 뺀 크기
                 height: 60, // 높이 설정
                 decoration: BoxDecoration(
-                  color: Color(0xFF233A66), // 배경색은 노란색
+                  color: Color(0xFFD7A859), // 배경색은 노란색
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
                 child: Container(
