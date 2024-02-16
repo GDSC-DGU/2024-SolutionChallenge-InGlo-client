@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:inglo/screens/signin/signin.dart';
+import 'package:inglo/screens/signup/get_profile.dart';
 import 'package:inglo/widgets/dropdown/borderdropdownbutton.dart';
 import 'package:inglo/util/options/country_data.dart';
 import 'package:inglo/util/options/language_data.dart';
@@ -25,8 +26,9 @@ class AccountPage extends StatelessWidget {
         resizeToAvoidBottomInset: false, // 스크롤이 scaffold 영역을 건드리지 않는다.
         // 배경 이미지를 위해 Scaffold의 배경색을 투명으로 한다.
         // backgroundColor: Colors.transparent,
-        // 수직 스크롤이 된다고 한다.
-        // 나중에 빼도 될 것 같다!
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+        ),
         body: Stack(
           children: <Widget>[
     SingleChildScrollView(
@@ -70,14 +72,14 @@ class AccountPage extends StatelessWidget {
                     // title만 중앙 정렬, 나머지는 flex-start
                     Center(
                       child: Text(
-                        "ACCOUNT",
+                        "INFORM",
                         style: GoogleFonts.notoSans(
-                            fontSize: 30,
+                            fontSize: 24,
                             color: Colors.black,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.w400),
                       ),
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 60.0),
                     // label에 padding 추가
                     // lable에 animation을 넣고 싶다면 labeltext를 추가하자.
                     Padding(
@@ -87,52 +89,15 @@ class AccountPage extends StatelessWidget {
                             color: Colors.black,
                           )),
                     ),
-                    // Email TextField
                     TextFormField(
                       decoration: InputDecoration(
                         hintText: 'name',
                         isDense: true,
-                        contentPadding: EdgeInsets.all(8), // padding
+                        contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 10,)
                       ),
                       style: GoogleFonts.notoSans(fontSize: 14),
                     ),
-                    SizedBox(height: 10.0),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(7, 0, 0, 3),
-                      child: Text("email",
-                          style: GoogleFonts.notoSans(
-                            color: Colors.black,
-                          )),
-                    ),
-                    // passowrd textfield
-                    TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'email',
-                        isDense: true,
-                        contentPadding: EdgeInsets.all(10), // padding
-                      ),
-                      keyboardType: TextInputType.emailAddress,
-                      style: GoogleFonts.notoSans(fontSize: 14),
-                    ),
-                    SizedBox(height: 10.0),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(7, 0, 0, 3),
-                      child: Text("password",
-                          style: GoogleFonts.notoSans(
-                            color: Colors.black,
-                          )),
-                    ),
-                    // passowrd textfield
-                    TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'password',
-                        isDense: true,
-                        contentPadding: EdgeInsets.all(10), // padding
-                      ),
-                      obscureText: true, // 비밀번호와 같은 민감한 정보용
-                      style: GoogleFonts.notoSans(fontSize: 14),
-                    ),
-                    SizedBox(height: 10.0),
+                    SizedBox(height: 15.0),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(7, 0, 0, 3),
                       child: Text("country",
@@ -143,7 +108,7 @@ class AccountPage extends StatelessWidget {
                     SizedBox(
                         height: 45.0,
                     child: BorderCustomDropdown(options: countryData),),
-                    SizedBox(height: 10.0),
+                    SizedBox(height: 15.0),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(7, 0, 0, 3),
                       child: Text("language",
@@ -154,12 +119,12 @@ class AccountPage extends StatelessWidget {
                     SizedBox(
                       height: 45.0,
                       child: BorderCustomDropdown(options: languageData),),
-                    SizedBox(height: 40.0),
+                    SizedBox(height: 100.0),
                     // Login Button
                     FilledButton(
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => LoginPage()),
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => GetProfilePage()),
                         );
                       },
                       style: ButtonStyle(
@@ -167,9 +132,9 @@ class AccountPage extends StatelessWidget {
                         minimumSize: MaterialStateProperty.all(Size(400, 40)), // 버튼 사이즈
                       ),
                       child: Text(
-                        "SIGNUP",
+                        "NEXT",
                         style: GoogleFonts.notoSans(
-                            fontSize: 18,
+                            fontSize: 20,
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
                       ),
