@@ -105,7 +105,7 @@ class _DetailPostState extends State<DetailPost> {
               left: 0,
               right: 20,
               child: SizedBox(
-                height: 60,
+                height: 40,
                 child: BarModal(),
               ),
             ),
