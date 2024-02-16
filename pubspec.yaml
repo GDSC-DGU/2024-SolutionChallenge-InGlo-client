@@ -55,5 +55,6 @@ flutter:
     - assets/image/background/
     - assets/image/design/
     - assets/image/home/
+    - assets/image/sdgs/
     - .env
     - assets/image/
