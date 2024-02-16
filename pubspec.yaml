@@ -37,6 +37,9 @@ dependencies:
   flutter_state_notifier: ^0.7.1
   html_editor_enhanced: ^2.5.1
   comment_box: ^0.0.18
+  syncfusion_flutter_gauges: ^24.2.6
+  flutter_localization: ^0.2.0
+  syncfusion_localizations: ^24.2.6
 
 dev_dependencies:
   flutter_test:
