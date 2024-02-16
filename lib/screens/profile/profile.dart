@@ -5,6 +5,7 @@ import 'package:inglo/screens/profile/widgets/my_posts.dart';
 import 'package:inglo/screens/profile/widgets/my_sketch.dart';
 import 'package:inglo/screens/profile/widgets/select_langauge.dart';
 import 'package:inglo/util/profile/user_preferences.dart';
+import 'package:inglo/widgets/appbar/appbar.dart';
 import 'package:inglo/widgets/profile/numbers_widget.dart';
 import 'package:inglo/widgets/profile/percent.dart';
 import 'package:inglo/widgets/profile/profile_widget.dart';
@@ -56,6 +57,9 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
       ),
+      bottomNavigationBar: NavigationAppBar(
+        currentIndex: 3, // index 전송
+      ),
     );
   }
 
@@ -95,7 +99,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         // My Sketchs 버튼이 눌렸을 때 처리할 내용
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => MySketch(),),
+                          MaterialPageRoute(
+                            builder: (context) => MySketch(),
+                          ),
                         );
                       },
                     ),
@@ -109,7 +115,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         // My Sketchs 버튼이 눌렸을 때 처리할 내용
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => MyPost(),),
+                          MaterialPageRoute(
+                            builder: (context) => MyPost(),
+                          ),
                         );
                       },
                     ),
@@ -123,7 +131,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         // My Sketchs 버튼이 눌렸을 때 처리할 내용
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => SelectLanguage(),),
+                          MaterialPageRoute(
+                            builder: (context) => SelectLanguage(),
+                          ),
                         );
                       },
                     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inglo/screens/post/create_post.dart';
+import 'package:inglo/widgets/appbar/appbar.dart';
 import 'package:inglo/widgets/dropdown/dropdownbutton.dart';
 import 'package:inglo/screens/postlist/widgets/post_item.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -74,6 +75,9 @@ class _PostBoardPageState extends State<PostBoardPage> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: NavigationAppBar(
+        currentIndex: 2, // index 전송
       ),
     );
   }

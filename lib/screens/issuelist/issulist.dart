@@ -3,6 +3,7 @@ import 'package:inglo/screens/issuelist/sdgs_select.dart';
 import 'package:inglo/screens/issuelist/widgets/issue_item.dart';
 import 'package:inglo/screens/issuelist/widgets/issue_choose.dart';
 import 'package:inglo/screens/issuelist/widgets/issue_slider.dart';
+import 'package:inglo/widgets/appbar/appbar.dart';
 
 class IssueListPage extends StatefulWidget {
   // 나중에 폰트 스타일 다시 재정의!
@@ -63,6 +64,9 @@ class _IssueListPageState extends State<IssueListPage> {
           Icons.palette,
           color: Colors.white,
         ),
+      ),
+      bottomNavigationBar: NavigationAppBar(
+        currentIndex: 0, // index 전송
       ),
     );
   }
