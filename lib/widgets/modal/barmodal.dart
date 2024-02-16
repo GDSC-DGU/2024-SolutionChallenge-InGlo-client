@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inglo/widgets/comment/comment_box.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 
 class BarModal extends StatelessWidget {
   @override
@@ -18,19 +18,23 @@ class BarModal extends StatelessWidget {
                 builder: (context) => Comments(),
               ),
               child: Container(
-                width: 70, // 화면 너비에서 양쪽 여백을 뺀 크기
-                height: 60, // 높이 설정
+                width: MediaQuery.of(context).size.width * 0.4,
+                height: 40,
                 decoration: BoxDecoration(
-                  color: Color(0xFFD7A859), // 배경색은 노란색
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  color: Color(0xFF233A66),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
                 child: Container(
                   child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
-                      children: [
-                        Icon(Icons.comment, color: Colors.white,), // 댓글 아이콘
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween, // 중앙 정렬
+                        children: [
+                          Text('Feedbacks', style: GoogleFonts.notoSans(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w700)),
+                          Icon(Icons.send, color: Colors.white,),
+                        ],
+                      ),
                     ),
                   ),
                 ),

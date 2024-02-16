@@ -19,6 +19,7 @@ class _CreatePostState extends State<CreatePost> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
@@ -28,7 +29,7 @@ class _CreatePostState extends State<CreatePost> {
         ),
         actions: [
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Color(0xFFFFD691)),
+            style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF233A66)),
             onPressed: () {},
             child: Text('Post',
               style: GoogleFonts.notoSans(

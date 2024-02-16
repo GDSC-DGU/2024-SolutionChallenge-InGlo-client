@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inglo/screens/start/start.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   await WidgetsFlutterBinding.ensureInitialized();
@@ -12,8 +13,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //  debugShowCheckedModeBanner: false, //오른쪽 상단에 배너 띠를 없애준다.
       home: StartPage(), // 화면의 표시될 스크린
+      theme: ThemeData(
+        // ThemeData를 사용하여 앱의 기본 테마를 설정합니다.
+        textTheme: GoogleFonts.notoSansTextTheme( // 기본 폰트 적용
+          Theme.of(context).textTheme,
+        ),
+        scaffoldBackgroundColor: Colors.white,
+      ),
+      debugShowCheckedModeBanner: false, // 오른쪽 상단의 배너 띠 엇애기
     );
   }
 }
