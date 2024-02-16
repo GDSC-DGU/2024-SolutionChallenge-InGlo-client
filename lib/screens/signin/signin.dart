@@ -20,7 +20,7 @@ class LoginPage extends StatelessWidget {
       )),
       child: Scaffold(
         // 배경 이미지를 위해 Scaffold의 배경색을 투명으로 한다.
-        //  backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         // 수직 스크롤이 된다고 한다.
         // 나중에 빼도 될 것 같다!
         body: SingleChildScrollView(

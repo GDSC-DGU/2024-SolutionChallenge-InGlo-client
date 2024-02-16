@@ -28,7 +28,7 @@ class _BorderCustomDropdownState extends State<BorderCustomDropdown> {
                   'select SDGS',
                   style: GoogleFonts.notoSans(
                     fontSize: 14,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w400,
                     color: Color(0xFF696969),
                   ),
                   overflow: TextOverflow.ellipsis,
@@ -43,7 +43,7 @@ class _BorderCustomDropdownState extends State<BorderCustomDropdown> {
               item,
               style: GoogleFonts.notoSans(
                 fontSize: 14,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w400,
                 color: Colors.black,
               ),
               overflow: TextOverflow.ellipsis,
@@ -65,7 +65,7 @@ class _BorderCustomDropdownState extends State<BorderCustomDropdown> {
                 color: Color(0xFFC4C4C4), // 테두리 색상
                 width: 1.0, // 테두리 두께
               ),
-              color: Colors.transparent, // 배경색 설정
+              color: Colors.white, // 배경색 설정
             ),
           ),
           iconStyleData: const IconStyleData(
