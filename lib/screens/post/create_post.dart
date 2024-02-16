@@ -29,7 +29,7 @@ class _CreatePostState extends State<CreatePost> {
         ),
         actions: [
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Color(0xFFFFD691)),
+            style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF233A66)),
             onPressed: () {},
             child: Text('Post',
               style: GoogleFonts.notoSans(
