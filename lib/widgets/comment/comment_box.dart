@@ -1,5 +1,6 @@
 import 'package:comment_box/comment/comment.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Comments extends StatefulWidget {
   @override
@@ -62,10 +63,10 @@ class _CommentsState extends State<Comments> {
               ),
               title: Text(
                 data[i]['name'],
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: GoogleFonts.notoSans(fontWeight: FontWeight.bold),
               ),
               subtitle: Text(data[i]['message']),
-              trailing: Text(data[i]['date'], style: TextStyle(fontSize: 10)),
+              trailing: Text(data[i]['date'], style: GoogleFonts.notoSans(fontSize: 10)),
             ),
           )
       ],
@@ -104,9 +105,9 @@ class _CommentsState extends State<Comments> {
           },
           formKey: formKey,
           commentController: commentController,
-          backgroundColor: Color(0xFFF7EEDE),
-          textColor: Colors.black,
-          sendWidget: Icon(Icons.send_sharp, size: 30, color: Color(0xFFD7A859)),
+          backgroundColor: Color(0xFF233A66),
+          textColor: Colors.white,
+          sendWidget: Icon(Icons.send_sharp, size: 30, color: Colors.white),
         ),
       ),
     );
