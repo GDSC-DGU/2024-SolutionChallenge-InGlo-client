@@ -1066,6 +1066,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  vertical_card_pager:
+    dependency: "direct main"
+    description:
+      name: vertical_card_pager
+      sha256: "8f60196707ac13a56639e33e89ea3ec82d5ba3455d99c2ac812f67746d1cf0dd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.6.0"
   visibility_detector:
     dependency: transitive
     description:

@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/models/profile/user.dart';
 
 class NumbersWidget extends StatelessWidget {
+  final User user;
+
+  NumbersWidget({Key? key, required this.user}) : super(key: key);
+
   @override
   Widget build(BuildContext context) => Column(
     mainAxisAlignment: MainAxisAlignment.start,
     children: <Widget>[
-      buildButton(context, '30', 'Liked'),
-      buildButton(context, '35', 'Posting'),
-      buildButton(context, '50', 'Feedbacks'),
+      buildButton(context, '${user.liked_total}', 'Liked'),
+      buildButton(context, '${user.sketch_num}', 'Sketchs'),
+      buildButton(context, '${user.feedback_total}', 'Feedbacks'),
     ],
   );
   Widget buildDivider() => Container(
@@ -26,12 +32,12 @@ class NumbersWidget extends StatelessWidget {
           children: <Widget>[
             Text(
               text,
-              style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
+              style: GoogleFonts.notoSans(fontWeight: FontWeight.w300, fontSize: 12),
             ),
             buildDivider(),
             Text(
               value,
-              style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
+              style: GoogleFonts.notoSans(fontWeight: FontWeight.w300, fontSize: 12),
             ),
           ],
         ),

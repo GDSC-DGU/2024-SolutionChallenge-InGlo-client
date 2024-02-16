@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/widgets/gauge/range_pointer/range_pointer.dart';
 
 class ProfileWidget extends StatelessWidget {

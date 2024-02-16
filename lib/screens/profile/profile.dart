@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/models/profile/user.dart';
-import 'package:inglo/screens/profile/widgets/my_posts.dart';
-import 'package:inglo/screens/profile/widgets/my_sketch.dart';
-import 'package:inglo/screens/profile/widgets/select_langauge.dart';
+import 'package:inglo/screens/profile/widgets/mydrawing.dart';
+import 'package:inglo/screens/profile/widgets/myposts.dart';
+import 'package:inglo/screens/profile/widgets/setting.dart';
 import 'package:inglo/util/profile/user_preferences.dart';
 import 'package:inglo/widgets/appbar/appbar.dart';
 import 'package:inglo/widgets/profile/numbers_widget.dart';
@@ -38,15 +39,15 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  NumbersWidget(),
+                  NumbersWidget(user: user),
                   Column(
                     children: [
                       ProfileWidget(
-                        imagePath: user.imagePath,
+                        imagePath: user.profile_img,
                       ),
                     ],
                   ),
-                  PercentWidget(),
+                  PercentWidget(user: user),
                 ],
               ),
             ),
@@ -67,7 +68,7 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           Text(
             user.name,
-            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
+            style: GoogleFonts.notoSans(fontWeight: FontWeight.w500, fontSize: 24),
           ),
         ],
       );
@@ -100,7 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MySketch(),
+                            builder: (context) => MyDrawing(),
                           ),
                         );
                       },
@@ -116,7 +117,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MyPost(),
+                            builder: (context) => MyPosting(),
                           ),
                         );
                       },
@@ -132,7 +133,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SelectLanguage(),
+                            builder: (context) => Setting(),
                           ),
                         );
                       },
