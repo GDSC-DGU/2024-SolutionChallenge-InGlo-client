@@ -62,7 +62,7 @@ class _DetailPostState extends State<DetailPost> {
                         Text(
                           'Title',
                           style: GoogleFonts.notoSans(
-                            fontSize: 20, // 폰트 크기 설정
+                            fontSize: 26, // 폰트 크기 설정
                             fontWeight: FontWeight.bold, // 폰트 굵기 설정
                             color: Colors.black, // 텍스트 색상 설정
                           ),
