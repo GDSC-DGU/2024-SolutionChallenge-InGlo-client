@@ -100,10 +100,10 @@ class PostItem extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Icon(Icons.favorite, color: Color(0xFFFF6E80), size: 10.0,),
-                              Text("12", style: GoogleFonts.notoSans(fontSize: 10,),),
+                              Icon(Icons.favorite_border_outlined, color: Color(0xFFD7A859), size: 10.0,),
+                              Text("12", style: GoogleFonts.notoSans(fontSize: 10, ), ),
                               SizedBox(width: 5),
-                              Icon(Icons.visibility, color: Color(0xFFD7A859), size: 10.0,),
+                              Icon(Icons.visibility_outlined, color: Color(0xFFD7A859), size: 10.0,),
                               Text("12", style: GoogleFonts.notoSans(fontSize: 10,),),
                             ],
                           ),
