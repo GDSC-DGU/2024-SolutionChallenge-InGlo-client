@@ -55,7 +55,7 @@ class _DetailPostState extends State<DetailPost> {
                     thickness: 1,
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
