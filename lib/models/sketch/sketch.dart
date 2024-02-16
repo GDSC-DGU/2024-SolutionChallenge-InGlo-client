@@ -1,5 +1,5 @@
-// 스케치 리스트 조회
-class SektchList {
+// 스케치 리스트 조회용 스케치
+class Sketch {
   final int id;
   final String title;
   final String description;
@@ -11,7 +11,7 @@ class SektchList {
   final int hmw;
   final int crazy8stack;
 
-  const SektchList({
+  const Sketch({
     required this.id,
     required this.title,
     required this.description,
