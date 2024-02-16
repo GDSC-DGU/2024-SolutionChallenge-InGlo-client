@@ -40,6 +40,8 @@ dependencies:
   syncfusion_flutter_gauges: ^24.2.6
   flutter_localization: ^0.2.0
   syncfusion_localizations: ^24.2.6
+  flutter_profile_picture: ^2.0.0
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:

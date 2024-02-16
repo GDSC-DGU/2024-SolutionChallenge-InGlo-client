@@ -31,49 +31,11 @@ class StartPage extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
-                  SizedBox(height: 30.0),
-                  FilledButton(
+                  SizedBox(height: 160.0),
+                  OutlinedButton(
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(builder: (context) => AccountPage()),
-                      );
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Color(0xFFFFD691)), // 버튼 배경색
-                      minimumSize: MaterialStateProperty.all(Size(400, 40)), // 버튼 사이즈
-                    ),
-                    child: Text(
-                      "SIGNUP",
-                      style: GoogleFonts.notoSans(
-                          fontSize: 16,
-                          color: Colors.white,),
-                    ),
-                  ),
-                  SizedBox(height: 8.0),
-                  OutlinedButton(
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => LoginPage()),
-                      );
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.white), // 버튼 배경색
-                      minimumSize: MaterialStateProperty.all(Size(400, 40)), // 버튼 사이즈
-                      // 테두리 색상 설정
-                      side: MaterialStateProperty.all(BorderSide(color: Color(0xFFDADCE0), width: 1)),
-                    ),
-                    child: Text(
-                      "SIGNIN",
-                      style: GoogleFonts.notoSans(
-                          fontSize: 16,
-                          color: Colors.black,),
-                    ),
-                  ),
-                  SizedBox(height: 8.0),
-                  OutlinedButton(
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => LoginPage()),
                       );
                     },
                     style: ButtonStyle(
