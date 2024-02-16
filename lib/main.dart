@@ -65,21 +65,3 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 }
-
-class NotificationsPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Notifications Page'),
-    );
-  }
-}
-
-class MessagesPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Messages Page'),
-    );
-  }
-}
