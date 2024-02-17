@@ -5,8 +5,8 @@ class SketchListPreferences {
   static final List<Sketch> mySketchList = [
     Sketch(
       id: 1,
-      title: "다른 애 테스트",
-      description: "테스트용",
+      title: "다른 애 테스트제목길이테스트트트트트트트트트트트트트트트르르르트트트",
+      description: "테스트용길이테스트트트ㅡ트트트트트트트트트트를아ㅣ머라ㅣㄴ머리ㅏㄴ머라ㅣ넘라ㅣ너라ㅣㅓㄴ마ㅣ러ㅏㅣㄴ머라ㅣㄴ머라ㅣ너라ㅣ넘라ㅣㄴ머라ㅣㄴ머라ㅣㅁ너",
       content: "다른애",
       image_url: "adfssadfsadf.jpg",
       created_at: "2024-02-14T17:37:11.131701Z",

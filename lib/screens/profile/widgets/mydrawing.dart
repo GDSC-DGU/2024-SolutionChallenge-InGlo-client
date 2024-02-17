@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:inglo/models/sketch/sketch.dart';
 import 'package:inglo/util/sketch/sketchlist_preference.dart';
 
 import 'package:vertical_card_pager/vertical_card_pager.dart';
@@ -80,7 +79,7 @@ class _MyDrawingState extends State<MyDrawing> {
                                 style: GoogleFonts.notoSans(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w400),
-                                textAlign: TextAlign.center,
+                                textAlign: TextAlign.left,
                               ),
                             ),
                           ),
