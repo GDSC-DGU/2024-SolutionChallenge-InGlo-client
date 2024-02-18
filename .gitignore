@@ -464,8 +464,5 @@ fastlane/test_output
 # google services
 android/app/google-services.json
 
-# ios
-ios/Runner/Info.plist
-
 # pubspec.lock
 pubspec.lock
