@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:inglo/screens/hmw/hmw_choose.dart';
-import 'package:inglo/screens/hmw/widgets/design_paper.dart';
+import 'package:inglo/screens/hmw/widgets/check_design_paper.dart';
 import 'package:inglo/screens/problem_definition/problem_write.dart';
 import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
 import 'package:inglo/widgets/design_steps.dart';
 
-class HMWDetailPage extends StatefulWidget {
-  const HMWDetailPage({super.key});
+class HMWChoosePage extends StatefulWidget {
+  const HMWChoosePage({super.key});
 
   @override
-  State<HMWDetailPage> createState() => _HMWDetailPageState();
+  State<HMWChoosePage> createState() => _HMWChoosePageState();
 }
 
-class _HMWDetailPageState extends State<HMWDetailPage> {
+class _HMWChoosePageState extends State<HMWChoosePage> {
+  String checkedId = "0"; // 나중에 int로 바꾸기!
+
   // 더미데이터
   final List<Map<String, String>> problemList = [
     {"id": "1", "content": "choose 3-5 problems"},
@@ -99,46 +100,27 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
                 MasonryGridView.count(
                   physics: BouncingScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: problemList.length + 1,
+                  itemCount: problemList.length,
                   crossAxisCount: 2,
                   crossAxisSpacing: 5.0,
                   mainAxisSpacing: 5.0,
                   itemBuilder: (context, index) {
-                    if (index == 0) {
-                      return Container(
-                        margin: EdgeInsets.all(40),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const ProblemWrite(),
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            //fixedSize: Size(30, 30),
-                            backgroundColor: Colors.white,
-                            shape: CircleBorder(),
-                            // padding도 넣을 수 있음!
-                            padding: EdgeInsets.all(10.0),
-                            side: BorderSide(
-                              color: Color(0xFF233A66),
-                              width: 1,
-                            ),
-                            shadowColor: Colors.transparent,
-                          ),
-                          child: const Icon(
-                            Icons.edit_outlined,
-                            size: 25,
-                            color: Color(0xFF233A66),
-                          ),
-                        ),
-                      );
-                    } else {
-                      // return DesignCard(content: problemList[index - 1]["content"]!);
-                      return DesignPaper(
-                          content: problemList[index - 1]["content"]!);
-                    }
+                    return CheckDesignPaper(
+                      id: problemList[index]["id"]!,
+                      checkedId: checkedId,
+                      checkCard: (id) {
+                        setState(() {
+                          if (checkedId == id) {
+                            checkedId = "0";
+                          } else {
+                            checkedId = id;
+                          }
+                        });
+                        print(id);
+                        print(checkedId);
+                      },
+                      content: problemList[index]["content"]!,
+                    );
                   },
                 ),
                 SizedBox(
@@ -149,43 +131,36 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
           ),
         ),
       ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.centerDocked, // 버튼 가운데 정렬
       floatingActionButton: Container(
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-          width: double.infinity,
-          child: Row(
-            children: [
-              Expanded(
-                // 최대한 가로 길이 늘리기
-                child: FloatingActionButton.extended(
-                  onPressed: () {
-                    //Add your onPressed code here!
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const HMWChoosePage(),
-                      ),
-                    );
-                  },
-                  backgroundColor: Colors.white,
-                  shape: StadiumBorder(
-                    side: BorderSide(
-                      color: Color(0xFF233A66),
-                      width: 1,
-                    ),
-                  ),
-                  label: Text(
-                    'choose one HMW',
-                    style: GoogleFonts.notoSans(
-                      color: Color(0xFF233A66),
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        child: ElevatedButton(
+          onPressed: () {
+            // Navigator.of(context).push(
+            //   MaterialPageRoute(
+            //     builder: (context) => const HMWListPage(),
+            //     settings: RouteSettings(
+            //       arguments: ModalRoute.of(context)!.settings.arguments,
+            //     ),
+            //   ),
+            // );
+          },
+          style: ElevatedButton.styleFrom(
+            elevation: 0,
+            side: BorderSide(
+              color: Color(0xFF233A66),
+              width: 1,
+            ),
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
           ),
+          child: Text(
+            'next',
+            style: GoogleFonts.notoSans(
+              color: Color(0xFF233A66),
+              fontSize: 20.0,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
       ),
     );
   }

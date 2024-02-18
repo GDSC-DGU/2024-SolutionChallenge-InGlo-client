@@ -42,6 +42,8 @@ class _HMWListPageState extends State<HMWListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final sdgs = ModalRoute.of(context)!.settings.arguments; // 받아온 sdgs값
+
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
