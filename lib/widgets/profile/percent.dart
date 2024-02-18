@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/models/profile/user.dart';
 
 class PercentWidget extends StatelessWidget {
+  final User user;
+
+  PercentWidget({Key? key, required this.user}) : super(key: key);
+
   @override
   Widget build(BuildContext context) => Column(
     mainAxisAlignment: MainAxisAlignment.start,
     children: <Widget>[
-      percentButton(context, '50%',),
+      percentButton(context, '${user.percent}',),
     ],
   );
   Widget buildDivider() => Container(
@@ -27,7 +33,7 @@ class PercentWidget extends StatelessWidget {
                 SizedBox(height: 70,),
                 Text(
                   text,
-                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
+                  style: GoogleFonts.notoSans(fontWeight: FontWeight.w400, fontSize: 12),
                 ),
                 buildDivider(),
               ],
