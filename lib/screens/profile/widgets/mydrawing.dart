@@ -52,15 +52,15 @@ class _MyDrawingState extends State<MyDrawing> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Expanded( // 제목을 더 큰 공간에 할당합니다.
-                                  flex: 4, // 공간 비율을 조절하여 다른 Text에 비해 더 많은 공간을 할당
+                                Expanded(
+                                  flex: 4,
                                   child: Text(
                                     sketch.title,
                                     style: GoogleFonts.notoSans(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
                                     overflow: TextOverflow.ellipsis, // 넘치는 텍스트 처리
                                   ),
                                 ),
-                                Flexible( // 생성 날짜에 유연한 공간 할당
+                                Flexible(
                                   child: Container(
                                     child: Text(
                                       sketch.created_at,
