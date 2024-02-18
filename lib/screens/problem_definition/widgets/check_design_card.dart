@@ -3,13 +3,16 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CheckDesignCard extends StatelessWidget {
+  final id;
+  final checkedId;
+  final checkCard;
   final String content;
-  final bool isChecked = true;
-  //final changeisChecked;
+
   const CheckDesignCard({
+    required this.id,
+    required this.checkedId,
+    required this.checkCard,
     required this.content,
-    //required this.isChecked,
-    //required this.changeisChecked,
     super.key,
   });
 
@@ -25,7 +28,7 @@ class CheckDesignCard extends StatelessWidget {
             color: Colors.white,
             border: Border.all(
               width: 3,
-              color: isChecked ? Color(0xFFFF6280) : Color(0xFFD7A859),
+              color: id == checkedId ? Color(0xFFFF6280) : Color(0xFFD7A859),
             ),
             borderRadius: BorderRadius.all(
               Radius.circular(10.0),
@@ -63,37 +66,25 @@ class CheckDesignCard extends StatelessWidget {
           child: RawMaterialButton(
             onPressed: () {
               // check값 바꾸기
+              checkCard(id);
             },
             elevation: 0,
             fillColor: Colors.white,
-            child: isChecked ? Icon(
-              Icons.check_rounded,
-              size: 25.0,
-              color: Color(0xFFFF6280),
-            ) : Text(""),
+            child: id == checkedId
+                ? Icon(
+                    Icons.check_rounded,
+                    size: 25.0,
+                    color: Color(0xFFFF6280),
+                  )
+                : Text(""),
             padding: EdgeInsets.all(0.0),
             shape: CircleBorder(
               side: BorderSide(
                 width: 3,
-                color: isChecked ? Color(0xFFFF6280) : Color(0xFFD7A859),
+                color: id == checkedId ? Color(0xFFFF6280) : Color(0xFFD7A859),
               ),
             ),
           ),
-          // child: ElevatedButton(
-          //   onPressed: () {},
-          //   style: ElevatedButton.styleFrom(
-          //     alignment: Alignment.centerLeft,
-          //     backgroundColor: Colors.white,
-          //     shape: CircleBorder(),
-          //     // padding도 넣을 수 있음!
-          //     side: BorderSide(
-          //       width: 3,
-          //       color: isChecked ? Color(0xFFFF6280) : Color(0xFFD7A859),
-          //     ),
-          //     fixedSize: Size(30, 30),
-          //   ),
-          //   child: isChecked ? Icon(Icons.abc, color: Color(0xFFFF6280), size: 30,) : Text(""),
-          // ),
         ),
       ],
     );

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/crazy/crazy_8s.dart';
-import 'package:inglo/screens/hmw/hmw_list.dart';
+import 'package:inglo/screens/hmw/hmw_detail.dart';
+import 'package:inglo/screens/problem_definition/problem_definition.dart';
 import 'package:inglo/screens/solution_sketch/solution_sketch.dart';
 
 class DesignSteps extends StatelessWidget {
@@ -38,7 +39,18 @@ class DesignSteps extends StatelessWidget {
                 Column(
                   children: [
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (step != 1) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const ProblemDefinitionPage(),
+                              settings: RouteSettings(
+                                arguments: ModalRoute.of(context)!.settings.arguments,
+                              ),
+                            ),
+                          );
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                         backgroundColor:
@@ -69,16 +81,21 @@ class DesignSteps extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const HMWListPage(),
-                          ),
-                        );
+                        if (step != 2) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const HMWDetailPage(),
+                              settings: RouteSettings(
+                                arguments: ModalRoute.of(context)!.settings.arguments,
+                              ),
+                            ),
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                         backgroundColor:
-                        step == 2 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
+                            step == 2 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
                         shape: CircleBorder(),
                         // padding도 넣을 수 있음!
                       ),
@@ -95,7 +112,7 @@ class DesignSteps extends StatelessWidget {
                       "HMW",
                       style: GoogleFonts.notoSans(
                         color:
-                        step == 2 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
+                            step == 2 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
                         fontSize: 13.0,
                       ),
                     ),
@@ -105,16 +122,21 @@ class DesignSteps extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const Crazy8sPage(),
-                          ),
-                        );
+                        if (step != 3) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const Crazy8sPage(),
+                              settings: RouteSettings(
+                                arguments: ModalRoute.of(context)!.settings.arguments,
+                              ),
+                            ),
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                         backgroundColor:
-                        step == 3 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
+                            step == 3 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
                         shape: CircleBorder(),
                         // padding도 넣을 수 있음!
                       ),
@@ -131,7 +153,7 @@ class DesignSteps extends StatelessWidget {
                       "crazy 8's",
                       style: GoogleFonts.notoSans(
                         color:
-                        step == 3 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
+                            step == 3 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
                         fontSize: 13.0,
                       ),
                     ),
@@ -141,16 +163,21 @@ class DesignSteps extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const SolutionSketchPage(),
-                          ),
-                        );
+                        if (step != 4) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const SolutionSketchPage(),
+                              settings: RouteSettings(
+                                arguments: ModalRoute.of(context)!.settings.arguments,
+                              ),
+                            ),
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                         backgroundColor:
-                        step == 4 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
+                            step == 4 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
                         shape: CircleBorder(),
                         // padding도 넣을 수 있음!
                       ),
@@ -167,7 +194,7 @@ class DesignSteps extends StatelessWidget {
                       "sketch",
                       style: GoogleFonts.notoSans(
                         color:
-                        step == 4 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
+                            step == 4 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
                         fontSize: 13.0,
                       ),
                     ),
