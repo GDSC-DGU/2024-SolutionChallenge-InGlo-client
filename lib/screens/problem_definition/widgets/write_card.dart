@@ -3,10 +3,13 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WriteCard extends StatelessWidget {
-  const WriteCard({super.key});
+  final id;
+  final changeContent;
+  const WriteCard({required this.id, required this.changeContent, super.key});
 
   @override
   Widget build(BuildContext context) {
+    String value;
     return Stack(
       children: [
         Container(
@@ -31,6 +34,7 @@ class WriteCard extends StatelessWidget {
             ],
           ),
           child: TextField(
+            onChanged: (val) => changeContent(val),
             keyboardType: TextInputType.multiline, // 여러 줄
             maxLines: null, // 자동 줄 바꿈
             minLines: 10,

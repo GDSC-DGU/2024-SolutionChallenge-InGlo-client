@@ -61,7 +61,10 @@ class SDGSList extends StatelessWidget {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => const ProblemDefinitionPage(),
+                builder: (context) => ProblemDefinitionPage(),
+                settings: RouteSettings(
+                  arguments: index + 1,
+                ),
               ),
             );
           }

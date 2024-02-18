@@ -14,7 +14,6 @@ class IssueMenu extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          //const Text("Recommand"),
           DropdownMenu<String>(
             initialSelection: usersSketchData[selectedSdgs - 1],
             onSelected: (String? value) {
@@ -36,7 +35,8 @@ class IssueMenu extends StatelessWidget {
                 )
               ),
             ),
-            menuStyle: const MenuStyle(
+            menuStyle: MenuStyle(
+              maximumSize: MaterialStatePropertyAll(Size(MediaQuery.of(context).size.width - 20, MediaQuery.of(context).size.height - 200)),
               backgroundColor: MaterialStatePropertyAll<Color>(Color(0xFFFFD691)),
             ),
 
