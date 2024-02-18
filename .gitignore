@@ -460,3 +460,9 @@ fastlane/test_output
 
 
 # End of https://www.toptal.com/developers/gitignore/api/flutter,android,androidstudio,swift,dart,darteditor
+
+# google services
+android/app/google-services.json
+
+# ios
+ios/Runner/Info.plist
