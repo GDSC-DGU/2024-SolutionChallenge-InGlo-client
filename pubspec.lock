@@ -789,6 +789,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  pager:
+    dependency: "direct main"
+    description:
+      name: pager
+      sha256: "49a6c5d98ca1d3f63947db5075d860fbc50b8aa9bb753251378f0e42721635df"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.6"
   path:
     dependency: transitive
     description:

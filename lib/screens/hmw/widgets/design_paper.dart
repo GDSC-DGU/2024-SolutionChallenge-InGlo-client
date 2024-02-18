@@ -20,14 +20,6 @@ class DesignPaper extends StatelessWidget {
         borderRadius: BorderRadius.all(
           Radius.circular(5.0),
         ),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Color(0xFFFFD691),
-        //     blurRadius: 0.0,
-        //     spreadRadius: 0.0,
-        //     offset: Offset(6, 6),
-        //   ),
-        // ],
       ),
       child: Text(
         content,

@@ -2,11 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/problem_definition/widgets/write_card.dart';
 
-class ProblemWrite extends StatelessWidget {
-  const ProblemWrite({super.key});
+class ProblemWrite extends StatefulWidget {
+  const ProblemWrite({
+    super.key,
+  });
+
+  @override
+  State<ProblemWrite> createState() => _ProblemWriteState();
+}
+
+class _ProblemWriteState extends State<ProblemWrite> {
+
 
   @override
   Widget build(BuildContext context) {
+    final id = ModalRoute.of(context)!.settings.arguments; // 받아온 id값
+    String content = ""; // 작성글 내용
+
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
@@ -41,10 +53,18 @@ class ProblemWrite extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               // 글쓰기
-              WriteCard(),
+              WriteCard(
+                id: id,
+                changeContent: (text) {
+                  setState(() {
+                    content = text;
+                  });
+                },
+              ),
               // Submit 버튼
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                margin:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(

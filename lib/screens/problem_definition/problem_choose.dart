@@ -13,25 +13,31 @@ class ProblemChoosePage extends StatefulWidget {
 }
 
 class _ProblemChoosePageState extends State<ProblemChoosePage> {
+  String checkedId = "0"; // 나중에 int로 바꾸기!
+
   // 더미데이터
   final List<Map<String, String>> problemList = [
-    {"content": "choose 3-5 problems"},
+    {"id": "1", "content": "choose 3-5 problems"},
     {
+      "id": "2",
       "content":
           "Clean Energy Technological Innovation Reshapes the Future Energy Market"
     },
-    {"content": "choose 3-5 problems"},
+    {"id": "3", "content": "choose 3-5 problems"},
     {
+      "id": "4",
       "content":
           "Clean Energy Technological Innovation Reshapes the Future Energy Market"
     },
-    {"content": "choose 3-5 problems"},
+    {"id": "5", "content": "choose 3-5 problems"},
     {
+      "id": "6",
       "content":
           "Clean Energy Technological Innovation Reshapes the Future Energy Market"
     },
-    {"content": "choose 3-5 problems"},
+    {"id": "7", "content": "choose 3-5 problems"},
     {
+      "id": "8",
       "content":
           "Clean Energy Technological Innovation Reshapes the Future Energy Market"
     },
@@ -52,32 +58,17 @@ class _ProblemChoosePageState extends State<ProblemChoosePage> {
         ),
         backgroundColor: Color(0xFFF7EEDE),
         actions: <Widget>[
-          Row(
-            children: [
-              IconButton(
-                icon: const Icon(
-                  Icons.help_outline,
-                  size: 25,
-                ),
-                tooltip: 'Show Snackbar', // icon 설명 tooltip
-                onPressed: () {
-                  // 클릭하면 메시지를 띄운다.
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(const SnackBar(content: Text('설명 내용 넣기')));
-                },
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 0, 10, 3),
-                child: Text(
-                  "2/3",
-                  style: GoogleFonts.notoSans(
-                    color: Color(0xFFFF6280),
-                    fontSize: 15,
-                    letterSpacing: 4,
-                  ),
-                ),
-              ),
-            ],
+          IconButton(
+            icon: const Icon(
+              Icons.help_outline,
+              size: 25,
+            ),
+            tooltip: 'Show Snackbar', // icon 설명 tooltip
+            onPressed: () {
+              // 클릭하면 메시지를 띄운다.
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text('설명 내용 넣기')));
+            },
           ),
         ],
       ),
@@ -103,7 +94,20 @@ class _ProblemChoosePageState extends State<ProblemChoosePage> {
                   mainAxisSpacing: 1.0,
                   itemBuilder: (context, index) {
                     return CheckDesignCard(
-                        content: problemList[index]["content"]!);
+                        id: problemList[index]["id"]!,
+                        checkedId: checkedId,
+                        checkCard: (id) {
+                          setState(() {
+                            if(checkedId == id) {
+                              checkedId = "0";
+                            } else {
+                              checkedId = id;
+                            }
+                          });
+                          print(id);
+                          print(checkedId);
+                        },
+                        content: problemList[index]["content"]!,);
                   },
                 ),
               ),
@@ -119,6 +123,9 @@ class _ProblemChoosePageState extends State<ProblemChoosePage> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => const HMWListPage(),
+                settings: RouteSettings(
+                  arguments: ModalRoute.of(context)!.settings.arguments,
+                ),
               ),
             );
           },

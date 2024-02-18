@@ -45,6 +45,7 @@ dependencies:
   vertical_card_pager: ^1.4.0
   google_sign_in: ^6.2.1
   http: ^1.2.0
+  pager: ^0.0.6
 
 dev_dependencies:
   flutter_test:
@@ -60,5 +61,6 @@ flutter:
     - assets/image/background/
     - assets/image/design/
     - assets/image/home/
+    - assets/image/sdgs/
     - .env
     - assets/image/

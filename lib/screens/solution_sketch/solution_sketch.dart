@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:inglo/screens/solution_sketch/widgets/solution_sketch_btn.dart';
 import 'package:inglo/screens/solution_sketch/widgets/solution_sketch_img.dart';
 import 'package:inglo/screens/solution_sketch/widgets/solution_sketch_input.dart';
@@ -13,14 +14,29 @@ class SolutionSketchPage extends StatefulWidget {
 }
 
 class _SolutionSketchPageState extends State<SolutionSketchPage> {
+  XFile? _image; //이미지를 담을 변수 선언
+  final ImagePicker picker = ImagePicker(); //ImagePicker 초기화
+  //이미지를 가져오는 함수
+  Future getImage(ImageSource imageSource) async {
+    //pickedFile에 ImagePicker로 가져온 이미지가 담긴다.
+    final XFile? pickedFile = await picker.pickImage(source: imageSource);
+    if (pickedFile != null) {
+      setState(() {
+        _image = XFile(pickedFile.path); //가져온 이미지를 _image에 저장
+      });
+    }
+  }
+
   // 더미데이터
-  final drawingData = [
-    'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-    'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-  ];
+  // final drawingData = [
+  //   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
+  // ];
+
 
   @override
   Widget build(BuildContext context) {
+    final sdgs = ModalRoute.of(context)!.settings.arguments; // 받아온 sdgs값
+
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
@@ -51,37 +67,23 @@ class _SolutionSketchPageState extends State<SolutionSketchPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 50),
+          padding: EdgeInsets.fromLTRB(10, 0, 10, 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               DesignSteps(step: 4),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SolutionSketchBtn(),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    SolutionSketchBtn(),
-                  ],
-                ),
+                child: SolutionSketchBtn(getImage: getImage),
               ),
-              if (drawingData.length > 0)
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: drawingData
-                        .map(
-                          (item) => SolutionSketchImg(
-                            imageData: item,
-                          ),
-                        )
-                        .toList(),
-                  ),
+              if (_image != null)
+                SolutionSketchImg(
+                  imageData: _image,
+                  deleteImage: () {
+                    setState(() {
+                      _image = null;
+                    });
+                  },
                 ),
               SolutionSketchInput(),
               // Submit 버튼

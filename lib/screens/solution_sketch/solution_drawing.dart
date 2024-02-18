@@ -21,52 +21,53 @@ class SolutionDrawingPage extends StatelessWidget {
         ),
         backgroundColor: Color(0xFFF7EEDE),
         actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.help_outline,
-              size: 25,
+          // IconButton(
+          //   icon: const Icon(
+          //     Icons.help_outline,
+          //     size: 25,
+          //   ),
+          //   tooltip: 'Show Snackbar', // icon 설명 tooltip
+          //   onPressed: () {
+          //     // 클릭하면 메시지를 띄운다.
+          //     ScaffoldMessenger.of(context)
+          //         .showSnackBar(const SnackBar(content: Text('설명 내용 넣기')));
+          //   },
+          // ),
+          Container(
+            margin:
+            const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+            alignment: Alignment.centerRight,
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                side: BorderSide(
+                  color: Color(0xFF233A66),
+                  width: 1,
+                ),
+                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 25),
+              ),
+              child: Text(
+                'finish',
+                style: GoogleFonts.notoSans(
+                  color: Color(0xFF233A66),
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
             ),
-            tooltip: 'Show Snackbar', // icon 설명 tooltip
-            onPressed: () {
-              // 클릭하면 메시지를 띄운다.
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(const SnackBar(content: Text('설명 내용 넣기')));
-            },
           ),
         ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 50),
+          padding: EdgeInsets.fromLTRB(10, 0, 10, 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+
               SolutionDrawingBoard(),
-              Container(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                alignment: Alignment.centerRight,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    side: BorderSide(
-                      color: Color(0xFF233A66),
-                      width: 1,
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-                  ),
-                  child: Text(
-                    'finish',
-                    style: GoogleFonts.notoSans(
-                      color: Color(0xFF233A66),
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),

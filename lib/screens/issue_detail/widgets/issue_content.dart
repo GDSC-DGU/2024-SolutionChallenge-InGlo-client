@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/screens/issuelist/sdgs_select.dart';
 
 class IssueContent extends StatelessWidget {
   const IssueContent({super.key});
@@ -35,7 +36,13 @@ class IssueContent extends StatelessWidget {
               style: ButtonStyle(
                 backgroundColor: MaterialStatePropertyAll(Color(0xFFD7A859)),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const SDGSSelectPage(),
+                  ),
+                );
+              },
               child: Text(
                 "Let's Design",
                 style: TextStyle(

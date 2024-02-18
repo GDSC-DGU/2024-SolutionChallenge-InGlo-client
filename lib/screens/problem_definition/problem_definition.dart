@@ -40,6 +40,8 @@ class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
 
   @override
   Widget build(BuildContext context) {
+    final sdgs = ModalRoute.of(context)!.settings.arguments; // 받아온 sdgs값
+
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
@@ -128,7 +130,7 @@ class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
       floatingActionButtonLocation:
           FloatingActionButtonLocation.centerDocked, // 버튼 가운데 정렬
       floatingActionButton: Container(
-        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 30),
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
         width: double.infinity,
         child: Row(
           children: [
@@ -151,7 +153,7 @@ class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
                   ),
                 ),
                 label: Text(
-                  'choose 3-5 problems',
+                  'choose one problem',
                   style: GoogleFonts.notoSans(
                     color: Color(0xFF233A66),
                     fontSize: 20.0,

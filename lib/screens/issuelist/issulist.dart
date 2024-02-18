@@ -15,6 +15,9 @@ class IssueListPage extends StatefulWidget {
 }
 
 class _IssueListPageState extends State<IssueListPage> {
+  int sdgs = 1; // 1~17?
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +29,14 @@ class _IssueListPageState extends State<IssueListPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                IssueMenu(),
+                IssueMenu(
+                  selectedSdgs: sdgs,
+                  onSdgsTap: (int sdgs) {
+                    setState(() {
+                      this.sdgs = sdgs;
+                    });
+                  }
+                ),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 20),

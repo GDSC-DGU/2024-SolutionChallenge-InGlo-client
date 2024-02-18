@@ -1,33 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:inglo/util/dummy/users_sketch.dart';
 
-// 드롭다운 데이터
-const List<String> list = <String>['No Poverty', 'Zero Hunger', 'Good Health And Well-Being', 'Quality Education'];
+class IssueMenu extends StatelessWidget {
+  final onSdgsTap;
+  final int selectedSdgs;
 
-class IssueMenu extends StatefulWidget {
-  const IssueMenu({super.key});
-
-  @override
-  State<IssueMenu> createState() => _IssueMenuState();
-}
-
-class _IssueMenuState extends State<IssueMenu> {
-  String dropdownValue = list.first;
+  const IssueMenu({required this.onSdgsTap, required this.selectedSdgs, super.key,});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          //const Text("Recommand"),
           DropdownMenu<String>(
-            initialSelection: list.first,
+            initialSelection: usersSketchData[selectedSdgs - 1],
             onSelected: (String? value) {
               // This is called when the user selects an item.
-              setState(() {
-                dropdownValue = value!;
-              });
+              onSdgsTap(usersSketchData.indexOf(value!) + 1);
             },
             textStyle: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
             // label: const Text("SDGs"),
@@ -44,11 +35,12 @@ class _IssueMenuState extends State<IssueMenu> {
                 )
               ),
             ),
-            menuStyle: const MenuStyle(
+            menuStyle: MenuStyle(
+              maximumSize: MaterialStatePropertyAll(Size(MediaQuery.of(context).size.width - 20, MediaQuery.of(context).size.height - 200)),
               backgroundColor: MaterialStatePropertyAll<Color>(Color(0xFFFFD691)),
             ),
 
-            dropdownMenuEntries: list.map<DropdownMenuEntry<String>>((String value) {
+            dropdownMenuEntries: usersSketchData.map<DropdownMenuEntry<String>>((String value) {
               return DropdownMenuEntry<String>(value: value, label: value);
             }).toList(),
           ),

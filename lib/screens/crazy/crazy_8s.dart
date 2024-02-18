@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/crazy/crazy_voting.dart';
+import 'package:inglo/screens/hmw/widgets/design_paper.dart';
 import 'package:inglo/screens/problem_definition/problem_write.dart';
 import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
 import 'package:inglo/widgets/design_steps.dart';
@@ -16,23 +17,27 @@ class Crazy8sPage extends StatefulWidget {
 class _Crazy8sPageState extends State<Crazy8sPage> {
   // 더미데이터
   final List<Map<String, String>> problemList = [
-    {"content": "choose 3-5 problems"},
+    {"id": "1", "content": "choose 3-5 problems"},
     {
+      "id": "2",
       "content":
       "Clean Energy Technological Innovation Reshapes the Future Energy Market"
     },
-    {"content": "choose 3-5 problems"},
+    {"id": "3", "content": "choose 3-5 problems"},
     {
+      "id": "4",
       "content":
       "Clean Energy Technological Innovation Reshapes the Future Energy Market"
     },
-    {"content": "choose 3-5 problems"},
+    {"id": "5", "content": "choose 3-5 problems"},
     {
+      "id": "6",
       "content":
       "Clean Energy Technological Innovation Reshapes the Future Energy Market"
     },
-    {"content": "choose 3-5 problems"},
+    {"id": "7", "content": "choose 3-5 problems"},
     {
+      "id": "8",
       "content":
       "Clean Energy Technological Innovation Reshapes the Future Energy Market"
     },
@@ -40,6 +45,8 @@ class _Crazy8sPageState extends State<Crazy8sPage> {
 
   @override
   Widget build(BuildContext context) {
+    final sdgs = ModalRoute.of(context)!.settings.arguments; // 받아온 sdgs값
+
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
@@ -69,15 +76,27 @@ class _Crazy8sPageState extends State<Crazy8sPage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 50),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              DesignSteps(step: 3),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: MasonryGridView.count(
+          child: Container(
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 50),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                DesignSteps(step: 3),
+                SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  width: 170,
+                  child: DesignCard(
+                      content:
+                      "Clean Energy Technological Innovation Reshapes the Future Energy Market"),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                MasonryGridView.count(
                   physics: BouncingScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: problemList.length + 1,
@@ -116,19 +135,24 @@ class _Crazy8sPageState extends State<Crazy8sPage> {
                         ),
                       );
                     } else {
-                      return DesignCard(content: problemList[index - 1]["content"]!);
+                      // return DesignCard(content: problemList[index - 1]["content"]!);
+                      return DesignPaper(
+                          content: problemList[index - 1]["content"]!);
                     }
                   },
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: 20,
+                ),
+              ],
+            ),
           ),
         ),
       ),
       floatingActionButtonLocation:
       FloatingActionButtonLocation.centerDocked, // 버튼 가운데 정렬
       floatingActionButton: Container(
-        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 30),
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
         width: double.infinity,
         child: Row(
           children: [
@@ -136,7 +160,7 @@ class _Crazy8sPageState extends State<Crazy8sPage> {
               // 최대한 가로 길이 늘리기
               child: FloatingActionButton.extended(
                 onPressed: () {
-                  // Add your onPressed code here!
+                  //Add your onPressed code here!
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => const CrazyVotingPage(),

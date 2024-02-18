@@ -23,7 +23,7 @@ class _SolutionDrawingBoardState extends State<SolutionDrawingBoard> {
     return Container(
       color: Colors.white,
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-      height: MediaQuery.of(context).size.height,
+      height: 750,
       child: Stack(
         children: [
           Scribble(

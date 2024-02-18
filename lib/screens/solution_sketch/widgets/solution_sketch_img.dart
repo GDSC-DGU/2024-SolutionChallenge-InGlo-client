@@ -1,15 +1,20 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SolutionSketchImg extends StatelessWidget {
-  final String imageData;
-  const SolutionSketchImg({required this.imageData, super.key});
+  final XFile? imageData;
+  final deleteImage;
+  const SolutionSketchImg({required this.imageData, required this.deleteImage, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Container(
-          margin: const EdgeInsets.all(10.0),
+          margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          width: 200,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
             border: Border.all(
@@ -19,14 +24,15 @@ class SolutionSketchImg extends StatelessWidget {
           ),
           child: ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-              child: Image.network(imageData, fit: BoxFit.cover, width: 150.0)),
+              child: Image.file(File(imageData!.path), fit: BoxFit.cover, width: 150.0)),
         ),
         Positioned(
           top: -5,
-          right: -25,
+          left: -20,
           child: RawMaterialButton(
             onPressed: () {
               // check값 바꾸기
+              deleteImage();
             },
             elevation: 0,
             fillColor: Colors.white,
