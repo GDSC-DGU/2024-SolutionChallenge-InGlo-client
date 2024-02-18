@@ -42,9 +42,6 @@ import FirebaseMessaging
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
-<<<<<<< HEAD
-}
-=======
 
   // MARK: UNUserNotificationCenterDelegate
   
@@ -65,4 +62,3 @@ import FirebaseMessaging
     NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
   }
 }
->>>>>>> main

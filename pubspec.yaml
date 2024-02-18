@@ -43,6 +43,7 @@ dependencies:
   flutter_profile_picture: ^2.0.0
   image_picker: ^1.0.7
   vertical_card_pager: ^1.4.0
+  google_sign_in: ^6.2.1
 
 dev_dependencies:
   flutter_test:
