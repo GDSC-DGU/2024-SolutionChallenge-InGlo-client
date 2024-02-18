@@ -466,3 +466,6 @@ android/app/google-services.json
 
 # ios
 ios/Runner/Info.plist
+
+# pubspec.lock
+pubspec.lock
