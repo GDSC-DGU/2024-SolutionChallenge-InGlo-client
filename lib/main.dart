@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inglo/screens/start/start.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/service/auth/google/google_sign.dart';
 import 'package:inglo/widgets/card-slider/vertical_card_pager.dart';
 
 void main() async {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: StartPage(), // 화면의 표시될 스크린
+      home: SignInDemo(), // 화면의 표시될 스크린
       theme: ThemeData(
         // ThemeData를 사용하여 앱의 기본 테마를 설정합니다.
         textTheme: GoogleFonts.notoSansTextTheme( // 기본 폰트 적용
