@@ -117,6 +117,36 @@ class _SignInDemoState extends State<SignInDemo> {
     });
   }
 
+  // 스프링 api post 코드!!!!!!!!!
+  Future<void> _handlePostWithToken(String _token) async {
+    setState(() {
+      _contactText = 'Sending data...';
+    });
+
+    final String token = _token;
+
+    final http.Response response = await http.post(
+      Uri.parse('baseurl/api/accounts/google/login/'), // end point
+      body: json.encode(<String, String>{
+        'access_token': token,
+      }),
+    );
+    // error
+    if (response.statusCode != 200) {
+      setState(() {
+        _contactText = 'error code :  ${response.statusCode}';
+      });
+      print('api code :  ${response.statusCode}, response: ${response.body}');
+      return;
+    }
+    // 성공
+    setState(() {
+      _contactText = 'success code : ${response.statusCode}';
+    });
+    print('api code :  ${response.statusCode}, response: ${response.body}');
+    return;
+  }
+
   String? _pickFirstNamedContact(Map<String, dynamic> data) {
     final List<dynamic>? connections = data['connections'] as List<dynamic>?;
     final Map<String, dynamic>? contact = connections?.firstWhere(
@@ -144,7 +174,17 @@ class _SignInDemoState extends State<SignInDemo> {
   // #docregion SignIn
   Future<void> _handleSignIn() async {
     try {
-      await _googleSignIn.signIn();
+      await _googleSignIn.signIn().then((result){
+        result?.authentication.then((googleKey){
+          print(googleKey.accessToken); // 토큰
+          print(googleKey.idToken); // null값 출력
+          print(_googleSignIn.currentUser?.displayName); // 유저 이름
+        }).catchError((err){
+          print('inner error');
+        });
+      }).catchError((err){
+        print('error occured');
+      });
     } catch (error) {
       print(error);
     }
