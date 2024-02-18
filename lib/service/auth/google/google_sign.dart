@@ -12,9 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
-
 /// The scopes required by this application.
 // #docregion Initialize
 const List<String> scopes = <String>[
@@ -27,6 +24,16 @@ GoogleSignIn _googleSignIn = GoogleSignIn(
   // clientId: 'your-client_id.apps.googleusercontent.com',
   scopes: scopes,
 );
+// #enddocregion Initialize
+
+void main() {
+  runApp(
+    const MaterialApp(
+      title: 'Google Sign In',
+      home: SignInDemo(),
+    ),
+  );
+}
 
 /// The SignInDemo app.
 class SignInDemo extends StatefulWidget {
@@ -107,36 +114,6 @@ class _SignInDemoState extends State<SignInDemo> {
     });
   }
 
-  // 스프링 api post 코드!!!!!!!!!
-  Future<void> _handlePostWithToken(String _token) async {
-    setState(() {
-      _contactText = 'Sending data...';
-    });
-
-    final String token = _token;
-
-    final http.Response response = await http.post(
-      Uri.parse('baseurl/api/accounts/google/login/'), // end point
-      body: json.encode(<String, String>{
-        'access_token': token,
-      }),
-    );
-    // error
-    if (response.statusCode != 200) {
-      setState(() {
-        _contactText = 'error code :  ${response.statusCode}';
-      });
-      print('api code :  ${response.statusCode}, response: ${response.body}');
-      return;
-    }
-    // 성공
-    setState(() {
-      _contactText = 'success code : ${response.statusCode}';
-    });
-    print('api code :  ${response.statusCode}, response: ${response.body}');
-    return;
-  }
-
   String? _pickFirstNamedContact(Map<String, dynamic> data) {
     final List<dynamic>? connections = data['connections'] as List<dynamic>?;
     final Map<String, dynamic>? contact = connections?.firstWhere(
@@ -164,17 +141,7 @@ class _SignInDemoState extends State<SignInDemo> {
   // #docregion SignIn
   Future<void> _handleSignIn() async {
     try {
-      await _googleSignIn.signIn().then((result){
-        result?.authentication.then((googleKey){
-          print(googleKey.accessToken); // 토큰
-          print(googleKey.idToken); // null값 출력
-          print(_googleSignIn.currentUser?.displayName); // 유저 이름
-        }).catchError((err){
-          print('inner error');
-        });
-      }).catchError((err){
-        print('error occured');
-      });
+      await _googleSignIn.signIn();
     } catch (error) {
       print(error);
     }
@@ -243,51 +210,17 @@ class _SignInDemoState extends State<SignInDemo> {
       );
     } else {
       // The user is NOT Authenticated
-      return Container(
-        // 배경 이미지를 넣기 위해 Scaffold를 Container로 감싸준다.
-        decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              repeat: ImageRepeat.noRepeat,
-              image: Svg(
-                'assets/image/background/background.svg',
-                // size: Size(10, 10), // size 지정 하던 안 하던 동일하다.
-              ),
-            )),
-        child: Scaffold(
-          // 배경 이미지를 위해 Scaffold의 배경색을 투명으로 한다.
-          backgroundColor: Colors.transparent,
-          // 수직 스크롤이 된다고 한다.
-          // 나중에 빼도 될 것 같다!
-          body: SingleChildScrollView(
-            child: Padding(
-              // 전체 padding
-              padding: const EdgeInsets.fromLTRB(60, 300, 60, 0),
-              child: Center(
-                child: Column(
-                  children: [
-                    SizedBox(height: 160.0),
-                    OutlinedButton(
-                      onPressed: _handleSignIn,
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.white), // 버튼 배경색
-                        minimumSize: MaterialStateProperty.all(Size(400, 40)), // 버튼 사이즈
-                        // 테두리 색상 설정
-                        side: MaterialStateProperty.all(BorderSide(color: Color(0xFFDADCE0), width: 1)),
-                      ),
-                      child: Text(
-                        "SIGNIN WITH GOOGLE",
-                        style: GoogleFonts.notoSans(
-                          fontSize: 16,
-                          color: Colors.black,),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          const Text('You are not currently signed in.'),
+          // This method is used to separate mobile from web code with conditional exports.
+          // See: src/sign_in_button.dart
+          FilledButton(
+            onPressed: _handleSignIn,
+            child: const Text('SIGN IN'),
           ),
-        ),
+        ],
       );
     }
   }
