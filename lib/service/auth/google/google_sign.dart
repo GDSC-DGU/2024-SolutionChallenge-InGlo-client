@@ -117,11 +117,13 @@ class _SignInDemoState extends State<SignInDemo> {
 
     print('보낸 토큰 :  ${_token}');
 
+    var body = {
+      'access_token': _token,
+    };
+
     final http.Response response = await http.post(
       Uri.parse('https://dongkyeom.com/api/v1/accounts/login-success/'), // end point
-      body: json.encode(<String, String>{
-        'access_token': _token,
-      }),
+      body: body,
     );
     // error
     if (response.statusCode != 200) {
