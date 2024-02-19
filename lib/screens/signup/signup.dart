@@ -6,9 +6,54 @@ import 'package:inglo/widgets/dropdown/borderdropdownbutton.dart';
 import 'package:inglo/util/options/country_data.dart';
 import 'package:inglo/util/options/language_data.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+class AccountPage extends StatefulWidget {
+  @override
+  _AccountPageState createState() => _AccountPageState();
+}
 
 // LoginPage 클래스
-class AccountPage extends StatelessWidget {
+class _AccountPageState extends State<AccountPage> {
+  String _name = ''; // 사용자 이름 저장을 위한 변수
+  String _country = 'country1'; // 국가 저장을 위한 변수
+  String _language = 'en'; // 언어 저장을 위한 변수
+
+  // 유저 정보 전송 api
+  Future<void> _handlePost() async {
+    final url = "https://dongkyeom.com/api/v1/accounts/info/";
+    Map<String, String> data = {
+      "name": _name,
+      "country": _country,
+      "language": _language,
+    };
+
+    Map<String, String> headers = {
+      "Content-Type": 'application/json',
+      "Authorization": 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MzUzOTc5LCJpYXQiOjE3MDgzNTAzNzksImp0aSI6Ijg4YjM5ZTE3Y2RlMzRmY2FhZjZmZjI1NTRiMjVlNDdkIiwidXNlcl9pZCI6M30.Wjxayhs_Zk_locENQ9Yyzz4G1yh4_z7uQBkIVYwGeVI',
+    };
+
+    try {
+      final http.Response response = await http.patch(
+        Uri.parse(url), // URL 파싱
+        headers: headers,
+        body: json.encode(data), // 데이터 JSON 인코딩
+      );
+
+      if (response.statusCode == 200) {
+        // 성공
+        print('Success code: ${response.statusCode}, response: ${response.body}');
+      } else {
+        // 비-200 상태 코드
+        print('Error code: ${response.statusCode}, response: ${response.body}');
+      }
+    } catch (e) {
+      // 예외 처리
+      print('Exception caught: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,6 +72,12 @@ class AccountPage extends StatelessWidget {
         // 배경 이미지를 위해 Scaffold의 배경색을 투명으로 한다.
         // backgroundColor: Colors.transparent,
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios, size: 30,),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           backgroundColor: Colors.white,
         ),
         body: Stack(
@@ -96,6 +147,11 @@ class AccountPage extends StatelessWidget {
                         contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 10,)
                       ),
                       style: GoogleFonts.notoSans(fontSize: 14),
+                      onChanged: (value) {
+                        setState(() {
+                          _name = value; // 사용자 입력에 따라 _name 변수의 값을 변경
+                        });
+                      },
                     ),
                     SizedBox(height: 15.0),
                     Padding(
