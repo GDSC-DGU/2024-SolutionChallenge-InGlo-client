@@ -35,12 +35,12 @@ class _GetProfilePageState extends State<GetProfilePage> {
 
     try {
       FormData formData = FormData.fromMap({
-        "file": await MultipartFile.fromFile(_image!.path, filename: fileName),
+        "image": await MultipartFile.fromFile(_image!.path, filename: fileName),
       });
 
       dio.options.headers = {
         'Content-Type': 'multipart/form-data',
-        'token': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MzUzOTc5LCJpYXQiOjE3MDgzNTAzNzksImp0aSI6Ijg4YjM5ZTE3Y2RlMzRmY2FhZjZmZjI1NTRiMjVlNDdkIiwidXNlcl9pZCI6M30.Wjxayhs_Zk_locENQ9Yyzz4G1yh4_z7uQBkIVYwGeVI', // 필요한 토큰이나 인증 정보를 여기에 추가
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MzY0OTI5LCJpYXQiOjE3MDgzNjEzMjksImp0aSI6IjJkOWI4Mzk0NDhkMTRkZDJhMzRhZjFiYTM5ZDRkNjdkIiwidXNlcl9pZCI6M30.wXtK1L1D2aIpdb4qXjnelsFx0tqP64yFJg_sIR3JjMw', // 필요한 토큰이나 인증 정보를 여기에 추가
       };
 
       var response = await dio.patch(
@@ -48,7 +48,14 @@ class _GetProfilePageState extends State<GetProfilePage> {
         data: formData,
       );
 
-      print('성공적으로 업로드했습니다: ${response.statusCode}');
+      print('업로드 성공 : ${response.statusCode}');
+
+      // 이동
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => IssueListPage()), // 다음 페이지로 이동
+      );
+
     } catch (e) {
       print('이미지 업로드 실패: $e');
     }
@@ -92,11 +99,7 @@ class _GetProfilePageState extends State<GetProfilePage> {
               _buildButton(),
               SizedBox(height: 40),
               FilledButton(
-                onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => IssueListPage()),
-                  );
-                },
+                onPressed: uploadImage,
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Color(0xFFFFD691)),
                   // 버튼 배경색
