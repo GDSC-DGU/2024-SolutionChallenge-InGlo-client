@@ -8,6 +8,10 @@ import 'package:inglo/service/auth/google/google_sign.dart';
 import 'package:inglo/provider/test/counts.dart';
 import 'package:provider/provider.dart';
 
+// user
+import 'package:inglo/provider/profile/users.dart';
+
+
 void main() async {
   await WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -17,6 +21,7 @@ void main() async {
       providers: [
         // 아마 아래에 상태 변수들을 계속 추가하면 될 것 같다.
         ChangeNotifierProvider(create: (_) => Counts()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
       ],
       child: MyApp(),
     ),
