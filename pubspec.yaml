@@ -46,6 +46,7 @@ dependencies:
   google_sign_in: ^6.2.1
   pager: ^0.0.6
   http: ^1.2.0
+  google_sign_in_android: ^6.1.21
 
 dev_dependencies:
   flutter_test:

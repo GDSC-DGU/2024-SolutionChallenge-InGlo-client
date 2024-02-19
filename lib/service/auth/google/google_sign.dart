@@ -138,9 +138,7 @@ class _SignInDemoState extends State<SignInDemo> {
     return null;
   }
 
-  // 스프링 api post 코드!!!!!!!!!
   Future<void> _handlePostWithToken(String _token) async {
-    print('token : Bearer $_token');
     setState(() {
       _contactText = 'Sending data...';
     });
@@ -148,26 +146,37 @@ class _SignInDemoState extends State<SignInDemo> {
     final String token = _token;
     print('보낸 토큰 :  ${_token}');
 
-    final http.Response response = await http.post(
-      Uri.parse('https://dongkyeom.com/api/v1/accounts/login-success/'), // end point
-      body: json.encode(<String, String>{
-        'access_token': _token,
-      }),
-    );
-    // error
-    if (response.statusCode != 200) {
+    try {
+      final http.Response response = await http.post(
+        Uri.parse('https://dongkyeom.com/api/v1/accounts/login-success/'), // end point
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(<String, String>{
+          'access_token': _token,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // 성공
+        setState(() {
+          _contactText = 'success code : ${response.statusCode}';
+        });
+        print('success code :  ${response.statusCode}, response: ${response.body}');
+      } else {
+        // error but caught in non-200 status code
+        setState(() {
+          _contactText = 'error code :  ${response.statusCode}';
+        });
+        print('error code :  ${response.statusCode}, response: ${response.body}');
+      }
+    } catch (e) {
+      // error caught in try block
       setState(() {
-        _contactText = 'error code :  ${response.statusCode}';
+        _contactText = 'Exception caught: $e';
       });
-      print('error code :  ${response.statusCode}, response: ${response.body}');
-      return;
+      print('Exception caught: $e');
     }
-    // 성공
-    setState(() {
-      _contactText = 'success code : ${response.statusCode}';
-    });
-    print('success code :  ${response.statusCode}, response: ${response.body}');
-    return;
   }
 
   // This is the on-click handler for the Sign In button that is rendered by Flutter.
@@ -176,6 +185,9 @@ class _SignInDemoState extends State<SignInDemo> {
   // SDK, so this method can be considered mobile only.
   // #docregion SignIn
   Future<void> _handleSignIn() async {
+    // _googleSignIn.currentUser?.clearAuthCache();
+    // _googleSignIn.signInSilently();
+
     try {
       await _googleSignIn.signIn().then((result) {
         result?.authentication.then((googleKey) {
