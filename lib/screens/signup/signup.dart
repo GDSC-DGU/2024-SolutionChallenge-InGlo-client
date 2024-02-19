@@ -17,40 +17,40 @@ class AccountPage extends StatefulWidget {
 // LoginPage 클래스
 class _AccountPageState extends State<AccountPage> {
   String _name = ''; // 사용자 이름 저장을 위한 변수
-  String _country = ''; // 국가 저장을 위한 변수
-  String _language = ''; // 언어 저장을 위한 변수
+  String _country = 'country1'; // 국가 저장을 위한 변수
+  String _language = 'en'; // 언어 저장을 위한 변수
 
-  // POST 요청을 함수
-  Future<void> submitData(String name, String country, String language) async {
-    print(name);
-    print(country);
-    print(language);
+  // 유저 정보 전송 api
+  Future<void> _handlePost() async {
+    final url = "https://dongkyeom.com/api/v1/accounts/info/";
+    Map<String, String> data = {
+      "name": _name,
+      "country": _country,
+      "language": _language,
+    };
 
-    var url = Uri.parse('https://dongkyeom.com/api/v1/accounts/info/language/'); // 실제 API URL로 변경하세요.
+    Map<String, String> headers = {
+      "Content-Type": 'application/json',
+      "Authorization": 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MzUzOTc5LCJpYXQiOjE3MDgzNTAzNzksImp0aSI6Ijg4YjM5ZTE3Y2RlMzRmY2FhZjZmZjI1NTRiMjVlNDdkIiwidXNlcl9pZCI6M30.Wjxayhs_Zk_locENQ9Yyzz4G1yh4_z7uQBkIVYwGeVI',
+    };
+
     try {
-
-      var body = {
-        'name': name,
-        'country': country,
-        'language': language,
-      };
-
-      var response = await http.post(
-        url,
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer",
-        },
-        body: jsonEncode(<String, String>{
-          'name': name,
-          'country': country,
-          'language': language,
-        }),
+      final http.Response response = await http.patch(
+        Uri.parse(url), // URL 파싱
+        headers: headers,
+        body: json.encode(data), // 데이터 JSON 인코딩
       );
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        // 성공
+        print('Success code: ${response.statusCode}, response: ${response.body}');
+      } else {
+        // 비-200 상태 코드
+        print('Error code: ${response.statusCode}, response: ${response.body}');
+      }
     } catch (e) {
-      print("Error sending data: $e");
+      // 예외 처리
+      print('Exception caught: $e');
     }
   }
 
@@ -172,9 +172,7 @@ class _AccountPageState extends State<AccountPage> {
                     SizedBox(height: 100.0),
                     // Login Button
                     FilledButton(
-                      onPressed: () {
-                        submitData(_name, 'country1', 'en'); // 버튼 클릭 시 서버로 데이터 전송
-                      },
+                      onPressed: _handlePost,
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Color(0xFFFFD691)), // 버튼 배경색
                         minimumSize: MaterialStateProperty.all(Size(400, 40)), // 버튼 사이즈
