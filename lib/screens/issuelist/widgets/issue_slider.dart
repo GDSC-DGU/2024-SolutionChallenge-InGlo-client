@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:inglo/screens/issue_detail/issue_detail.dart';
+import 'package:inglo/service/issuelist/issuelist.dart';
 
 // 더미데이터
 final List<String> imgList = [
@@ -17,14 +18,17 @@ class IssueSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: CarouselSlider(
+    return FutureBuilder(
+      future: IssueTop3Service().getIssueTop3(),
+      builder: (context, snapshot) {
+        var data = snapshot.data!;
+        return CarouselSlider(
         options: CarouselOptions(
           autoPlay: true,
           aspectRatio: 2.0,
           enlargeCenterPage: true,
         ),
-        items: imgList
+        items: data
             .map((item) => InkWell(
                   onTap: () {
                     Navigator.of(context).push(
@@ -40,7 +44,7 @@ class IssueSlider extends StatelessWidget {
                             const BorderRadius.all(Radius.circular(5.0)),
                         child: Stack(
                           children: <Widget>[
-                            Image.network(item,
+                            Image.network(item.imageUrl,
                                 fit: BoxFit.cover, width: 1000.0),
                             Positioned(
                               bottom: 0.0,
@@ -59,11 +63,11 @@ class IssueSlider extends StatelessWidget {
                                 ),
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 15.0, horizontal: 20.0),
-                                child: const Column(
+                                child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      '이슈 제목 넣기',
+                                      item.title,
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 20.0,
@@ -71,7 +75,7 @@ class IssueSlider extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      '이슈 설명 넣기',
+                                      item.description.substring(10),
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 13.0,
@@ -87,7 +91,7 @@ class IssueSlider extends StatelessWidget {
                   ),
                 ))
             .toList(),
-      ),
+      );},
     );
   }
 }
