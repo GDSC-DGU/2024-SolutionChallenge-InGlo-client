@@ -34,12 +34,12 @@ class PercentWidget extends StatelessWidget {
                 SizedBox(height: 70,),
                 Text(
                   text,
-                  style: GoogleFonts.notoSans(fontWeight: FontWeight.w400, fontSize: 12),
+                  style: GoogleFonts.notoSans(fontWeight: FontWeight.w300, fontSize: 12),
                 ),
                 buildDivider(),
                 Text(
                   'Global impact',
-                  style: GoogleFonts.notoSans(fontWeight: FontWeight.w400, fontSize: 12),
+                  style: GoogleFonts.notoSans(fontWeight: FontWeight.w300, fontSize: 12),
                 ),
               ],
             ),
