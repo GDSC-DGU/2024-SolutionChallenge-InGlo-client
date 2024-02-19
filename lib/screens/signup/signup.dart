@@ -8,6 +8,7 @@ import 'package:inglo/util/options/language_data.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:dio/dio.dart';
 
 class AccountPage extends StatefulWidget {
   @override
@@ -16,43 +17,45 @@ class AccountPage extends StatefulWidget {
 
 // LoginPage 클래스
 class _AccountPageState extends State<AccountPage> {
+  final dio = Dio(); // dio instance 생성
+
   String _name = ''; // 사용자 이름 저장을 위한 변수
-  String _country = 'country1'; // 국가 저장을 위한 변수
+  int _country = int.parse('2'); // 국가 저장을 위한 변수
   String _language = 'en'; // 언어 저장을 위한 변수
 
-  // 유저 정보 전송 api
+  // 유저 정보 전송 API
   Future<void> _handlePost() async {
     final url = "https://dongkyeom.com/api/v1/accounts/info/";
-    Map<String, String> data = {
+    Map<String, dynamic> data = {
       "name": _name,
       "country": _country,
       "language": _language,
     };
 
-    Map<String, String> headers = {
-      "Content-Type": 'application/json',
-      "Authorization": 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MzUzOTc5LCJpYXQiOjE3MDgzNTAzNzksImp0aSI6Ijg4YjM5ZTE3Y2RlMzRmY2FhZjZmZjI1NTRiMjVlNDdkIiwidXNlcl9pZCI6M30.Wjxayhs_Zk_locENQ9Yyzz4G1yh4_z7uQBkIVYwGeVI',
-    };
+    // 요청 헤더 설정
+    Options options = Options(
+      contentType: Headers.jsonContentType,
+      headers: {
+        "Authorization": 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MzU5MzkzLCJpYXQiOjE3MDgzNTU3OTMsImp0aSI6IjA0MTk5MTdhOWVmYzQzNGE5ZjY2Y2ZjYzQxYjFjYjgxIiwidXNlcl9pZCI6M30.IwYMQTV4fE9b04P_BW50xsGvcoNY7shbO18aar3ohL0',
+      },
+    );
 
     try {
-      final http.Response response = await http.patch(
-        Uri.parse(url), // URL 파싱
-        headers: headers,
-        body: json.encode(data), // 데이터 JSON 인코딩
-      );
+      final response = await dio.patch(url, data: data, options: options);
 
       if (response.statusCode == 200) {
         // 성공
-        print('Success code: ${response.statusCode}, response: ${response.body}');
+        print('Success code: ${response.statusCode}, response: ${response.data}');
       } else {
         // 비-200 상태 코드
-        print('Error code: ${response.statusCode}, response: ${response.body}');
+        print('Error code: ${response.statusCode}, response: ${response.data}');
       }
     } catch (e) {
       // 예외 처리
       print('Exception caught: $e');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -178,11 +181,7 @@ class _AccountPageState extends State<AccountPage> {
                     SizedBox(height: 100.0),
                     // Login Button
                     FilledButton(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => GetProfilePage()),
-                        );
-                      },
+                      onPressed: _handlePost,
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Color(0xFFFFD691)), // 버튼 배경색
                         minimumSize: MaterialStateProperty.all(Size(400, 40)), // 버튼 사이즈
