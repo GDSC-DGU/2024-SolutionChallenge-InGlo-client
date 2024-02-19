@@ -12,8 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 /// The scopes required by this application.
 // #docregion Initialize
@@ -29,6 +27,15 @@ GoogleSignIn _googleSignIn = GoogleSignIn(
 );
 // #enddocregion Initialize
 
+void main() {
+  runApp(
+    const MaterialApp(
+      title: 'Google Sign In',
+      home: SignInDemo(),
+    ),
+  );
+}
+
 /// The SignInDemo app.
 class SignInDemo extends StatefulWidget {
   ///
@@ -42,7 +49,6 @@ class _SignInDemoState extends State<SignInDemo> {
   GoogleSignInAccount? _currentUser;
   bool _isAuthorized = false; // has granted permissions?
   String _contactText = '';
-  String? _accessToken; // accessToken을 저장할 변수
 
   @override
   void initState() {
@@ -64,6 +70,8 @@ class _SignInDemoState extends State<SignInDemo> {
         _isAuthorized = isAuthorized;
       });
 
+      print('isAuthoried : $isAuthorized');
+
       // Now that we know that the user can access the required scopes, the app
       // can call the REST API.
       if (isAuthorized) {
@@ -81,6 +89,7 @@ class _SignInDemoState extends State<SignInDemo> {
 
   // Calls the People API REST endpoint for the signed-in user to retrieve information.
   Future<void> _handleGetContact(GoogleSignInAccount user) async {
+    print('user : ${user}');
     setState(() {
       _contactText = 'Loading contact info...';
     });
@@ -109,38 +118,6 @@ class _SignInDemoState extends State<SignInDemo> {
     });
   }
 
-  // 스프링 api post 코드!!!!!!!!!
-  Future<void> _handlePostWithToken(String _token) async {
-    setState(() {
-      _contactText = 'Sending data...';
-    });
-
-    print('보낸 토큰 :  ${_token}');
-
-    var body = {
-      'access_token': _token,
-    };
-
-    final http.Response response = await http.post(
-      Uri.parse('https://dongkyeom.com/api/v1/accounts/login-success/'), // end point
-      body: body,
-    );
-    // error
-    if (response.statusCode != 200) {
-      setState(() {
-        _contactText = 'error code :  ${response.statusCode}';
-      });
-      print('error code :  ${response.statusCode}, response: ${response.body}');
-      return;
-    }
-    // 성공
-    setState(() {
-      _contactText = 'success code : ${response.statusCode}';
-    });
-    print('success code :  ${response.statusCode}, response: ${response.body}');
-    return;
-  }
-
   String? _pickFirstNamedContact(Map<String, dynamic> data) {
     final List<dynamic>? connections = data['connections'] as List<dynamic>?;
     final Map<String, dynamic>? contact = connections?.firstWhere(
@@ -161,6 +138,38 @@ class _SignInDemoState extends State<SignInDemo> {
     return null;
   }
 
+  // 스프링 api post 코드!!!!!!!!!
+  Future<void> _handlePostWithToken(String _token) async {
+    print('token : Bearer $_token');
+    setState(() {
+      _contactText = 'Sending data...';
+    });
+
+    final String token = _token;
+    print('보낸 토큰 :  ${_token}');
+
+    final http.Response response = await http.post(
+      Uri.parse('https://dongkyeom.com/api/v1/accounts/login-success/'), // end point
+      body: json.encode(<String, String>{
+        'access_token': _token,
+      }),
+    );
+    // error
+    if (response.statusCode != 200) {
+      setState(() {
+        _contactText = 'error code :  ${response.statusCode}';
+      });
+      print('error code :  ${response.statusCode}, response: ${response.body}');
+      return;
+    }
+    // 성공
+    setState(() {
+      _contactText = 'success code : ${response.statusCode}';
+    });
+    print('success code :  ${response.statusCode}, response: ${response.body}');
+    return;
+  }
+
   // This is the on-click handler for the Sign In button that is rendered by Flutter.
   //
   // On the web, the on-click handler of the Sign In button is owned by the JS
@@ -170,14 +179,12 @@ class _SignInDemoState extends State<SignInDemo> {
     try {
       await _googleSignIn.signIn().then((result) {
         result?.authentication.then((googleKey) {
-          setState(() {
-            _accessToken = googleKey.accessToken; // AccessToken 저장
-          });
-          print(_accessToken); // 토큰 출력
+          print(googleKey.accessToken); // 토큰 출력
           print(_googleSignIn.currentUser?.displayName); // 유저 이름
 
-          if (_accessToken != null) {
-            _handlePostWithToken(_accessToken!);
+          if (googleKey.accessToken != null) {
+            print('token : ${googleKey.accessToken}');
+            _handlePostWithToken(googleKey.accessToken!);
           } else {
             print('Access token is null');
           }
@@ -207,6 +214,7 @@ class _SignInDemoState extends State<SignInDemo> {
     setState(() {
       _isAuthorized = isAuthorized;
     });
+
     // #docregion RequestScopes
     if (isAuthorized) {
       unawaited(_handleGetContact(_currentUser!));
@@ -256,51 +264,17 @@ class _SignInDemoState extends State<SignInDemo> {
       );
     } else {
       // The user is NOT Authenticated
-      return Container(
-        // 배경 이미지를 넣기 위해 Scaffold를 Container로 감싸준다.
-        decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              repeat: ImageRepeat.noRepeat,
-              image: Svg(
-                'assets/image/background/background.svg',
-                // size: Size(10, 10), // size 지정 하던 안 하던 동일하다.
-              ),
-            )),
-        child: Scaffold(
-          // 배경 이미지를 위해 Scaffold의 배경색을 투명으로 한다.
-          backgroundColor: Colors.transparent,
-          // 수직 스크롤이 된다고 한다.
-          // 나중에 빼도 될 것 같다!
-          body: SingleChildScrollView(
-            child: Padding(
-              // 전체 padding
-              padding: const EdgeInsets.fromLTRB(60, 300, 60, 0),
-              child: Center(
-                child: Column(
-                  children: [
-                    SizedBox(height: 160.0),
-                    OutlinedButton(
-                      onPressed: _handleSignIn,
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.white), // 버튼 배경색
-                        minimumSize: MaterialStateProperty.all(Size(400, 40)), // 버튼 사이즈
-                        // 테두리 색상 설정
-                        side: MaterialStateProperty.all(BorderSide(color: Color(0xFFDADCE0), width: 1)),
-                      ),
-                      child: Text(
-                        "SIGNIN WITH GOOGLE",
-                        style: GoogleFonts.notoSans(
-                          fontSize: 16,
-                          color: Colors.black,),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          const Text('You are not currently signed in.'),
+          // This method is used to separate mobile from web code with conditional exports.
+          // See: src/sign_in_button.dart
+          ElevatedButton(
+            onPressed: _handleSignIn,
+            child: const Text('SIGN OUT'),
           ),
-        ),
+        ],
       );
     }
   }
@@ -308,6 +282,9 @@ class _SignInDemoState extends State<SignInDemo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: const Text('Google Sign In'),
+        ),
         body: ConstrainedBox(
           constraints: const BoxConstraints.expand(),
           child: _buildBody(),

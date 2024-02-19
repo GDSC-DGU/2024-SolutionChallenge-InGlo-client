@@ -6,9 +6,54 @@ import 'package:inglo/widgets/dropdown/borderdropdownbutton.dart';
 import 'package:inglo/util/options/country_data.dart';
 import 'package:inglo/util/options/language_data.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+class AccountPage extends StatefulWidget {
+  @override
+  _AccountPageState createState() => _AccountPageState();
+}
 
 // LoginPage 클래스
-class AccountPage extends StatelessWidget {
+class _AccountPageState extends State<AccountPage> {
+  String _name = ''; // 사용자 이름 저장을 위한 변수
+  String _country = ''; // 국가 저장을 위한 변수
+  String _language = ''; // 언어 저장을 위한 변수
+
+  // POST 요청을 함수
+  Future<void> submitData(String name, String country, String language) async {
+    print(name);
+    print(country);
+    print(language);
+
+    var url = Uri.parse('https://dongkyeom.com/api/v1/accounts/info/language/'); // 실제 API URL로 변경하세요.
+    try {
+
+      var body = {
+        'name': name,
+        'country': country,
+        'language': language,
+      };
+
+      var response = await http.post(
+        url,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer",
+        },
+        body: jsonEncode(<String, String>{
+          'name': name,
+          'country': country,
+          'language': language,
+        }),
+      );
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+    } catch (e) {
+      print("Error sending data: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -96,6 +141,11 @@ class AccountPage extends StatelessWidget {
                         contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 10,)
                       ),
                       style: GoogleFonts.notoSans(fontSize: 14),
+                      onChanged: (value) {
+                        setState(() {
+                          _name = value; // 사용자 입력에 따라 _name 변수의 값을 변경
+                        });
+                      },
                     ),
                     SizedBox(height: 15.0),
                     Padding(
@@ -123,9 +173,7 @@ class AccountPage extends StatelessWidget {
                     // Login Button
                     FilledButton(
                       onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => GetProfilePage()),
-                        );
+                        submitData(_name, 'country1', 'en'); // 버튼 클릭 시 서버로 데이터 전송
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Color(0xFFFFD691)), // 버튼 배경색
