@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/issuelist/issulist.dart';
+import 'package:dio/dio.dart';
 
 class GetProfilePage extends StatefulWidget {
   const GetProfilePage({Key? key}) : super(key: key);
@@ -14,17 +15,46 @@ class GetProfilePage extends StatefulWidget {
 class _GetProfilePageState extends State<GetProfilePage> {
   XFile? _image; //이미지를 담을 변수 선언
   final ImagePicker picker = ImagePicker(); //ImagePicker 초기화
+  final dio = Dio();
 
-  //이미지를 가져오는 함수
+  // 이미지를 가져오는 함수
   Future getImage(ImageSource imageSource) async {
-    //pickedFile에 ImagePicker로 가져온 이미지가 담긴다.
     final XFile? pickedFile = await picker.pickImage(source: imageSource);
     if (pickedFile != null) {
       setState(() {
-        _image = XFile(pickedFile.path); //가져온 이미지를 _image에 저장
+        _image = XFile(pickedFile.path); // 가져온 이미지를 _image에 저장
       });
+      uploadImage(); // 이미지를 서버에 전송하는 함수 호출
     }
   }
+
+  // 이미지를 서버에 전송하는 함수
+  Future<void> uploadImage() async {
+    if (_image == null) return;
+    String fileName = _image!.path.split('/').last;
+
+    try {
+      FormData formData = FormData.fromMap({
+        "file": await MultipartFile.fromFile(_image!.path, filename: fileName),
+      });
+
+      dio.options.headers = {
+        'Content-Type': 'multipart/form-data',
+        'token': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MzUzOTc5LCJpYXQiOjE3MDgzNTAzNzksImp0aSI6Ijg4YjM5ZTE3Y2RlMzRmY2FhZjZmZjI1NTRiMjVlNDdkIiwidXNlcl9pZCI6M30.Wjxayhs_Zk_locENQ9Yyzz4G1yh4_z7uQBkIVYwGeVI', // 필요한 토큰이나 인증 정보를 여기에 추가
+      };
+
+      var response = await dio.patch(
+        'https://dongkyeom.com/api/v1/accounts/info/profile-img/',
+        data: formData,
+      );
+
+      print('성공적으로 업로드했습니다: ${response.statusCode}');
+    } catch (e) {
+      print('이미지 업로드 실패: $e');
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
