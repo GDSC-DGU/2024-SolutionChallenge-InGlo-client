@@ -4,7 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:inglo/screens/solution_sketch/widgets/solution_sketch_btn.dart';
 import 'package:inglo/screens/solution_sketch/widgets/solution_sketch_img.dart';
 import 'package:inglo/screens/solution_sketch/widgets/solution_sketch_input.dart';
-import 'package:inglo/widgets/design_steps.dart';
+import 'package:inglo/widgets/design/design_steps.dart';
 
 class SolutionSketchPage extends StatefulWidget {
   const SolutionSketchPage({super.key});

@@ -6,7 +6,7 @@ import 'package:inglo/screens/hmw/widgets/multiple_design_card.dart';
 import 'package:inglo/screens/problem_definition/problem_choose.dart';
 import 'package:inglo/screens/problem_definition/problem_write.dart';
 import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
-import 'package:inglo/widgets/design_steps.dart';
+import 'package:inglo/widgets/design/design_steps.dart';
 
 class HMWListPage extends StatefulWidget {
   const HMWListPage({super.key});

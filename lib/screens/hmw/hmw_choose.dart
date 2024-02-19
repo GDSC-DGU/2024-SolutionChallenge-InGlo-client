@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/hmw/widgets/check_design_paper.dart';
 import 'package:inglo/screens/problem_definition/problem_write.dart';
 import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
-import 'package:inglo/widgets/design_steps.dart';
+import 'package:inglo/widgets/design/design_steps.dart';
 
 class HMWChoosePage extends StatefulWidget {
   const HMWChoosePage({super.key});

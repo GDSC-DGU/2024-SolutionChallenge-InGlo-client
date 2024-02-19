@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/solution_sketch/widgets/solution_drawing_board.dart';
-import 'package:inglo/widgets/design_steps.dart';
+import 'package:inglo/widgets/design/design_steps.dart';
+import 'package:scribble/scribble.dart';
 
-class SolutionDrawingPage extends StatelessWidget {
+class SolutionDrawingPage extends StatefulWidget {
   const SolutionDrawingPage({super.key});
+
+  @override
+  State<SolutionDrawingPage> createState() => _SolutionDrawingPageState();
+}
+
+class _SolutionDrawingPageState extends State<SolutionDrawingPage> {
+  late ScribbleNotifier notifier;
+
+  @override
+  void initState() {
+    notifier = ScribbleNotifier();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,24 +35,12 @@ class SolutionDrawingPage extends StatelessWidget {
         ),
         backgroundColor: Color(0xFFF7EEDE),
         actions: <Widget>[
-          // IconButton(
-          //   icon: const Icon(
-          //     Icons.help_outline,
-          //     size: 25,
-          //   ),
-          //   tooltip: 'Show Snackbar', // icon 설명 tooltip
-          //   onPressed: () {
-          //     // 클릭하면 메시지를 띄운다.
-          //     ScaffoldMessenger.of(context)
-          //         .showSnackBar(const SnackBar(content: Text('설명 내용 넣기')));
-          //   },
-          // ),
           Container(
             margin:
             const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             alignment: Alignment.centerRight,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () => _saveImage(context),
               style: ElevatedButton.styleFrom(
                 elevation: 0,
                 side: BorderSide(
@@ -66,11 +68,21 @@ class SolutionDrawingPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-
-              SolutionDrawingBoard(),
+              SolutionDrawingBoard(notifier: notifier,),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Future<void> _saveImage(BuildContext context) async {
+    final image = await notifier.renderImage();
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Your Image", style: GoogleFonts.notoSans(fontWeight: FontWeight.w700, fontSize: 20,),),
+        content: Image.memory(image.buffer.asUint8List()),
       ),
     );
   }

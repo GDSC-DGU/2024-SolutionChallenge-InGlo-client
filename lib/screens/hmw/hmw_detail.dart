@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/hmw/hmw_choose.dart';
+import 'package:inglo/screens/hmw/hmw_write.dart';
 import 'package:inglo/screens/hmw/widgets/design_paper.dart';
-import 'package:inglo/screens/problem_definition/problem_write.dart';
 import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
-import 'package:inglo/widgets/design_steps.dart';
+import 'package:inglo/widgets/design/design_steps.dart';
 
 class HMWDetailPage extends StatefulWidget {
   const HMWDetailPage({super.key});
@@ -111,7 +111,7 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
                           onPressed: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => const ProblemWrite(),
+                                builder: (context) => const HMWWrite(),
                               ),
                             );
                           },

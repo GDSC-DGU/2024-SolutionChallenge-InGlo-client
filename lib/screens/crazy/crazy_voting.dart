@@ -5,7 +5,7 @@ import 'package:inglo/screens/crazy/crazy_voting.dart';
 import 'package:inglo/screens/crazy/widgets/crazy_pagination.dart';
 import 'package:inglo/screens/problem_definition/problem_write.dart';
 import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
-import 'package:inglo/widgets/design_steps.dart';
+import 'package:inglo/widgets/design/design_steps.dart';
 
 class CrazyVotingPage extends StatefulWidget {
   const CrazyVotingPage({super.key});
@@ -16,26 +16,93 @@ class CrazyVotingPage extends StatefulWidget {
 
 class _CrazyVotingPageState extends State<CrazyVotingPage> {
   // 더미데이터
-  final List<Map<String, String>> problemList = [
-    {"content": "choose 3-5 problems"},
+  final problemList = [
     {
-      "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+      "id": "2",
+      "contents": [
+        {"id": "1", "content": "1choose 3-5 problems"},
+        {
+          "id": "2",
+          "content":
+              "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+        {"id": "3", "content": "choose 3-5 problems"},
+        {
+          "id": "4",
+          "content":
+              "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+        {"id": "5", "content": "choose 3-5 problems"},
+        {
+          "id": "6",
+          "content":
+              "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+        {"id": "7", "content": "choose 3-5 problems"},
+        {
+          "id": "8",
+          "content":
+              "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+      ],
     },
-    {"content": "choose 3-5 problems"},
     {
-      "content":
+      "id": "5",
+      "contents": [
+        {"id": "1", "content": "2choose 3-5 problems"},
+        {
+          "id": "2",
+          "content":
           "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+        {"id": "3", "content": "choose 3-5 problems"},
+        {
+          "id": "4",
+          "content":
+          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+        {"id": "5", "content": "choose 3-5 problems"},
+        {
+          "id": "6",
+          "content":
+          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+        {"id": "7", "content": "choose 3-5 problems"},
+        {
+          "id": "8",
+          "content":
+          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+      ],
     },
-    {"content": "choose 3-5 problems"},
     {
-      "content":
+      "id": "6",
+      "contents": [
+        {"id": "1", "content": "3choose 3-5 problems"},
+        {
+          "id": "2",
+          "content":
           "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-    },
-    {"content": "choose 3-5 problems"},
-    {
-      "content":
+        },
+        {"id": "3", "content": "choose 3-5 problems"},
+        {
+          "id": "4",
+          "content":
           "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+        {"id": "5", "content": "choose 3-5 problems"},
+        {
+          "id": "6",
+          "content":
+          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+        {"id": "7", "content": "choose 3-5 problems"},
+        {
+          "id": "8",
+          "content":
+          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+      ],
     },
   ];
 
@@ -101,7 +168,9 @@ class _CrazyVotingPageState extends State<CrazyVotingPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               DesignSteps(step: 3),
-              CrazyPagination(),
+              CrazyPagination(
+                problemList: problemList,
+              ),
               // Padding(
               //   padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
               //   child: MasonryGridView.count(

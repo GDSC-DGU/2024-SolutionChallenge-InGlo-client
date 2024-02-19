@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/widgets/design/write_card.dart';
 
-class ProblemWrite extends StatefulWidget {
-  const ProblemWrite({
+class CrazyWrite extends StatefulWidget {
+  const CrazyWrite({
     super.key,
   });
 
   @override
-  State<ProblemWrite> createState() => _ProblemWriteState();
+  State<CrazyWrite> createState() => _CrazyWriteState();
 }
 
-class _ProblemWriteState extends State<ProblemWrite> {
+class _CrazyWriteState extends State<CrazyWrite> {
 
 
   @override
@@ -24,7 +24,7 @@ class _ProblemWriteState extends State<ProblemWrite> {
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
         title: Text(
-          "Write problems",
+          "Write Crazy 8's",
           style: GoogleFonts.notoSans(
               color: Color(0xFF233A66),
               fontSize: 20,
