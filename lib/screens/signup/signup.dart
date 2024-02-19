@@ -72,6 +72,12 @@ class _AccountPageState extends State<AccountPage> {
         // 배경 이미지를 위해 Scaffold의 배경색을 투명으로 한다.
         // backgroundColor: Colors.transparent,
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios, size: 30,),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           backgroundColor: Colors.white,
         ),
         body: Stack(
@@ -172,7 +178,11 @@ class _AccountPageState extends State<AccountPage> {
                     SizedBox(height: 100.0),
                     // Login Button
                     FilledButton(
-                      onPressed: _handlePost,
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => GetProfilePage()),
+                        );
+                      },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Color(0xFFFFD691)), // 버튼 배경색
                         minimumSize: MaterialStateProperty.all(Size(400, 40)), // 버튼 사이즈
