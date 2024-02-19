@@ -29,15 +29,6 @@ GoogleSignIn _googleSignIn = GoogleSignIn(
 );
 // #enddocregion Initialize
 
-void main() {
-  runApp(
-    const MaterialApp(
-      title: 'Google Sign In',
-      home: SignInDemo(),
-    ),
-  );
-}
-
 /// The SignInDemo app.
 class SignInDemo extends StatefulWidget {
   ///
@@ -51,6 +42,7 @@ class _SignInDemoState extends State<SignInDemo> {
   GoogleSignInAccount? _currentUser;
   bool _isAuthorized = false; // has granted permissions?
   String _contactText = '';
+  String? _accessToken; // accessToken을 저장할 변수
 
   @override
   void initState() {
@@ -123,12 +115,12 @@ class _SignInDemoState extends State<SignInDemo> {
       _contactText = 'Sending data...';
     });
 
-    final String token = _token;
+    print('보낸 토큰 :  ${_token}');
 
     final http.Response response = await http.post(
-      Uri.parse('baseurl/api/accounts/google/login/'), // end point
+      Uri.parse('https://dongkyeom.com/api/v1/accounts/login-success/'), // end point
       body: json.encode(<String, String>{
-        'access_token': token,
+        'access_token': _token,
       }),
     );
     // error
@@ -136,14 +128,14 @@ class _SignInDemoState extends State<SignInDemo> {
       setState(() {
         _contactText = 'error code :  ${response.statusCode}';
       });
-      print('api code :  ${response.statusCode}, response: ${response.body}');
+      print('error code :  ${response.statusCode}, response: ${response.body}');
       return;
     }
     // 성공
     setState(() {
       _contactText = 'success code : ${response.statusCode}';
     });
-    print('api code :  ${response.statusCode}, response: ${response.body}');
+    print('success code :  ${response.statusCode}, response: ${response.body}');
     return;
   }
 
@@ -174,21 +166,30 @@ class _SignInDemoState extends State<SignInDemo> {
   // #docregion SignIn
   Future<void> _handleSignIn() async {
     try {
-      await _googleSignIn.signIn().then((result){
-        result?.authentication.then((googleKey){
-          print(googleKey.accessToken); // 토큰
-          print(googleKey.idToken); // null값 출력
+      await _googleSignIn.signIn().then((result) {
+        result?.authentication.then((googleKey) {
+          setState(() {
+            _accessToken = googleKey.accessToken; // AccessToken 저장
+          });
+          print(_accessToken); // 토큰 출력
           print(_googleSignIn.currentUser?.displayName); // 유저 이름
-        }).catchError((err){
+
+          if (_accessToken != null) {
+            _handlePostWithToken(_accessToken!);
+          } else {
+            print('Access token is null');
+          }
+        }).catchError((err) {
           print('inner error');
         });
-      }).catchError((err){
+      }).catchError((err) {
         print('error occured');
       });
     } catch (error) {
       print(error);
     }
   }
+
   // #enddocregion SignIn
 
   // Prompts the user to authorize `scopes`.
