@@ -51,7 +51,7 @@ class _AccountPageState extends State<AccountPage> {
       contentType: Headers.jsonContentType,
       headers: {
         "Authorization":
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MzY0MjkwLCJpYXQiOjE3MDgzNjA2OTAsImp0aSI6Ijk5ZGRmMzVhNGRmNzQ0MjQ5YmViMzM3ZTVjOTBlZGZkIiwidXNlcl9pZCI6M30.c0xebmaR4_iEoXuCHXwwv0NaJz39x9vLluxPLbJxo2k',
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MzY4MTQ3LCJpYXQiOjE3MDgzNjQ1NDcsImp0aSI6IjYyNzRjY2RjZjY1MzQ4NjU5NjYzOTQxZjVmMDMwNDc2IiwidXNlcl9pZCI6M30._-R-VopbH5kIv9YkbMGuARcOF9z4E2TwQiy0kq-d6Uw',
       },
     );
 

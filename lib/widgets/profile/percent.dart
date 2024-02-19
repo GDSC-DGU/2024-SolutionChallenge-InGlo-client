@@ -11,12 +11,13 @@ class PercentWidget extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     mainAxisAlignment: MainAxisAlignment.start,
     children: <Widget>[
-      percentButton(context, '${user.percent}',),
+      percentButton(context, '${user.global_impact} %',),
     ],
   );
   Widget buildDivider() => Container(
     width: 70,
     child: Divider(),
+
   );
 
   Widget percentButton(BuildContext context, String text) =>
@@ -36,6 +37,10 @@ class PercentWidget extends StatelessWidget {
                   style: GoogleFonts.notoSans(fontWeight: FontWeight.w400, fontSize: 12),
                 ),
                 buildDivider(),
+                Text(
+                  'Global impact',
+                  style: GoogleFonts.notoSans(fontWeight: FontWeight.w400, fontSize: 12),
+                ),
               ],
             ),
             SizedBox(width: 10,),

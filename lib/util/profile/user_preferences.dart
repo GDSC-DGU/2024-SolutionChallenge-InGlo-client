@@ -12,7 +12,7 @@ class UserPreferences {
     liked_total: 0,
     sketch_num: 0,
     feedback_total: 0,
-    percent: 0,
-    created_at: "2024-02-14T04:14:49.708735Z",
+    post_total: 0,
+    global_impact: 0.0,
   );
 }

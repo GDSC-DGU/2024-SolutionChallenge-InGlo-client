@@ -11,6 +11,12 @@ import 'package:inglo/widgets/profile/numbers_widget.dart';
 import 'package:inglo/widgets/profile/percent.dart';
 import 'package:inglo/widgets/profile/profile_widget.dart';
 import 'package:inglo/widgets/profile/button_widget.dart';
+import 'package:dio/dio.dart';
+// provider
+import 'package:provider/provider.dart';
+import 'package:inglo/provider/profile/users.dart';
+
+import 'dart:convert';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -18,9 +24,74 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final dio = Dio(); // dio instance 생성
+  User? _user;
+
+  // 임시 변수
+  /*
+  int _id = 0;
+  String _email = '';
+  String _name = '';
+  String _profile_img = '';
+  int _country = 0;
+  String _language = '';
+  int _liked_total = 0;
+  int _sketch_num = 0;
+  int _feedback_total = 0;
+  int _post_total = 0;
+  double _global_impact = 0;
+*/
+
+  // 초기 1번 실행
+  void initState() {
+    super.initState();
+    getProfile();
+  }
+
+  // 전체 update 함수
+  void updateSpecificUserInfo(BuildContext context, User newUser) {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    userProvider.updateUser(newUser);
+  }
+
+  // profile get 함수
+  Future<void> getProfile() async {
+    final url = "https://dongkyeom.com/api/v1/accounts/info/";
+
+    try {
+      final response = await dio.get(
+        url,
+        options: Options(
+          responseType: ResponseType.plain,
+          headers: {
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MzY4MTQ3LCJpYXQiOjE3MDgzNjQ1NDcsImp0aSI6IjYyNzRjY2RjZjY1MzQ4NjU5NjYzOTQxZjVmMDMwNDc2IiwidXNlcl9pZCI6M30._-R-VopbH5kIv9YkbMGuARcOF9z4E2TwQiy0kq-d6Uw',
+          },
+        ),
+      );
+
+      String responseBody = response.data;
+
+      User user = parseUser(responseBody); // 받아온 데이터를 User 객체로 생성
+
+      setState(() {
+        _user = user; // _user 변수에 값을 할당하고 화면을 다시 그림
+      });
+
+      print('user : $user');
+
+      // 굳이 필요 없을 것 같기도..
+      updateSpecificUserInfo(context, user); // 전체 업데이트
+
+    } catch (e) {
+      // 요청 실패 또는 기타 에러 처리
+      print('Error fetching data: $e');
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    final user = UserPreferences.myUser;
 
     return Scaffold(
       body: Container(
@@ -39,22 +110,22 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  NumbersWidget(user: user),
+                  NumbersWidget(user: _user!),
                   Column(
                     children: [
                       ProfileWidget(
-                        imagePath: user.profile_img,
+                        imagePath: _user!.profile_img,
                       ),
                     ],
                   ),
-                  PercentWidget(user: user),
+                  PercentWidget(user: _user!),
                 ],
               ),
             ),
             const SizedBox(height: 24),
-            buildName(user),
+            buildName(_user!),
             const SizedBox(height: 20),
-            buildAbout(user),
+            buildAbout(_user!),
           ],
         ),
       ),
@@ -67,7 +138,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget buildName(User user) => Column(
         children: [
           Text(
-            user.name,
+            _user!.name,
             style: GoogleFonts.notoSans(fontWeight: FontWeight.w500, fontSize: 24),
           ),
         ],
