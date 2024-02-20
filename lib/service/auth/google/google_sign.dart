@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:dio/dio.dart';
+
 
 /// The scopes required by this application.
 // #docregion Initialize
@@ -27,15 +29,6 @@ GoogleSignIn _googleSignIn = GoogleSignIn(
 );
 // #enddocregion Initialize
 
-void main() {
-  runApp(
-    const MaterialApp(
-      title: 'Google Sign In',
-      home: SignInDemo(),
-    ),
-  );
-}
-
 /// The SignInDemo app.
 class SignInDemo extends StatefulWidget {
   ///
@@ -49,6 +42,8 @@ class _SignInDemoState extends State<SignInDemo> {
   GoogleSignInAccount? _currentUser;
   bool _isAuthorized = false; // has granted permissions?
   String _contactText = '';
+
+  final dio = Dio(); // dio instance 생성
 
   @override
   void initState() {
@@ -138,43 +133,39 @@ class _SignInDemoState extends State<SignInDemo> {
     return null;
   }
 
-  Future<void> _handlePostWithToken(String _token) async {
-    setState(() {
-      _contactText = 'Sending data...';
-    });
+  // google token 전송 api(500 출력 중)
+  Future<void> _handlePostGoogle(String _token) async {
+    print('전송 토큰 $_token');
+    final url = "https://dongkyeom.com/api/v1/accounts/login-success/";
+    Map<String, dynamic> data = {
+      "access_token": _token,
+    };
 
-    final String token = _token;
-    print('보낸 토큰 :  ${_token}');
+    // 요청 헤더 설정
+    Options options = Options(
+      contentType: Headers.jsonContentType,
+    );
 
     try {
-      final http.Response response = await http.post(
-        Uri.parse('https://dongkyeom.com/api/v1/accounts/login-success/'), // end point
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-        },
-        body: json.encode(<String, String>{
-          'access_token': _token,
-        }),
-      );
+      final response = await dio.post(url, data: data, options: options);
 
       if (response.statusCode == 200) {
         // 성공
-        setState(() {
-          _contactText = 'success code : ${response.statusCode}';
-        });
-        print('success code :  ${response.statusCode}, response: ${response.body}');
+        print(
+            'Success code: ${response.statusCode}, response: ${response.data}');
+
+        /*
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => GetProfilePage()), // 다음 페이지로 이동
+        );
+*/
       } else {
-        // error but caught in non-200 status code
-        setState(() {
-          _contactText = 'error code :  ${response.statusCode}';
-        });
-        print('error code :  ${response.statusCode}, response: ${response.body}');
+        // 비-200 상태 코드
+        print('Error code: ${response.statusCode}, response: ${response.data}');
       }
     } catch (e) {
-      // error caught in try block
-      setState(() {
-        _contactText = 'Exception caught: $e';
-      });
+      // 예외 처리
       print('Exception caught: $e');
     }
   }
@@ -196,7 +187,7 @@ class _SignInDemoState extends State<SignInDemo> {
 
           if (googleKey.accessToken != null) {
             print('token : ${googleKey.accessToken}');
-            _handlePostWithToken(googleKey.accessToken!);
+            _handlePostGoogle(googleKey.accessToken!);
           } else {
             print('Access token is null');
           }

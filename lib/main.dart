@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inglo/screens/postlist/post_board.dart';
 import 'package:inglo/screens/provider_test/test.dart';
 import 'package:inglo/screens/signup/signup.dart';
 import 'package:inglo/screens/start/start.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ProviderTest(),
+      home: PostBoardPage(),
       theme: ThemeData(
         // ThemeData를 사용하여 앱의 기본 테마를 설정합니다.
         textTheme: GoogleFonts.notoSansTextTheme(
