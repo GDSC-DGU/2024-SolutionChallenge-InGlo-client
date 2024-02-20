@@ -1,95 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:inglo/screens/post/detail_post.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/models/post/post_list.dart';
+import 'package:inglo/util/post/postlist.dart';
 
-// 더미데이터
-final List<Map<String, String>> itemData = [
-  {
-    "title": "제목1 엄청나게 길 때에는 어떻게 되는걸까아아아아아ㅏㅇ아아아ㅏ아아아ㅏ",
-    "content": "content 엄청나게 길 때에는 어떻게 되는걸까아아아아아ㅏ아아아아아아ㅏ앙",
-    "image":
-        "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80"
-  },
-  {
-    "title": "제목2",
-    "content": "content",
-    "image":
-        "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80"
-  },
-  {
-    "title": "제목3",
-    "content": "content",
-    "image":
-        "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80"
-  },
-  {
-    "title": "제목4",
-    "content": "content",
-    "image":
-        "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80"
-  },
-  {
-    "title": "제목1",
-    "content": "content",
-    "image":
-        "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80"
-  },
-  {
-    "title": "제목2",
-    "content": "content",
-    "image":
-        "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80"
-  },
-  {
-    "title": "제목3",
-    "content": "content",
-    "image":
-        "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80"
-  },
-  {
-    "title": "제목4",
-    "content": "content",
-    "image":
-        "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80"
-  },
-  {
-    "title": "제목1",
-    "content": "content",
-    "image":
-        "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80"
-  },
-  {
-    "title": "제목2",
-    "content": "content",
-    "image":
-        "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80"
-  },
-  {
-    "title": "제목3",
-    "content": "content",
-    "image":
-        "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80"
-  },
-  {
-    "title": "제목4",
-    "content": "content",
-    "image":
-        "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80"
-  },
-];
-
-// 선
+// 선 위젯
 Widget buildDivider(BuildContext context) => Container(
       width: MediaQuery.of(context).size.width,
       child: Divider(),
     );
 
-class PostItem extends StatelessWidget {
-  const PostItem({super.key});
+class PostItem extends StatefulWidget {
+  const PostItem({Key? key}) : super(key: key);
+
+  @override
+  _PostItemState createState() => _PostItemState();
+}
+
+class _PostItemState extends State<PostItem> {
+  // 기존의 StatelessWidget 내부 로직을 여기로 옮깁니다.
+  final _listItem = PostListPreferences.listItem;
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> itemListData = itemData.map((item) {
+    final List<Widget> itemListData = _listItem.map((item) {
       return InkWell(
         onTap: () {
           Navigator.of(context).push(
@@ -121,7 +55,7 @@ class PostItem extends StatelessWidget {
                                   Container(
                                     width: MediaQuery.of(context).size.width * 0.8,
                                     child: Text(
-                                      item["title"]!,
+                                      item.title!,
                                       style: GoogleFonts.notoSans(
                                           fontSize: 14,
                                           color: Colors.black,
@@ -139,19 +73,19 @@ class PostItem extends StatelessWidget {
                                       // ClipRRect를 사용하여 이미지도 borderRadius를 적용
                                       borderRadius: BorderRadius.circular(100),
                                       child: Image.asset(
-                                        'assets/image/sdgs/sdgs1.png',
+                                        getSdgsImage(item.sdgs),
                                         width: 20,
                                         height: 20,
                                         fit: BoxFit.cover, // container에 딱 맞게
                                       ),
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                               Container(
                                   width: 200,
                                   child: Text(
-                                    item["content"]!,
+                                    item.content!,
                                     style: GoogleFonts.notoSans(
                                         fontSize: 14,
                                         color: Colors.black,
@@ -168,7 +102,7 @@ class PostItem extends StatelessWidget {
                                     Row(
                                       children: [
                                         Text(
-                                          '7분전 | 익명',
+                                          '${item.created_at} | ${item.user}',
                                           style: GoogleFonts.notoSans(
                                               fontSize: 12,
                                               color: Colors.grey,
@@ -184,23 +118,12 @@ class PostItem extends StatelessWidget {
                                           size: 12.0,
                                         ),
                                         Text(
-                                          "12",
+                                          '${item.likes}',
                                           style: GoogleFonts.notoSans(
                                             fontSize: 12,
                                           ),
                                         ),
                                         SizedBox(width: 5),
-                                        Icon(
-                                          Icons.visibility_outlined,
-                                          color: Color(0xFFD7A859),
-                                          size: 12.0,
-                                        ),
-                                        Text(
-                                          "12",
-                                          style: GoogleFonts.notoSans(
-                                            fontSize: 12,
-                                          ),
-                                        ),
                                       ],
                                     ),
                                   ],
@@ -227,5 +150,47 @@ class PostItem extends StatelessWidget {
         children: itemListData,
       ),
     );
+  }
+}
+
+// sdgs 이미지 반환 로직
+String getSdgsImage(int index) {
+  switch (index) {
+    case 1:
+      return 'assets/image/sdgs/sdgs1.png';
+    case 2:
+      return 'assets/image/sdgs/sdgs2.png';
+    case 3:
+      return 'assets/image/sdgs/sdgs3.png';
+    case 4:
+      return 'assets/image/sdgs/sdgs4.png';
+    case 5:
+      return 'assets/image/sdgs/sdgs5.png';
+    case 6:
+      return 'assets/image/sdgs/sdgs6.png';
+    case 7:
+      return 'assets/image/sdgs/sdgs7.png';
+    case 8:
+      return 'assets/image/sdgs/sdgs8.png';
+    case 9:
+      return 'assets/image/sdgs/sdgs9.png';
+    case 10:
+      return 'assets/image/sdgs/sdgs10.png';
+    case 11:
+      return 'assets/image/sdgs/sdgs11.png';
+    case 12:
+      return 'assets/image/sdgs/sdgs12.png';
+    case 13:
+      return 'assets/image/sdgs/sdgs13.png';
+    case 14:
+      return 'assets/image/sdgs/sdgs14.png';
+    case 15:
+      return 'assets/image/sdgs/sdgs15.png';
+    case 16:
+      return 'assets/image/sdgs/sdgs16.png';
+    case 17:
+      return 'assets/image/sdgs/sdgs17.png';
+    default:
+      return 'assets/image/sdgs/sdgs1.png'; // 기본 이미지 경로
   }
 }
