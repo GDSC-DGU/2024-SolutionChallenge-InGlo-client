@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SolutionSketchImg extends StatelessWidget {
-  final XFile? imageData;
+  final File? imageData;
   final deleteImage;
   const SolutionSketchImg({required this.imageData, required this.deleteImage, super.key});
 
@@ -24,7 +24,7 @@ class SolutionSketchImg extends StatelessWidget {
           ),
           child: ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-              child: Image.file(File(imageData!.path), fit: BoxFit.cover, width: 150.0)),
+              child: Image.file(imageData!, fit: BoxFit.cover, width: 150.0)),
         ),
         Positioned(
           top: -5,

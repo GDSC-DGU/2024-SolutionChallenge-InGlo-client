@@ -46,6 +46,7 @@ dependencies:
   google_sign_in: ^6.2.1
   http: ^1.2.0
   pager: ^0.0.6
+  path_provider: ^2.1.2
 
 dev_dependencies:
   flutter_test:

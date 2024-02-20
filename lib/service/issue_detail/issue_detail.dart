@@ -58,7 +58,7 @@ class IssueDetailService {
       );
 
       print("issue_detail_like: ${response.body}");
-      if (response.statusCode == 201) {
+      if (response.statusCode == 201 || response.statusCode == 204) {
         onClickLike();
         print("성공");
       } else {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/solution_sketch/widgets/solution_drawing_board.dart';
-import 'package:inglo/widgets/design/design_steps.dart';
 import 'package:scribble/scribble.dart';
 
 class SolutionDrawingPage extends StatefulWidget {
-  const SolutionDrawingPage({super.key});
+  final finishDrawing;
+  const SolutionDrawingPage({required this.finishDrawing, super.key});
 
   @override
   State<SolutionDrawingPage> createState() => _SolutionDrawingPageState();
@@ -22,6 +22,22 @@ class _SolutionDrawingPageState extends State<SolutionDrawingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final finishDrawing = widget.finishDrawing;
+
+    Future<void> saveImage(BuildContext context) async {
+      final image = await notifier.renderImage();
+      finishDrawing(image);
+      Navigator.pop(context);
+      // Navigator.pop(context, image.buffer.asUint8List());
+      // showDialog(
+      //   context: context,
+      //   builder: (context) => AlertDialog(
+      //     title: Text("Your Image", style: GoogleFonts.notoSans(fontWeight: FontWeight.w700, fontSize: 20,),),
+      //     content: Image.memory(image.buffer.asUint8List()),
+      //   ),
+      // );
+    }
+
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
@@ -40,7 +56,7 @@ class _SolutionDrawingPageState extends State<SolutionDrawingPage> {
             const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             alignment: Alignment.centerRight,
             child: ElevatedButton(
-              onPressed: () => _saveImage(context),
+              onPressed: () => saveImage(context),
               style: ElevatedButton.styleFrom(
                 elevation: 0,
                 side: BorderSide(
@@ -74,16 +90,8 @@ class _SolutionDrawingPageState extends State<SolutionDrawingPage> {
         ),
       ),
     );
+
   }
 
-  Future<void> _saveImage(BuildContext context) async {
-    final image = await notifier.renderImage();
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text("Your Image", style: GoogleFonts.notoSans(fontWeight: FontWeight.w700, fontSize: 20,),),
-        content: Image.memory(image.buffer.asUint8List()),
-      ),
-    );
-  }
+
 }
