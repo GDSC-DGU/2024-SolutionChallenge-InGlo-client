@@ -17,7 +17,10 @@ class BarModal extends StatelessWidget {
               onPressed: () {},
               child: Text(
                 'See Sketch',
-                style: GoogleFonts.notoSans(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w700),
+                style: GoogleFonts.notoSans(
+                    fontSize: 14,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700),
               ),
               style: FilledButton.styleFrom(
                 backgroundColor: Color(0xFFD7A859),
@@ -25,37 +28,48 @@ class BarModal extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           InkWell(
-              onTap: () => showBarModalBottomSheet(
-                expand: false,
-                context: context,
-                backgroundColor: Colors.transparent,
-                builder: (context) => Comments(),
+            onTap: () => showBarModalBottomSheet(
+              expand: false,
+              context: context,
+              backgroundColor: Colors.transparent,
+              builder: (context) => Comments(),
+            ),
+            child: Container(
+              width: 150,
+              height: 40,
+              decoration: BoxDecoration(
+                color: Color(0xFF233A66),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
               child: Container(
-                width: 150,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Color(0xFF233A66),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                child: Container(
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween, // 중앙 정렬
-                        children: [
-                          Text('Feedbacks', style: GoogleFonts.notoSans(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w700)),
-                          Icon(Icons.send, color: Colors.white, size: 20,),
-                        ],
-                      ),
+                child: Center(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // 중앙 정렬
+                      children: [
+                        Text('Feedbacks',
+                            style: GoogleFonts.notoSans(
+                                fontSize: 14,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700)),
+                        Icon(
+                          Icons.send,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                      ],
                     ),
                   ),
                 ),
-
               ),
+            ),
           ),
         ],
       ),

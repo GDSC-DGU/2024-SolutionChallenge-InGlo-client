@@ -10,13 +10,48 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:inglo/models/post/detail_post.dart'; // model
 import 'package:inglo/util/post/detailpost.dart'; // util
 
+import 'package:dio/dio.dart';
+
 class DetailPost extends StatefulWidget {
   @override
   _DetailPostState createState() => _DetailPostState();
 }
 
 class _DetailPostState extends State<DetailPost> {
+  final dio = Dio(); // dio instance 생성
   final detail = DetailPostPreferences.detailPost;
+
+  // 초기 1번 실행
+  void initState() {
+    super.initState();
+    getDetail();
+  }
+
+  // profile get 함수
+  Future<void> getDetail() async {
+    final url = "https://dongkyeom.com/api/v1/posts/{post_id}";
+
+    try {
+      final response = await dio.get(
+        url,
+        options: Options(
+          responseType: ResponseType.plain,
+          headers: {
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTcxMDcwLCJpYXQiOjE3MDg0MjcwNzAsImp0aSI6IjNhNTJjOTkzODczNTRiNmM4NzNlYjc4MzU0NDNmOWVlIiwidXNlcl9pZCI6M30.d7lTdqfIBZuskzHKBvclwYKNeVE4-SepdmPggZghMSM',
+          },
+        ),
+      );
+
+      String responseBody = response.data;
+
+      print('user : ${responseBody}');
+
+    } catch (e) {
+      // 요청 실패 또는 기타 에러 처리
+      print('Error fetching data: $e');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -120,10 +155,10 @@ class _DetailPostState extends State<DetailPost> {
             ),
                 Positioned(
                   bottom: 20,
-                  left: 0,
+                  left: 20,
                   right: 20,
                   child: SizedBox(
-                    height: 40,
+                    height: 100,
                     child: BarModal(),
                   ),
                 ),
