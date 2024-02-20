@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: SignInDemo(),
+      home: PostBoardPage(),
       theme: ThemeData(
         // ThemeData를 사용하여 앱의 기본 테마를 설정합니다.
         textTheme: GoogleFonts.notoSansTextTheme(
