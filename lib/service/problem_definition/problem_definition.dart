@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:inglo/models/problem_definition/problem_definition.dart';
 import 'package:http/http.dart' as http;
 import 'package:inglo/screens/hmw/hmw_detail.dart';
+import 'package:inglo/screens/problem_definition/problem_definition.dart';
 import 'package:inglo/service/issue_detail/issue_detail.dart';
 
 
@@ -56,7 +57,6 @@ class ProblemDefinitionService {
       final http.Response response = await http.post(
         coreUrl,
         headers: {
-          //'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Authorization':
           'Bearer $token',
@@ -69,6 +69,44 @@ class ProblemDefinitionService {
       print("problem_definition_write: ${response.body}");
       if (response.statusCode == 201) {
         print("성공");
+        // 화면 전환 어케 했는지 물어보깅!
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ProblemDefinitionPage(sdgs: sdgs),
+          ),
+        );
+      } else {
+        print('statusCode: ${response.statusCode}');
+      }
+    } catch (e) {
+    // 예외 처리
+      print('Exception caught: $e');
+    }
+
+    throw Error();
+  }
+
+  // problem definition 선택
+  Future<void> postProblemChoose(int sdgs, int problemId, BuildContext context) async {
+    print("${sdgs}, ${problemId}");
+    final coreUrl =
+    Uri.parse("https://dongkyeom.com/api/v1/sketches/");
+    try {
+      final http.Response response = await http.post(
+          coreUrl,
+          headers: {
+            'Accept': 'application/json',
+            'Authorization':
+            'Bearer $token',
+          },
+          body: {
+            "problem_id": problemId.toString(),
+          }
+      );
+
+      print("problem_definition_choose: ${response.body}");
+      if (response.statusCode == 201) {
+        print("성공");
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => HMWDetailPage(sdgs: sdgs),
@@ -78,7 +116,7 @@ class ProblemDefinitionService {
         print('statusCode: ${response.statusCode}');
       }
     } catch (e) {
-    // 예외 처리
+      // 예외 처리
       print('Exception caught: $e');
     }
 

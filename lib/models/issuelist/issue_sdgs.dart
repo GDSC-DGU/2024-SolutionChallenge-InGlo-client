@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class IssueSdgsModel {
   int id;
   int views;

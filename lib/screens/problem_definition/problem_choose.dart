@@ -3,6 +3,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/hmw/hmw_list.dart';
 import 'package:inglo/screens/problem_definition/widgets/check_design_card.dart';
+import 'package:inglo/service/problem_definition/problem_definition.dart';
 import 'package:inglo/widgets/design/design_steps.dart';
 
 class ProblemChoosePage extends StatefulWidget {
@@ -14,7 +15,7 @@ class ProblemChoosePage extends StatefulWidget {
 }
 
 class _ProblemChoosePageState extends State<ProblemChoosePage> {
-  String checkedId = "0"; // 나중에 int로 바꾸기!
+  int checkedId = 0; // 선택한 아이디값 (선택안될 때는 0값)
 
   // 더미데이터
   final List<Map<String, String>> problemList = [
@@ -82,36 +83,41 @@ class _ProblemChoosePageState extends State<ProblemChoosePage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               DesignSteps(step: 1, sdgs: sdgs,),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 10,
-                ),
-                child: MasonryGridView.count(
-                  physics: BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: problemList.length,
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 1.0,
-                  mainAxisSpacing: 1.0,
-                  itemBuilder: (context, index) {
-                    return CheckDesignCard(
-                        id: problemList[index]["id"]!,
-                        checkedId: checkedId,
-                        checkCard: (id) {
-                          setState(() {
-                            if(checkedId == id) {
-                              checkedId = "0";
-                            } else {
-                              checkedId = id;
-                            }
-                          });
-                          print(id);
-                          print(checkedId);
-                        },
-                        content: problemList[index]["content"]!,);
-                  },
-                ),
+              FutureBuilder(
+                future: ProblemDefinitionService().getProblemDefinition(sdgs),
+                builder: (context, snapshot) {
+                  var data = snapshot.data!;
+                  return Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 10,
+                  ),
+                  child: MasonryGridView.count(
+                    physics: BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: data.length,
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 1.0,
+                    mainAxisSpacing: 1.0,
+                    itemBuilder: (context, index) {
+                      return CheckDesignCard(
+                          id: data[index].id,
+                          checkedId: checkedId,
+                          checkCard: (id) {
+                            setState(() {
+                              if(checkedId == id) {
+                                checkedId = 0;
+                              } else {
+                                checkedId = id;
+                              }
+                            });
+                            print(id);
+                            print(checkedId);
+                          },
+                          content: data[index].content,);
+                    },
+                  ),
+                ); },
               ),
               // Submit 버튼
             ],
@@ -122,14 +128,15 @@ class _ProblemChoosePageState extends State<ProblemChoosePage> {
         margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: ElevatedButton(
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => HMWListPage(),
-                settings: RouteSettings(
-                  arguments: ModalRoute.of(context)!.settings.arguments,
-                ),
-              ),
-            );
+            ProblemDefinitionService().postProblemChoose(sdgs, checkedId, context);
+            // Navigator.of(context).push(
+            //   MaterialPageRoute(
+            //     builder: (context) => HMWListPage(),
+            //     settings: RouteSettings(
+            //       arguments: ModalRoute.of(context)!.settings.arguments,
+            //     ),
+            //   ),
+            // );
           },
           style: ElevatedButton.styleFrom(
             elevation: 0,

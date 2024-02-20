@@ -22,6 +22,9 @@ class CheckDesignCard extends StatelessWidget {
       children: [
         Container(
           //width: 150,
+          constraints: BoxConstraints(
+            minWidth: 150,
+          ),
           margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
           decoration: BoxDecoration(

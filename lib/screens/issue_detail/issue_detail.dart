@@ -15,12 +15,19 @@ class IssueDetailPage extends StatefulWidget {
 }
 
 class _IssueDetailPageState extends State<IssueDetailPage> {
-  bool isBookMarked = false;
+  bool isLiked = false;
 
   @override
   Widget build(BuildContext context) {
+
+    onClickLike() {
+      setState(() {
+        isLiked = !isLiked;
+      });
+    }
+
     final int itemId = widget.itemId;
-    //print(argument?.issue_id);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -32,18 +39,31 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
                   future: IssueDetailService().getIssueDetail(itemId),
                   builder: (context, snapshot) {
                     var data = snapshot.data!;
+                    isLiked = data.userHasLiked;
                     return Container(
                       width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        image: DecorationImage(
-                          colorFilter: ColorFilter.mode(
-                              Colors.black54, BlendMode.darken),
-                          alignment: Alignment.topCenter,
-                          fit: BoxFit.fitWidth,
-                          image: AssetImage('assets/image/sdgs/sdgs1.png'),
-                        ),
-                      ),
+                      decoration: data.imageUrl != ""
+                          ? BoxDecoration(
+                              color: Colors.black45,
+                              image: DecorationImage(
+                                colorFilter: ColorFilter.mode(
+                                    Colors.black54, BlendMode.darken),
+                                alignment: Alignment.topCenter,
+                                fit: BoxFit.fitHeight,
+                                image: NetworkImage(data.imageUrl),
+                              ),
+                            )
+                          : BoxDecoration(
+                              color: Color(0xFFFFD691),
+                              gradient: LinearGradient(
+                                begin: Alignment.bottomCenter,
+                                end: Alignment.topCenter,
+                                colors: [
+                                  Colors.black54,
+                                  Colors.grey,
+                                ],
+                              ),
+                            ),
                       child: SafeArea(
                         //backgroundColor: Colors.transparent,
                         child: ConstrainedBox(
@@ -73,14 +93,12 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
                                       ),
                                       IconButton(
                                         onPressed: () {
-                                          setState(() {
-                                            isBookMarked = !isBookMarked;
-                                          });
+                                          IssueDetailService().postIssueLike(data.id, onClickLike);
                                         },
                                         icon: Icon(
-                                          isBookMarked
-                                              ? Icons.bookmark
-                                              : Icons.bookmark_outline,
+                                          isLiked
+                                              ? Icons.favorite
+                                              : Icons.favorite_border_outlined,
                                           size: 30,
                                           color: Color(0xFFFF6280),
                                         ),

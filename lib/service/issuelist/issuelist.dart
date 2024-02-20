@@ -24,7 +24,7 @@ class IssueTop3Service {
 
       print(response.body);
       if (response.statusCode == 200) {
-        final List<dynamic> data = jsonDecode(response.body);
+        final List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes)); // 글자 깨짐 문제 해결!
         for (var d in data) {
           dataInstance.add(IssueTop3Model.fromJson(d));
         }
@@ -62,7 +62,8 @@ class IssueSdgsService {
 
       print(response.body);
       if (response.statusCode == 200) {
-        final List<dynamic> data = jsonDecode(response.body);
+        final List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
+        // final List<dynamic> data = jsonDecode(response.body);
         for (var d in data) {
           dataInstance.add(IssueSdgsModel.fromJson(d));
         }
