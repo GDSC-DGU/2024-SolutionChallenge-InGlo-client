@@ -4,25 +4,25 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/models/comment/commnet.dart';
 import 'package:dio/dio.dart';
 
-import 'package:inglo/service/comment/comment_api.dart'; // api 호인스
+import 'package:inglo/service/comment/issue_comment_api.dart'; // api 호인스
 
-class Comments extends StatefulWidget {
+class IssueComments extends StatefulWidget {
   final int id;
 
   // 생성자를 통해 id를 전달 받는다.
-  const Comments({Key? key, required this.id}) : super(key: key);
+  const IssueComments({Key? key, required this.id}) : super(key: key);
 
   @override
-  _CommentsState createState() => _CommentsState();
+  _IssueCommentsState createState() => _IssueCommentsState();
 }
 
-class _CommentsState extends State<Comments> {
+class _IssueCommentsState extends State<IssueComments> {
   final dio = Dio(); // dio instance 생성
   final formKey = GlobalKey<FormState>();
   final TextEditingController commentController = TextEditingController();
-  final _parent_id = null; // 부모 피드백 아이디
+  final _parent_comment = null; // 부모 피드백 아이디
 
-  final CommentService _CommentService = CommentService(); // instance 생성
+  final IssueCommentService _CommentService = IssueCommentService(); // instance 생성
 
   @override
   void dispose() {
@@ -62,11 +62,11 @@ class _CommentsState extends State<Comments> {
   // 초기 1번 실행 / 피드백 조회
   void initState() {
     super.initState();
-    _CommentService.getFeedbacks('${widget.id}'); // id 전송
+    _CommentService.getComment('${widget.id}'); // id 전송
   }
 
   void _submitFeedback() {
-    _CommentService.postFeedback('${widget.id}', commentController.text, _parent_id); // 피드백 제출
+    _CommentService.postComment('${widget.id}', commentController.text, _parent_comment); // 피드백 제출
   }
 
   Widget commentChild(data) {

@@ -103,7 +103,7 @@ class _PostItemState extends State<PostItem> {
                                     Row(
                                       children: [
                                         Text(
-                                          '${item.created_at} | ${item.user}',
+                                          '${item.created_at} | ${item.user_name}',
                                           style: GoogleFonts.notoSans(
                                               fontSize: 12,
                                               color: Colors.grey,

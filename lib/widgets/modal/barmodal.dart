@@ -4,6 +4,10 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BarModal extends StatelessWidget {
+  final int id;
+
+  const BarModal({Key? key, required this.id}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +41,7 @@ class BarModal extends StatelessWidget {
               expand: false,
               context: context,
               backgroundColor: Colors.transparent,
-              builder: (context) => Comments(),
+              builder: (context) => Comments(id: id),
             ),
             child: Container(
               width: 150,

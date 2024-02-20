@@ -74,7 +74,7 @@ class _DetailPostState extends State<DetailPost> {
         isLoading = false; // 데이터를 받아온 후 로딩 상태 해제
         detailPost = jsonResponse;
         if (detailPost != null) {
-          print('post : ${detailPost!['id']}'); // null 검사 후 값에 접근
+          print('post : ${detailPost!['feedbacks']}'); // null 검사 후 값에 접근
         }
       });
 
@@ -82,6 +82,38 @@ class _DetailPostState extends State<DetailPost> {
     } catch (e) {
       // 요청 실패 또는 기타 에러 처리
       print('Error fetching data: $e');
+    }
+  }
+
+
+  // post likes / 포스트 좋아요 누르기
+  Future<void> PostLike() async {
+    final url = "https://dongkyeom.com/api/v1/posts/${widget.id}/like/";
+
+    // 요청 헤더 설정
+    Options options = Options(
+      contentType: Headers.jsonContentType,
+      headers: {
+        "Authorization":
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTcxMDcwLCJpYXQiOjE3MDg0MjcwNzAsImp0aSI6IjNhNTJjOTkzODczNTRiNmM4NzNlYjc4MzU0NDNmOWVlIiwidXNlcl9pZCI6M30.d7lTdqfIBZuskzHKBvclwYKNeVE4-SepdmPggZghMSM',
+      },
+    );
+
+    try {
+      final response = await dio.post(url, options: options);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // 성공
+        print(
+            'Success code: ${response.statusCode}, response: ${response.data}');
+
+      } else {
+        // 비-200 상태 코드
+        print('Error code: ${response.statusCode}, response: ${response.data}');
+      }
+    } catch (e) {
+      // 예외 처리
+      print('Exception caught: $e');
     }
   }
 
@@ -230,7 +262,7 @@ class _DetailPostState extends State<DetailPost> {
                 right: 20,
                 child: SizedBox(
                   height: 40,
-                  child: BarModal(),
+                  child: BarModal(id: widget.id),
                 ),
               ),
             ],
