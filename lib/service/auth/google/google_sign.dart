@@ -133,11 +133,12 @@ class _SignInDemoState extends State<SignInDemo> {
     return null;
   }
 
+  /*
   // google token 전송 api(500 출력 중)
   Future<void> _handlePostGoogle(String _token) async {
     print('전송 토큰 $_token');
     final url = "https://dongkyeom.com/api/v1/accounts/login-success/";
-    Map<String, dynamic> data = {
+    Map<String, String> data = {
       "access_token": _token,
     };
 
@@ -169,7 +170,33 @@ class _SignInDemoState extends State<SignInDemo> {
       print('Exception caught: $e');
     }
   }
+*/
 
+
+  void PostApi(String _token) async {
+
+    print('token :  ${_token}');
+
+    var dio = Dio();
+    var url = 'https://dongkyeom.com/api/v1/accounts/google/login';
+    var data = {'access_token': _token}; // 서버로 보내는 데이터
+
+    try {
+      Response response = await dio.post(url, data: data);
+      print('Response status: ${response.statusCode}');
+      print('Response data: ${response.data}');
+    } on DioException catch (e) {
+      if (e.response != null) {
+        print('DioError:');
+        print('STATUS: ${e.response?.statusCode}');
+        print('DATA: ${e.response?.data}');
+        print('HEADERS: ${e.response?.headers}');
+      } else {
+        print('Error sending request!');
+        print(e.message);
+      }
+    }
+  }
   // This is the on-click handler for the Sign In button that is rendered by Flutter.
   //
   // On the web, the on-click handler of the Sign In button is owned by the JS
@@ -187,7 +214,8 @@ class _SignInDemoState extends State<SignInDemo> {
 
           if (googleKey.accessToken != null) {
             print('token : ${googleKey.accessToken}');
-            _handlePostGoogle(googleKey.accessToken!);
+            // _handlePostGoogle(googleKey.accessToken!);
+            PostApi(googleKey.accessToken!);
           } else {
             print('Access token is null');
           }

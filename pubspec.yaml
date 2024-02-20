@@ -49,6 +49,7 @@ dependencies:
   google_sign_in_android: ^6.1.21
   dio: ^5.4.1
   flutter_provider: ^2.1.0
+  url_launcher: ^6.2.4
 
 dev_dependencies:
   flutter_test:
