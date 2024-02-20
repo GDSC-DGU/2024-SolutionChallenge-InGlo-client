@@ -135,7 +135,7 @@ class _SignInDemoState extends State<SignInDemo> {
 
   /*
   // google token 전송 api(500 출력 중)
-  Future<void> _handlePostGoogle(String _token) async {
+  Future<String?> _handlePostGoogle(String _token) async {
     print('전송 토큰 $_token');
     final url = "https://dongkyeom.com/api/v1/accounts/login-success/";
     Map<String, String> data = {
@@ -172,17 +172,37 @@ class _SignInDemoState extends State<SignInDemo> {
   }
 */
 
+  Future<String?> PostApi(String _token) async {
+    Dio dio = Dio();
+    try {
+      final response = await dio.post(
+        'https://dongkyeom.com/api/v1/accounts/google/login/',
+        data: {
+          'access_token': _token,
+        },
+      );
+      if (response.statusCode == 200) {
+        print(response.data);
+      } else {
+        print('Failed to get access token with status code: ${response.statusCode}');
+        return null;
+      }
+    } on DioException catch (e) {
+      print('DioError: $e');
+      return null;
+    }
+  }
 
-  void PostApi(String _token) async {
-
-    print('token :  ${_token}');
+/*
+  void IsCorrectToken(String _token) async {
+    print('token : $_token');
 
     var dio = Dio();
-    var url = 'https://dongkyeom.com/api/v1/accounts/google/login';
-    var data = {'access_token': _token}; // 서버로 보내는 데이터
+    // access_token을 URL 쿼리 파라미터로 포함
+    var url = 'https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=$_token';
 
     try {
-      Response response = await dio.post(url, data: data);
+      Response response = await dio.get(url);
       print('Response status: ${response.statusCode}');
       print('Response data: ${response.data}');
     } on DioException catch (e) {
@@ -192,16 +212,19 @@ class _SignInDemoState extends State<SignInDemo> {
         print('DATA: ${e.response?.data}');
         print('HEADERS: ${e.response?.headers}');
       } else {
+        // 요청 관련 오류 처리
         print('Error sending request!');
         print(e.message);
       }
     }
   }
+  */
   // This is the on-click handler for the Sign In button that is rendered by Flutter.
   //
   // On the web, the on-click handler of the Sign In button is owned by the JS
   // SDK, so this method can be considered mobile only.
   // #docregion SignIn
+  /*
   Future<void> _handleSignIn() async {
     // _googleSignIn.currentUser?.clearAuthCache();
     // _googleSignIn.signInSilently();
@@ -215,7 +238,7 @@ class _SignInDemoState extends State<SignInDemo> {
           if (googleKey.accessToken != null) {
             print('token : ${googleKey.accessToken}');
             // _handlePostGoogle(googleKey.accessToken!);
-            PostApi(googleKey.accessToken!);
+            IsCorrectToken(googleKey.accessToken!);
           } else {
             print('Access token is null');
           }
@@ -228,6 +251,24 @@ class _SignInDemoState extends State<SignInDemo> {
     } catch (error) {
       print(error);
     }
+  }
+  */
+
+  // id token 발급
+  Future<String?> _handleSignIn() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    try {
+      final GoogleSignInAccount? account = await googleSignIn.signIn();
+      if (account != null) {
+        final GoogleSignInAuthentication googleAuth = await account.authentication;
+        print('id : ${googleAuth.idToken}'); // Google 로부터 받은 idToken
+        PostApi(googleAuth.accessToken!);
+      }
+    } catch (error) {
+      print(error);
+      return null;
+    }
+    return null;
   }
 
   // #enddocregion SignIn
