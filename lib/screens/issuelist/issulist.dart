@@ -50,7 +50,7 @@ class _IssueListPageState extends State<IssueListPage> {
                   child: const Text("Today's Issue",
                       style: IssueListPage.titleStyle),
                 ),
-                IssueItem(),
+                IssueItem(sdgs: sdgs),
               ],
             ),
           ),

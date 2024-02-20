@@ -4,7 +4,7 @@ class IssueTop3Model {
   int likes;
   String title;
   String description;
-  int country;
+  String country;
   int sdgs;
   String imageUrl;
   String createdAt;
@@ -26,12 +26,12 @@ class IssueTop3Model {
     : id = json['id'],
     views = json['views'],
     likes = json['likes'],
-    title = json['title'],
-    description = json['description'],
-    country = json['country'],
+    title = json['title'] ?? "",
+    description = json['description'] ?? "",
+    country = json['country'] ?? "",
     sdgs = json['sdgs'],
-    imageUrl = json['image_url'],
-    createdAt = json['created_at'],
+    imageUrl = json['image_url'] ?? "",
+    createdAt = json['created_at'] ?? "",
     issue = json['issue'];
 
 }

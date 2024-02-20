@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inglo/screens/issue_detail/issue_detail.dart';
+import 'package:inglo/service/issuelist/issuelist.dart';
 
 // 더미데이터
 final List<Map<String, String>> itemData = [
@@ -26,104 +27,123 @@ final List<Map<String, String>> itemData = [
 ];
 
 class IssueItem extends StatelessWidget {
-  const IssueItem({super.key});
+  final int sdgs;
+  const IssueItem({required this.sdgs, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      child: const IssueListData(),
+      child: IssueListData(sdgs: sdgs),
     );
   }
 }
 
-
 class IssueListData extends StatelessWidget {
-  const IssueListData({super.key});
+  final int sdgs;
+  const IssueListData({required this.sdgs, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: itemData
-          .map((item) => InkWell(
-        onTap: (){
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const IssueDetailPage(),
-            ),
-          );
-        },
-        child: Container(
-          margin: const EdgeInsets.symmetric(vertical: 10),
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(
-              Radius.circular(10.0),
-            ),
-            border: Border.all(
-              width: 1,
-              color: Colors.grey,
-            ),
-            boxShadow: [
-              // BoxShadow(
-              //   color: Colors.grey,
-              //   blurRadius: 10.0,
-              //   spreadRadius: 0.0,
-              //   offset: Offset(5, 5),
-              // ),
-              BoxShadow(
-                color: Color(0xFFFFD691),
-                blurRadius: 0.0,
-                spreadRadius: 0.0,
-                offset: Offset(4, 4),
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(5, 5, 10, 0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(item["title"]!, style: TextStyle(fontSize: 17, color: Colors.black, fontWeight: FontWeight.bold),),
-                      Text("내용 설명~~~"),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Icon(
-                            Icons.favorite,
-                            color: Color(0xFFD7A859),
-                            size: 20.0,
+    return FutureBuilder(
+      future: IssueSdgsService().getIssueSdgs(sdgs),
+      builder: (context, snapshot) {
+        var data = snapshot.data!;
+        return Column(
+          children: data
+              .map((item) => InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const IssueDetailPage(),
+                          settings: RouteSettings(
+                            arguments: {
+                              "itemId": item.id,
+                            }
                           ),
-                          Text("12"),
-                          SizedBox(width: 5),
-                          Icon(
-                            Icons.visibility,
-                            color: Color(0xFFD7A859),
-                            size: 20.0,
+                        ),
+                      );
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(10.0),
+                        ),
+                        border: Border.all(
+                          width: 1,
+                          color: Colors.grey,
+                        ),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0xFFFFD691),
+                            blurRadius: 0.0,
+                            spreadRadius: 0.0,
+                            offset: Offset(4, 4),
                           ),
-                          Text("12"),
                         ],
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                child: Image.network(item["image"]!,
-                  fit: BoxFit.cover, width: 100.0, height: 80.0,),
-              ),
-            ],
-          ),
-        ),
-      ))
-          .toList(),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(5, 5, 10, 0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    item.title,
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(item.description.length >= 20 ? '${item.description.substring(0, 20)}...' : item.description),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Icon(
+                                        Icons.favorite,
+                                        color: Color(0xFFD7A859),
+                                        size: 20.0,
+                                      ),
+                                      Text(item.likes.toString()),
+                                      SizedBox(width: 5),
+                                      Icon(
+                                        Icons.visibility,
+                                        color: Color(0xFFD7A859),
+                                        size: 20.0,
+                                      ),
+                                      SizedBox(width: 2),
+                                      Text(item.views.toString()),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          if (item.imageUrl != "")
+                            ClipRRect(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(5.0)),
+                              child: Image.network(
+                                item.imageUrl,
+                                fit: BoxFit.cover,
+                                width: 100.0,
+                                height: 80.0,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ))
+              .toList(),
+        );
+      },
     );
   }
 }
-

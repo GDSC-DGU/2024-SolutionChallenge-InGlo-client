@@ -17,6 +17,9 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    var argument = ModalRoute.of(context)!.settings.arguments;
+    print(argument);
+    //print(argument?.issue_id);
     return Scaffold(
       body: Stack(
         children: [
