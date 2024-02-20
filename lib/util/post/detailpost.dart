@@ -1,10 +1,11 @@
 import 'package:inglo/models/post/detail_post.dart';
 
+/*
 class DetailPostPreferences {
   static final detailPost = DetailPost(
     id: 7,
     user: 2,
-    sketch: DetailSketch(
+    sketch: Sketch(
       id: 4,
       user: "hsw0106@gmail.com",
       title: "일하기싫다 테테테스",
@@ -13,14 +14,14 @@ class DetailPostPreferences {
       problem: "내일 약속을 잡은게 문제다",
       hmw: "저녁을 안먹는건 어떨까",
       crazy8stck: [
-        CrazyItem(content: "테스트1"),
-        CrazyItem(content: "테스트2"),
-        CrazyItem(content: "테스트3"),
-        CrazyItem(content: "테스트4"),
-        CrazyItem(content: "테스트5"),
-        CrazyItem(content: "테스트6"),
-        CrazyItem(content: "테스트7"),
-        CrazyItem(content: "테스트8"),
+        Crazy8(content: "테스트1"),
+        Crazy8(content: "테스트2"),
+        Crazy8(content: "테스트3"),
+        Crazy8(content: "테스트4"),
+        Crazy8(content: "테스트5"),
+        Crazy8(content: "테스트6"),
+        Crazy8(content: "테스트7"),
+        Crazy8(content: "테스트8"),
       ],
     ),
     title: "포스트 생성아주아주긴기기기기기기기기제목메저고거고ㅓ마와ㅓㅁ오ㅓㅏㄴ모아ㅓㄴ모어ㅏㄴㅁ오나ㅓ몽나ㅓㅁ오",
@@ -65,3 +66,4 @@ class DetailPostPreferences {
     is_liked: false,
   );
 }
+*/

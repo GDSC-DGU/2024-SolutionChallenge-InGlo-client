@@ -3,7 +3,7 @@ import 'dart:convert'; // JSON 디코드를 위해 필요
 class DetailPost {
   final int id;
   final int user;
-  final DetailSketch sketch; // detail sketch
+  final Sketch sketch; // detail sketch
   final String title;
   final String content;
   final int sdgs;
@@ -30,7 +30,7 @@ class DetailPost {
     return DetailPost(
       id: json['id'],
       user: json['user'],
-      sketch: DetailSketch.fromJson(json['sketch']),
+      sketch: Sketch.fromJson(json['sketch']),
       title: json['title'],
       content: json['content'],
       sdgs: json['sdgs'],
@@ -42,54 +42,54 @@ class DetailPost {
   }
 }
 
-class DetailSketch {
+class Sketch {
   final int id;
   final String user;
   final String title;
-  final String image_url;
-  final String created_at;
+  final String description;
+  final String content;
+  final String imageUrl;
+  final String createdAt;
   final String problem;
   final String hmw;
-  final List<CrazyItem> crazy8stck;
+  final List<Crazy8> crazy8stack;
 
-  const DetailSketch({
+  Sketch({
     required this.id,
     required this.user,
     required this.title,
-    required this.image_url,
-    required this.created_at,
+    required this.description,
+    required this.content,
+    required this.imageUrl,
+    required this.createdAt,
     required this.problem,
     required this.hmw,
-    required this.crazy8stck,
+    required this.crazy8stack,
   });
 
-  factory DetailSketch.fromJson(Map<String, dynamic> json) {
-    var crazy8stckList = (json['crazy8stck'] as List)
-        .map((item) => CrazyItem.fromJson(item as Map<String, dynamic>))
-        .toList();
-
-    return DetailSketch(
+  factory Sketch.fromJson(Map<String, dynamic> json) {
+    return Sketch(
       id: json['id'],
       user: json['user'],
       title: json['title'],
-      image_url: json['image_url'],
-      created_at: json['created_at'],
+      description: json['description'],
+      content: json['content'],
+      imageUrl: json['image_url'],
+      createdAt: json['created_at'],
       problem: json['problem'],
       hmw: json['hmw'],
-      crazy8stck: crazy8stckList,
+      crazy8stack: List<Crazy8>.from(json['crazy8stack'].map((x) => Crazy8.fromJson(x))),
     );
   }
 }
 
-class CrazyItem {
+class Crazy8 {
   final String content;
 
-  const CrazyItem({
-    required this.content,
-  });
+  Crazy8({required this.content});
 
-  factory CrazyItem.fromJson(Map<String, dynamic> json) {
-    return CrazyItem(
+  factory Crazy8.fromJson(Map<String, dynamic> json) {
+    return Crazy8(
       content: json['content'],
     );
   }

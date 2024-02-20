@@ -4,9 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/models/post/detail_post.dart';
 
 class PostUser extends StatelessWidget {
-  final DetailPost detail;
+  final String? user_name;
+  final String? created_at;
 
-  PostUser({Key? key, required this.detail}) : super(key: key);
+  const PostUser({
+    Key? key,
+    this.user_name,
+    this.created_at,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +35,7 @@ class PostUser extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${detail.user}',
+                    user_name ?? 'Unknown',
                     style: GoogleFonts.notoSans(
                       fontSize: 14,
                       color: Colors.black,),
@@ -40,7 +45,7 @@ class PostUser extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    '${detail.created_at}',
+                    created_at ?? '0000.00.00',
                     style: GoogleFonts.notoSans(
                       fontSize: 14,
                     ),
