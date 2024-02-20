@@ -95,7 +95,7 @@ class _DetailPostState extends State<DetailPost> {
       contentType: Headers.jsonContentType,
       headers: {
         "Authorization":
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTcxMDcwLCJpYXQiOjE3MDg0MjcwNzAsImp0aSI6IjNhNTJjOTkzODczNTRiNmM4NzNlYjc4MzU0NDNmOWVlIiwidXNlcl9pZCI6M30.d7lTdqfIBZuskzHKBvclwYKNeVE4-SepdmPggZghMSM',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTk1OTg4LCJpYXQiOjE3MDg0NTE5ODgsImp0aSI6IjIzZWZjNDQ1NmJkMDRhYTI5NTQ0OTc0MGFiNmIyMjljIiwidXNlcl9pZCI6NH0.JS6_zrhwAFH0OX9HjfRkV0CGJ8BADmKXmB3r4Gf2y7E',
       },
     );
 

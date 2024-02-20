@@ -38,7 +38,7 @@ class _PostBoardPageState extends State<PostBoardPage> {
         options: Options(
           responseType: ResponseType.plain,
           headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTk1OTg4LCJpYXQiOjE3MDg0NTE5ODgsImp0aSI6IjIzZWZjNDQ1NmJkMDRhYTI5NTQ0OTc0MGFiNmIyMjljIiwidXNlcl9pZCI6NH0.JS6_zrhwAFH0OX9HjfRkV0CGJ8BADmKXmB3r4Gf2y7E',
           },
         ),
       );
@@ -46,7 +46,8 @@ class _PostBoardPageState extends State<PostBoardPage> {
       if(response.statusCode == 200 || response.statusCode == 201) {
         print('성공!');
         final List<dynamic> jsonResponse = jsonDecode(response.data);
-        print('data : ${jsonResponse[0]['id']}');
+        print('data : ${jsonResponse}');
+
         setState(() {
           _listItems.clear(); // 기존 목록을 지우고 새로운 데이터로 채운다.
           for (var item in jsonResponse) {
@@ -54,8 +55,6 @@ class _PostBoardPageState extends State<PostBoardPage> {
           }
         });
       }
-
-
     } catch (e) {
       // 요청 실패 또는 기타 에러 처리
       print('Error fetching data: $e');

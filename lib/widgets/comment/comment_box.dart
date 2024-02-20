@@ -21,6 +21,8 @@ class _CommentsState extends State<Comments> {
   final formKey = GlobalKey<FormState>();
   final TextEditingController commentController = TextEditingController();
   final _parent_id = null; // 부모 피드백 아이디
+  final _feedback_id = null;
+
 
   final CommentService _CommentService = CommentService(); // instance 생성
 
@@ -62,11 +64,19 @@ class _CommentsState extends State<Comments> {
   // 초기 1번 실행 / 피드백 조회
   void initState() {
     super.initState();
-    _CommentService.getFeedbacks('${widget.id}'); // id 전송
+    _CommentService.getFeedbacks(widget.id); // id 전송
   }
 
-  void _submitFeedback() {
-    _CommentService.postFeedback('${widget.id}', commentController.text, _parent_id); // 피드백 제출
+  void PostFeedback() {
+    _CommentService.postFeedback(widget.id, commentController.text, _parent_id); // 피드백 제출
+  }
+
+  void ModifiedFeedback() {
+    _CommentService.ModifiedFeedback(commentController.text, widget.id, _feedback_id); // 피드백 수정
+  }
+
+  void DeleteFeedback() {
+    _CommentService.deleteFeedback(widget.id, _feedback_id); // 피드백 삭제
   }
 
   Widget commentChild(data) {
