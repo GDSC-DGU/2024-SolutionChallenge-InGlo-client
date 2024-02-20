@@ -24,7 +24,6 @@ class DetailPostPreferences {
       ],
     ),
     title: "포스트 생성아주아주긴기기기기기기기기제목메저고거고ㅓ마와ㅓㅁ오ㅓㅏㄴ모아ㅓㄴ모어ㅏㄴㅁ오나ㅓ몽나ㅓㅁ오",
-    image_url: "https://inglo-bucket.s3.ap-northeast-2.amazonaws.com/user_2/post_7",
     content: '''
       <!DOCTYPE html>
       <html>

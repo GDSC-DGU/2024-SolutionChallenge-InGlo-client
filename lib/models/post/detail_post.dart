@@ -5,7 +5,6 @@ class DetailPost {
   final int user;
   final DetailSketch sketch; // detail sketch
   final String title;
-  final String image_url;
   final String content;
   final int sdgs;
   final int likes;
@@ -18,7 +17,6 @@ class DetailPost {
     required this.user,
     required this.sketch,
     required this.title,
-    required this.image_url,
     required this.content,
     required this.sdgs,
     required this.likes,
@@ -32,14 +30,13 @@ class DetailPost {
     return DetailPost(
       id: json['id'],
       user: json['user'],
-      sketch: DetailSketch.fromJson(json['sketch'] as Map<String, dynamic>),
+      sketch: DetailSketch.fromJson(json['sketch']),
       title: json['title'],
-      image_url: json['image_url'],
       content: json['content'],
       sdgs: json['sdgs'],
       likes: json['likes'],
       created_at: json['created_at'],
-      feedbacks: json['feedbacks'] as List<dynamic>,
+      feedbacks: json['feedbacks'],
       is_liked: json['is_liked'],
     );
   }

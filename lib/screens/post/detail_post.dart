@@ -37,132 +37,146 @@ class _DetailPostState extends State<DetailPost> {
         options: Options(
           responseType: ResponseType.plain,
           headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs',
+            'Authorization':
+                'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs',
           },
         ),
       );
 
       String responseBody = response.data;
+      final jsonResponse =
+          jsonDecode(responseBody); // 문자열을 파싱하여 dart 객체로 변환시킨다.
 
-      print('data : ${responseBody}');
+      print('ID: ${jsonResponse['id']}');
+      print('User: ${jsonResponse['user']}');
+      print('Sketch: ${jsonResponse['sketch']}');
+      print('Title: ${jsonResponse['title']}');
+      print('Content: ${jsonResponse['content']}');
+      print('SDGs: ${jsonResponse['sdgs']}');
+      print('Likes: ${jsonResponse['likes']}');
+      print('Created At: ${jsonResponse['created_at']}');
+      print('Feedbacks: ${jsonResponse['feedbacks']}');
+      print('Is Liked: ${jsonResponse['is_liked']}');
 
+      // final detail = DetailPost.fromJson(jsonResponse); // 왜인지 안 된다!
     } catch (e) {
       // 요청 실패 또는 기타 에러 처리
       print('Error fetching data: $e');
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: Row(
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.arrow_back_ios),
-                          onPressed: () {
-                            Navigator.pop(context); // 이전 페이지로 이동
-                          },
-                        ),
-                        Spacer(),
-                        Column(
-                          children: [
-                            SizedBox(height: 10),
-                            GestureDetector(
-                              onTap: () {
-                                // 좋아요 기능 구현
-                              },
-                              child: Icon(
-                                detail.is_liked
-                                    ? Icons.favorite
-                                    : Icons.favorite_outline,
-                                color: Color(0xFFFF6280),
-                                size: 20.0,
-                              ),
-                            ),
-                            SizedBox(height: 0), // 여기서 간격을 조절
-                            Text(
-                              '${detail.likes}',
-                              style: GoogleFonts.notoSans(
-                                fontSize: 8,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Divider(
-                    thickness: 1,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          detail.title,
-                          style: GoogleFonts.notoSans(
-                            fontSize: 26, // 폰트 크기 설정
-                            fontWeight: FontWeight.bold, // 폰트 굵기 설정
-                            color: Colors.black, // 텍스트 색상 설정
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        SizedBox(
-                          height: 20,
-                          child: PostUser(detail: detail),
-                        ),
-                        Divider(
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height *
-                              0.6, // 컨텐츠 영역을 화면의 60%로 설정
-                          child: WebView(
-                            initialUrl: 'about:blank',
-                            onWebViewCreated:
-                                (WebViewController webViewController) {
-                              // 웹뷰가 생성되면 HTML 내용을 로드 한다.
-                              webViewController.loadUrl(Uri.dataFromString(
-                                detail.content, // HTML 내용을 가져오는 함수
-                                mimeType: 'text/html',
-                                encoding: utf8,
-                              ).toString());
+      body: SafeArea(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          child: Stack(
+            children: [
+              SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: Row(
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.arrow_back_ios),
+                            onPressed: () {
+                              Navigator.pop(context); // 이전 페이지로 이동
                             },
                           ),
-                        ),
-                      ],
+                          Spacer(),
+                          Column(
+                            children: [
+                              SizedBox(height: 10),
+                              GestureDetector(
+                                onTap: () {
+                                  // 좋아요 기능 구현
+                                },
+                                child: Icon(
+                                  detail.is_liked
+                                      ? Icons.favorite
+                                      : Icons.favorite_outline,
+                                  color: Color(0xFFFF6280),
+                                  size: 20.0,
+                                ),
+                              ),
+                              SizedBox(height: 0), // 여기서 간격을 조절
+                              Text(
+                                '${detail.likes}',
+                                style: GoogleFonts.notoSans(
+                                  fontSize: 8,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-                Positioned(
-                  bottom: 20,
-                  left: 20,
-                  right: 20,
-                  child: SizedBox(
-                    height: 100,
-                    child: BarModal(),
-                  ),
+                    Divider(
+                      thickness: 1,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            detail.title,
+                            style: GoogleFonts.notoSans(
+                              fontSize: 26, // 폰트 크기 설정
+                              fontWeight: FontWeight.bold, // 폰트 굵기 설정
+                              color: Colors.black, // 텍스트 색상 설정
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            height: 20,
+                            child: PostUser(detail: detail),
+                          ),
+                          Divider(
+                            thickness: 1,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height *
+                                0.6, // 컨텐츠 영역을 화면의 60%로 설정
+                            child: WebView(
+                              initialUrl: 'about:blank',
+                              onWebViewCreated:
+                                  (WebViewController webViewController) {
+                                // 웹뷰가 생성되면 HTML 내용을 로드 한다.
+                                webViewController.loadUrl(Uri.dataFromString(
+                                  detail.content, // HTML 내용을 가져오는 함수
+                                  mimeType: 'text/html',
+                                  encoding: utf8,
+                                ).toString());
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-          ],
+              ),
+              Positioned(
+                bottom: 20,
+                left: 20,
+                right: 20,
+                child: SizedBox(
+                  height: 40,
+                  child: BarModal(),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

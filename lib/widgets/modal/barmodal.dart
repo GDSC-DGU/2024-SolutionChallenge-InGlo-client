@@ -7,12 +7,13 @@ class BarModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.end, // 오른쪽 정렬
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween, // 오른쪽 정렬
         children: [
           Container(
             width: 150,
             height: 40,
+            color: Colors.transparent,
             child: FilledButton(
               onPressed: () {},
               child: Text(
