@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:inglo/screens/post/detail_post.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:inglo/models/post/post_list.dart';
-import 'package:inglo/util/post/postlist.dart';
-import 'package:dio/dio.dart';
 
 // 선 위젯
 Widget buildDivider(BuildContext context) => Container(
@@ -12,52 +11,20 @@ Widget buildDivider(BuildContext context) => Container(
     );
 
 class PostItem extends StatefulWidget {
-  const PostItem({Key? key}) : super(key: key);
+  final List<PostList> listItems; // 리스트를 저장할 변수 추가
+
+  // 생성자를 통해 리스트를 전달 받는다.
+  const PostItem({Key? key, required this.listItems}) : super(key: key);
 
   @override
   _PostItemState createState() => _PostItemState();
 }
 
 class _PostItemState extends State<PostItem> {
-  final dio = Dio(); // dio instance 생성
-  // 기존의 StatelessWidget 내부 로직을 여기로 옮깁니다.
-  final _listItem = PostListPreferences.listItem;
-
-  // 초기 1번 실행
-  void initState() {
-    super.initState();
-    getPostItems();
-  }
-
-  // profile get 함수
-  Future<void> getPostItems() async {
-    final url = "https://dongkyeom.com/api/v1/posts/";
-
-    try {
-      final response = await dio.get(
-        url,
-        options: Options(
-          responseType: ResponseType.plain,
-          headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTcxMDcwLCJpYXQiOjE3MDg0MjcwNzAsImp0aSI6IjNhNTJjOTkzODczNTRiNmM4NzNlYjc4MzU0NDNmOWVlIiwidXNlcl9pZCI6M30.d7lTdqfIBZuskzHKBvclwYKNeVE4-SepdmPggZghMSM',
-          },
-        ),
-      );
-
-      String responseBody = response.data;
-
-      print('get data : $responseBody');
-
-
-    } catch (e) {
-      // 요청 실패 또는 기타 에러 처리
-      print('Error fetching data: $e');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> itemListData = _listItem.map((item) {
+    final List<Widget> itemListData = widget.listItems.map((item) {
       return InkWell(
         onTap: () {
           Navigator.of(context).push(

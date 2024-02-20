@@ -29,7 +29,7 @@ class _DetailPostState extends State<DetailPost> {
 
   // profile get 함수
   Future<void> getDetail() async {
-    final url = "https://dongkyeom.com/api/v1/posts/{post_id}";
+    final url = "https://dongkyeom.com/api/v1/posts/3";
 
     try {
       final response = await dio.get(
@@ -37,14 +37,14 @@ class _DetailPostState extends State<DetailPost> {
         options: Options(
           responseType: ResponseType.plain,
           headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTcxMDcwLCJpYXQiOjE3MDg0MjcwNzAsImp0aSI6IjNhNTJjOTkzODczNTRiNmM4NzNlYjc4MzU0NDNmOWVlIiwidXNlcl9pZCI6M30.d7lTdqfIBZuskzHKBvclwYKNeVE4-SepdmPggZghMSM',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs',
           },
         ),
       );
 
       String responseBody = response.data;
 
-      print('user : ${responseBody}');
+      print('data : ${responseBody}');
 
     } catch (e) {
       // 요청 실패 또는 기타 에러 처리
