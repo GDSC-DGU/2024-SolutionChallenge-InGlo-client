@@ -25,7 +25,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final dio = Dio(); // dio instance 생성
-  User? _user;
+  User? _user = UserPreferences.myUser;
 
   // 임시 변수
   /*

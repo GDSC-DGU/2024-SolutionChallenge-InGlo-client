@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:inglo/models/post/detail_post.dart';
+
 class PostUser extends StatelessWidget {
+  final DetailPost detail;
+
+  PostUser({Key? key, required this.detail}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,39 +26,23 @@ class PostUser extends StatelessWidget {
                     child: Icon(
                       Icons.person_2_outlined,
                       color: Colors.black,
-                      size: 12,
+                      size: 20,
                     ),
                   ),
                   Text(
-                    "name",
+                    '${detail.user}',
                     style: GoogleFonts.notoSans(
-                      fontSize: 12,
+                      fontSize: 14,
                       color: Colors.black,),
                   ),
                 ],
               ),
               Row(
                 children: [
-                  Icon(
-                    Icons.favorite,
-                    color: Color(0xFFFF6E80),
-                    size: 10.0,
-                  ),
                   Text(
-                    "12",
+                    '${detail.created_at}',
                     style: GoogleFonts.notoSans(
-                      fontSize: 10,
-                    ),
-                  ),
-                  Icon(
-                    Icons.visibility,
-                    color: Color(0xFFD7A859),
-                    size: 10.0,
-                  ),
-                  Text(
-                    "12",
-                    style: GoogleFonts.notoSans(
-                      fontSize: 10,
+                      fontSize: 14,
                     ),
                   ),
                 ],

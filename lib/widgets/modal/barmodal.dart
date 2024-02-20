@@ -7,9 +7,25 @@ class BarModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Row(
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.end, // 오른쪽 정렬
         children: [
+          Container(
+            width: 150,
+            height: 40,
+            child: FilledButton(
+              onPressed: () {},
+              child: Text(
+                'See Sketch',
+                style: GoogleFonts.notoSans(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w700),
+              ),
+              style: FilledButton.styleFrom(
+                backgroundColor: Color(0xFFD7A859),
+                minimumSize: Size(50, 40),
+              ),
+            ),
+          ),
+          SizedBox(height: 10,),
           InkWell(
               onTap: () => showBarModalBottomSheet(
                 expand: false,
@@ -18,7 +34,7 @@ class BarModal extends StatelessWidget {
                 builder: (context) => Comments(),
               ),
               child: Container(
-                width: MediaQuery.of(context).size.width * 0.4,
+                width: 150,
                 height: 40,
                 decoration: BoxDecoration(
                   color: Color(0xFF233A66),
@@ -31,8 +47,8 @@ class BarModal extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween, // 중앙 정렬
                         children: [
-                          Text('Feedbacks', style: GoogleFonts.notoSans(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w700)),
-                          Icon(Icons.send, color: Colors.white,),
+                          Text('Feedbacks', style: GoogleFonts.notoSans(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w700)),
+                          Icon(Icons.send, color: Colors.white, size: 20,),
                         ],
                       ),
                     ),

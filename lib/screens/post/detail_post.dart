@@ -1,11 +1,14 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:inglo/screens/post/widgets/image_slider.dart';
 import 'package:inglo/screens/post/widgets/post_user.dart';
 import 'package:inglo/widgets/modal/barmodal.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:inglo/models/post/detail_post.dart'; // model
+import 'package:inglo/util/post/detailpost.dart'; // util
 
 class DetailPost extends StatefulWidget {
   @override
@@ -13,13 +16,13 @@ class DetailPost extends StatefulWidget {
 }
 
 class _DetailPostState extends State<DetailPost> {
-  bool isBookmarked = false; // 북마크 상태
+  final detail = DetailPostPreferences.detailPost;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        height:  MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).size.height,
         child: Stack(
           children: [
             SingleChildScrollView(
@@ -27,7 +30,7 @@ class _DetailPostState extends State<DetailPost> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: Row(
                       children: [
                         IconButton(
@@ -37,16 +40,29 @@ class _DetailPostState extends State<DetailPost> {
                           },
                         ),
                         Spacer(),
-                        IconButton(
-                          icon: isBookmarked ? Icon(Icons.bookmark) : Icon(Icons.bookmark_border), // 채워진 이미지와 outlined 이미지를 번갈아가며 표시
-                          color: Color(0xFFFF6280), // 아이콘 색상
-                          onPressed: () {
-                            setState(() {
-                              // 버튼이 눌릴 때마다 상태 변경
-                              isBookmarked = !isBookmarked;
-                            });
-                          },
-                          iconSize: 30.0,
+                        Column(
+                          children: [
+                            SizedBox(height: 10),
+                            GestureDetector(
+                              onTap: () {
+                                // 좋아요 기능 구현
+                              },
+                              child: Icon(
+                                detail.is_liked
+                                    ? Icons.favorite
+                                    : Icons.favorite_outline,
+                                color: Color(0xFFFF6280),
+                                size: 20.0,
+                              ),
+                            ),
+                            SizedBox(height: 0), // 여기서 간격을 조절
+                            Text(
+                              '${detail.likes}',
+                              style: GoogleFonts.notoSans(
+                                fontSize: 8,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -60,7 +76,7 @@ class _DetailPostState extends State<DetailPost> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Title',
+                          detail.title,
                           style: GoogleFonts.notoSans(
                             fontSize: 26, // 폰트 크기 설정
                             fontWeight: FontWeight.bold, // 폰트 굵기 설정
@@ -68,11 +84,11 @@ class _DetailPostState extends State<DetailPost> {
                           ),
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 20,
                         ),
                         SizedBox(
                           height: 20,
-                          child: PostUser(),
+                          child: PostUser(detail: detail),
                         ),
                         Divider(
                           thickness: 1,
@@ -81,13 +97,15 @@ class _DetailPostState extends State<DetailPost> {
                           height: 10,
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.6, // 컨텐츠 영역을 화면의 60%로 설정
+                          height: MediaQuery.of(context).size.height *
+                              0.6, // 컨텐츠 영역을 화면의 60%로 설정
                           child: WebView(
                             initialUrl: 'about:blank',
-                            onWebViewCreated: (WebViewController webViewController) {
+                            onWebViewCreated:
+                                (WebViewController webViewController) {
                               // 웹뷰가 생성되면 HTML 내용을 로드 한다.
                               webViewController.loadUrl(Uri.dataFromString(
-                                _getHtmlContent(), // HTML 내용을 가져오는 함수
+                                detail.content, // HTML 내용을 가져오는 함수
                                 mimeType: 'text/html',
                                 encoding: utf8,
                               ).toString());
@@ -100,56 +118,18 @@ class _DetailPostState extends State<DetailPost> {
                 ],
               ),
             ),
-            Positioned(
-              bottom: 20,
-              left: 0,
-              right: 20,
-              child: SizedBox(
-                height: 40,
-                child: BarModal(),
-              ),
-            ),
+                Positioned(
+                  bottom: 20,
+                  left: 0,
+                  right: 20,
+                  child: SizedBox(
+                    height: 40,
+                    child: BarModal(),
+                  ),
+                ),
           ],
         ),
       ),
     );
   }
-}
-
-// 더미 데이터로부터 HTML 컨텐츠를 반환하는 함수
-String _getHtmlContent() {
-  return '''
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <title>Example Post</title>
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            font-size: 24px;
-            color: #333;
-          }
-          h1 {
-            font-size: 32px;
-            font-weight: bold;
-            color: #000;
-          }
-          p {
-            margin: 10px 0;
-          }
-          img {
-            max-width: 100%;
-            height: auto;
-          }
-        </style>
-      </head>
-      <body>
-        <h1>This is the title of the post</h1>
-        <p>This is a paragraph describing the content of the post. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus eget massa semper consectetur eu nec leo. Praesent tempus vel libero vel suscipit. Integer mattis nunc non feugiat venenatis.</p>
-        <img src="https://via.placeholder.com/600" alt="Example Image">
-        <p>This is another paragraph. Nullam fermentum, quam sit amet fermentum vehicula, enim nunc bibendum odio, vel rhoncus lorem ex eu velit.</p>
-      </body>
-      </html>
-    ''';
 }
