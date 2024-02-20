@@ -82,15 +82,15 @@ class DesignSteps extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        if (step != 2) {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => HMWDetailPage(
-                                sdgs: sdgs,
-                              ),
-                            ),
-                          );
-                        }
+                        // if (step != 2) {
+                        //   Navigator.of(context).push(
+                        //     MaterialPageRoute(
+                        //       builder: (context) => HMWDetailPage(
+                        //         sdgs: sdgs,
+                        //       ),
+                        //     ),
+                        //   );
+                        // }
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 0,

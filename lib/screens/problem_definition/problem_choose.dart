@@ -3,7 +3,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/hmw/hmw_list.dart';
 import 'package:inglo/screens/problem_definition/widgets/check_design_card.dart';
-import 'package:inglo/service/problem_definition/problem_definition.dart';
+import 'package:inglo/service/design/problem_definition.dart';
 import 'package:inglo/widgets/design/design_steps.dart';
 
 class ProblemChoosePage extends StatefulWidget {

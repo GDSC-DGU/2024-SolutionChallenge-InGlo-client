@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inglo/screens/issue_detail/issue_detail.dart';
-import 'package:inglo/service/issuelist/issuelist.dart';
+import 'package:inglo/service/issue/issuelist.dart';
 
 // 더미데이터
 final List<Map<String, String>> itemData = [

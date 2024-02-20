@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/service/design/hmw_service.dart';
 import 'package:inglo/widgets/design/write_card.dart';
 
 class HMWWrite extends StatefulWidget {
+  final int problemId;
+  final int sdgs;
   const HMWWrite({
+    required this.problemId,
+    required this.sdgs,
     super.key,
   });
 
@@ -12,12 +17,12 @@ class HMWWrite extends StatefulWidget {
 }
 
 class _HMWWriteState extends State<HMWWrite> {
-
+  String content = ""; // 작성글 내용
 
   @override
   Widget build(BuildContext context) {
-    final id = ModalRoute.of(context)!.settings.arguments; // 받아온 id값
-    String content = ""; // 작성글 내용
+    int problemId = widget.problemId;
+    int sdgs = widget.sdgs;
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -65,7 +70,9 @@ class _HMWWriteState extends State<HMWWrite> {
                 margin:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    HMWService().postHMW(sdgs, problemId, content, context);
+                  },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
                     side: BorderSide(

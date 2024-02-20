@@ -1,18 +1,22 @@
 class HMWModel {
   int id;
+  int problem;
+  String problemContent;
   String content;
   String createdAt;
-  int problem;
+
 
   HMWModel(
       {required this.id,
+        required this.problemContent,
       required this.content,
       required this.createdAt,
       required this.problem});
 
   HMWModel.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        content = json['content'],
-        createdAt = json['created_at'],
+        problemContent = json['problem_content'] ?? "",
+        content = json['content'] ?? "",
+        createdAt = json['created_at'] ?? "",
         problem = json['problem'];
 }

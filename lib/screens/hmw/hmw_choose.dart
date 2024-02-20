@@ -4,18 +4,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/hmw/widgets/check_design_paper.dart';
 import 'package:inglo/screens/problem_definition/problem_write.dart';
 import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
+import 'package:inglo/service/design/hmw_service.dart';
 import 'package:inglo/widgets/design/design_steps.dart';
 
 class HMWChoosePage extends StatefulWidget {
+  final int problemId;
   final int sdgs;
-  const HMWChoosePage({required this.sdgs, super.key});
+  const HMWChoosePage({required this.problemId, required this.sdgs, super.key});
 
   @override
   State<HMWChoosePage> createState() => _HMWChoosePageState();
 }
 
 class _HMWChoosePageState extends State<HMWChoosePage> {
-  String checkedId = "0"; // 나중에 int로 바꾸기!
+  int checkedId = 0; // 나중에 int로 바꾸기!
 
   // 더미데이터
   final List<Map<String, String>> problemList = [
@@ -47,6 +49,7 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
 
   @override
   Widget build(BuildContext context) {
+    final int problemId = widget.problemId;
     final int sdgs = widget.sdgs;
 
     return Scaffold(
@@ -85,7 +88,10 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                DesignSteps(step: 2, sdgs: sdgs,),
+                DesignSteps(
+                  step: 2,
+                  sdgs: sdgs,
+                ),
                 SizedBox(
                   height: 20,
                 ),
@@ -98,29 +104,36 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
                 SizedBox(
                   height: 20,
                 ),
-                MasonryGridView.count(
-                  physics: BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: problemList.length,
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 5.0,
-                  mainAxisSpacing: 5.0,
-                  itemBuilder: (context, index) {
-                    return CheckDesignPaper(
-                      id: problemList[index]["id"]!,
-                      checkedId: checkedId,
-                      checkCard: (id) {
-                        setState(() {
-                          if (checkedId == id) {
-                            checkedId = "0";
-                          } else {
-                            checkedId = id;
-                          }
-                        });
-                        print(id);
-                        print(checkedId);
+                FutureBuilder(
+                  future: HMWService().getHmw(problemId),
+                  builder: (context, snapshot) {
+                    var data = snapshot.data!;
+
+                    return MasonryGridView.count(
+                      physics: BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: data.length,
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 5.0,
+                      mainAxisSpacing: 5.0,
+                      itemBuilder: (context, index) {
+                        return CheckDesignPaper(
+                          id: data[index].id,
+                          checkedId: checkedId,
+                          checkCard: (id) {
+                            setState(() {
+                              if (checkedId == id) {
+                                checkedId = 0;
+                              } else {
+                                checkedId = id;
+                              }
+                            });
+                            print(id);
+                            print(checkedId);
+                          },
+                          content: data[index].content,
+                        );
                       },
-                      content: problemList[index]["content"]!,
                     );
                   },
                 ),
@@ -136,6 +149,7 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: ElevatedButton(
           onPressed: () {
+            HMWService().patchHMW(sdgs, problemId, checkedId, context);
             // Navigator.of(context).push(
             //   MaterialPageRoute(
             //     builder: (context) => const HMWListPage(),

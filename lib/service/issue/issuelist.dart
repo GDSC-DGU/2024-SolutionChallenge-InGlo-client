@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:inglo/models/issuelist/issue_sdgs.dart';
 import 'package:inglo/models/issuelist/issue_top3.dart';
 import 'package:http/http.dart' as http;
-import 'package:inglo/service/issue_detail/issue_detail.dart';
+import 'package:inglo/service/issue/issue_detail.dart';
 
 class IssueTop3Service {
   Future<List<IssueTop3Model>> getIssueTop3() async {

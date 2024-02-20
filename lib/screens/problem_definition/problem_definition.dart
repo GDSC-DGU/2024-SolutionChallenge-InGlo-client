@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/problem_definition/problem_choose.dart';
 import 'package:inglo/screens/problem_definition/problem_write.dart';
 import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
-import 'package:inglo/service/problem_definition/problem_definition.dart';
+import 'package:inglo/service/design/problem_definition.dart';
 import 'package:inglo/widgets/design/design_steps.dart';
 
 class ProblemDefinitionPage extends StatefulWidget {

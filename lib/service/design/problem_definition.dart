@@ -6,7 +6,7 @@ import 'package:inglo/models/problem_definition/problem_definition.dart';
 import 'package:http/http.dart' as http;
 import 'package:inglo/screens/hmw/hmw_detail.dart';
 import 'package:inglo/screens/problem_definition/problem_definition.dart';
-import 'package:inglo/service/issue_detail/issue_detail.dart';
+import 'package:inglo/service/issue/issue_detail.dart';
 
 
 class ProblemDefinitionService {
@@ -88,9 +88,34 @@ class ProblemDefinitionService {
 
   // problem definition 선택
   Future<void> postProblemChoose(int sdgs, int problemId, BuildContext context) async {
-    print("${sdgs}, ${problemId}");
+
     final coreUrl =
     Uri.parse("https://dongkyeom.com/api/v1/sketches/");
+
+    if(problemId == 0) {
+      return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: ((context) {
+          return AlertDialog(
+            title: Text("Problem Choose"),
+            content: Text("Please Choose one problem definition."),
+            actions: <Widget>[
+              Container(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); //창 닫기
+                  },
+                  child: Text("Confirm"),
+                ),
+              ),
+            ],
+          );
+        }),
+      );
+    }
+
+
     try {
       final http.Response response = await http.post(
           coreUrl,
@@ -109,7 +134,7 @@ class ProblemDefinitionService {
         print("성공");
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => HMWDetailPage(sdgs: sdgs),
+            builder: (context) => HMWDetailPage(sdgs: sdgs, problemId: problemId,),
           ),
         );
       } else {

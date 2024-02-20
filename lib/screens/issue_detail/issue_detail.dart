@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/issue_detail/widgets/issue_content.dart';
 import 'package:inglo/screens/issue_detail/widgets/issue_input.dart';
-import 'package:inglo/service/issue_detail/issue_detail.dart';
+import 'package:inglo/service/issue/issue_detail.dart';
 import 'package:inglo/widgets/comment/comment_box.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 

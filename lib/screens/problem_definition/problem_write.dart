@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/hmw/hmw_detail.dart';
-import 'package:inglo/service/problem_definition/problem_definition.dart';
+import 'package:inglo/service/design/problem_definition.dart';
 import 'package:inglo/widgets/design/write_card.dart';
 
 class ProblemWrite extends StatefulWidget {
