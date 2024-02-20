@@ -7,9 +7,11 @@ import 'package:inglo/screens/solution_sketch/solution_sketch.dart';
 
 class DesignSteps extends StatelessWidget {
   final int step;
+  final int sdgs;
 
   const DesignSteps({
     required this.step,
+    required this.sdgs,
     super.key,
   });
 
@@ -43,9 +45,8 @@ class DesignSteps extends StatelessWidget {
                         if (step != 1) {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const ProblemDefinitionPage(),
-                              settings: RouteSettings(
-                                arguments: ModalRoute.of(context)!.settings.arguments,
+                              builder: (context) => ProblemDefinitionPage(
+                                sdgs: sdgs,
                               ),
                             ),
                           );
@@ -84,9 +85,8 @@ class DesignSteps extends StatelessWidget {
                         if (step != 2) {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const HMWDetailPage(),
-                              settings: RouteSettings(
-                                arguments: ModalRoute.of(context)!.settings.arguments,
+                              builder: (context) => HMWDetailPage(
+                                sdgs: sdgs,
                               ),
                             ),
                           );
@@ -125,10 +125,10 @@ class DesignSteps extends StatelessWidget {
                         if (step != 3) {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const Crazy8sPage(),
-                              settings: RouteSettings(
-                                arguments: ModalRoute.of(context)!.settings.arguments,
+                              builder: (context) => Crazy8sPage(
+                                sdgs: sdgs,
                               ),
+
                             ),
                           );
                         }
@@ -166,9 +166,8 @@ class DesignSteps extends StatelessWidget {
                         if (step != 4) {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const SolutionSketchPage(),
-                              settings: RouteSettings(
-                                arguments: ModalRoute.of(context)!.settings.arguments,
+                              builder: (context) => SolutionSketchPage(
+                                sdgs: sdgs,
                               ),
                             ),
                           );

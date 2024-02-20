@@ -7,7 +7,8 @@ import 'package:inglo/screens/solution_sketch/widgets/solution_sketch_input.dart
 import 'package:inglo/widgets/design/design_steps.dart';
 
 class SolutionSketchPage extends StatefulWidget {
-  const SolutionSketchPage({super.key});
+  final int sdgs;
+  const SolutionSketchPage({required this.sdgs, super.key});
 
   @override
   State<SolutionSketchPage> createState() => _SolutionSketchPageState();
@@ -35,7 +36,7 @@ class _SolutionSketchPageState extends State<SolutionSketchPage> {
 
   @override
   Widget build(BuildContext context) {
-    final sdgs = ModalRoute.of(context)!.settings.arguments; // 받아온 sdgs값
+    final int sdgs = widget.sdgs;// 받아온 sdgs값
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -71,7 +72,7 @@ class _SolutionSketchPageState extends State<SolutionSketchPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              DesignSteps(step: 4),
+              DesignSteps(step: 4, sdgs: sdgs,),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                 child: SolutionSketchBtn(getImage: getImage),

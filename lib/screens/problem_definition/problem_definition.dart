@@ -4,10 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/problem_definition/problem_choose.dart';
 import 'package:inglo/screens/problem_definition/problem_write.dart';
 import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
+import 'package:inglo/service/problem_definition/problem_definition.dart';
 import 'package:inglo/widgets/design/design_steps.dart';
 
 class ProblemDefinitionPage extends StatefulWidget {
-  const ProblemDefinitionPage({super.key});
+  final int sdgs;
+  const ProblemDefinitionPage({required this.sdgs, super.key});
 
   @override
   State<ProblemDefinitionPage> createState() => _ProblemDefinitionPageState();
@@ -40,8 +42,7 @@ class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
 
   @override
   Widget build(BuildContext context) {
-    final sdgs = ModalRoute.of(context)!.settings.arguments; // 받아온 sdgs값
-
+    final int sdgs = widget.sdgs;
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
@@ -76,52 +77,57 @@ class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              DesignSteps(step: 1),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: MasonryGridView.count(
-                  physics: BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: problemList.length + 1,
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 5.0,
-                  mainAxisSpacing: 5.0,
-                  itemBuilder: (context, index) {
-                    if (index == 0) {
-                      return Container(
-                        margin: EdgeInsets.all(40),
-                        child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const ProblemWrite(),
+              DesignSteps(step: 1, sdgs: sdgs,),
+              FutureBuilder(
+                future: ProblemDefinitionService().getProblemDefinition(sdgs),
+                builder: (context, snapshot) {
+                  var data = snapshot.data!;
+                  return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: MasonryGridView.count(
+                    physics: BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: data.length + 1,
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 5.0,
+                    mainAxisSpacing: 5.0,
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        return Container(
+                          margin: EdgeInsets.all(40),
+                          child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => ProblemWrite(sdgs: sdgs),
+                                  ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                //fixedSize: Size(30, 30),
+                                backgroundColor: Colors.white,
+                                shape: CircleBorder(),
+                                // padding도 넣을 수 있음!
+                                padding: EdgeInsets.all(10.0),
+                                side: BorderSide(
+                                  color: Color(0xFF233A66),
+                                  width: 1,
                                 ),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              //fixedSize: Size(30, 30),
-                              backgroundColor: Colors.white,
-                              shape: CircleBorder(),
-                              // padding도 넣을 수 있음!
-                              padding: EdgeInsets.all(10.0),
-                              side: BorderSide(
-                                color: Color(0xFF233A66),
-                                width: 1,
+                                shadowColor: Colors.transparent,
                               ),
-                              shadowColor: Colors.transparent,
+                              child: const Icon(
+                                Icons.edit_outlined,
+                                size: 25,
+                                color: Color(0xFF233A66),
+                              ),
                             ),
-                            child: const Icon(
-                              Icons.edit_outlined,
-                              size: 25,
-                              color: Color(0xFF233A66),
-                            ),
-                          ),
-                      );
-                    } else {
-                      return DesignCard(content: problemList[index - 1]["content"]!);
-                    }
-                  },
-                ),
+                        );
+                      } else {
+                        return DesignCard(content: data[index - 1].content!);
+                      }
+                    },
+                  ),
+                );},
               ),
             ],
           ),
@@ -141,7 +147,7 @@ class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
                   // Add your onPressed code here!
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const ProblemChoosePage(),
+                      builder: (context) => ProblemChoosePage(sdgs: sdgs,),
                     ),
                   );
                 },

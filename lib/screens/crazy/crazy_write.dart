@@ -13,12 +13,10 @@ class CrazyWrite extends StatefulWidget {
 
 class _CrazyWriteState extends State<CrazyWrite> {
 
-
   @override
   Widget build(BuildContext context) {
     final id = ModalRoute.of(context)!.settings.arguments; // 받아온 id값
     String content = ""; // 작성글 내용
-
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
@@ -54,7 +52,6 @@ class _CrazyWriteState extends State<CrazyWrite> {
             children: [
               // 글쓰기
               WriteCard(
-                id: id,
                 changeContent: (text) {
                   setState(() {
                     content = text;

@@ -8,7 +8,8 @@ import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
 import 'package:inglo/widgets/design/design_steps.dart';
 
 class CrazyVotingPage extends StatefulWidget {
-  const CrazyVotingPage({super.key});
+  final int sdgs;
+  const CrazyVotingPage({required this.sdgs, super.key});
 
   @override
   State<CrazyVotingPage> createState() => _CrazyVotingPageState();
@@ -108,7 +109,7 @@ class _CrazyVotingPageState extends State<CrazyVotingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final sdgs = ModalRoute.of(context)!.settings.arguments; // 받아온 sdgs값
+    final int sdgs = widget.sdgs; // 받아온 sdgs값
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -167,7 +168,7 @@ class _CrazyVotingPageState extends State<CrazyVotingPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              DesignSteps(step: 3),
+              DesignSteps(step: 3, sdgs: sdgs,),
               CrazyPagination(
                 problemList: problemList,
               ),

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/screens/hmw/hmw_detail.dart';
+import 'package:inglo/service/problem_definition/problem_definition.dart';
 import 'package:inglo/widgets/design/write_card.dart';
 
 class ProblemWrite extends StatefulWidget {
+  final int sdgs;
   const ProblemWrite({
+    required this.sdgs,
     super.key,
   });
 
@@ -12,12 +16,12 @@ class ProblemWrite extends StatefulWidget {
 }
 
 class _ProblemWriteState extends State<ProblemWrite> {
-
+  String content = "";
 
   @override
   Widget build(BuildContext context) {
-    final id = ModalRoute.of(context)!.settings.arguments; // 받아온 id값
-    String content = ""; // 작성글 내용
+    final int sdgs = widget.sdgs;
+    //String content = ""; // 작성글 내용
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -54,11 +58,11 @@ class _ProblemWriteState extends State<ProblemWrite> {
             children: [
               // 글쓰기
               WriteCard(
-                id: id,
                 changeContent: (text) {
                   setState(() {
                     content = text;
                   });
+                  print('${content}, ${text}');
                 },
               ),
               // Submit 버튼
@@ -66,7 +70,10 @@ class _ProblemWriteState extends State<ProblemWrite> {
                 margin:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    print(content);
+                    ProblemDefinitionService().postProblemDefinition(sdgs, content, context);
+                  },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
                     side: BorderSide(

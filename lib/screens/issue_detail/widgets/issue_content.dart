@@ -3,7 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/issuelist/sdgs_select.dart';
 
 class IssueContent extends StatelessWidget {
-  const IssueContent({super.key});
+  final data;
+  const IssueContent({required this.data, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class IssueContent extends StatelessWidget {
           Container(
             padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
             child: Text(
-              "The world is currently witnessing a significant focus on clean energy technologies. Recent studies indicate a rapid development in renewable energy sources such as solar, wind, and geothermal energy.Numerous countries are implementing policies to support this transition and investment in clean energy technologies is on the rise. Experts predict that these changes will bring long-term economic and environmental benefits....",
+              data.content,
               style: GoogleFonts.notoSans(
                 color: Colors.black,
                 fontSize: 15,

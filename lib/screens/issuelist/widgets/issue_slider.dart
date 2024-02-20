@@ -33,7 +33,7 @@ class IssueSlider extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const IssueDetailPage(),
+                          builder: (context) => IssueDetailPage(itemId: item.id,),
                         ),
                       );
                     },

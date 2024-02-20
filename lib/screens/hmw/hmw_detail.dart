@@ -8,7 +8,8 @@ import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
 import 'package:inglo/widgets/design/design_steps.dart';
 
 class HMWDetailPage extends StatefulWidget {
-  const HMWDetailPage({super.key});
+  final int sdgs;
+  const HMWDetailPage({required this.sdgs, super.key});
 
   @override
   State<HMWDetailPage> createState() => _HMWDetailPageState();
@@ -45,7 +46,7 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final sdgs = ModalRoute.of(context)!.settings.arguments; // 받아온 sdgs값
+    final int sdgs = widget.sdgs;
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -83,7 +84,7 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                DesignSteps(step: 2),
+                DesignSteps(step: 2, sdgs: sdgs,),
                 SizedBox(
                   height: 20,
                 ),
@@ -163,7 +164,7 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
                     //Add your onPressed code here!
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const HMWChoosePage(),
+                        builder: (context) => HMWChoosePage(sdgs: sdgs,),
                       ),
                     );
                   },

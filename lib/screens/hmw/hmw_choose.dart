@@ -7,7 +7,8 @@ import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
 import 'package:inglo/widgets/design/design_steps.dart';
 
 class HMWChoosePage extends StatefulWidget {
-  const HMWChoosePage({super.key});
+  final int sdgs;
+  const HMWChoosePage({required this.sdgs, super.key});
 
   @override
   State<HMWChoosePage> createState() => _HMWChoosePageState();
@@ -46,7 +47,7 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
 
   @override
   Widget build(BuildContext context) {
-    final sdgs = ModalRoute.of(context)!.settings.arguments; // 받아온 sdgs값
+    final int sdgs = widget.sdgs;
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -84,7 +85,7 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                DesignSteps(step: 2),
+                DesignSteps(step: 2, sdgs: sdgs,),
                 SizedBox(
                   height: 20,
                 ),

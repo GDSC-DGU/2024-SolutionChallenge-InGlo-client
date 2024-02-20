@@ -55,12 +55,7 @@ class IssueListData extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const IssueDetailPage(),
-                          settings: RouteSettings(
-                            arguments: {
-                              "itemId": item.id,
-                            }
-                          ),
+                          builder: (context) => IssueDetailPage(itemId: item.id),
                         ),
                       );
                     },

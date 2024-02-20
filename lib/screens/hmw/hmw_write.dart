@@ -54,7 +54,6 @@ class _HMWWriteState extends State<HMWWrite> {
             children: [
               // 글쓰기
               WriteCard(
-                id: id,
                 changeContent: (text) {
                   setState(() {
                     content = text;

@@ -6,7 +6,8 @@ import 'package:inglo/screens/problem_definition/widgets/check_design_card.dart'
 import 'package:inglo/widgets/design/design_steps.dart';
 
 class ProblemChoosePage extends StatefulWidget {
-  const ProblemChoosePage({super.key});
+  final int sdgs;
+  const ProblemChoosePage({required this.sdgs, super.key});
 
   @override
   State<ProblemChoosePage> createState() => _ProblemChoosePageState();
@@ -45,6 +46,7 @@ class _ProblemChoosePageState extends State<ProblemChoosePage> {
 
   @override
   Widget build(BuildContext context) {
+    final int sdgs = widget.sdgs;
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
@@ -79,7 +81,7 @@ class _ProblemChoosePageState extends State<ProblemChoosePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              DesignSteps(step: 1),
+              DesignSteps(step: 1, sdgs: sdgs,),
               Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: 10,
@@ -122,7 +124,7 @@ class _ProblemChoosePageState extends State<ProblemChoosePage> {
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => const HMWListPage(),
+                builder: (context) => HMWListPage(),
                 settings: RouteSettings(
                   arguments: ModalRoute.of(context)!.settings.arguments,
                 ),

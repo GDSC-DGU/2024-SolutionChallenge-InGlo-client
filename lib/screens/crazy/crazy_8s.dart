@@ -8,7 +8,8 @@ import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
 import 'package:inglo/widgets/design/design_steps.dart';
 
 class Crazy8sPage extends StatefulWidget {
-  const Crazy8sPage({super.key});
+  final int sdgs;
+  const Crazy8sPage({required this.sdgs, super.key});
 
   @override
   State<Crazy8sPage> createState() => _Crazy8sPageState();
@@ -45,7 +46,7 @@ class _Crazy8sPageState extends State<Crazy8sPage> {
 
   @override
   Widget build(BuildContext context) {
-    final sdgs = ModalRoute.of(context)!.settings.arguments; // 받아온 sdgs값
+    final int sdgs = widget.sdgs;
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -83,7 +84,7 @@ class _Crazy8sPageState extends State<Crazy8sPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                DesignSteps(step: 3),
+                DesignSteps(step: 3, sdgs: sdgs,),
                 SizedBox(
                   height: 20,
                 ),
@@ -163,7 +164,7 @@ class _Crazy8sPageState extends State<Crazy8sPage> {
                   //Add your onPressed code here!
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const CrazyVotingPage(),
+                      builder: (context) => CrazyVotingPage(sdgs: sdgs,),
                     ),
                   );
                 },

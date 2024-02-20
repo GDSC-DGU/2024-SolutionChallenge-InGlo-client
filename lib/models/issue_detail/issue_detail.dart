@@ -24,11 +24,11 @@ class IssueDetailModel {
     : id = json['id'],
     comments = json['comments'],
     userHasLiked = json['user_has_liked'],
-    link = json['link'],
-    writer = json['writer'],
-    title = json['title'],
-    content = json['content'],
-    imageUrl = json['image_url'],
-    createdAt = json['created_at'];
+    link = json['link'] ?? "",
+    writer = json['writer'] ?? "",
+    title = json['title'] ?? "",
+    content = json['content'] ?? "",
+    imageUrl = json['image_url'] ?? "",
+    createdAt = json['created_at'] ?? "";
 
 }
