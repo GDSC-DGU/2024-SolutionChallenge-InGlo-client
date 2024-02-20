@@ -45,13 +45,15 @@ class _PostBoardPageState extends State<PostBoardPage> {
 
       if(response.statusCode == 200 || response.statusCode == 201) {
         print('성공!');
+        final List<dynamic> jsonResponse = jsonDecode(response.data);
+        print('data : ${jsonResponse[0]['id']}');
+        setState(() {
+          _listItems.clear(); // 기존 목록을 지우고 새로운 데이터로 채운다.
+          for (var item in jsonResponse) {
+            _listItems.add(PostList.fromJson(item));
+          }
+        });
       }
-
-      /*
-      final List<dynamic> jsonResponse = jsonDecode(response.data);
-      print('data : $jsonResponse');
-      print('성공!');
-      */
 
 
     } catch (e) {
@@ -93,8 +95,7 @@ class _PostBoardPageState extends State<PostBoardPage> {
                       physics: const BouncingScrollPhysics(),
                       child: Column(
                         children: [
-                          // Text(_listItems[0].title),
-                          // PostItem(listItems : _listItems), // PostItem 호출
+                          PostItem(listItems : _listItems), // PostItem 호출
                           SizedBox(height: 0),
                         ],
                       ),

@@ -11,7 +11,7 @@ Widget buildDivider(BuildContext context) => Container(
     );
 
 class PostItem extends StatefulWidget {
-  final List<PostList> listItems; // 리스트를 저장할 변수 추가
+  final List<PostList> listItems; // 리스트를 저장할 변수
 
   // 생성자를 통해 리스트를 전달 받는다.
   const PostItem({Key? key, required this.listItems}) : super(key: key);
@@ -56,7 +56,7 @@ class _PostItemState extends State<PostItem> {
                                   Container(
                                     width: MediaQuery.of(context).size.width * 0.8,
                                     child: Text(
-                                      item.title!,
+                                      item.title,
                                       style: GoogleFonts.notoSans(
                                           fontSize: 14,
                                           color: Colors.black,
@@ -86,7 +86,7 @@ class _PostItemState extends State<PostItem> {
                               Container(
                                   width: 200,
                                   child: Text(
-                                    item.content!,
+                                    item.content,
                                     style: GoogleFonts.notoSans(
                                         fontSize: 14,
                                         color: Colors.black,
