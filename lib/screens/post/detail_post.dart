@@ -13,11 +13,17 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 
 class DetailPost extends StatefulWidget {
+  final int id;
+
+  // 생성자를 통해 id를 전달 받는다.
+  const DetailPost({Key? key, required this.id}) : super(key: key);
+
   @override
   _DetailPostState createState() => _DetailPostState();
 }
 
 class _DetailPostState extends State<DetailPost> {
+  bool isLoading = true; // 로딩 상태 관리
   Map<String, dynamic>? detailPost; // api 저장용
   final dio = Dio(); // dio instance 생성
   // final detail = DetailPostPreferences.detailPost;
@@ -30,7 +36,12 @@ class _DetailPostState extends State<DetailPost> {
 
   // profile get 함수
   Future<void> getDetail() async {
-    final url = "https://dongkyeom.com/api/v1/posts/7";
+
+    setState(() {
+      isLoading = true; // 데이터 요청 전 로딩 상태로 설정
+    });
+
+    final url = "https://dongkyeom.com/api/v1/posts/${widget.id}";
 
     try {
       final response = await dio.get(
@@ -60,6 +71,7 @@ class _DetailPostState extends State<DetailPost> {
       print('Is Liked: ${jsonResponse['is_liked']}');
 
       setState(() {
+        isLoading = false; // 데이터를 받아온 후 로딩 상태 해제
         detailPost = jsonResponse;
         if (detailPost != null) {
           print('post : ${detailPost!['id']}'); // null 검사 후 값에 접근
@@ -77,7 +89,9 @@ class _DetailPostState extends State<DetailPost> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
+        child: isLoading
+          ? Center(child: Text('로딩 중입니다... '),)
+          : Container(
           height: MediaQuery.of(context).size.height,
           child: Stack(
             children: [

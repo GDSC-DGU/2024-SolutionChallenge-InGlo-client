@@ -29,7 +29,7 @@ class _PostItemState extends State<PostItem> {
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => DetailPost(),
+              builder: (context) => DetailPost(id: item.id),
             ),
           );
         },
