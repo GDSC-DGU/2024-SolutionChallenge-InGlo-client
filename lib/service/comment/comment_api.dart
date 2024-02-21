@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:inglo/models/comment/commnet.dart';
+import 'package:inglo/models/comment/comment.dart';
+import 'package:inglo/models/comment/modified_comment.dart';
 
 class CommentService {
   final Dio dio = Dio(); // Dio 인스턴스 생성
@@ -62,9 +63,10 @@ class CommentService {
     }
   }
 
-  // 유저 정보 전송 API
-  Future<void> ModifiedFeedback(String _content, int post_id, int feedback_id, String? token) async {
-    final url = "https://dongkyeom.com/api/v1/posts/{post_id}/feedbacks/{feedback_id}";
+  // 피드백 수정
+  Future<ModifiedComment> ModifiedFeedback(String _content, int postId, int? feedbackId, String? token) async {
+    final url = "https://dongkyeom.com/api/v1/posts/$postId/feedbacks/$feedbackId";
+    print('post id : $postId feedback_id : $feedbackId');
     Map<String, dynamic> data = {
       "content": _content,
     };
@@ -81,23 +83,27 @@ class CommentService {
     try {
       final response = await dio.patch(url, data: data, options: options);
 
-      if (response.statusCode == 200) {
+      print(
+          'Success code: ${response.statusCode}, 수정 성공!: ${response.data}');
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
         // 성공
-        print(
-            'Success code: ${response.statusCode}, response: ${response.data}');
+        ModifiedComment newComment = ModifiedComment.fromJson(response.data);
+        return newComment;
       } else {
-        // 비-200 상태 코드
         print('Error code: ${response.statusCode}, response: ${response.data}');
+        throw Exception('Failed to modify feedback');
       }
     } catch (e) {
-      // 예외 처리
       print('Exception caught: $e');
+      throw Exception('Error modifying feedback');
     }
   }
 
   // 유저 정보 삭제 API
-  Future<void> deleteFeedback(int post_id, int feedback_id, String? token) async {
-    final url = "https://dongkyeom.com/api/v1/posts/{post_id}/feedbacks/{feedback_id}";
+  Future<void> deleteFeedback(int postId, int? feedbackId, String? token) async {
+    final url = "https://dongkyeom.com/api/v1/posts/$postId/feedbacks/$feedbackId";
+    print('post id : $postId feedback_id : $feedbackId token: $token');
 
     // 요청 헤더 설정
     Options options = Options(

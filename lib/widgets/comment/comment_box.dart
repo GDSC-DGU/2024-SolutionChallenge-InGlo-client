@@ -1,15 +1,16 @@
 import 'package:comment_box/comment/comment.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:inglo/models/comment/commnet.dart';
+import 'package:inglo/models/comment/comment.dart';
 import 'package:dio/dio.dart';
+import 'package:inglo/models/comment/modified_comment.dart';
 
 import 'package:inglo/service/comment/comment_api.dart'; // api 호인스
-
 // provider
 import 'package:provider/provider.dart';
 import 'package:inglo/provider/profile/users.dart';
 import 'package:inglo/provider/user_token/user_token.dart';
+import 'package:intl/intl.dart';
 
 class Comments extends StatefulWidget {
   final int id;
@@ -24,12 +25,16 @@ class Comments extends StatefulWidget {
 class _CommentsState extends State<Comments> {
   final dio = Dio(); // dio instance 생성
   final formKey = GlobalKey<FormState>();
-  final TextEditingController commentController = TextEditingController();
-  final _parent_id = null; // 부모 피드백 아이디
-  final _feedback_id = null;
+  int? _parent_id = null; // 부모 피드백 아이디
+  int? _feedback_id = null; // 현재 선택한 feedback id
   List<Comment> feedbacks = []; // feedback을 저장할 변수
 
-  String? profile_img;
+  int? isEditing; // edit 모드 저장 변수
+  String? _modifiedController = '';
+
+  final TextEditingController commentController = TextEditingController();
+  final TextEditingController modifiedController =
+      TextEditingController(); // 수정용
 
   final CommentService _CommentService = CommentService(); // instance 생성
 
@@ -40,15 +45,17 @@ class _CommentsState extends State<Comments> {
     super.dispose();
   }
 
-  String? token ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs'; // token 저장
+  String? token = ''; // token 저장
+  String? profile_img = UserProvider().user?.profile_img ?? '';
+  String? user_name = UserProvider().user?.name ?? '';
 
   // 초기 1번 실행 / 피드백 조회
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-    profile_img = Provider.of<UserProvider>(context, listen: false).user?.profile_img ?? ''; // provider에서 토큰 가져오기
-      loadFeedbacks(); // 비동기 함수 호출
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      token = Provider.of<UserToken>(context, listen: false).token;
+      await loadFeedbacks(); // 비동기 함수 호출
     });
     print('token : $token');
   }
@@ -56,7 +63,8 @@ class _CommentsState extends State<Comments> {
   Future<void> loadFeedbacks() async {
     try {
       // await 키워드를 사용하여 비동기 완료를 기다린다.
-      List<Comment> feedbacks = await _CommentService.getFeedbacks(widget.id, token);
+      List<Comment> feedbacks =
+          await _CommentService.getFeedbacks(widget.id, token);
       setState(() {
         this.feedbacks = feedbacks;
       });
@@ -67,19 +75,31 @@ class _CommentsState extends State<Comments> {
     }
   }
 
-  void PostFeedback() {
-    _CommentService.postFeedback(widget.id, commentController.text, _parent_id, token); // 피드백 제출
+  Future<void> modifiedFeedback() async {
+    try {
+      // await 키워드를 사용하여 비동기 완료를 기다린다.
+      ModifiedComment newComment = await _CommentService.ModifiedFeedback(
+          modifiedController.text, widget.id, _feedback_id, token); // 피드백 수정
+    } catch (e) {
+      // 오류 처리
+      print("Error loading new feedback: $e");
+    }
   }
 
-  void ModifiedFeedback() {
-    _CommentService.ModifiedFeedback(commentController.text, widget.id, _feedback_id, token); // 피드백 수정
+  Future<void> PostFeedback() async {
+    await _CommentService.postFeedback(
+        widget.id, commentController.text, _parent_id, token); // 피드백 제출
   }
 
-  void DeleteFeedback() {
-    _CommentService.deleteFeedback(widget.id, _feedback_id, token); // 피드백 삭제
+  Future<void> ModifiedFeedback() async {
   }
 
-  Widget commentChild(data) {
+  Future<void> DeleteFeedback() async {
+    await _CommentService.deleteFeedback(
+        widget.id, _feedback_id, token); // 피드백 삭제
+  }
+
+  Widget commentChild(data, id) {
     return ListView(
       children: [
         for (var i = 0; i < data.length; i++)
@@ -107,30 +127,101 @@ class _CommentsState extends State<Comments> {
                 data[i].user.name,
                 style: GoogleFonts.notoSans(fontWeight: FontWeight.bold),
               ),
-              subtitle: Text(data[i].content),
-              trailing: Text(data[i].created_at, style: GoogleFonts.notoSans(fontSize: 10)),
+              // edit 모드인 경우 text editor으로 전환한다.
+              subtitle: isEditing == i
+                  ? Form(
+                      child: TextFormField(
+                        controller: modifiedController,
+                        decoration: InputDecoration(
+                          isDense: true, // 여백 최소화
+                        ),
+                        style: GoogleFonts.notoSans(fontSize: 14),
+                      ),
+                    )
+                  : Text(data[i].content),
+              trailing: Container(
+                width: 60,
+                child: Column(
+                  children: [
+                    data[i].user.id != id // 유저 아이디가 같지 않다면
+                        ? Container()
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              GestureDetector(
+                                onTap: () async {
+                                  print("Edit Clicked");
+                                  setState(() {
+                                    if (isEditing == i) {
+                                      isEditing = null;
+                                    } else {
+                                      isEditing = i; // 수정 모드로 전환
+                                      _feedback_id =
+                                          data[i].id; // feedback id도 변경
+                                      modifiedController.text = data[i].content;
+                                    }
+                                  });
+                                  if (isEditing == null) {
+                                    await modifiedFeedback();
+                                    modifiedController.clear(); // 컨트롤러 초기화
+                                    FocusScope.of(context).unfocus(); // 키보드 숨기기
+                                    await loadFeedbacks();
+                                  }
+                                },
+                                child: Icon(
+                                  isEditing == i ? Icons.send : Icons.edit,
+                                  color: Color(0xFFD7A859),
+                                  size: 25,
+                                ),
+                              ),
+                              SizedBox(width: 5),
+                              GestureDetector(
+                                onTap: () async {
+                                  print("Delete Clicked");
+                                  _feedback_id = data[i].id;
+                                  await DeleteFeedback();
+                                  await loadFeedbacks();
+                                },
+                                child: Icon(
+                                  Icons.delete,
+                                  color: Colors.grey,
+                                  size: 25,
+                                ),
+                              ),
+                            ],
+                          ),
+                    Text(
+                        DateFormat('yyyy-MM-dd')
+                            .format(DateTime.parse(data[i].created_at)),
+                        style: GoogleFonts.notoSans(fontSize: 10)),
+                  ],
+                ),
+              ),
             ),
-          )
+          ),
       ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final profile_img = userProvider.user?.profile_img; // img
+    final id = userProvider.user?.id; // id
+
     return Scaffold(
       body: Container(
         child: CommentBox(
-          userImage: CommentBox.commentImageParser(
-              imageURLorPath: profile_img),
-          child: commentChild(feedbacks),
+          userImage: CommentBox.commentImageParser(imageURLorPath: profile_img),
+          child: commentChild(feedbacks, id),
           labelText: 'Send Feedbacks',
           errorText: 'Comment cannot be blank',
           withBorder: false,
           sendButtonMethod: () async {
             if (formKey.currentState!.validate()) {
-              PostFeedback();
+              await PostFeedback();
+              await loadFeedbacks();
               print(commentController.text);
-              setState(() {});
               commentController.clear();
               FocusScope.of(context).unfocus();
             } else {

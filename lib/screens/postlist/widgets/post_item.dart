@@ -3,6 +3,7 @@ import 'package:inglo/screens/post/detail_post.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:inglo/models/post/post_list.dart';
+import 'package:intl/intl.dart';
 
 // provider
 
@@ -108,7 +109,7 @@ class _PostItemState extends State<PostItem> {
                                     Row(
                                       children: [
                                         Text(
-                                          '${item.created_at} | ',
+                                          '${DateFormat('yyyy-MM-dd').format(DateTime.parse(item.created_at))} | ',
                                           style: GoogleFonts.notoSans(
                                               fontSize: 12,
                                               color: Colors.grey,
