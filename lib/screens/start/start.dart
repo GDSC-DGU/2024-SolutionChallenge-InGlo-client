@@ -8,6 +8,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart'; // secure
 
 import 'dart:convert';
 import 'package:dio/dio.dart';
+// provider
+import 'package:provider/provider.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 
 // LoginPage 클래스
 class StartPage extends StatefulWidget {
@@ -36,20 +39,52 @@ class _StartPageState extends State<StartPage> {
   _asyncMethod() async {
     // read 함수로 key값에 맞는 정보를 불러오고 데이터타입은 String 타입
     // 데이터가 없을때는 null을 반환
-    user_token = await storage.read(key:'token');
+    user_token = await storage.read(key:'refresh_token');
 
     // user의 정보가 있다면 로그인 후 들어가는 첫 페이지로 넘어간다.
     if (user_token != null) {
-      print('로그인 성공!');
-      // 현재 화면을 새로운 화면으로 교체
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => IssueListPage()), // 다음 페이지로 이동
-      );
-
+      print('리프레시 인증 성공!');
+      GetNewToken(user_token); // 새 토큰 발급
       // 여기 refresh token과 비교하여 token이 유효한지 확인한다.
     } else {
       print('로그인이 필요합니다');
+    }
+  }
+
+
+  // 만료된 토큰 발급 함수
+  Future<void> GetNewToken(String refresh_token) async {
+
+    final url = "https://dongkyeom.com/api/accounts/token/refresh/";
+    Map<String, String> data = {
+      "refresh_token": refresh_token,
+    };
+
+    // 요청 헤더 설정
+    Options options = Options(
+      contentType: Headers.jsonContentType,
+    );
+
+    try {
+      final response = await dio.post(url, data: data, options: options);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // 성공
+        print(
+            'Success code: ${response.statusCode}, 새 토큰: ${response.data['access_token']}');
+
+        // 새 토큰을 provider에 저장
+        Provider.of<UserToken>(context, listen: false).setToken(response.data['access_token']);
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => IssueListPage()), // 다음 페이지로 이동
+        );
+      } else {
+        print('Error api code: ${response.statusCode}, response: ${response.data}');
+      }
+    } catch (e) {
+      print('Exception caught: $e');
     }
   }
 
@@ -73,14 +108,20 @@ class _StartPageState extends State<StartPage> {
       if (response.statusCode == 200 || response.statusCode == 201) {
         // 성공
         print(
-            'Success code: ${response.statusCode}, response: ${response.data}');
+            'Success code: ${response.statusCode}, response: ${response.data['refresh_token']}');
 
         // storage에 저장
         await storage.write(
-          key: 'token',
-          value: response.data['access'], // 토큰 직렬화 데이터 저장
+          key: 'refresh_token',
+          value: response.data['refresh_token'], // 토큰 직렬화 데이터 저장
+        );
+        await storage.write(
+          key: 'access_token',
+          value: response.data['access_token'], // 토큰 직렬화 데이터 저장
         );
 
+        // 새 토큰을 provider에 저장
+        Provider.of<UserToken>(context, listen: false).setToken(response.data['access_token']);
 
         Navigator.pushReplacement(
           context,

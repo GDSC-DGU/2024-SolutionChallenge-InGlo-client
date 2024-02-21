@@ -11,6 +11,7 @@ import 'package:dio/dio.dart';
 // provider
 import 'package:provider/provider.dart';
 import 'package:inglo/provider/profile/users.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 
 class AccountPage extends StatefulWidget {
   @override
@@ -22,8 +23,19 @@ class _AccountPageState extends State<AccountPage> {
   final dio = Dio(); // dio instance 생성
 
   String _name = ''; // 사용자 이름 저장을 위한 변수
-  int _country = 0; // 국가 저장을 위한 변수
+  int _country = 2; // 국가 저장을 위한 변수
   String _language = ''; // 언어 저장을 위한 변수
+
+  String? token; // token 저장
+
+  // 초기 1번 실행
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      token = Provider.of<UserToken>(context, listen: false).token; // provider에서 토큰 가져오기
+    });
+    print('token :  $token');
+  }
 
   // user name, langauge, country 업데이트 provider 함수
   void updateSpecificUserInfo(BuildContext context) {
@@ -43,7 +55,7 @@ class _AccountPageState extends State<AccountPage> {
     Map<String, dynamic> data = {
       "name": _name,
       "country": int.parse('$_country'),
-      "language": _language,
+      "language": "en",
     };
 
     // 요청 헤더 설정
@@ -51,7 +63,7 @@ class _AccountPageState extends State<AccountPage> {
       contentType: Headers.jsonContentType,
       headers: {
         "Authorization":
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MzY4MTQ3LCJpYXQiOjE3MDgzNjQ1NDcsImp0aSI6IjYyNzRjY2RjZjY1MzQ4NjU5NjYzOTQxZjVmMDMwNDc2IiwidXNlcl9pZCI6M30._-R-VopbH5kIv9YkbMGuARcOF9z4E2TwQiy0kq-d6Uw',
+            'Bearer $token',
       },
     );
 

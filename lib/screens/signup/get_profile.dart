@@ -5,6 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/issuelist/issulist.dart';
 import 'package:dio/dio.dart';
 
+import 'package:provider/provider.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
+
 class GetProfilePage extends StatefulWidget {
   const GetProfilePage({Key? key}) : super(key: key);
 
@@ -16,6 +19,16 @@ class _GetProfilePageState extends State<GetProfilePage> {
   XFile? _image; //이미지를 담을 변수 선언
   final ImagePicker picker = ImagePicker(); //ImagePicker 초기화
   final dio = Dio();
+
+  String? token; // token 저장
+
+  // 초기 1번 실행
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      token = Provider.of<UserToken>(context, listen: false).token; // provider에서 토큰 가져오기
+    });
+  }
 
   // 이미지를 가져오는 함수
   Future getImage(ImageSource imageSource) async {
@@ -40,7 +53,7 @@ class _GetProfilePageState extends State<GetProfilePage> {
 
       dio.options.headers = {
         'Content-Type': 'multipart/form-data',
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MzY0OTI5LCJpYXQiOjE3MDgzNjEzMjksImp0aSI6IjJkOWI4Mzk0NDhkMTRkZDJhMzRhZjFiYTM5ZDRkNjdkIiwidXNlcl9pZCI6M30.wXtK1L1D2aIpdb4qXjnelsFx0tqP64yFJg_sIR3JjMw', // 필요한 토큰이나 인증 정보를 여기에 추가
+        'Authorization': 'Bearer $token', // 필요한 토큰이나 인증 정보를 여기에 추가
       };
 
       var response = await dio.patch(

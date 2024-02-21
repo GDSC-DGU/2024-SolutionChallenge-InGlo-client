@@ -9,8 +9,11 @@ import 'dart:convert';
 
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:inglo/util/post/postlist.dart';
 import 'package:inglo/models/post/post_list.dart';
+
+// provider
+import 'package:provider/provider.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 
 
 class PostBoardPage extends StatefulWidget {
@@ -21,11 +24,15 @@ class PostBoardPage extends StatefulWidget {
 class _PostBoardPageState extends State<PostBoardPage> {
   final dio = Dio(); // dio instance 생성
   final List<PostList> _listItems = [];
+  String? token; // token 저장
 
   // 초기 1번 실행
   void initState() {
     super.initState();
-    getPostItems();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      token = Provider.of<UserToken>(context, listen: false).token; // provider에서 토큰 가져오기
+      getPostItems(); // API 호출
+    });
   }
 
   // profile get 함수
@@ -38,7 +45,7 @@ class _PostBoardPageState extends State<PostBoardPage> {
         options: Options(
           responseType: ResponseType.plain,
           headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTk1OTg4LCJpYXQiOjE3MDg0NTE5ODgsImp0aSI6IjIzZWZjNDQ1NmJkMDRhYTI5NTQ0OTc0MGFiNmIyMjljIiwidXNlcl9pZCI6NH0.JS6_zrhwAFH0OX9HjfRkV0CGJ8BADmKXmB3r4Gf2y7E',
+            'Authorization': 'Bearer $token',
           },
         ),
       );

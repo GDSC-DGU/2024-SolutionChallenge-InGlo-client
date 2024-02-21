@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:inglo/screens/postlist/post_board.dart';
-import 'package:inglo/screens/provider_test/test.dart';
-import 'package:inglo/screens/signup/signup.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/start/start.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:inglo/service/auth/google/google_sign.dart';
 import 'package:inglo/provider/test/counts.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +20,7 @@ void main() async {
         // 아마 아래에 상태 변수들을 계속 추가하면 될 것 같다.
         ChangeNotifierProvider(create: (_) => Counts()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => UserToken()),
       ],
       child: MyApp(),
     ),
