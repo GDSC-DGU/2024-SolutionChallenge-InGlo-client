@@ -262,6 +262,24 @@ class _SetProfilePageState extends State<SetProfilePage> {
                           },
                         ),
                       ),
+                      SizedBox(height: 50.0),
+                      // Login Button
+                      FilledButton(
+                        onPressed: () {},
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              Color(0xFFFFD691)), // 버튼 배경색
+                          minimumSize: MaterialStateProperty.all(
+                              Size(400, 40)), // 버튼 사이즈
+                        ),
+                        child: Text(
+                          "SAVE",
+                          style: GoogleFonts.notoSans(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -289,7 +307,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
             width: 200,
             height: 200,
             decoration: BoxDecoration(
-              color: Color(0xFFD7A859),
+              color: Color(0xFFFFD691),
               borderRadius: BorderRadius.circular(200),
               border: Border.all(color: Colors.white, width: 5),
             ),
