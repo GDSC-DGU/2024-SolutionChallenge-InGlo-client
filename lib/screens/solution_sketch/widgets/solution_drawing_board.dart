@@ -2,21 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:scribble/scribble.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 
-class SolutionDrawingBoard extends StatefulWidget {
-  const SolutionDrawingBoard({super.key});
-
-  @override
-  State<SolutionDrawingBoard> createState() => _SolutionDrawingBoardState();
-}
-
-class _SolutionDrawingBoardState extends State<SolutionDrawingBoard> {
-  late ScribbleNotifier notifier;
-
-  @override
-  void initState() {
-    notifier = ScribbleNotifier();
-    super.initState();
-  }
+class SolutionDrawingBoard extends StatelessWidget {
+  final ScribbleNotifier notifier;
+  const SolutionDrawingBoard({required this.notifier, super.key, });
 
   @override
   Widget build(BuildContext context) {
@@ -40,21 +28,15 @@ class _SolutionDrawingBoardState extends State<SolutionDrawingBoard> {
                   height: 32,
                 ),
                 _buildStrokeToolbar(context),
+                // IconButton(
+                //   icon: const Icon(Icons.save),
+                //   tooltip: "Save to Image",
+                //   onPressed: () => _saveImage(context),
+                // ),
               ],
             ),
           )
         ],
-      ),
-    );
-  }
-
-  Future<void> _saveImage(BuildContext context) async {
-    final image = await notifier.renderImage();
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Your Image"),
-        content: Image.memory(image.buffer.asUint8List()),
       ),
     );
   }
@@ -182,7 +164,7 @@ class _SolutionDrawingBoardState extends State<SolutionDrawingBoard> {
             : RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
-        child: const Icon(Icons.remove, color: Colors.blueGrey),
+        child: const Icon(Icons.phonelink_erase, color: Colors.blueGrey),
         onPressed: notifier.setEraser,
       ),
     );

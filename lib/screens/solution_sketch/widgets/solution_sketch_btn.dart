@@ -4,7 +4,8 @@ import 'package:inglo/screens/solution_sketch/solution_drawing.dart';
 
 class SolutionSketchBtn extends StatelessWidget {
   final getImage;
-  const SolutionSketchBtn({required this.getImage, super.key,});
+  final finishDrawing;
+  const SolutionSketchBtn({required this.getImage, required this.finishDrawing, super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +42,10 @@ class SolutionSketchBtn extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => const SolutionDrawingPage(),
+              builder: (context) => SolutionDrawingPage(finishDrawing: finishDrawing),
             ),
           );
+          // navigateDrawing(context);
         },
         constraints: BoxConstraints(
           maxHeight: 100,

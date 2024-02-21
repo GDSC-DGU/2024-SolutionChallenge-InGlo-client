@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SolutionSketchInput extends StatelessWidget {
-  const SolutionSketchInput({super.key});
+  final changeTitle;
+  final changeDescription;
+  final changeContent;
+
+  const SolutionSketchInput({required this.changeTitle, required this.changeDescription, required this.changeContent, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +50,7 @@ class SolutionSketchInput extends StatelessWidget {
                 ),
               ),
               TextFormField(
+                onChanged: (val) => changeTitle(val),
                 decoration: InputDecoration(
                   hintText: 'write the title...',
                   contentPadding: EdgeInsets.all(8), // padding
@@ -62,6 +67,7 @@ class SolutionSketchInput extends StatelessWidget {
                 ),
               ),
               TextFormField(
+                onChanged: (val) => changeDescription(val),
                 keyboardType: TextInputType.multiline,
                 decoration: InputDecoration(
                   hintText: 'write the description...',
@@ -80,6 +86,7 @@ class SolutionSketchInput extends StatelessWidget {
                 ),
               ),
               TextFormField(
+                onChanged: (val) => changeContent(val),
                 keyboardType: TextInputType.multiline,
                 decoration: InputDecoration(
                   hintText: 'write solution sketch...',

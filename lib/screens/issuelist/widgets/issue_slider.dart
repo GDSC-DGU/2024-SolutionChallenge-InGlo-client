@@ -1,6 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_provider/flutter_provider.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/issue_detail/issue_detail.dart';
+import 'package:inglo/service/issue/issuelist.dart';
 
 // 더미데이터
 final List<String> imgList = [
@@ -13,81 +16,99 @@ final List<String> imgList = [
 ];
 
 class IssueSlider extends StatelessWidget {
-  const IssueSlider({super.key});
+  final String? token;
+  const IssueSlider({required this.token, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: CarouselSlider(
-        options: CarouselOptions(
-          autoPlay: true,
-          aspectRatio: 2.0,
-          enlargeCenterPage: true,
-        ),
-        items: imgList
-            .map((item) => InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const IssueDetailPage(),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.all(5.0),
-                    child: ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5.0)),
-                        child: Stack(
-                          children: <Widget>[
-                            Image.network(item,
-                                fit: BoxFit.cover, width: 1000.0),
-                            Positioned(
-                              bottom: 0.0,
-                              left: 0.0,
-                              right: 0.0,
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Color.fromARGB(200, 0, 0, 0),
-                                      Color.fromARGB(0, 0, 0, 0)
+
+    return FutureBuilder(
+      future: IssueTop3Service().getIssueTop3(token),
+      builder: (context, snapshot) {
+        var data = snapshot.data!;
+        return CarouselSlider(
+          options: CarouselOptions(
+            autoPlay: true,
+            aspectRatio: 2.0,
+            enlargeCenterPage: true,
+          ),
+          items: data
+              .map((item) => InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => IssueDetailPage(itemId: item.id,),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.all(5.0),
+                      child: ClipRRect(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          child: Stack(
+                            children: <Widget>[
+                              item.imageUrl != ""
+                                  ? Image.network(item.imageUrl,
+                                      fit: BoxFit.cover, width: 1000.0)
+                                  : Container(
+                                      width: 1000,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFFFD691),
+                                      ),
+                                    ),
+                              Positioned(
+                                bottom: 0.0,
+                                left: 0.0,
+                                right: 0.0,
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color.fromARGB(200, 0, 0, 0),
+                                        Color.fromARGB(0, 0, 0, 0)
+                                      ],
+                                      begin: Alignment.bottomCenter,
+                                      end: Alignment.topCenter,
+                                    ),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 15.0, horizontal: 20.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        item.title.length >= 40
+                                            ? '${item.title.substring(0, 40)}...'
+                                            : item.title,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        item.description.length >= 30
+                                            ? '${item.description.substring(0, 30)}...'
+                                            : item.description,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 13.0,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
                                     ],
-                                    begin: Alignment.bottomCenter,
-                                    end: Alignment.topCenter,
                                   ),
                                 ),
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 15.0, horizontal: 20.0),
-                                child: const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '이슈 제목 넣기',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
-                                      '이슈 설명 넣기',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 13.0,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
                               ),
-                            ),
-                          ],
-                        )),
-                  ),
-                ))
-            .toList(),
-      ),
+                            ],
+                          )),
+                    ),
+                  ))
+              .toList(),
+        );
+      },
     );
   }
 }

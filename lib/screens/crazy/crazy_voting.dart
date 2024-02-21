@@ -1,47 +1,126 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:inglo/screens/crazy/crazy_voting.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/crazy/widgets/crazy_pagination.dart';
-import 'package:inglo/screens/problem_definition/problem_write.dart';
-import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
-import 'package:inglo/widgets/design_steps.dart';
+import 'package:inglo/screens/solution_sketch/solution_sketch.dart';
+import 'package:inglo/service/design/crazy_service.dart';
+import 'package:inglo/widgets/design/design_steps.dart';
+import 'package:provider/provider.dart';
 
 class CrazyVotingPage extends StatefulWidget {
-  const CrazyVotingPage({super.key});
+  final int sdgs;
+  final int problemId;
+  const CrazyVotingPage({required this.sdgs, required this.problemId, super.key});
 
   @override
   State<CrazyVotingPage> createState() => _CrazyVotingPageState();
 }
 
 class _CrazyVotingPageState extends State<CrazyVotingPage> {
+  late int checkedNumber;
+
+  @override
+  void initState() {
+    super.initState();
+    checkedNumber = 0;
+  }
+
   // 더미데이터
-  final List<Map<String, String>> problemList = [
-    {"content": "choose 3-5 problems"},
+  final problemList = [
     {
-      "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+      "id": "2",
+      "contents": [
+        {"id": "1", "content": "1choose 3-5 problems"},
+        {
+          "id": "2",
+          "content":
+              "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+        {"id": "3", "content": "choose 3-5 problems"},
+        {
+          "id": "4",
+          "content":
+              "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+        {"id": "5", "content": "choose 3-5 problems"},
+        {
+          "id": "6",
+          "content":
+              "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+        {"id": "7", "content": "choose 3-5 problems"},
+        {
+          "id": "8",
+          "content":
+              "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+      ],
     },
-    {"content": "choose 3-5 problems"},
     {
-      "content":
+      "id": "5",
+      "contents": [
+        {"id": "1", "content": "2choose 3-5 problems"},
+        {
+          "id": "2",
+          "content":
           "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+        {"id": "3", "content": "choose 3-5 problems"},
+        {
+          "id": "4",
+          "content":
+          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+        {"id": "5", "content": "choose 3-5 problems"},
+        {
+          "id": "6",
+          "content":
+          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+        {"id": "7", "content": "choose 3-5 problems"},
+        {
+          "id": "8",
+          "content":
+          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+      ],
     },
-    {"content": "choose 3-5 problems"},
     {
-      "content":
+      "id": "6",
+      "contents": [
+        {"id": "1", "content": "3choose 3-5 problems"},
+        {
+          "id": "2",
+          "content":
           "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-    },
-    {"content": "choose 3-5 problems"},
-    {
-      "content":
+        },
+        {"id": "3", "content": "choose 3-5 problems"},
+        {
+          "id": "4",
+          "content":
           "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+        {"id": "5", "content": "choose 3-5 problems"},
+        {
+          "id": "6",
+          "content":
+          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+        {"id": "7", "content": "choose 3-5 problems"},
+        {
+          "id": "8",
+          "content":
+          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
+        },
+      ],
     },
   ];
 
   @override
   Widget build(BuildContext context) {
-    final sdgs = ModalRoute.of(context)!.settings.arguments; // 받아온 sdgs값
+    final int sdgs = widget.sdgs; // 받아온 sdgs값
+    final int problemId = widget.problemId;
+    final token = context.watch<UserToken>().token;
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -59,7 +138,7 @@ class _CrazyVotingPageState extends State<CrazyVotingPage> {
           Container(
             margin: EdgeInsets.fromLTRB(0, 0, 5, 3),
             child: Text(
-              "2/3",
+              "$checkedNumber/3",
               style: GoogleFonts.notoSans(
                 color: Color(0xFFFF6280),
                 fontSize: 15,
@@ -72,7 +151,14 @@ class _CrazyVotingPageState extends State<CrazyVotingPage> {
             margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             alignment: Alignment.centerRight,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        SolutionSketchPage(sdgs: sdgs, problemId: problemId,),
+                  ),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 elevation: 0,
                 side: BorderSide(
@@ -100,8 +186,26 @@ class _CrazyVotingPageState extends State<CrazyVotingPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              DesignSteps(step: 3),
-              CrazyPagination(),
+              DesignSteps(step: 3, sdgs: sdgs,),
+              FutureBuilder(
+                future: CrazyService().getCrazyAll(problemId, token),
+                builder: (context, snapshot) {
+                  var data = snapshot.data!;
+                  return CrazyPagination(
+                  problemList: data,
+                  problemId: problemId,
+                  checkedNumber: checkedNumber,
+                  changeCheckedNumber : (int type) {
+                    setState(() {
+                      if(type == 0) {
+                        checkedNumber = checkedNumber - 1;
+                      } else {
+                        checkedNumber = checkedNumber + 1;
+                      }
+                    });
+                  }
+                ); },
+              ),
               // Padding(
               //   padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
               //   child: MasonryGridView.count(

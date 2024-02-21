@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/hmw/hmw_choose.dart';
+import 'package:inglo/screens/hmw/hmw_write.dart';
 import 'package:inglo/screens/hmw/widgets/design_paper.dart';
-import 'package:inglo/screens/problem_definition/problem_write.dart';
 import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
-import 'package:inglo/widgets/design_steps.dart';
+import 'package:inglo/service/design/hmw_service.dart';
+import 'package:inglo/widgets/design/design_steps.dart';
+import 'package:provider/provider.dart';
 
 class HMWDetailPage extends StatefulWidget {
-  const HMWDetailPage({super.key});
+  final int sdgs;
+  final int problemId;
+  const HMWDetailPage({required this.sdgs, required this.problemId, super.key});
 
   @override
   State<HMWDetailPage> createState() => _HMWDetailPageState();
@@ -45,7 +50,9 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final sdgs = ModalRoute.of(context)!.settings.arguments; // 받아온 sdgs값
+    final int sdgs = widget.sdgs;
+    final int problemId = widget.problemId;
+    final token = context.watch<UserToken>().token;
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -78,74 +85,79 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           physics: const BouncingScrollPhysics(),
-          child: Container(
-            padding: EdgeInsets.fromLTRB(10, 0, 10, 50),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                DesignSteps(step: 2),
-                SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  width: 170,
-                  child: DesignCard(
-                      content:
-                          "Clean Energy Technological Innovation Reshapes the Future Energy Market"),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                MasonryGridView.count(
-                  physics: BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: problemList.length + 1,
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 5.0,
-                  mainAxisSpacing: 5.0,
-                  itemBuilder: (context, index) {
-                    if (index == 0) {
-                      return Container(
-                        margin: EdgeInsets.all(40),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const ProblemWrite(),
+          child: FutureBuilder(
+            future: HMWService().getHmw(problemId, token),
+            builder: (context, snapshot) {
+              print("hmw problemId: $problemId");
+              var data = snapshot.data!;
+              return Container(
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 50),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  DesignSteps(step: 2, sdgs: sdgs,),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    width: 170,
+                    child: DesignCard(
+                        content: data.problemContent),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  MasonryGridView.count(
+                    physics: BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: data.hmws.length + 1,
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 5.0,
+                    mainAxisSpacing: 5.0,
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        return Container(
+                          margin: EdgeInsets.all(40),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => HMWWrite(sdgs: sdgs, problemId: problemId,),
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              //fixedSize: Size(30, 30),
+                              backgroundColor: Colors.white,
+                              shape: CircleBorder(),
+                              // padding도 넣을 수 있음!
+                              padding: EdgeInsets.all(10.0),
+                              side: BorderSide(
+                                color: Color(0xFF233A66),
+                                width: 1,
                               ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            //fixedSize: Size(30, 30),
-                            backgroundColor: Colors.white,
-                            shape: CircleBorder(),
-                            // padding도 넣을 수 있음!
-                            padding: EdgeInsets.all(10.0),
-                            side: BorderSide(
-                              color: Color(0xFF233A66),
-                              width: 1,
+                              shadowColor: Colors.transparent,
                             ),
-                            shadowColor: Colors.transparent,
+                            child: const Icon(
+                              Icons.edit_outlined,
+                              size: 25,
+                              color: Color(0xFF233A66),
+                            ),
                           ),
-                          child: const Icon(
-                            Icons.edit_outlined,
-                            size: 25,
-                            color: Color(0xFF233A66),
-                          ),
-                        ),
-                      );
-                    } else {
-                      // return DesignCard(content: problemList[index - 1]["content"]!);
-                      return DesignPaper(
-                          content: problemList[index - 1]["content"]!);
-                    }
-                  },
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-              ],
-            ),
+                        );
+                      } else {
+                        // return DesignCard(content: problemList[index - 1]["content"]!);
+                        return DesignPaper(
+                            content: data.hmws[index - 1]["content"]);
+                      }
+                    },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
+            ); },
           ),
         ),
       ),
@@ -163,7 +175,7 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
                     //Add your onPressed code here!
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const HMWChoosePage(),
+                        builder: (context) => HMWChoosePage(sdgs: sdgs, problemId: problemId,),
                       ),
                     );
                   },

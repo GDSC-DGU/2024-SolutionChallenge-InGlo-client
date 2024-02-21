@@ -1,27 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/provider/user_token/user_token.dart';
-import 'package:inglo/service/design/problem_definition.dart';
+import 'package:inglo/service/design/crazy_service.dart';
 import 'package:inglo/widgets/design/write_card.dart';
 import 'package:provider/provider.dart';
 
-class ProblemWrite extends StatefulWidget {
+class CrazyWrite extends StatefulWidget {
   final int sdgs;
-  const ProblemWrite({
+  final int problemId;
+
+  const CrazyWrite({
     required this.sdgs,
+    required this.problemId,
     super.key,
   });
 
   @override
-  State<ProblemWrite> createState() => _ProblemWriteState();
+  State<CrazyWrite> createState() => _CrazyWriteState();
 }
 
-class _ProblemWriteState extends State<ProblemWrite> {
-  String content = "";
+class _CrazyWriteState extends State<CrazyWrite> {
+  String content = ""; // 작성글 내용
 
   @override
   Widget build(BuildContext context) {
     final int sdgs = widget.sdgs;
+    final int problemId = widget.problemId;
     final token = context.watch<UserToken>().token;
 
     return Scaffold(
@@ -29,7 +33,7 @@ class _ProblemWriteState extends State<ProblemWrite> {
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
         title: Text(
-          "Write problems",
+          "Write Crazy 8's",
           style: GoogleFonts.notoSans(
               color: Color(0xFF233A66),
               fontSize: 20,
@@ -63,7 +67,6 @@ class _ProblemWriteState extends State<ProblemWrite> {
                   setState(() {
                     content = text;
                   });
-                  print('${content}, ${text}');
                 },
               ),
               // Submit 버튼
@@ -72,8 +75,7 @@ class _ProblemWriteState extends State<ProblemWrite> {
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: ElevatedButton(
                   onPressed: () {
-                    print(content);
-                    ProblemDefinitionService().postProblemDefinition(sdgs, content, context, token);
+                    CrazyService().postCrazy(sdgs, problemId, content, context, token);
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,

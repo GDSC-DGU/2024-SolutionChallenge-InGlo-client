@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/issuelist/sdgs_select.dart';
 import 'package:inglo/screens/issuelist/widgets/issue_item.dart';
 import 'package:inglo/screens/issuelist/widgets/issue_choose.dart';
 import 'package:inglo/screens/issuelist/widgets/issue_slider.dart';
 import 'package:inglo/widgets/appbar/appbar.dart';
+import 'package:provider/provider.dart';
 
 class IssueListPage extends StatefulWidget {
   // 나중에 폰트 스타일 다시 재정의!
@@ -17,9 +19,10 @@ class IssueListPage extends StatefulWidget {
 class _IssueListPageState extends State<IssueListPage> {
   int sdgs = 1; // 1~17?
 
-
   @override
   Widget build(BuildContext context) {
+    final token = context.watch<UserToken>().token;
+
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -30,27 +33,26 @@ class _IssueListPageState extends State<IssueListPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 IssueMenu(
-                  selectedSdgs: sdgs,
-                  onSdgsTap: (int sdgs) {
-                    setState(() {
-                      this.sdgs = sdgs;
-                    });
-                  }
-                ),
+                    selectedSdgs: sdgs,
+                    onSdgsTap: (int sdgs) {
+                      setState(() {
+                        this.sdgs = sdgs;
+                      });
+                    }),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child:
                       const Text("Recommand", style: IssueListPage.titleStyle),
                 ),
-                IssueSlider(),
+                IssueSlider(token: token),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: const Text("Today's Issue",
                       style: IssueListPage.titleStyle),
                 ),
-                IssueItem(),
+                IssueItem(sdgs: sdgs, token: token,),
               ],
             ),
           ),
