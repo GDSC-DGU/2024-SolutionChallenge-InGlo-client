@@ -43,6 +43,8 @@ class _SignInDemoState extends State<SignInDemo> {
   bool _isAuthorized = false; // has granted permissions?
   String _contactText = '';
 
+  final String access_token = 'ya29.a0AfB_byBkrYs7r3xZat1rrbTqFn-shoMhm6Sta9McvJFRS1hbjRKP3XdMf9Ox1OBpJw-VGufHkGrKdJGv3YHukAndD0zz7ybVH6CByYUsj4haXJZSxy8MmZTwFetpoAoRwGtj5eIJWKSbDWi0-yABw1exQEUBOhzk2AaCgYKAaESARASFQHGX2Mifxjj_1DqUnqQ01FJSTUMAg0169';
+
   final dio = Dio(); // dio instance 생성
 
   @override
@@ -133,11 +135,11 @@ class _SignInDemoState extends State<SignInDemo> {
     return null;
   }
 
-  /*
   // google token 전송 api(500 출력 중)
-  Future<String?> _handlePostGoogle(String _token) async {
+  Future<void> PostApi(String _token) async {
     print('전송 토큰 $_token');
-    final url = "https://dongkyeom.com/api/v1/accounts/login-success/";
+
+    final url = "https://dongkyeom.com/api/v1/accounts/loginsuccess/";
     Map<String, String> data = {
       "access_token": _token,
     };
@@ -150,7 +152,7 @@ class _SignInDemoState extends State<SignInDemo> {
     try {
       final response = await dio.post(url, data: data, options: options);
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         // 성공
         print(
             'Success code: ${response.statusCode}, response: ${response.data}');
@@ -163,20 +165,22 @@ class _SignInDemoState extends State<SignInDemo> {
 */
       } else {
         // 비-200 상태 코드
-        print('Error code: ${response.statusCode}, response: ${response.data}');
+        print('Error api code: ${response.statusCode}, response: ${response.data}');
       }
     } catch (e) {
       // 예외 처리
       print('Exception caught: $e');
     }
   }
-*/
 
+  /*
   Future<String?> PostApi(String _token) async {
+    print('token :::: $_token');
+
     Dio dio = Dio();
     try {
       final response = await dio.post(
-        'https://dongkyeom.com/api/v1/accounts/google/login/',
+        'https://dongkyeom.com/api/v1/accounts/login-success/',
         data: {
           'access_token': _token,
         },
@@ -192,7 +196,7 @@ class _SignInDemoState extends State<SignInDemo> {
       return null;
     }
   }
-
+*/
 /*
   void IsCorrectToken(String _token) async {
     print('token : $_token');
@@ -343,8 +347,10 @@ class _SignInDemoState extends State<SignInDemo> {
           // This method is used to separate mobile from web code with conditional exports.
           // See: src/sign_in_button.dart
           ElevatedButton(
-            onPressed: _handleSignIn,
-            child: const Text('SIGN OUT'),
+            onPressed: () {
+             PostApi(access_token);
+            },
+            child: const Text('SIGN IN'),
           ),
         ],
       );

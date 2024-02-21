@@ -1,5 +1,6 @@
 import 'package:inglo/models/post/post_list.dart';
 
+/*
 class PostListPreferences {
   static final List<PostList> listItem = [
     PostList(
@@ -126,3 +127,5 @@ class PostListPreferences {
   ];
 }
 // 더미데이터
+
+*/

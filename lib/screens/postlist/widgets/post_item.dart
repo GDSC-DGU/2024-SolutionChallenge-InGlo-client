@@ -103,7 +103,30 @@ class _PostItemState extends State<PostItem> {
                                     Row(
                                       children: [
                                         Text(
-                                          '${item.created_at} | ${item.user_name}',
+                                          '${item.created_at} | ',
+                                          style: GoogleFonts.notoSans(
+                                              fontSize: 12,
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.w300),
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(100),
+                                          ),
+                                          child: ClipRRect(
+                                            // ClipRRect를 사용하여 이미지도 borderRadius를 적용
+                                            borderRadius: BorderRadius.circular(100),
+                                            child: Image.asset(
+                                              item.user.profile_img,
+                                              width: 12,
+                                              height: 12,
+                                              fit: BoxFit.cover, // container에 딱 맞게
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(width: 5,),
+                                        Text(
+                                          '${item.user.name}',
                                           style: GoogleFonts.notoSans(
                                               fontSize: 12,
                                               color: Colors.grey,
