@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/hmw/hmw_list.dart';
 import 'package:inglo/screens/problem_definition/widgets/check_design_card.dart';
-import 'package:inglo/widgets/design_steps.dart';
+import 'package:inglo/service/design/problem_definition.dart';
+import 'package:inglo/widgets/design/design_steps.dart';
+import 'package:provider/provider.dart';
 
 class ProblemChoosePage extends StatefulWidget {
-  const ProblemChoosePage({super.key});
+  final int sdgs;
+  const ProblemChoosePage({required this.sdgs, super.key});
 
   @override
   State<ProblemChoosePage> createState() => _ProblemChoosePageState();
 }
 
 class _ProblemChoosePageState extends State<ProblemChoosePage> {
-  String checkedId = "0"; // 나중에 int로 바꾸기!
+  int checkedId = 0; // 선택한 아이디값 (선택안될 때는 0값)
 
   // 더미데이터
   final List<Map<String, String>> problemList = [
@@ -45,6 +49,9 @@ class _ProblemChoosePageState extends State<ProblemChoosePage> {
 
   @override
   Widget build(BuildContext context) {
+    final int sdgs = widget.sdgs;
+    final token = context.watch<UserToken>().token;
+
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
@@ -79,37 +86,42 @@ class _ProblemChoosePageState extends State<ProblemChoosePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              DesignSteps(step: 1),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 10,
-                ),
-                child: MasonryGridView.count(
-                  physics: BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: problemList.length,
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 1.0,
-                  mainAxisSpacing: 1.0,
-                  itemBuilder: (context, index) {
-                    return CheckDesignCard(
-                        id: problemList[index]["id"]!,
-                        checkedId: checkedId,
-                        checkCard: (id) {
-                          setState(() {
-                            if(checkedId == id) {
-                              checkedId = "0";
-                            } else {
-                              checkedId = id;
-                            }
-                          });
-                          print(id);
-                          print(checkedId);
-                        },
-                        content: problemList[index]["content"]!,);
-                  },
-                ),
+              DesignSteps(step: 1, sdgs: sdgs,),
+              FutureBuilder(
+                future: ProblemDefinitionService().getProblemDefinition(sdgs, token),
+                builder: (context, snapshot) {
+                  var data = snapshot.data!;
+                  return Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 10,
+                  ),
+                  child: MasonryGridView.count(
+                    physics: BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: data.length,
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 1.0,
+                    mainAxisSpacing: 1.0,
+                    itemBuilder: (context, index) {
+                      return CheckDesignCard(
+                          id: data[index].id,
+                          checkedId: checkedId,
+                          checkCard: (id) {
+                            setState(() {
+                              if(checkedId == id) {
+                                checkedId = 0;
+                              } else {
+                                checkedId = id;
+                              }
+                            });
+                            print(id);
+                            print(checkedId);
+                          },
+                          content: data[index].content,);
+                    },
+                  ),
+                ); },
               ),
               // Submit 버튼
             ],
@@ -120,14 +132,16 @@ class _ProblemChoosePageState extends State<ProblemChoosePage> {
         margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: ElevatedButton(
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const HMWListPage(),
-                settings: RouteSettings(
-                  arguments: ModalRoute.of(context)!.settings.arguments,
-                ),
-              ),
-            );
+            print('checkId: $checkedId');
+            ProblemDefinitionService().postProblemChoose(sdgs, checkedId, context, token);
+            // Navigator.of(context).push(
+            //   MaterialPageRoute(
+            //     builder: (context) => HMWListPage(),
+            //     settings: RouteSettings(
+            //       arguments: ModalRoute.of(context)!.settings.arguments,
+            //     ),
+            //   ),
+            // );
           },
           style: ElevatedButton.styleFrom(
             elevation: 0,

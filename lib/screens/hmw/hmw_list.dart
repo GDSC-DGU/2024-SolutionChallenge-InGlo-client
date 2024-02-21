@@ -6,7 +6,7 @@ import 'package:inglo/screens/hmw/widgets/multiple_design_card.dart';
 import 'package:inglo/screens/problem_definition/problem_choose.dart';
 import 'package:inglo/screens/problem_definition/problem_write.dart';
 import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
-import 'package:inglo/widgets/design_steps.dart';
+import 'package:inglo/widgets/design/design_steps.dart';
 
 class HMWListPage extends StatefulWidget {
   const HMWListPage({super.key});
@@ -78,7 +78,7 @@ class _HMWListPageState extends State<HMWListPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              DesignSteps(step: 2),
+              //DesignSteps(step: 2),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: MasonryGridView.count(
@@ -94,11 +94,11 @@ class _HMWListPageState extends State<HMWListPage> {
                         margin: EdgeInsets.all(40),
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const ProblemWrite(),
-                              ),
-                            );
+                            // Navigator.of(context).push(
+                            //   MaterialPageRoute(
+                            //     builder: (context) => const ProblemWrite(),
+                            //   ),
+                            // );
                           },
                           style: ElevatedButton.styleFrom(
                             //fixedSize: Size(30, 30),
@@ -134,11 +134,11 @@ class _HMWListPageState extends State<HMWListPage> {
         margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: ElevatedButton(
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const Crazy8sPage(),
-              ),
-            );
+            // Navigator.of(context).push(
+            //   MaterialPageRoute(
+            //     builder: (context) => const Crazy8sPage(),
+            //   ),
+            // );
           },
           style: ElevatedButton.styleFrom(
             elevation: 0,

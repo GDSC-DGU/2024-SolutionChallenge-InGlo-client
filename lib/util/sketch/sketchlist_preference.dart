@@ -1,4 +1,4 @@
-import 'package:inglo/models/sketch/sketch.dart';
+import 'package:inglo/models/design/sketch.dart';
 
 // list로 저장한다.
 class SketchListPreferences {

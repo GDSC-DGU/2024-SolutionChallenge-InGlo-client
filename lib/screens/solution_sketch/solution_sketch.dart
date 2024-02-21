@@ -1,20 +1,33 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/solution_sketch/widgets/solution_sketch_btn.dart';
 import 'package:inglo/screens/solution_sketch/widgets/solution_sketch_img.dart';
 import 'package:inglo/screens/solution_sketch/widgets/solution_sketch_input.dart';
-import 'package:inglo/widgets/design_steps.dart';
+import 'package:inglo/service/design/solution_sketch.dart';
+import 'package:inglo/widgets/design/design_steps.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 
 class SolutionSketchPage extends StatefulWidget {
-  const SolutionSketchPage({super.key});
+  final int sdgs;
+  final int problemId;
+  const SolutionSketchPage({required this.sdgs, required this.problemId, super.key});
 
   @override
   State<SolutionSketchPage> createState() => _SolutionSketchPageState();
 }
 
 class _SolutionSketchPageState extends State<SolutionSketchPage> {
-  XFile? _image; //이미지를 담을 변수 선언
+  String title = "";
+  String description = "";
+  String content = "";
+
+  File? _image; //이미지를 담을 변수 선언
   final ImagePicker picker = ImagePicker(); //ImagePicker 초기화
   //이미지를 가져오는 함수
   Future getImage(ImageSource imageSource) async {
@@ -22,20 +35,16 @@ class _SolutionSketchPageState extends State<SolutionSketchPage> {
     final XFile? pickedFile = await picker.pickImage(source: imageSource);
     if (pickedFile != null) {
       setState(() {
-        _image = XFile(pickedFile.path); //가져온 이미지를 _image에 저장
+        _image = File(XFile(pickedFile.path)!.path); //가져온 이미지를 _image에 저장
       });
     }
   }
 
-  // 더미데이터
-  // final drawingData = [
-  //   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-  // ];
-
-
   @override
   Widget build(BuildContext context) {
-    final sdgs = ModalRoute.of(context)!.settings.arguments; // 받아온 sdgs값
+    final int sdgs = widget.sdgs; // 받아온 sdgs값
+    final int problemId = widget.problemId;
+    final token = context.watch<UserToken>().token;
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -71,10 +80,21 @@ class _SolutionSketchPageState extends State<SolutionSketchPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              DesignSteps(step: 4),
+              DesignSteps(
+                step: 4,
+                sdgs: sdgs,
+              ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                child: SolutionSketchBtn(getImage: getImage),
+                child: SolutionSketchBtn(
+                  getImage: getImage,
+                  finishDrawing: (img) async{
+                    var image = await writeToFile(img);
+                    setState(() {
+                      _image = image; //가져온 이미지를 _image에 저장
+                    });
+                  },
+                ),
               ),
               if (_image != null)
                 SolutionSketchImg(
@@ -85,14 +105,32 @@ class _SolutionSketchPageState extends State<SolutionSketchPage> {
                     });
                   },
                 ),
-              SolutionSketchInput(),
+              SolutionSketchInput(
+                changeTitle: (text) {
+                  setState(() {
+                    title = text;
+                  });
+                },
+                changeDescription: (text) {
+                  setState(() {
+                    description = text;
+                  });
+                },
+                changeContent: (text) {
+                  setState(() {
+                    content = text;
+                  });
+                },
+              ),
               // Submit 버튼
               Container(
                 margin:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                 alignment: Alignment.centerRight,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    SolutionSketchService().patchSolutionSketch(problemId, _image!, title, description, content, context, token);
+                  },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
                     side: BorderSide(
@@ -116,5 +154,16 @@ class _SolutionSketchPageState extends State<SolutionSketchPage> {
         ),
       ),
     );
+  }
+
+  // ByteData를 File 형식으로 변경하는 함수!
+  Future<File> writeToFile(ByteData data) async {
+    final buffer = data.buffer;
+    Directory tempDir = await getTemporaryDirectory();
+    String tempPath = tempDir.path;
+    var filePath = '$tempPath/file_01.tmp'; // file_01.tmp is dump file, can be anything
+
+    return File(filePath).writeAsBytes(
+        buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
   }
 }

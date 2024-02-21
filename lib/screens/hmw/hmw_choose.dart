@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/hmw/widgets/check_design_paper.dart';
-import 'package:inglo/screens/problem_definition/problem_write.dart';
 import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
-import 'package:inglo/widgets/design_steps.dart';
+import 'package:inglo/service/design/hmw_service.dart';
+import 'package:inglo/widgets/design/design_steps.dart';
+import 'package:provider/provider.dart';
 
 class HMWChoosePage extends StatefulWidget {
-  const HMWChoosePage({super.key});
+  final int problemId;
+  final int sdgs;
+  const HMWChoosePage({required this.problemId, required this.sdgs, super.key});
 
   @override
   State<HMWChoosePage> createState() => _HMWChoosePageState();
 }
 
 class _HMWChoosePageState extends State<HMWChoosePage> {
-  String checkedId = "0"; // 나중에 int로 바꾸기!
+  int checkedId = 0; // 나중에 int로 바꾸기!
 
   // 더미데이터
   final List<Map<String, String>> problemList = [
@@ -46,7 +50,9 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
 
   @override
   Widget build(BuildContext context) {
-    final sdgs = ModalRoute.of(context)!.settings.arguments; // 받아온 sdgs값
+    final int problemId = widget.problemId;
+    final int sdgs = widget.sdgs;
+    final token = context.watch<UserToken>().token;
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -81,52 +87,59 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
           physics: const BouncingScrollPhysics(),
           child: Container(
             padding: EdgeInsets.fromLTRB(10, 0, 10, 50),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                DesignSteps(step: 2),
-                SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  width: 170,
-                  child: DesignCard(
-                      content:
-                          "Clean Energy Technological Innovation Reshapes the Future Energy Market"),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                MasonryGridView.count(
-                  physics: BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: problemList.length,
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 5.0,
-                  mainAxisSpacing: 5.0,
-                  itemBuilder: (context, index) {
-                    return CheckDesignPaper(
-                      id: problemList[index]["id"]!,
-                      checkedId: checkedId,
-                      checkCard: (id) {
-                        setState(() {
-                          if (checkedId == id) {
-                            checkedId = "0";
-                          } else {
-                            checkedId = id;
-                          }
-                        });
-                        print(id);
-                        print(checkedId);
+            child: FutureBuilder(
+              future: HMWService().getHmw(problemId, token),
+              builder: (context, snapshot) {
+                var data = snapshot.data!;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    DesignSteps(
+                      step: 2,
+                      sdgs: sdgs,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: 170,
+                      child: DesignCard(content: data.problemContent),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    MasonryGridView.count(
+                      physics: BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: data.hmws.length,
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 5.0,
+                      mainAxisSpacing: 5.0,
+                      itemBuilder: (context, index) {
+                        return CheckDesignPaper(
+                          id: data.hmws[index]["id"],
+                          checkedId: checkedId,
+                          checkCard: (id) {
+                            setState(() {
+                              if (checkedId == id) {
+                                checkedId = 0;
+                              } else {
+                                checkedId = id;
+                              }
+                            });
+                            print(id);
+                            print(checkedId);
+                          },
+                          content: data.hmws[index]["content"],
+                        );
                       },
-                      content: problemList[index]["content"]!,
-                    );
-                  },
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-              ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ),
@@ -135,6 +148,8 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: ElevatedButton(
           onPressed: () {
+            HMWService().patchHMW(sdgs, problemId, checkedId, context, token);
+
             // Navigator.of(context).push(
             //   MaterialPageRoute(
             //     builder: (context) => const HMWListPage(),

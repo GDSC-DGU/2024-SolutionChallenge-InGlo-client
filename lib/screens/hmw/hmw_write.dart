@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/provider/user_token/user_token.dart';
-import 'package:inglo/service/design/problem_definition.dart';
+import 'package:inglo/service/design/hmw_service.dart';
 import 'package:inglo/widgets/design/write_card.dart';
 import 'package:provider/provider.dart';
 
-class ProblemWrite extends StatefulWidget {
+class HMWWrite extends StatefulWidget {
+  final int problemId;
   final int sdgs;
-  const ProblemWrite({
+  const HMWWrite({
+    required this.problemId,
     required this.sdgs,
     super.key,
   });
 
   @override
-  State<ProblemWrite> createState() => _ProblemWriteState();
+  State<HMWWrite> createState() => _HMWWriteState();
 }
 
-class _ProblemWriteState extends State<ProblemWrite> {
-  String content = "";
+class _HMWWriteState extends State<HMWWrite> {
+  String content = ""; // 작성글 내용
 
   @override
   Widget build(BuildContext context) {
-    final int sdgs = widget.sdgs;
+    int problemId = widget.problemId;
+    int sdgs = widget.sdgs;
     final token = context.watch<UserToken>().token;
 
     return Scaffold(
@@ -29,7 +32,7 @@ class _ProblemWriteState extends State<ProblemWrite> {
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
         title: Text(
-          "Write problems",
+          "Write HMW",
           style: GoogleFonts.notoSans(
               color: Color(0xFF233A66),
               fontSize: 20,
@@ -63,7 +66,6 @@ class _ProblemWriteState extends State<ProblemWrite> {
                   setState(() {
                     content = text;
                   });
-                  print('${content}, ${text}');
                 },
               ),
               // Submit 버튼
@@ -72,8 +74,7 @@ class _ProblemWriteState extends State<ProblemWrite> {
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: ElevatedButton(
                   onPressed: () {
-                    print(content);
-                    ProblemDefinitionService().postProblemDefinition(sdgs, content, context, token);
+                    HMWService().postHMW(sdgs, problemId, content, context, token);
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,

@@ -14,11 +14,11 @@ class MultipleDesignCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const HMWDetailPage(),
-          ),
-        );
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(
+        //     builder: (context) => const HMWDetailPage(),
+        //   ),
+        // );
       },
       child: Stack(
         children: [

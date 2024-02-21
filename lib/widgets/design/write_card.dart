@@ -3,9 +3,8 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WriteCard extends StatelessWidget {
-  final id;
   final changeContent;
-  const WriteCard({required this.id, required this.changeContent, super.key});
+  const WriteCard({required this.changeContent, super.key});
 
   @override
   Widget build(BuildContext context) {
