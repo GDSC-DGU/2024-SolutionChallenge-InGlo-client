@@ -41,15 +41,17 @@ class _ModifiedPostState extends State<ModifiedPost> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      token = Provider.of<UserToken>(context, listen: false).token; // provider에서 토큰 가져오기
+      token = Provider.of<UserToken>(context, listen: false)
+          .token; // provider에서 토큰 가져오기
     });
   }
 
   Future<void> modifiedPost() async {
     try {
       String text = await controller.getText();
-      bool modified = await _PostService.ModifiedPost(_titleController.text, text, widget.id, token); // 피드백 수정
-      if(modified == true) {
+      bool modified = await _PostService.ModifiedPost(
+          _titleController.text, text, widget.id, token); // 피드백 수정
+      if (modified == true) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => PostBoardPage()),
@@ -74,21 +76,28 @@ class _ModifiedPostState extends State<ModifiedPost> {
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => DetailPost(id: widget.id)),
+              MaterialPageRoute(
+                  builder: (context) => DetailPost(id: widget.id)),
             );
           },
         ),
         actions: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF233A66)),
-            onPressed: modifiedPost,
-            child: Text('Modified',
-              style: GoogleFonts.notoSans(
-                fontSize: 16, // 폰트 크기 설정
-                fontWeight: FontWeight.bold, // 폰트 굵기 설정
-                color: Colors.white, // 텍스트 색상 설정
-              ),),
-          )
+          Padding(
+            padding: EdgeInsets.only(right: 10),
+            child: ElevatedButton(
+              style:
+                  ElevatedButton.styleFrom(backgroundColor: Color(0xFF233A66)),
+              onPressed: modifiedPost,
+              child: Text(
+                'Modified',
+                style: GoogleFonts.notoSans(
+                  fontSize: 16, // 폰트 크기 설정
+                  fontWeight: FontWeight.bold, // 폰트 굵기 설정
+                  color: Colors.white, // 텍스트 색상 설정
+                ),
+              ),
+            ),
+          ),
         ],
       ),
       body: GestureDetector(
@@ -104,16 +113,20 @@ class _ModifiedPostState extends State<ModifiedPost> {
               TextFormField(
                 controller: _titleController,
                 maxLines: null,
-                maxLength: 50, // 사용자가 입력할 수 있는 최대 문자 수
+                maxLength: 50,
+                // 사용자가 입력할 수 있는 최대 문자 수
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: "Title",
-                  contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  hintStyle: GoogleFonts.notoSans(fontSize: 20, fontWeight: FontWeight.bold),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  hintStyle: GoogleFonts.notoSans(
+                      fontSize: 20, fontWeight: FontWeight.bold),
                   isDense: true,
                   counterText: "", // 문자 수 표시 없애기
                 ),
-                style: GoogleFonts.notoSans(fontSize: 20, fontWeight: FontWeight.bold), // 내부 텍스트 스타일 지정
+                style: GoogleFonts.notoSans(
+                    fontSize: 20, fontWeight: FontWeight.bold), // 내부 텍스트 스타일 지정
               ),
               HtmlEditor(
                 controller: controller,
@@ -123,16 +136,24 @@ class _ModifiedPostState extends State<ModifiedPost> {
                 ),
                 htmlToolbarOptions: HtmlToolbarOptions(
                   defaultToolbarButtons: [
-                    FontButtons(clearAll: false,), // font style
+                    FontButtons(
+                      clearAll: false,
+                    ), // font style
                     StyleButtons(), // h1, h2...
-                    InsertButtons(audio: false, video: false, otherFile: false, table: true, hr: true),
+                    InsertButtons(
+                        audio: false,
+                        video: false,
+                        otherFile: false,
+                        table: true,
+                        hr: true),
                   ],
                   customToolbarButtons: [
                     // 커스텀 툴바
                   ],
                 ),
                 // 이외 사용자 옵션들
-                otherOptions: OtherOptions(height: MediaQuery.of(context).size.height),
+                otherOptions:
+                    OtherOptions(height: MediaQuery.of(context).size.height),
                 callbacks: Callbacks(
                   onBeforeCommand: (String? currentHtml) {
                     print('html before change is $currentHtml');
@@ -162,7 +183,8 @@ class _ModifiedPostState extends State<ModifiedPost> {
                   onInit: () {
                     print('init');
                   },
-                  onImageUploadError: (FileUpload? file, String? base64Str, UploadError error) {
+                  onImageUploadError:
+                      (FileUpload? file, String? base64Str, UploadError error) {
                     print(describeEnum(error));
                     print(base64Str ?? '');
                     if (file != null) {
@@ -173,7 +195,8 @@ class _ModifiedPostState extends State<ModifiedPost> {
                   },
                   onKeyDown: (int? keyCode) {
                     print('$keyCode key downed');
-                    print('current character count: ${controller.characterCount}');
+                    print(
+                        'current character count: ${controller.characterCount}');
                   },
                   onKeyUp: (int? keyCode) {
                     print('$keyCode key released');

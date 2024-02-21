@@ -155,7 +155,7 @@ class _DetailPostState extends State<DetailPost> {
                                           IconButton(
                                             onPressed: () {
                                               PostDetailService().postIssueLike(
-                                                  detailPost!['id'],
+                                                  detailPost!['id'] ?? 0,
                                                   onClickLike,
                                                   token);
                                             },
@@ -293,7 +293,7 @@ class _DetailPostState extends State<DetailPost> {
       </head>
       <body>
       <div>
-        ${detailPost?['content'] ?? '<p>not found content</p>'}
+        ${detailPost?['content'] ?? '<h1>not found content</h1>'}
         </div>
       </body>
       </html>

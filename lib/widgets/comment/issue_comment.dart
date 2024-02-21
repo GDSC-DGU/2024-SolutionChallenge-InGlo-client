@@ -136,7 +136,7 @@ class _IssueCommentsState extends State<IssueComments> {
                   child: CircleAvatar(
                       radius: 50,
                       backgroundImage: CommentBox.commentImageParser(
-                          imageURLorPath: data[i].user.profile_img)),
+                          imageURLorPath: data[i].user.profile_img ?? '')),
                 ),
               ),
               title: Text(
@@ -183,7 +183,7 @@ class _IssueCommentsState extends State<IssueComments> {
                                 isEditing = i; // 수정 모드로 전환
                                 _comment_id =
                                     data[i].id; // feedback id도 변경
-                                modifiedController.text = data[i].content;
+                                modifiedController.text = data[i].content ?? '';
                               }
                             });
                             if (isEditing == null) {
@@ -203,7 +203,7 @@ class _IssueCommentsState extends State<IssueComments> {
                         GestureDetector(
                           onTap: () async {
                             print("Delete Clicked");
-                            _comment_id = data[i].id;
+                            _comment_id = data[i].id ?? 0;
                             await DeleteComment();
                             await loadComments();
                           },
@@ -231,8 +231,8 @@ class _IssueCommentsState extends State<IssueComments> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final profile_img = userProvider.user?.profile_img; // img
-    final id = userProvider.user?.id; // id
+    final profile_img = userProvider.user?.profile_img ?? ''; // img
+    final id = userProvider.user?.id ?? 0; // id
 
     return Scaffold(
       body: Container(

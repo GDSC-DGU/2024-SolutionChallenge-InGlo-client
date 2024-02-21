@@ -116,7 +116,7 @@ class _CommentsState extends State<Comments> {
                   child: CircleAvatar(
                       radius: 50,
                       backgroundImage: CommentBox.commentImageParser(
-                          imageURLorPath: data[i].user.profile_img)),
+                          imageURLorPath: data[i].user.profile_img ?? '')),
                 ),
               ),
               title: Text(
@@ -153,8 +153,8 @@ class _CommentsState extends State<Comments> {
                                     } else {
                                       isEditing = i; // 수정 모드로 전환
                                       _feedback_id =
-                                          data[i].id; // feedback id도 변경
-                                      modifiedController.text = data[i].content;
+                                          data[i].id ?? 0; // feedback id도 변경
+                                      modifiedController.text = data[i].content ?? '';
                                     }
                                   });
                                   if (isEditing == null) {
@@ -174,7 +174,7 @@ class _CommentsState extends State<Comments> {
                               GestureDetector(
                                 onTap: () async {
                                   print("Delete Clicked");
-                                  _feedback_id = data[i].id;
+                                  _feedback_id = data[i].id ?? 0;
                                   await DeleteFeedback();
                                   await loadFeedbacks();
                                 },
@@ -188,7 +188,7 @@ class _CommentsState extends State<Comments> {
                           ),
                     Text(
                         DateFormat('yyyy-MM-dd')
-                            .format(DateTime.parse(data[i].created_at)),
+                            .format(DateTime.parse(data[i].created_at)) ?? '0000-00-00',
                         style: GoogleFonts.notoSans(fontSize: 10)),
                   ],
                 ),
@@ -202,8 +202,8 @@ class _CommentsState extends State<Comments> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final profile_img = userProvider.user?.profile_img; // img
-    final id = userProvider.user?.id; // id
+    final profile_img = userProvider.user?.profile_img ?? ''; // img
+    final id = userProvider.user?.id ?? 0; // id
 
     return Scaffold(
       body: Container(

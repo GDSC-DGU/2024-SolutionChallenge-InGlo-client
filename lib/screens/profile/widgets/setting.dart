@@ -31,10 +31,6 @@ class _SetProfilePageState extends State<SetProfilePage> {
   XFile? _image; //이미지를 담을 변수 선언
   final ImagePicker picker = ImagePicker(); //ImagePicker 초기화
 
-  String _name = ''; // 사용자 이름 저장을 위한 변수
-  int _country = 2; // 국가 저장을 위한 변수
-  String _language = ''; // 언어 저장을 위한 변수
-
   // 초기 1번 실행
   void initState() {
     super.initState();
@@ -43,6 +39,10 @@ class _SetProfilePageState extends State<SetProfilePage> {
           .token; // provider에서 토큰 가져오기
     });
   }
+
+  String _name = ''; // 사용자 이름 저장을 위한 변수
+  int _country = 2; // 국가 저장을 위한 변수
+  String _language = ''; // 언어 저장을 위한 변수
 
   // 전체 update 함수
   void updateSpecificUserInfo(BuildContext context, User newUser) {
@@ -202,6 +202,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                             )),
                       ),
                       TextFormField(
+                        initialValue: '은지',
                         decoration: InputDecoration(
                             hintText: 'name',
                             isDense: true,

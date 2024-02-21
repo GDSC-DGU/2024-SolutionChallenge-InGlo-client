@@ -32,7 +32,7 @@ class _PostItemState extends State<PostItem> {
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => DetailPost(id: item.id),
+              builder: (context) => DetailPost(id: item.id ?? 0),
             ),
           );
         },
@@ -60,7 +60,7 @@ class _PostItemState extends State<PostItem> {
                                     width:
                                         MediaQuery.of(context).size.width * 0.8,
                                     child: Text(
-                                      item.title,
+                                      item.title ?? '',
                                       style: GoogleFonts.notoSans(
                                           fontSize: 14,
                                           color: Colors.black,
@@ -88,10 +88,12 @@ class _PostItemState extends State<PostItem> {
                                   ),
                                 ],
                               ),
+                              // text는 html 변환 전까지 우선 보류
+                              /*
                               Container(
                                   width: 200,
                                   child: Text(
-                                    item.content,
+                                    item.content ?? '',
                                     style: GoogleFonts.notoSans(
                                         fontSize: 14,
                                         color: Colors.black,
@@ -99,6 +101,7 @@ class _PostItemState extends State<PostItem> {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   )),
+                               */
                               SizedBox(height: 3),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.9,
@@ -109,7 +112,7 @@ class _PostItemState extends State<PostItem> {
                                     Row(
                                       children: [
                                         Text(
-                                          '${DateFormat('yyyy-MM-dd').format(DateTime.parse(item.created_at))} | ',
+                                          '${DateFormat('yyyy-MM-dd').format(DateTime.parse(item.created_at)) ?? '0000-00-00'} | ',
                                           style: GoogleFonts.notoSans(
                                               fontSize: 12,
                                               color: Colors.grey,
@@ -127,7 +130,7 @@ class _PostItemState extends State<PostItem> {
                                               borderRadius:
                                                   BorderRadius.circular(100),
                                               child: Image.network(
-                                                item.user.profile_img,
+                                                item.user.profile_img ?? '',
                                                 width: 12,
                                                 height: 12,
                                                 fit: BoxFit
@@ -139,7 +142,7 @@ class _PostItemState extends State<PostItem> {
                                           width: 5,
                                         ),
                                         Text(
-                                          '${item.user.name}',
+                                          '${item.user.name ?? 'Unknown'}',
                                           style: GoogleFonts.notoSans(
                                               fontSize: 12,
                                               color: Colors.grey,
@@ -155,7 +158,7 @@ class _PostItemState extends State<PostItem> {
                                           size: 12.0,
                                         ),
                                         Text(
-                                          '${item.likes}',
+                                          '${item.likes ?? 0}',
                                           style: GoogleFonts.notoSans(
                                             fontSize: 12,
                                           ),
