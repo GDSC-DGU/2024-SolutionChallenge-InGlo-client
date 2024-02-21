@@ -21,7 +21,6 @@ class PostItem extends StatefulWidget {
 }
 
 class _PostItemState extends State<PostItem> {
-
   @override
   Widget build(BuildContext context) {
     final List<Widget> itemListData = widget.listItems.map((item) {
@@ -54,7 +53,8 @@ class _PostItemState extends State<PostItem> {
                               Row(
                                 children: [
                                   Container(
-                                    width: MediaQuery.of(context).size.width * 0.8,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.8,
                                     child: Text(
                                       item.title,
                                       style: GoogleFonts.notoSans(
@@ -62,7 +62,8 @@ class _PostItemState extends State<PostItem> {
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold),
                                       maxLines: 1,
-                                      overflow: TextOverflow.ellipsis, // 최대 텍스트 줄
+                                      overflow:
+                                          TextOverflow.ellipsis, // 최대 텍스트 줄
                                     ),
                                   ),
                                   SizedBox(width: 20),
@@ -98,7 +99,8 @@ class _PostItemState extends State<PostItem> {
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.9,
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
@@ -109,22 +111,29 @@ class _PostItemState extends State<PostItem> {
                                               color: Colors.grey,
                                               fontWeight: FontWeight.w300),
                                         ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(100),
-                                          ),
-                                          child: ClipRRect(
-                                            // ClipRRect를 사용하여 이미지도 borderRadius를 적용
-                                            borderRadius: BorderRadius.circular(100),
-                                            child: Image.asset(
-                                              item.user.profile_img,
-                                              width: 12,
-                                              height: 12,
-                                              fit: BoxFit.cover, // container에 딱 맞게
+                                          Container(
+                                            width: 20,
+                                            height: 20,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
                                             ),
-                                          ),
+                                            child: ClipRRect(
+                                              // ClipRRect를 사용하여 이미지도 borderRadius를 적용
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                              child: Image.network(
+                                                item.user.profile_img,
+                                                width: 12,
+                                                height: 12,
+                                                fit: BoxFit
+                                                    .cover, // container에 딱 맞게
+                                              ),
+                                            ),
                                         ),
-                                        SizedBox(width: 5,),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
                                         Text(
                                           '${item.user.name}',
                                           style: GoogleFonts.notoSans(

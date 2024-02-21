@@ -40,7 +40,14 @@ class _StartPageState extends State<StartPage> {
 
     // user의 정보가 있다면 로그인 후 들어가는 첫 페이지로 넘어간다.
     if (user_token != null) {
-      MaterialPageRoute(builder: (context) => IssueListPage());
+      print('로그인 성공!');
+      // 현재 화면을 새로운 화면으로 교체
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => IssueListPage()), // 다음 페이지로 이동
+      );
+
+      // 여기 refresh token과 비교하여 token이 유효한지 확인한다.
     } else {
       print('로그인이 필요합니다');
     }
@@ -71,15 +78,15 @@ class _StartPageState extends State<StartPage> {
         // storage에 저장
         await storage.write(
           key: 'token',
-          value: jsonEncode(response.data.access), // 토큰 직렬화 데이터 저장
+          value: response.data['access'], // 토큰 직렬화 데이터 저장
         );
 
-        /*
+
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => GetProfilePage()), // 다음 페이지로 이동
+          MaterialPageRoute(builder: (context) => AccountPage()), // 다음 페이지로 이동
         );
-*/
+
       } else {
         // 비-200 상태 코드
         print('Error api code: ${response.statusCode}, response: ${response.data}');

@@ -63,6 +63,7 @@ class _DetailPostState extends State<DetailPost> {
 
       print('ID: ${jsonResponse['id']}');
       print('User: ${jsonResponse['user']['name']}');
+      print('User: ${jsonResponse['user']}');
       print('Sketch: ${jsonResponse['sketch']}');
       print('Title: ${jsonResponse['title']}');
       print('Content: ${jsonResponse['content']}');
@@ -228,8 +229,9 @@ class _DetailPostState extends State<DetailPost> {
                                 SizedBox(
                                   height: 20,
                                   child: PostUser(
+                                    user_profile_img: detailPost?['user']['profile_img'],
                                     user_name:
-                                        detailPost?['user_name'] as String?,
+                                        detailPost?['user']['name'] as String?,
                                     created_at:
                                         detailPost?['created_at'] as String?,
                                   ),
