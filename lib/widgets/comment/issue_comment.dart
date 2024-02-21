@@ -1,11 +1,11 @@
 import 'package:comment_box/comment/comment.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:inglo/models/comment/comment.dart';
+import 'package:inglo/models/issue/comment.dart';
 import 'package:dio/dio.dart';
-import 'package:inglo/models/comment/modified_comment.dart';
+import 'package:inglo/models/issue/modified_comment.dart';
 
-import 'package:inglo/service/comment/comment_api.dart'; // api 호인스
+import 'package:inglo/service/comment/issue_comment_api.dart'; // api 호인스
 
 // provider
 import 'package:provider/provider.dart';
@@ -28,8 +28,8 @@ class _IssueCommentsState extends State<IssueComments> {
   final formKey = GlobalKey<FormState>();
   int? _parent_id = null; // 부모 피드백 아이디
   int? _comment_id = null; // 현재 선택한 feedback id
-  List<Comment> comments = []; // feedback을 저장할 변수
-  ModifiedComment? newComment;
+  List<IssueComment> comments = []; // feedback을 저장할 변수
+  IssueModifiedComment? newComment;
 
   int? isEditing; // edit 모드 저장 변수
   String? _modifiedController = '';
@@ -38,7 +38,7 @@ class _IssueCommentsState extends State<IssueComments> {
   final TextEditingController modifiedController =
   TextEditingController(); // 수정용
 
-  final CommentService _CommentService = CommentService(); // instance 생성
+  final IssueCommentService _IssueCommentService = IssueCommentService(); // instance 생성
 
   @override
   void dispose() {
@@ -57,16 +57,16 @@ class _IssueCommentsState extends State<IssueComments> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       token = Provider.of<UserToken>(context, listen: false).token;
-      await loadFeedbacks(); // 비동기 함수 호출
+      await loadComments(); // 비동기 함수 호출
     });
     print('token : $token');
   }
 
-  Future<void> loadFeedbacks() async {
+  Future<void> loadComments() async {
     try {
       // await 키워드를 사용하여 비동기 완료를 기다린다.
-      List<Comment> feedbacks =
-      await _CommentService.getFeedbacks(widget.id, token);
+      List<IssueComment> feedbacks =
+      await _IssueCommentService.getComments(widget.id, token);
       setState(() {
         this.comments = feedbacks;
       });
@@ -77,12 +77,12 @@ class _IssueCommentsState extends State<IssueComments> {
     }
   }
 
-  Future<void> modifiedFeedback() async {
+  Future<void> modifiedComment() async {
     print('수정 시작');
     try {
       print('수정 완료');
       // await 키워드를 사용하여 비동기 완료를 기다린다.
-      ModifiedComment newComment = await _CommentService.ModifiedFeedback(
+      IssueModifiedComment newComment = await _IssueCommentService.ModifiedComments(
           modifiedController.text, widget.id, _comment_id, token); // 피드백 수정
       setState(() {
         this.newComment = newComment;
@@ -94,16 +94,24 @@ class _IssueCommentsState extends State<IssueComments> {
     }
   }
 
-  Future<void> PostFeedback() async {
-    await _CommentService.postFeedback(
+  Future<void> PostComment() async {
+    await _IssueCommentService.postComment(
         widget.id, commentController.text, _parent_id, token); // 피드백 제출
   }
 
-  Future<void> ModifiedFeedback() async {
+  Future<void> modifiedContent() async {
+    try {
+      // await 키워드를 사용하여 비동기 완료를 기다린다.
+      IssueModifiedComment newComment = await _IssueCommentService.ModifiedComments(
+          modifiedController.text, widget.id, _comment_id, token); // 피드백 수정
+    } catch (e) {
+      // 오류 처리
+      print("Error loading new feedback: $e");
+    }
   }
 
-  Future<void> DeleteFeedback() async {
-    await _CommentService.deleteFeedback(
+  Future<void> DeleteComment() async {
+    await _IssueCommentService.deleteComment(
         widget.id, _comment_id, token); // 피드백 삭제
   }
 
@@ -149,7 +157,7 @@ class _IssueCommentsState extends State<IssueComments> {
                     setState(() {
                       isEditing = null;
                     });
-                    modifiedFeedback();
+                    modifiedComment();
                     modifiedController.clear(); // 컨트롤러 초기화
                     FocusScope.of(context).unfocus(); // 키보드 숨기기
                   },
@@ -166,7 +174,7 @@ class _IssueCommentsState extends State<IssueComments> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         GestureDetector(
-                          onTap: () {
+                          onTap: () async {
                             print("Edit Clicked");
                             setState(() {
                               if (isEditing == i) {
@@ -179,7 +187,10 @@ class _IssueCommentsState extends State<IssueComments> {
                               }
                             });
                             if (isEditing == null) {
-                              ModifiedFeedback();
+                              await modifiedComment();
+                              modifiedController.clear(); // 컨트롤러 초기화
+                              FocusScope.of(context).unfocus(); // 키보드 숨기기
+                              await loadComments();
                             }
                           },
                           child: Icon(
@@ -193,8 +204,8 @@ class _IssueCommentsState extends State<IssueComments> {
                           onTap: () async {
                             print("Delete Clicked");
                             _comment_id = data[i].id;
-                            await DeleteFeedback();
-                            await loadFeedbacks();
+                            await DeleteComment();
+                            await loadComments();
                           },
                           child: Icon(
                             Icons.delete,
@@ -228,13 +239,13 @@ class _IssueCommentsState extends State<IssueComments> {
         child: CommentBox(
           userImage: CommentBox.commentImageParser(imageURLorPath: profile_img),
           child: commentChild(comments, id),
-          labelText: 'Send Feedbacks',
+          labelText: 'Send Comments',
           errorText: 'Comment cannot be blank',
           withBorder: false,
           sendButtonMethod: () async {
             if (formKey.currentState!.validate()) {
-              await PostFeedback();
-              await loadFeedbacks();
+              await PostComment();
+              await loadComments();
               print(commentController.text);
               commentController.clear();
               FocusScope.of(context).unfocus();
@@ -244,9 +255,9 @@ class _IssueCommentsState extends State<IssueComments> {
           },
           formKey: formKey,
           commentController: commentController,
-          backgroundColor: Color(0xFF233A66),
-          textColor: Colors.white,
-          sendWidget: Icon(Icons.send_sharp, size: 30, color: Colors.white),
+          backgroundColor: Color(0xFFFFD691),
+          textColor: Colors.black,
+          sendWidget: Icon(Icons.send_sharp, size: 30, color: Colors.black),
         ),
       ),
     );

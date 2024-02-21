@@ -1,13 +1,13 @@
 import 'dart:convert'; // jsonDecode를 사용하기 위해 import
 
-class ModifiedComment {
+class IssueModifiedComment {
   final int id;
   final User user;
   final String content;
   final int? parent_comment;
   final String created_at;
 
-  const ModifiedComment({
+  const IssueModifiedComment({
     required this.id,
     required this.user,
     required this.content,
@@ -15,8 +15,8 @@ class ModifiedComment {
     required this.created_at,
   });
 
-  factory ModifiedComment.fromJson(Map<String, dynamic> json) {
-    return ModifiedComment(
+  factory IssueModifiedComment.fromJson(Map<String, dynamic> json) {
+    return IssueModifiedComment(
       id: json['id'],
       user: User.fromJson(json['user']),
       content: json['content'],
@@ -26,9 +26,9 @@ class ModifiedComment {
   }
 
   // comment 객체를 list로 변환한다.
-  static List<ModifiedComment> parseComments(String responseBody) {
+  static List<IssueModifiedComment> parseComments(String responseBody) {
     final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-    return parsed.map<ModifiedComment>((json) => ModifiedComment.fromJson(json)).toList();
+    return parsed.map<IssueModifiedComment>((json) => IssueModifiedComment.fromJson(json)).toList();
   }
 }
 
