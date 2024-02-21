@@ -25,6 +25,7 @@ class _StartPageState extends State<StartPage> {
   static final storage = FlutterSecureStorage(); // FlutterSecureStorage를 storage로 저장
   dynamic user_token = ''; // storage에 있는 유저 정보를 저장
 
+  /*
   //flutter_secure_storage 사용을 위한 초기화 작업
   @override
   void initState() {
@@ -44,14 +45,15 @@ class _StartPageState extends State<StartPage> {
     // user의 정보가 있다면 로그인 후 들어가는 첫 페이지로 넘어간다.
     if (user_token != null) {
       print('리프레시 인증 성공!');
-      GetNewToken(user_token); // 새 토큰 발급
+     // GetNewToken(user_token); // 새 토큰 발급
       // 여기 refresh token과 비교하여 token이 유효한지 확인한다.
     } else {
       print('로그인이 필요합니다');
     }
   }
+  */
 
-
+/*
   // 만료된 토큰 발급 함수
   Future<void> GetNewToken(String refresh_token) async {
 
@@ -88,7 +90,7 @@ class _StartPageState extends State<StartPage> {
       print('Exception caught: $e');
     }
   }
-
+*/
   // google token 전송 api(500 출력 중)
   Future<void> PostApi(String _token) async {
     print('전송 토큰 $_token');
@@ -109,7 +111,7 @@ class _StartPageState extends State<StartPage> {
       if (response.statusCode == 200 || response.statusCode == 201) {
         // 성공
         print(
-            'Success code: ${response.statusCode}, response: ${response.data['refresh_token']}');
+            'Success code: ${response.statusCode}, response: ${response.data['access_token']}');
 
         // storage에 저장
         await storage.write(
@@ -121,8 +123,11 @@ class _StartPageState extends State<StartPage> {
           value: response.data['access_token'], // 토큰 직렬화 데이터 저장
         );
 
-        // 새 토큰을 provider에 저장
+        print('token을 저장합니다. ${response.data['access_token']}');
         Provider.of<UserToken>(context, listen: false).setToken(response.data['access_token']);
+
+        // 새 토큰을 provider에 저장
+       // Provider.of<UserToken>(context, listen: false).setToken(response.data['access_token']);
 
         Navigator.pushReplacement(
           context,
@@ -146,7 +151,6 @@ class _StartPageState extends State<StartPage> {
       final GoogleSignInAccount? account = await googleSignIn.signIn();
       if (account != null) {
         final GoogleSignInAuthentication googleAuth = await account.authentication;
-        print('id : ${googleAuth.idToken}'); // Google 로부터 받은 idToken
         PostApi(googleAuth.accessToken!);
       }
     } catch (error) {
