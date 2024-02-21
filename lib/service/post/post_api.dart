@@ -4,7 +4,7 @@ class PostService {
   final Dio dio = Dio(); // Dio 인스턴스 생성
 
   // post 수정 api
-  Future<void> ModifiedPost(String _title, String _content, int post_id) async {
+  Future<void> ModifiedPost(String _title, String _content, int post_id, String _token) async {
     final url = "https://dongkyeom.com/api/v1/posts/${post_id}";
     Map<String, dynamic> data = {
       "title": _title,
@@ -16,7 +16,7 @@ class PostService {
       contentType: Headers.jsonContentType,
       headers: {
         "Authorization":
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MzY4MTQ3LCJpYXQiOjE3MDgzNjQ1NDcsImp0aSI6IjYyNzRjY2RjZjY1MzQ4NjU5NjYzOTQxZjVmMDMwNDc2IiwidXNlcl9pZCI6M30._-R-VopbH5kIv9YkbMGuARcOF9z4E2TwQiy0kq-d6Uw',
+        'Bearer $_token',
       },
     );
 
@@ -38,15 +38,15 @@ class PostService {
   }
 
   // post 삭제 api
-  Future<void> deletePost(int post_id) async {
-    final url = "https://dongkyeom.com/api/v1/posts/${post_id}";
+  Future<void> deletePost(int postId, String _token) async {
+    final url = "https://dongkyeom.com/api/v1/posts/$postId";
 
     // 요청 헤더 설정
     Options options = Options(
       contentType: Headers.jsonContentType,
       headers: {
         "Authorization":
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MzY4MTQ3LCJpYXQiOjE3MDgzNjQ1NDcsImp0aSI6IjYyNzRjY2RjZjY1MzQ4NjU5NjYzOTQxZjVmMDMwNDc2IiwidXNlcl9pZCI6M30._-R-VopbH5kIv9YkbMGuARcOF9z4E2TwQiy0kq-d6Uw',
+        'Bearer $_token',
       },
     );
 

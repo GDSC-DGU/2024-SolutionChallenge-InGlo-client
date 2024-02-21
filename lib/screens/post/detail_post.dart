@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:inglo/screens/post/widgets/image_slider.dart';
 import 'package:inglo/screens/post/widgets/post_user.dart';
+import 'package:inglo/service/post/post_detail_api.dart';
 import 'package:inglo/widgets/modal/barmodal.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:webview_flutter/webview_flutter.dart' as webview_flutter;
@@ -29,6 +30,7 @@ class DetailPost extends StatefulWidget {
 class _DetailPostState extends State<DetailPost> {
   bool isEditing = false; // edit 상태 관리
   bool isLoading = true; // 로딩 상태 관리
+  bool isLiked = false;
   Map<String, dynamic>? detailPost; // api 저장용
   final dio = Dio(); // dio instance 생성
   // final detail = DetailPostPreferences.detailPost;
@@ -43,6 +45,12 @@ class _DetailPostState extends State<DetailPost> {
     WidgetsBinding.instance.addPostFrameCallback((_) async{
     token = Provider.of<UserToken>(context, listen: false).token; // provider에서 토큰 가져오기
     await getDetail();
+    });
+  }
+
+  onClickLike() {
+    setState(() {
+      isLiked = !isLiked;
     });
   }
 
@@ -164,20 +172,16 @@ class _DetailPostState extends State<DetailPost> {
                                         fontSize: 14,
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        // 좋아요 기능 구현
+                                    IconButton(
+                                      onPressed: () {
+                                        PostDetailService().postIssueLike(detailPost!['id'], onClickLike, token);
                                       },
-                                      child: Icon(
-                                        detailPost != null &&
-                                                detailPost!['is_liked'] == true
+                                      icon: Icon(
+                                        isLiked
                                             ? Icons.favorite
-                                            : Icons.favorite_outline,
+                                            : Icons.favorite_border_outlined,
+                                        size: 30,
                                         color: Color(0xFFFF6280),
-                                        size: 20.0,
                                       ),
                                     ),
                                     PopupMenuButton(
