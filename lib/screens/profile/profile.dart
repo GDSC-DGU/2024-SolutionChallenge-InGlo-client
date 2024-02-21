@@ -15,6 +15,7 @@ import 'package:dio/dio.dart';
 // provider
 import 'package:provider/provider.dart';
 import 'package:inglo/provider/profile/users.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 
 import 'dart:convert';
 
@@ -26,8 +27,16 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final dio = Dio(); // dio instance 생성
   User? _user = UserPreferences.myUser;
-  String? token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs';
+  String? token = '';
 
+  // 초기 1번 실행
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async{
+      token = Provider.of<UserToken>(context, listen: false).token; // provider에서 토큰 가져오기
+      await getProfile(); // API 호출
+    });
+  }
   // 임시 변수
   /*
   int _id = 0;
@@ -42,12 +51,6 @@ class _ProfilePageState extends State<ProfilePage> {
   int _post_total = 0;
   double _global_impact = 0;
 */
-
-  // 초기 1번 실행
-  void initState() {
-    super.initState();
-    getProfile();
-  }
 
   // 전체 update 함수
   void updateSpecificUserInfo(BuildContext context, User newUser) {

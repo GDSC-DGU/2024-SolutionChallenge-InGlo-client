@@ -12,14 +12,13 @@ class RangePointerExample extends StatefulWidget {
     Key? key,
     required this.global_impact,
   }) : super(key: key);
-  /// Creates the gauge range pointer sample
 
   @override
   _RangePointerExampleState createState() => _RangePointerExampleState();
 }
 
-class _RangePointerExampleState extends State {
-  _RangePointerExampleState();
+class _RangePointerExampleState extends State<RangePointerExample> {
+  // No changes needed here in the constructor
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +35,11 @@ class _RangePointerExampleState extends State {
             startAngle: 270,
             endAngle: 270,
             radiusFactor: 1.45,
-            axisLineStyle: const AxisLineStyle(
+            axisLineStyle: AxisLineStyle(
                 thicknessUnit: GaugeSizeUnit.factor, thickness: 0.25),
-            pointers: const <GaugePointer>[
+            pointers: <GaugePointer>[
               RangePointer(
-                  value: 6.2,
+                  value: widget.global_impact, // Correctly accessing global_impact
                   cornerStyle: CornerStyle.bothCurve,
                   enableAnimation: true,
                   animationDuration: 1200,
