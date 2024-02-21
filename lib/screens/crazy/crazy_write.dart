@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/service/design/crazy_service.dart';
 import 'package:inglo/widgets/design/write_card.dart';
 
 class CrazyWrite extends StatefulWidget {
+  final int sdgs;
+  final int problemId;
+
   const CrazyWrite({
+    required this.sdgs,
+    required this.problemId,
     super.key,
   });
 
@@ -12,11 +18,13 @@ class CrazyWrite extends StatefulWidget {
 }
 
 class _CrazyWriteState extends State<CrazyWrite> {
+  String content = ""; // 작성글 내용
 
   @override
   Widget build(BuildContext context) {
-    final id = ModalRoute.of(context)!.settings.arguments; // 받아온 id값
-    String content = ""; // 작성글 내용
+    final int sdgs = widget.sdgs;
+    final int problemId = widget.problemId;
+
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
@@ -63,7 +71,9 @@ class _CrazyWriteState extends State<CrazyWrite> {
                 margin:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    CrazyService().postCrazy(sdgs, problemId, content, context);
+                  },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
                     side: BorderSide(

@@ -85,31 +85,28 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
           physics: const BouncingScrollPhysics(),
           child: Container(
             padding: EdgeInsets.fromLTRB(10, 0, 10, 50),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                DesignSteps(
-                  step: 2,
-                  sdgs: sdgs,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  width: 170,
-                  child: DesignCard(
-                      content:
-                          "Clean Energy Technological Innovation Reshapes the Future Energy Market"),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                FutureBuilder(
-                  future: HMWService().getHmw(problemId),
-                  builder: (context, snapshot) {
-                    var data = snapshot.data!;
-
-                    return MasonryGridView.count(
+            child: FutureBuilder(
+              future: HMWService().getHmw(problemId),
+              builder: (context, snapshot) {
+                var data = snapshot.data!;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    DesignSteps(
+                      step: 2,
+                      sdgs: sdgs,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: 170,
+                      child: DesignCard(content: data.problemContent),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    MasonryGridView.count(
                       physics: BouncingScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: data.hmws.length,
@@ -134,13 +131,13 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
                           content: data.hmws[index]["content"],
                         );
                       },
-                    );
-                  },
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-              ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ),
@@ -150,6 +147,7 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
         child: ElevatedButton(
           onPressed: () {
             HMWService().patchHMW(sdgs, problemId, checkedId, context);
+
             // Navigator.of(context).push(
             //   MaterialPageRoute(
             //     builder: (context) => const HMWListPage(),

@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:inglo/models/hmw/hmw_model.dart';
+import 'package:inglo/models/design/hmw_model.dart';
 import 'package:inglo/screens/crazy/crazy_8s.dart';
 import 'package:inglo/screens/hmw/hmw_detail.dart';
 import 'package:inglo/service/issue/issue_detail.dart';
@@ -133,7 +133,7 @@ class HMWService {
         // 화면 전환
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => Crazy8sPage(sdgs: sdgs),
+            builder: (context) => Crazy8sPage(sdgs: sdgs, problemId: problemId),
           ),
         );
       } else {

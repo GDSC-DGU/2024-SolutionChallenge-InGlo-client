@@ -5,17 +5,28 @@ import 'package:inglo/screens/crazy/crazy_voting.dart';
 import 'package:inglo/screens/crazy/widgets/crazy_pagination.dart';
 import 'package:inglo/screens/problem_definition/problem_write.dart';
 import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
+import 'package:inglo/screens/solution_sketch/solution_sketch.dart';
+import 'package:inglo/service/design/crazy_service.dart';
 import 'package:inglo/widgets/design/design_steps.dart';
 
 class CrazyVotingPage extends StatefulWidget {
   final int sdgs;
-  const CrazyVotingPage({required this.sdgs, super.key});
+  final int problemId;
+  const CrazyVotingPage({required this.sdgs, required this.problemId, super.key});
 
   @override
   State<CrazyVotingPage> createState() => _CrazyVotingPageState();
 }
 
 class _CrazyVotingPageState extends State<CrazyVotingPage> {
+  late int checkedNumber;
+
+  @override
+  void initState() {
+    super.initState();
+    checkedNumber = 0;
+  }
+
   // 더미데이터
   final problemList = [
     {
@@ -110,6 +121,7 @@ class _CrazyVotingPageState extends State<CrazyVotingPage> {
   @override
   Widget build(BuildContext context) {
     final int sdgs = widget.sdgs; // 받아온 sdgs값
+    final int problemId = widget.problemId;
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -127,7 +139,7 @@ class _CrazyVotingPageState extends State<CrazyVotingPage> {
           Container(
             margin: EdgeInsets.fromLTRB(0, 0, 5, 3),
             child: Text(
-              "2/3",
+              "$checkedNumber/3",
               style: GoogleFonts.notoSans(
                 color: Color(0xFFFF6280),
                 fontSize: 15,
@@ -140,7 +152,14 @@ class _CrazyVotingPageState extends State<CrazyVotingPage> {
             margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             alignment: Alignment.centerRight,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        SolutionSketchPage(sdgs: sdgs, problemId: problemId,),
+                  ),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 elevation: 0,
                 side: BorderSide(
@@ -169,8 +188,24 @@ class _CrazyVotingPageState extends State<CrazyVotingPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               DesignSteps(step: 3, sdgs: sdgs,),
-              CrazyPagination(
-                problemList: problemList,
+              FutureBuilder(
+                future: CrazyService().getCrazyAll(problemId),
+                builder: (context, snapshot) {
+                  var data = snapshot.data!;
+                  return CrazyPagination(
+                  problemList: data,
+                  problemId: problemId,
+                  checkedNumber: checkedNumber,
+                  changeCheckedNumber : (int type) {
+                    setState(() {
+                      if(type == 0) {
+                        checkedNumber = checkedNumber - 1;
+                      } else {
+                        checkedNumber = checkedNumber + 1;
+                      }
+                    });
+                  }
+                ); },
               ),
               // Padding(
               //   padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),

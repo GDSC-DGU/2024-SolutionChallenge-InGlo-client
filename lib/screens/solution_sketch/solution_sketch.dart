@@ -8,18 +8,24 @@ import 'package:inglo/screens/solution_sketch/solution_drawing.dart';
 import 'package:inglo/screens/solution_sketch/widgets/solution_sketch_btn.dart';
 import 'package:inglo/screens/solution_sketch/widgets/solution_sketch_img.dart';
 import 'package:inglo/screens/solution_sketch/widgets/solution_sketch_input.dart';
+import 'package:inglo/service/design/solution_sketch.dart';
 import 'package:inglo/widgets/design/design_steps.dart';
 import 'package:path_provider/path_provider.dart';
 
 class SolutionSketchPage extends StatefulWidget {
   final int sdgs;
-  const SolutionSketchPage({required this.sdgs, super.key});
+  final int problemId;
+  const SolutionSketchPage({required this.sdgs, required this.problemId, super.key});
 
   @override
   State<SolutionSketchPage> createState() => _SolutionSketchPageState();
 }
 
 class _SolutionSketchPageState extends State<SolutionSketchPage> {
+  String title = "";
+  String description = "";
+  String content = "";
+
   File? _image; //이미지를 담을 변수 선언
   final ImagePicker picker = ImagePicker(); //ImagePicker 초기화
   //이미지를 가져오는 함수
@@ -36,6 +42,7 @@ class _SolutionSketchPageState extends State<SolutionSketchPage> {
   @override
   Widget build(BuildContext context) {
     final int sdgs = widget.sdgs; // 받아온 sdgs값
+    final int problemId = widget.problemId;
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -96,14 +103,32 @@ class _SolutionSketchPageState extends State<SolutionSketchPage> {
                     });
                   },
                 ),
-              SolutionSketchInput(),
+              SolutionSketchInput(
+                changeTitle: (text) {
+                  setState(() {
+                    title = text;
+                  });
+                },
+                changeDescription: (text) {
+                  setState(() {
+                    description = text;
+                  });
+                },
+                changeContent: (text) {
+                  setState(() {
+                    content = text;
+                  });
+                },
+              ),
               // Submit 버튼
               Container(
                 margin:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                 alignment: Alignment.centerRight,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    SolutionSketchService().patchSolutionSketch(problemId, _image!, title, description, content, context);
+                  },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
                     side: BorderSide(

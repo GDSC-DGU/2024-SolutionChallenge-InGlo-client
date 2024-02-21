@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:inglo/models/problem_definition/problem_definition.dart';
+import 'package:inglo/models/design/problem_definition.dart';
 import 'package:http/http.dart' as http;
 import 'package:inglo/screens/hmw/hmw_detail.dart';
 import 'package:inglo/screens/problem_definition/problem_definition.dart';
@@ -137,6 +137,7 @@ class ProblemDefinitionService {
             builder: (context) => HMWDetailPage(sdgs: sdgs, problemId: problemId,),
           ),
         );
+
       } else {
         print('statusCode: ${response.statusCode}');
       }

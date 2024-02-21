@@ -6,5 +6,5 @@ class HMWModel {
 
   HMWModel.fromJson(Map<String, dynamic> json)
       : problemContent = json['problem_content'] ?? "",
-        hmws = json['hmws'];
+        hmws = json['hmws'] ?? [];
 }

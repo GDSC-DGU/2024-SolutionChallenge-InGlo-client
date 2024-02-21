@@ -49,7 +49,7 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
   @override
   Widget build(BuildContext context) {
     final int sdgs = widget.sdgs;
-    final int problemId = widget.sdgs;
+    final int problemId = widget.problemId;
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -85,6 +85,7 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
           child: FutureBuilder(
             future: HMWService().getHmw(problemId),
             builder: (context, snapshot) {
+              print("hmw problemId: $problemId");
               var data = snapshot.data!;
               return Container(
               padding: EdgeInsets.fromLTRB(10, 0, 10, 50),

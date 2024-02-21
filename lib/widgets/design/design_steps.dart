@@ -122,16 +122,16 @@ class DesignSteps extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        if (step != 3) {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => Crazy8sPage(
-                                sdgs: sdgs,
-                              ),
-
-                            ),
-                          );
-                        }
+                        // if (step != 3) {
+                        //   Navigator.of(context).push(
+                        //     MaterialPageRoute(
+                        //       builder: (context) => Crazy8sPage(
+                        //         sdgs: sdgs,
+                        //       ),
+                        //
+                        //     ),
+                        //   );
+                        // }
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
@@ -163,15 +163,15 @@ class DesignSteps extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        if (step != 4) {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => SolutionSketchPage(
-                                sdgs: sdgs,
-                              ),
-                            ),
-                          );
-                        }
+                        // if (step != 4) {
+                        //   Navigator.of(context).push(
+                        //     MaterialPageRoute(
+                        //       builder: (context) => SolutionSketchPage(
+                        //         sdgs: sdgs,
+                        //       ),
+                        //     ),
+                        //   );
+                        // }
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 0,

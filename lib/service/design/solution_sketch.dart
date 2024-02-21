@@ -37,17 +37,28 @@ class SolutionSketchService {
     }
 
     try {
-      final http.Response response = await http.patch(coreUrl, headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      }, body: {
-        "image": image,
-        "title": title,
-        "description": description,
-        "content": content,
-      });
 
-      print("problem_definition_write: ${response.body}");
+      var request = new http.MultipartRequest("PATCH", coreUrl);
+
+      request.fields['title'] = title;
+      request.fields['description'] = description;
+      request.fields['content'] = content;
+      request.files.add(await http.MultipartFile.fromPath('image', image.path));
+
+
+      var response = await request.send();
+
+      // final http.Response response = await http.patch(coreUrl, headers: {
+      //   'Accept': 'application/json',
+      //   'Authorization': 'Bearer $token',
+      // }, body: {
+      //   "image": image,
+      //   "title": title,
+      //   "description": description,
+      //   "content": content,
+      // });
+
+      print("solution_sketch: $response");
       if (response.statusCode == 201) {
         print("성공");
 

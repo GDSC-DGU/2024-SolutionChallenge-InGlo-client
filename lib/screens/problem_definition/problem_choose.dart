@@ -128,6 +128,7 @@ class _ProblemChoosePageState extends State<ProblemChoosePage> {
         margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: ElevatedButton(
           onPressed: () {
+            print('checkId: $checkedId');
             ProblemDefinitionService().postProblemChoose(sdgs, checkedId, context);
             // Navigator.of(context).push(
             //   MaterialPageRoute(
