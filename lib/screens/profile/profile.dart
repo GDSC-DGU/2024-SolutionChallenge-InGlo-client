@@ -27,14 +27,14 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final dio = Dio(); // dio instance 생성
   User? _user = UserPreferences.myUser;
-  String? token = '';
+  String? token = ''; // token 빈 값으로 우선 정의
 
   // 초기 1번 실행
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async{
       token = Provider.of<UserToken>(context, listen: false).token; // provider에서 토큰 가져오기
-      await getProfile(); // API 호출
+      await getProfile(); // API 호출 // 처음 호출해야 하는 api가 있는 경우에 여기 await로 넣으면 됨.
     });
   }
   // 임시 변수

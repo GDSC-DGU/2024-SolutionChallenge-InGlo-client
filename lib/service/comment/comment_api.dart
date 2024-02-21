@@ -54,6 +54,7 @@ class CommentService {
 
       if (response.statusCode == 200) {
         print('Success code: ${response.statusCode}, response: ${response.data}');
+        getFeedbacks(postId, token); // 다시 불러오기
       } else {
         print('Error code: ${response.statusCode}, response: ${response.data}');
       }
@@ -62,9 +63,10 @@ class CommentService {
     }
   }
 
-  // 유저 정보 전송 API
-  Future<void> ModifiedFeedback(String _content, int post_id, int feedback_id, String? token) async {
-    final url = "https://dongkyeom.com/api/v1/posts/{post_id}/feedbacks/{feedback_id}";
+  // 피드백 수정
+  Future<void> ModifiedFeedback(String _content, int postId, int? feedbackId, String? token) async {
+    final url = "https://dongkyeom.com/api/v1/posts/$postId/feedbacks/$feedbackId";
+    print('post id : $postId feedback_id : $feedbackId');
     Map<String, dynamic> data = {
       "content": _content,
     };
@@ -96,8 +98,9 @@ class CommentService {
   }
 
   // 유저 정보 삭제 API
-  Future<void> deleteFeedback(int post_id, int feedback_id, String? token) async {
-    final url = "https://dongkyeom.com/api/v1/posts/{post_id}/feedbacks/{feedback_id}";
+  Future<void> deleteFeedback(int postId, int? feedbackId, String? token) async {
+    final url = "https://dongkyeom.com/api/v1/posts/$postId/feedbacks/$feedbackId";
+    print('post id : $postId feedback_id : $feedbackId token: $token');
 
     // 요청 헤더 설정
     Options options = Options(
