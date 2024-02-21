@@ -8,6 +8,9 @@ class UserProvider with ChangeNotifier {
 
   User? get user => _user;
 
+  int get user_id => _user!.id;
+  String get user_profile_img => _user!.profile_img;
+
   // 전부 업데이트 하는 메서드
   void updateUser(User newUser) {
     _user = newUser;

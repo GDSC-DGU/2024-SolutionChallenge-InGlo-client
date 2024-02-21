@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'package:inglo/models/post/detail_post.dart';
+import 'package:intl/intl.dart';
 
 class PostUser extends StatelessWidget {
   final String? user_name;
@@ -61,7 +60,7 @@ class PostUser extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    created_at ?? '0000.00.00',
+                  '${DateFormat('yyyy-MM-dd').format(DateTime.parse(created_at!))}' ?? '0000-00-00',
                     style: GoogleFonts.notoSans(
                       fontSize: 14,
                     ),
