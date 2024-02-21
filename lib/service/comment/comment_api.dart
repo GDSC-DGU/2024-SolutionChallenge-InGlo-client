@@ -5,7 +5,7 @@ class CommentService {
   final Dio dio = Dio(); // Dio 인스턴스 생성
 
   // feedback 받아오기
-  Future<List<Comment>> getFeedbacks(int postId) async {
+  Future<List<Comment>> getFeedbacks(int postId, String? token) async {
     print('get id : $postId');
     final url = "https://dongkyeom.com/api/v1/posts/$postId/feedbacks/";
 
@@ -15,7 +15,7 @@ class CommentService {
         options: Options(
           responseType: ResponseType.plain,
           headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs',
+            'Authorization': 'Bearer $token',
           },
         ),
       );
@@ -35,7 +35,8 @@ class CommentService {
   }
 
   // feedback 전송하기
-  Future<void> postFeedback(int postId, String content, int? parentId) async {
+  Future<void> postFeedback(int postId, String content, int? parentId, String? token) async {
+    print('post를 보냅니다. : $postId');
     final url = "https://dongkyeom.com/api/v1/posts/$postId/feedbacks/";
 
     Map<String, dynamic> data = {
@@ -44,10 +45,10 @@ class CommentService {
     };
 
     try {
-      final response = await dio.patch(url, data: data, options: Options(
+      final response = await dio.post(url, data: data, options: Options(
         contentType: Headers.jsonContentType,
         headers: {
-          "Authorization": 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs',
+          "Authorization": 'Bearer $token',
         },
       ));
 
@@ -62,7 +63,7 @@ class CommentService {
   }
 
   // 유저 정보 전송 API
-  Future<void> ModifiedFeedback(String _content, int post_id, int feedback_id) async {
+  Future<void> ModifiedFeedback(String _content, int post_id, int feedback_id, String? token) async {
     final url = "https://dongkyeom.com/api/v1/posts/{post_id}/feedbacks/{feedback_id}";
     Map<String, dynamic> data = {
       "content": _content,
@@ -73,7 +74,7 @@ class CommentService {
       contentType: Headers.jsonContentType,
       headers: {
         "Authorization":
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs',
+        'Bearer $token',
       },
     );
 
@@ -95,7 +96,7 @@ class CommentService {
   }
 
   // 유저 정보 삭제 API
-  Future<void> deleteFeedback(int post_id, int feedback_id) async {
+  Future<void> deleteFeedback(int post_id, int feedback_id, String? token) async {
     final url = "https://dongkyeom.com/api/v1/posts/{post_id}/feedbacks/{feedback_id}";
 
     // 요청 헤더 설정
@@ -103,7 +104,7 @@ class CommentService {
       contentType: Headers.jsonContentType,
       headers: {
         "Authorization":
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs',
+        'Bearer $token',
       },
     );
 

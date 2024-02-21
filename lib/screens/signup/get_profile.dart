@@ -81,12 +81,6 @@ class _GetProfilePageState extends State<GetProfilePage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios, size: 30,),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
           backgroundColor: Colors.white,
         ),
         body: Container(

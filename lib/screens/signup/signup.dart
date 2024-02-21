@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:inglo/screens/issuelist/issulist.dart';
 import 'package:inglo/screens/signup/get_profile.dart';
 import 'package:inglo/widgets/dropdown/intdropdown.dart';
 import 'package:inglo/widgets/dropdown/stringdropdown.dart';
 import 'package:inglo/util/options/country_data.dart';
 import 'package:inglo/util/options/language_data.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 // provider
 import 'package:provider/provider.dart';
 import 'package:inglo/provider/profile/users.dart';
 import 'package:inglo/provider/user_token/user_token.dart';
+
+import 'dart:convert';
 
 class AccountPage extends StatefulWidget {
   @override
@@ -31,11 +33,51 @@ class _AccountPageState extends State<AccountPage> {
   // 초기 1번 실행
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      print(Provider.of<UserToken>(context, listen: false).token);
       token = Provider.of<UserToken>(context, listen: false).token; // provider에서 토큰 가져오기
+      await getAccountedUser(token); // 회원 정보가 있는 유저인지 확인한다.
     });
-    print('token :  $token');
   }
+
+  // is accounted user?
+  Future<void> getAccountedUser(String? _token) async {
+    print('회원정보 기입 페이지 token :  $_token');
+    final url = "https://dongkyeom.com/api/v1/accounts/additional-info/";
+
+    try {
+      final response = await dio.get(
+        url,
+        options: Options(
+          responseType: ResponseType.plain,
+          headers: {
+            'Authorization': 'Bearer $_token',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final responseBody = jsonDecode(response.data);
+        print('true or false : ${responseBody['additional_info_provided']}');
+
+        if (responseBody['additional_info_provided'] == true) {
+          print("true");
+          // 현재 화면을 새로운 화면으로 교체
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => IssueListPage()), // 다음 페이지로 이동
+          );
+        } else {
+          print("false");
+        }
+      }
+
+    } catch (e) {
+      // 요청 실패 또는 기타 에러 처리
+      print('Error fetching data: $e');
+    }
+  }
+
 
   // user name, langauge, country 업데이트 provider 함수
   void updateSpecificUserInfo(BuildContext context) {
@@ -110,15 +152,6 @@ class _AccountPageState extends State<AccountPage> {
         // 배경 이미지를 위해 Scaffold의 배경색을 투명으로 한다.
         // backgroundColor: Colors.transparent,
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              size: 30,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
           backgroundColor: Colors.white,
         ),
         body: Stack(children: <Widget>[

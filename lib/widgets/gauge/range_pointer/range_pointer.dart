@@ -6,8 +6,13 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 /// Renders the gauge range pointer sample
 class RangePointerExample extends StatefulWidget {
+  final double global_impact;
+
+  const RangePointerExample({
+    Key? key,
+    required this.global_impact,
+  }) : super(key: key);
   /// Creates the gauge range pointer sample
-  const RangePointerExample({Key? key}) : super(key: key);
 
   @override
   _RangePointerExampleState createState() => _RangePointerExampleState();
@@ -35,7 +40,7 @@ class _RangePointerExampleState extends State {
                 thicknessUnit: GaugeSizeUnit.factor, thickness: 0.25),
             pointers: const <GaugePointer>[
               RangePointer(
-                  value: 50,
+                  value: 6.2,
                   cornerStyle: CornerStyle.bothCurve,
                   enableAnimation: true,
                   animationDuration: 1200,
