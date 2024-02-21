@@ -3,8 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BorderCustomDropdown extends StatefulWidget {
-  final List<String> options; // 이 위젯으로 전달될 데이터
-  const BorderCustomDropdown({Key? key, required this.options}) : super(key: key);
+  final List<Map<String, dynamic>> options; // 데이터 옵션
+  final void Function(String?) onChanged;
+
+
+  // 매개변수로 받은 값으로 생성자 생섵
+  const BorderCustomDropdown({
+    Key? key,
+    required this.options,
+    required this.onChanged,
+  }) : super(key: key);
 
   @override
   State<BorderCustomDropdown> createState() => _BorderCustomDropdownState();
@@ -15,8 +23,8 @@ class _BorderCustomDropdownState extends State<BorderCustomDropdown> {
 
   @override
   Widget build(BuildContext context) {
-
-    Color borderColor = selectedValue != null ? Color(0xFFFFD691) : Color(0xFFC4C4C4);
+    Color borderColor =
+        selectedValue != null ? Color(0xFFFFD691) : Color(0xFFC4C4C4);
     return Scaffold(
       body: DropdownButtonHideUnderline(
         child: DropdownButton2<String>(
@@ -37,24 +45,25 @@ class _BorderCustomDropdownState extends State<BorderCustomDropdown> {
             ],
           ),
           items: widget.options
-              .map((String item) => DropdownMenuItem<String>(
-            value: item,
-            child: Text(
-              item,
-              style: GoogleFonts.notoSans(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: Colors.black,
-              ),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ))
+              .map((Map<String, dynamic> item) => DropdownMenuItem<String>(
+                    value: item['value'],
+                    child: Text(
+                      item['value'],
+                      style: GoogleFonts.notoSans(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ))
               .toList(),
           value: selectedValue,
-          onChanged: (String? value) {
+          onChanged: (String? newValue) {
             setState(() {
-              selectedValue = value;
+              selectedValue = newValue; // 내부 상태 업데이트
             });
+            widget.onChanged(newValue); // 선택된 value를 부모 위젯에 전달
           },
           buttonStyleData: ButtonStyleData(
             width: MediaQuery.of(context).size.width * 1,

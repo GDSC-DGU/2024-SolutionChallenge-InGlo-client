@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/issue_detail/widgets/issue_content.dart';
 import 'package:inglo/screens/issue_detail/widgets/issue_input.dart';
+import 'package:inglo/widgets/comment/issue_comment.dart';
 import 'package:inglo/service/issue/issue_detail.dart';
 import 'package:inglo/widgets/comment/comment_box.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -15,6 +16,8 @@ class IssueDetailPage extends StatefulWidget {
 }
 
 class _IssueDetailPageState extends State<IssueDetailPage> {
+  bool isBookMarked = false;
+  final issue_id = 0; // issue id(임시값)
   bool isLiked = false;
 
   @override
@@ -167,28 +170,29 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
       floatingActionButton: Container(
         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: ElevatedButton(
-            onPressed: () {
-              showBarModalBottomSheet(
-                expand: false,
-                context: context,
-                backgroundColor: Colors.transparent,
-                builder: (context) => Comments(),
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFFF7EEDE),
-              elevation: 0,
-              side: BorderSide(
-                color: Color(0xFFD7A859),
-                width: 1,
-              ),
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            ),
-            child: Icon(
-              Icons.comment_outlined,
-              size: 35,
+          onPressed: () {
+            showBarModalBottomSheet(
+              expand: false,
+              context: context,
+              backgroundColor: Colors.transparent,
+              builder: (context) => IssueComments(id: issue_id),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color(0xFFF7EEDE),
+            elevation: 0,
+            side: BorderSide(
               color: Color(0xFFD7A859),
-            )),
+              width: 1,
+            ),
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          ),
+          child: Icon(
+            Icons.comment_outlined,
+            size: 35,
+            color: Color(0xFFD7A859),
+          )
+        ),
       ),
     );
   }

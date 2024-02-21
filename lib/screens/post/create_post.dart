@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:dio/dio.dart';
+import 'package:inglo/screens/postlist/post_board.dart';
 
 class CreatePost extends StatefulWidget {
   const CreatePost({super.key});
@@ -11,9 +13,83 @@ class CreatePost extends StatefulWidget {
 }
 
 class _CreatePostState extends State<CreatePost> {
-  String result = '';
+  final dio = Dio(); // dio instance 생성
+
+  // title 입력
+  final TextEditingController _titleController = TextEditingController();
   final HtmlEditorController controller = HtmlEditorController();
-  TextEditingController textEditingController = TextEditingController();
+
+  @override
+  void dispose() {
+    // 컨트롤러를 적절히 해제한다.
+    _titleController.dispose();
+    super.dispose();
+  }
+
+  String _title = '';
+  String _content = '';
+ // String _image = '';
+  int _sketch_id = 1; // 임시 번호
+  int _sdgs = 1; // 임시 번호
+
+  // post 생성 api
+  Future<void> _handlePost() async {
+    final url = "https://dongkyeom.com/api/v1/posts/";
+
+    String content = await controller.getText(); // 비동기 호출 적용
+    print('content : $content');
+
+    // FormData 객체를 생성하고 데이터 추가
+    Map<String, dynamic> data = {
+      "title": _titleController.text,
+      "content": content,
+      "sketch_id": int.parse('$_sketch_id'),
+      "sdgs": int.parse('$_sdgs'),
+    };
+
+    /*
+    Map<String, dynamic> data = {
+      "title": _titleController.text,
+      "content": content,
+      "image": _image,
+      "sketch_id": int.parse('$_sketch_id'),
+      "sdgs": int.parse('$_sdgs'),
+    };
+*/
+    // 요청 헤더 설정
+    Options options = Options(
+      contentType: Headers.jsonContentType,
+      headers: {
+        "Authorization":
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTcxMDcwLCJpYXQiOjE3MDg0MjcwNzAsImp0aSI6IjNhNTJjOTkzODczNTRiNmM4NzNlYjc4MzU0NDNmOWVlIiwidXNlcl9pZCI6M30.d7lTdqfIBZuskzHKBvclwYKNeVE4-SepdmPggZghMSM',
+      },
+    );
+
+    try {
+      final response = await dio.post(url, data: data, options: options);
+
+      print('post data : $data');
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // 성공
+        print(
+            'Success code: ${response.statusCode}, response: ${response.data}');
+
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => PostBoardPage()), // 포스트 리스트 페이지로 이동한다.
+        );
+
+      } else {
+        // 비-200 상태 코드
+        print('Error code: ${response.statusCode}, response: ${response.data}');
+      }
+    } catch (e) {
+      // 예외 처리
+      print('Exception caught: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +106,7 @@ class _CreatePostState extends State<CreatePost> {
         actions: [
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF233A66)),
-            onPressed: () {},
+            onPressed: _handlePost,
             child: Text('Post',
               style: GoogleFonts.notoSans(
                 fontSize: 16, // 폰트 크기 설정
@@ -51,6 +127,7 @@ class _CreatePostState extends State<CreatePost> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               TextFormField(
+                controller: _titleController,
                 maxLines: null,
                 maxLength: 50, // 사용자가 입력할 수 있는 최대 문자 수
                 decoration: InputDecoration(

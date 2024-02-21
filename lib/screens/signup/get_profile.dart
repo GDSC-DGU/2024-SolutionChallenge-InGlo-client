@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/issuelist/issulist.dart';
+import 'package:dio/dio.dart';
+
+import 'package:provider/provider.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 
 class GetProfilePage extends StatefulWidget {
   const GetProfilePage({Key? key}) : super(key: key);
@@ -14,17 +18,63 @@ class GetProfilePage extends StatefulWidget {
 class _GetProfilePageState extends State<GetProfilePage> {
   XFile? _image; //이미지를 담을 변수 선언
   final ImagePicker picker = ImagePicker(); //ImagePicker 초기화
+  final dio = Dio();
 
-  //이미지를 가져오는 함수
+  String? token; // token 저장
+
+  // 초기 1번 실행
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      token = Provider.of<UserToken>(context, listen: false).token; // provider에서 토큰 가져오기
+    });
+  }
+
+  // 이미지를 가져오는 함수
   Future getImage(ImageSource imageSource) async {
-    //pickedFile에 ImagePicker로 가져온 이미지가 담긴다.
     final XFile? pickedFile = await picker.pickImage(source: imageSource);
     if (pickedFile != null) {
       setState(() {
-        _image = XFile(pickedFile.path); //가져온 이미지를 _image에 저장
+        _image = XFile(pickedFile.path); // 가져온 이미지를 _image에 저장
       });
+      uploadImage(); // 이미지를 서버에 전송하는 함수 호출
     }
   }
+
+  // 이미지를 서버에 전송하는 함수
+  Future<void> uploadImage() async {
+    if (_image == null) return;
+    String fileName = _image!.path.split('/').last;
+
+    try {
+      FormData formData = FormData.fromMap({
+        "image": await MultipartFile.fromFile(_image!.path, filename: fileName),
+      });
+
+      dio.options.headers = {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': 'Bearer $token', // 필요한 토큰이나 인증 정보를 여기에 추가
+      };
+
+      var response = await dio.patch(
+        'https://dongkyeom.com/api/v1/accounts/info/profile-img/',
+        data: formData,
+      );
+
+      print('업로드 성공 : ${response.statusCode}');
+
+      // 이동
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => IssueListPage()), // 다음 페이지로 이동
+      );
+
+    } catch (e) {
+      print('이미지 업로드 실패: $e');
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -62,11 +112,7 @@ class _GetProfilePageState extends State<GetProfilePage> {
               _buildButton(),
               SizedBox(height: 40),
               FilledButton(
-                onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => IssueListPage()),
-                  );
-                },
+                onPressed: uploadImage,
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Color(0xFFFFD691)),
                   // 버튼 배경색
