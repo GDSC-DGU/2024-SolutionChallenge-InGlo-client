@@ -40,16 +40,10 @@ class _SetProfilePageState extends State<SetProfilePage> {
     });
   }
 
+  // 여기 나중에 초기값 넣기..
   String _name = ''; // 사용자 이름 저장을 위한 변수
-  int _country = 2; // 국가 저장을 위한 변수
-  String _language = ''; // 언어 저장을 위한 변수
-
-  // 전체 update 함수
-  void updateSpecificUserInfo(BuildContext context, User newUser) {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-
-    userProvider.updateUser(newUser);
-  }
+  int _country = 0; // 국가 저장을 위한 변수
+  String _language = 'en'; // 언어 저장을 위한 변수
 
   // 이미지를 가져오는 함수
   Future getImage(ImageSource imageSource) async {
