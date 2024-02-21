@@ -27,8 +27,8 @@ class _IssueCommentsState extends State<IssueComments> {
   final dio = Dio(); // dio instance 생성
   final formKey = GlobalKey<FormState>();
   int? _parent_id = null; // 부모 피드백 아이디
-  int? _feedback_id = null; // 현재 선택한 feedback id
-  List<Comment> feedbacks = []; // feedback을 저장할 변수
+  int? _comment_id = null; // 현재 선택한 feedback id
+  List<Comment> comments = []; // feedback을 저장할 변수
   ModifiedComment? newComment;
 
   int? isEditing; // edit 모드 저장 변수
@@ -68,7 +68,7 @@ class _IssueCommentsState extends State<IssueComments> {
       List<Comment> feedbacks =
       await _CommentService.getFeedbacks(widget.id, token);
       setState(() {
-        this.feedbacks = feedbacks;
+        this.comments = feedbacks;
       });
       print('데이터 받아옴 : ${feedbacks[0].user}');
     } catch (e) {
@@ -83,7 +83,7 @@ class _IssueCommentsState extends State<IssueComments> {
       print('수정 완료');
       // await 키워드를 사용하여 비동기 완료를 기다린다.
       ModifiedComment newComment = await _CommentService.ModifiedFeedback(
-          modifiedController.text, widget.id, _feedback_id, token); // 피드백 수정
+          modifiedController.text, widget.id, _comment_id, token); // 피드백 수정
       setState(() {
         this.newComment = newComment;
       });
@@ -104,7 +104,7 @@ class _IssueCommentsState extends State<IssueComments> {
 
   Future<void> DeleteFeedback() async {
     await _CommentService.deleteFeedback(
-        widget.id, _feedback_id, token); // 피드백 삭제
+        widget.id, _comment_id, token); // 피드백 삭제
   }
 
   Widget commentChild(data, id) {
@@ -173,7 +173,7 @@ class _IssueCommentsState extends State<IssueComments> {
                                 isEditing = null;
                               } else {
                                 isEditing = i; // 수정 모드로 전환
-                                _feedback_id =
+                                _comment_id =
                                     data[i].id; // feedback id도 변경
                                 modifiedController.text = data[i].content;
                               }
@@ -192,7 +192,7 @@ class _IssueCommentsState extends State<IssueComments> {
                         GestureDetector(
                           onTap: () async {
                             print("Delete Clicked");
-                            _feedback_id = data[i].id;
+                            _comment_id = data[i].id;
                             await DeleteFeedback();
                             await loadFeedbacks();
                           },
@@ -227,7 +227,7 @@ class _IssueCommentsState extends State<IssueComments> {
       body: Container(
         child: CommentBox(
           userImage: CommentBox.commentImageParser(imageURLorPath: profile_img),
-          child: commentChild(feedbacks, id),
+          child: commentChild(comments, id),
           labelText: 'Send Feedbacks',
           errorText: 'Comment cannot be blank',
           withBorder: false,

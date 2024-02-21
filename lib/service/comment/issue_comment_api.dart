@@ -1,13 +1,14 @@
 import 'package:dio/dio.dart';
-import 'package:inglo/models/comment/comment.dart';
+import 'package:inglo/models/issue/comment.dart';
+import 'package:inglo/models/issue/modified_comment.dart';
 
 class CommentService {
   final Dio dio = Dio(); // Dio 인스턴스 생성
 
   // feedback 받아오기
-  Future<List<Comment>> getComments(int postId, String? token) async {
-    print('get id : $postId');
-    final url = "https://dongkyeom.com/api/v1/posts/$postId/feedbacks/";
+  Future<List<Comment>> getComments(int issueId, String? token) async {
+    print('get id : $issueId');
+    final url = "https://dongkyeom.com/api/v1/issues/${issueId}/comments/";
 
     try {
       final response = await dio.get(
@@ -63,9 +64,9 @@ class CommentService {
   }
 
   // 피드백 수정
-  Future<void> ModifiedComment(String _content, int issueId, int? commentId, String? token) async {
-    final url = "https://dongkyeom.com/api/v1/issues/$issueId/comments/${commentId}";
-    print('post id : $issueId feedback_id : $commentId');
+  Future<ModifiedComment> ModifiedFeedback(String _content, int issueId, int? commentId, String? token) async {
+    final url = "https://dongkyeom.com/api/v1/issues/$issueId/comments/$commentId";
+    print('post id : $issueId comment_id : $commentId');
     Map<String, dynamic> data = {
       "content": _content,
     };
@@ -82,20 +83,22 @@ class CommentService {
     try {
       final response = await dio.patch(url, data: data, options: options);
 
-      if (response.statusCode == 200) {
+      print(
+          'Success code: ${response.statusCode}, 수정 성공!: ${response.data}');
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
         // 성공
-        print(
-            'Success code: ${response.statusCode}, response: ${response.data}');
+        ModifiedComment newComment = ModifiedComment.fromJson(response.data);
+        return newComment;
       } else {
-        // 비-200 상태 코드
         print('Error code: ${response.statusCode}, response: ${response.data}');
+        throw Exception('Failed to modify feedback');
       }
     } catch (e) {
-      // 예외 처리
       print('Exception caught: $e');
+      throw Exception('Error modifying feedback');
     }
   }
-
   // 유저 정보 삭제 API
   Future<void> deleteComment(int issueId, int? commentId, String? token) async {
     final url = "https://dongkyeom.com/api/v1/issues/${issueId}/comments/${commentId}";
