@@ -91,9 +91,6 @@ class _CommentsState extends State<Comments> {
         widget.id, commentController.text, _parent_id, token); // 피드백 제출
   }
 
-  Future<void> ModifiedFeedback() async {
-  }
-
   Future<void> DeleteFeedback() async {
     await _CommentService.deleteFeedback(
         widget.id, _feedback_id, token); // 피드백 삭제
