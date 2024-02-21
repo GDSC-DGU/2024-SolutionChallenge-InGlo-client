@@ -4,10 +4,12 @@ import 'package:inglo/widgets/gauge/range_pointer/range_pointer.dart';
 
 class ProfileWidget extends StatelessWidget {
   final String imagePath;
+  final double global_impact;
 
   const ProfileWidget({
     Key? key,
     required this.imagePath,
+    required this.global_impact,
   }) : super(key: key);
 
   @override
@@ -39,7 +41,7 @@ class ProfileWidget extends StatelessWidget {
             child: Container(
               width: 100,
               height: 100,
-              child: RangePointerExample(),
+              child: RangePointerExample(global_impact: global_impact),
             ),
           ),
         ],

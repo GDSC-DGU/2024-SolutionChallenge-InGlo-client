@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:inglo/screens/issuelist/issulist.dart';
 import 'package:inglo/screens/signup/get_profile.dart';
 import 'package:inglo/widgets/dropdown/intdropdown.dart';
 import 'package:inglo/widgets/dropdown/stringdropdown.dart';
@@ -58,6 +59,17 @@ class _AccountPageState extends State<AccountPage> {
       if (response.statusCode == 200 || response.statusCode == 201) {
         final responseBody = jsonDecode(response.data);
         print('true or false : ${responseBody['additional_info_provided']}');
+
+        if (responseBody['additional_info_provided'] == true) {
+          print("true");
+          // 현재 화면을 새로운 화면으로 교체
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => IssueListPage()), // 다음 페이지로 이동
+          );
+        } else {
+          print("false");
+        }
       }
 
     } catch (e) {

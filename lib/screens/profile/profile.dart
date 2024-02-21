@@ -117,6 +117,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [
                       ProfileWidget(
                         imagePath: _user!.profile_img,
+                        global_impact: _user!.global_impact,
                       ),
                     ],
                   ),
