@@ -9,8 +9,6 @@ import 'package:inglo/service/post/post_detail_api.dart';
 import 'package:inglo/widgets/modal/barmodal.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:webview_flutter/webview_flutter.dart' as webview_flutter;
-import 'package:html_editor_enhanced/html_editor.dart';
-
 import 'package:dio/dio.dart';
 
 // provider
@@ -188,7 +186,7 @@ class _DetailPostState extends State<DetailPost> {
                                                   ),
                                                 );
                                               } else if (result == 'delete') {
-                                                // 삭제 메서드
+                                                DeletePost();
                                               }
                                             },
                                             itemBuilder:
