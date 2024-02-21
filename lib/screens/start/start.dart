@@ -55,9 +55,10 @@ class _StartPageState extends State<StartPage> {
   // 만료된 토큰 발급 함수
   Future<void> GetNewToken(String refresh_token) async {
 
-    final url = "https://dongkyeom.com/api/accounts/token/refresh/";
+    print('refresh : ${refresh_token}');
+    final url = "https://dongkyeom.com/api/v1/accounts/token/refresh/";
     Map<String, String> data = {
-      "refresh_token": refresh_token,
+      "refresh_token": 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcwODU5MDIwMywiaWF0IjoxNzA4NTAzODAzLCJqdGkiOiIzM2YwZjNmNzA5YjE0Y2E0ODMzYjViY2ZlYzNjMjIwZSIsInVzZXJfaWQiOjN9.uhfeTninED9YvaccySNljTh74oly6rMjEjwkYxlSH94',
     };
 
     // 요청 헤더 설정

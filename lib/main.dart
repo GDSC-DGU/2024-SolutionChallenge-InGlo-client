@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inglo/provider/user_token/user_token.dart';
+import 'package:inglo/screens/profile/profile.dart';
 import 'package:inglo/screens/start/start.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: StartPage(),
+      home: ProfilePage(),
       theme: ThemeData(
         // ThemeData를 사용하여 앱의 기본 테마를 설정합니다.
         textTheme: GoogleFonts.notoSansTextTheme(
