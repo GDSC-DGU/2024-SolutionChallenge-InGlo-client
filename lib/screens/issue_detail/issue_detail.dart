@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/issue_detail/widgets/issue_content.dart';
 import 'package:inglo/screens/issue_detail/widgets/issue_input.dart';
-import 'package:inglo/widgets/comment/comment_box.dart';
+import 'package:inglo/widgets/comment/issue_comment.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class IssueDetailPage extends StatefulWidget {
@@ -14,6 +14,7 @@ class IssueDetailPage extends StatefulWidget {
 
 class _IssueDetailPageState extends State<IssueDetailPage> {
   bool isBookMarked = false;
+  final issue_id = 0; // issue id(임시값)
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +141,7 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
               expand: false,
               context: context,
               backgroundColor: Colors.transparent,
-              builder: (context) => Comments(),
+              builder: (context) => IssueComments(id: issue_id),
             );
           },
           style: ElevatedButton.styleFrom(

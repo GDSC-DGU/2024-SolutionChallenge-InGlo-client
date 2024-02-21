@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:inglo/screens/provider_test/test.dart';
-import 'package:inglo/screens/signup/signup.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/start/start.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:inglo/service/auth/google/google_sign.dart';
 import 'package:inglo/provider/test/counts.dart';
 import 'package:provider/provider.dart';
+
+// user
+import 'package:inglo/provider/profile/users.dart';
+
 
 void main() async {
   await WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +19,8 @@ void main() async {
       providers: [
         // 아마 아래에 상태 변수들을 계속 추가하면 될 것 같다.
         ChangeNotifierProvider(create: (_) => Counts()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => UserToken()),
       ],
       child: MyApp(),
     ),
@@ -27,7 +31,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ProviderTest(),
+      home: StartPage(),
       theme: ThemeData(
         // ThemeData를 사용하여 앱의 기본 테마를 설정합니다.
         textTheme: GoogleFonts.notoSansTextTheme(

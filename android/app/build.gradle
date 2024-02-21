@@ -27,6 +27,7 @@ android {
     namespace "com.example.inglo"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
+    compileSdkVersion 34 // 중간에 추가함
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

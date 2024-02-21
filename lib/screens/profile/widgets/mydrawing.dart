@@ -4,12 +4,51 @@ import 'package:inglo/util/sketch/sketchlist_preference.dart';
 
 import 'package:vertical_card_pager/vertical_card_pager.dart';
 
+import 'package:dio/dio.dart';
+
 class MyDrawing extends StatefulWidget {
   @override
   _MyDrawingState createState() => _MyDrawingState();
 }
 
 class _MyDrawingState extends State<MyDrawing> {
+  final dio = Dio(); // dio instance 생성
+
+  // 초기 1번 실행
+  void initState() {
+    super.initState();
+    getSketchs();
+  }
+
+  // profile get 함수
+  Future<void> getSketchs() async {
+    final url = "https://dongkyeom.com/api/v1/sketches/";
+
+    try {
+      final response = await dio.get(
+        url,
+        options: Options(
+          responseType: ResponseType.plain,
+          headers: {
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs',
+          },
+        ),
+      );
+
+      String responseBody = response.data;
+
+      if(response.statusCode == 200 || response.statusCode == 201) {
+        print('성공!');
+      }
+      print('data : $responseBody');
+
+    } catch (e) {
+      // 요청 실패 또는 기타 에러 처리
+      print('Error fetching data: $e');
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final list = SketchListPreferences.mySketchList;
