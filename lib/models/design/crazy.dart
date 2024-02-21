@@ -10,16 +10,12 @@ class CrazyMineModel {
 }
 
 class CrazyAllModel {
-  int id;
   List contents;
   String createdAt;
-  int problem;
 
-  CrazyAllModel({required this.id, required this.contents, required this.createdAt, required this.problem});
+  CrazyAllModel({required this.contents, required this.createdAt});
 
   CrazyAllModel.fromJson(Map<String, dynamic> json)
-    : id = json['id'] ?? 0,
-      contents = json['contents'] ?? [],
-      createdAt = json['created_at'] ?? "",
-      problem = json['problem'] ?? 0;
+      : contents = json['contents'] ?? [],
+      createdAt = json['created_at'] ?? "";
 }

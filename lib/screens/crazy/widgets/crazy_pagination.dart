@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 class CrazyPagination extends StatefulWidget {
   final List<CrazyAllModel> problemList;
-  final int checkedNumber;
+  final List checkedNumber;
   final int problemId;
   final changeCheckedNumber;
 
@@ -42,7 +42,6 @@ class _CrazyPaginationState extends State<CrazyPagination> {
     final checkedNumber = widget.checkedNumber;
     final problemId = widget.problemId;
     final changeCheckedNumber = widget.changeCheckedNumber;
-    final token = context.watch<UserToken>().token;
 
     return Center(
       child: Column(
@@ -63,9 +62,12 @@ class _CrazyPaginationState extends State<CrazyPagination> {
               itemBuilder: (context, index) {
                 return CheckDesignCards(
                   id: problemList[_currentPage - 1].contents[index]["id"],
+                  voteNumber : problemList[_currentPage - 1].contents[index]["vote_count"],
+                  content: problemList[_currentPage - 1].contents[index]
+                      ["content"],
                   checkCard: (id, isChecked, changeIsChecked) {
                     if (!isChecked) {
-                      if (checkedNumber == 3) {
+                      if (checkedNumber.length == 3) {
                         return showDialog(
                           context: context,
                           barrierDismissible: true,
@@ -88,20 +90,17 @@ class _CrazyPaginationState extends State<CrazyPagination> {
                         );
                       }
                     }
-                    CrazyService().postCrazyChoose(problemId, id, context, changeIsChecked, () {
-                      setState(() {
-                        if (!isChecked) {
-                          changeCheckedNumber(0);
-                        } else {
-                          changeCheckedNumber(1);
-                        }
-                      });
-                    }, token);
+                    setState(() {
+                      if (!isChecked) {
+                        changeCheckedNumber(0, id);
+                      } else {
+                        changeCheckedNumber(1, id);
+                      }
+                    });
+                    changeIsChecked();
 
                     print(id);
                   },
-                  content: problemList[_currentPage - 1].contents[index]
-                      ["content"],
                 );
               },
             ),

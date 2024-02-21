@@ -17,104 +17,13 @@ class CrazyVotingPage extends StatefulWidget {
 }
 
 class _CrazyVotingPageState extends State<CrazyVotingPage> {
-  late int checkedNumber;
+  late List checkedNumber;
 
   @override
   void initState() {
     super.initState();
-    checkedNumber = 0;
+    checkedNumber = [];
   }
-
-  // 더미데이터
-  final problemList = [
-    {
-      "id": "2",
-      "contents": [
-        {"id": "1", "content": "1choose 3-5 problems"},
-        {
-          "id": "2",
-          "content":
-              "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-        },
-        {"id": "3", "content": "choose 3-5 problems"},
-        {
-          "id": "4",
-          "content":
-              "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-        },
-        {"id": "5", "content": "choose 3-5 problems"},
-        {
-          "id": "6",
-          "content":
-              "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-        },
-        {"id": "7", "content": "choose 3-5 problems"},
-        {
-          "id": "8",
-          "content":
-              "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-        },
-      ],
-    },
-    {
-      "id": "5",
-      "contents": [
-        {"id": "1", "content": "2choose 3-5 problems"},
-        {
-          "id": "2",
-          "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-        },
-        {"id": "3", "content": "choose 3-5 problems"},
-        {
-          "id": "4",
-          "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-        },
-        {"id": "5", "content": "choose 3-5 problems"},
-        {
-          "id": "6",
-          "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-        },
-        {"id": "7", "content": "choose 3-5 problems"},
-        {
-          "id": "8",
-          "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-        },
-      ],
-    },
-    {
-      "id": "6",
-      "contents": [
-        {"id": "1", "content": "3choose 3-5 problems"},
-        {
-          "id": "2",
-          "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-        },
-        {"id": "3", "content": "choose 3-5 problems"},
-        {
-          "id": "4",
-          "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-        },
-        {"id": "5", "content": "choose 3-5 problems"},
-        {
-          "id": "6",
-          "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-        },
-        {"id": "7", "content": "choose 3-5 problems"},
-        {
-          "id": "8",
-          "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-        },
-      ],
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -126,6 +35,12 @@ class _CrazyVotingPageState extends State<CrazyVotingPage> {
       backgroundColor: Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, size: 25,),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           "Crazy Voting",
           style: GoogleFonts.notoSans(
@@ -138,7 +53,7 @@ class _CrazyVotingPageState extends State<CrazyVotingPage> {
           Container(
             margin: EdgeInsets.fromLTRB(0, 0, 5, 3),
             child: Text(
-              "$checkedNumber/3",
+              "${checkedNumber.length}/3",
               style: GoogleFonts.notoSans(
                 color: Color(0xFFFF6280),
                 fontSize: 15,
@@ -151,13 +66,40 @@ class _CrazyVotingPageState extends State<CrazyVotingPage> {
             margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             alignment: Alignment.centerRight,
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        SolutionSketchPage(sdgs: sdgs, problemId: problemId,),
-                  ),
-                );
+              onPressed: () async {
+                if(checkedNumber.isEmpty) {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    builder: ((context) {
+                      return AlertDialog(
+                        title: Text("Crazy 8's Choose"),
+                        content: Text("Please Choose one Crazy 8's."),
+                        actions: <Widget>[
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); //창 닫기
+                            },
+                            child: Text("Confirm"),
+                          ),
+                        ],
+                      );
+                    }),
+                  );
+                } else {
+                  print(checkedNumber);
+                  await Future.forEach(checkedNumber, (item) {
+                    print("call : $item");
+                    CrazyService().postCrazyChoose(problemId, item, context, token);
+                  });
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          SolutionSketchPage(sdgs: sdgs, problemId: problemId,),
+                    ),
+                  );
+                }
+
               },
               style: ElevatedButton.styleFrom(
                 elevation: 0,
@@ -195,32 +137,18 @@ class _CrazyVotingPageState extends State<CrazyVotingPage> {
                   problemList: data,
                   problemId: problemId,
                   checkedNumber: checkedNumber,
-                  changeCheckedNumber : (int type) {
+                  changeCheckedNumber : (int type, int id) {
                     setState(() {
-                      if(type == 0) {
-                        checkedNumber = checkedNumber - 1;
+                      if(type != 0) {
+                        checkedNumber.remove(id);
                       } else {
-                        checkedNumber = checkedNumber + 1;
+                        checkedNumber.add(id);
                       }
                     });
+                    print(checkedNumber);
                   }
                 ); },
               ),
-              // Padding(
-              //   padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
-              //   child: MasonryGridView.count(
-              //     physics: BouncingScrollPhysics(),
-              //     shrinkWrap: true,
-              //     itemCount: problemList.length,
-              //     crossAxisCount: 2,
-              //     crossAxisSpacing: 5.0,
-              //     mainAxisSpacing: 5.0,
-              //     itemBuilder: (context, index) {
-              //       return DesignCard(
-              //           content: problemList[index]["content"]!);
-              //     },
-              //   ),
-              // ),
             ],
           ),
         ),

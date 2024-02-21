@@ -32,6 +32,12 @@ class _CrazyWriteState extends State<CrazyWrite> {
       backgroundColor: Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, size: 25,),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           "Write Crazy 8's",
           style: GoogleFonts.notoSans(
@@ -75,7 +81,29 @@ class _CrazyWriteState extends State<CrazyWrite> {
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: ElevatedButton(
                   onPressed: () {
-                    CrazyService().postCrazy(sdgs, problemId, content, context, token);
+                    if(content.trim() == "") {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: ((context) {
+                          return AlertDialog(
+                            title: Text("Crazy 8's Write"),
+                            content: Text("Please Write Crazy 8's."),
+                            actions: <Widget>[
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop(); //창 닫기
+                                },
+                                child: Text("Confirm"),
+                              ),
+                            ],
+                          );
+                        }),
+                      );
+                    } else {
+                      CrazyService().postCrazy(sdgs, problemId, content, context, token);
+                    }
+
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
