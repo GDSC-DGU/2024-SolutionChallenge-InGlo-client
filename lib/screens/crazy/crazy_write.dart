@@ -81,7 +81,29 @@ class _CrazyWriteState extends State<CrazyWrite> {
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: ElevatedButton(
                   onPressed: () {
-                    CrazyService().postCrazy(sdgs, problemId, content, context, token);
+                    if(content.trim() == "") {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: ((context) {
+                          return AlertDialog(
+                            title: Text("Crazy 8's Write"),
+                            content: Text("Please Write Crazy 8's."),
+                            actions: <Widget>[
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop(); //창 닫기
+                                },
+                                child: Text("Confirm"),
+                              ),
+                            ],
+                          );
+                        }),
+                      );
+                    } else {
+                      CrazyService().postCrazy(sdgs, problemId, content, context, token);
+                    }
+
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,

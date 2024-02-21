@@ -142,34 +142,10 @@ class CrazyService {
   }
 
   // Crazy 선택
-  Future<void> postCrazyChoose(int problemId, int crazy8contentId, BuildContext context, changeIsChecked, changeCheck, String? token) async {
+  Future<void> postCrazyChoose(int problemId, int crazy8contentId, BuildContext context, String? token) async {
 
     final coreUrl =
     Uri.parse("https://dongkyeom.com/api/v1/sketches/$problemId/crazy8/vote/");
-
-    if(problemId == 0) {
-      return showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: ((context) {
-          return AlertDialog(
-            title: Text("Crazy 8's Choose"),
-            content: Text("Please Choose one Crazy 8's."),
-            actions: <Widget>[
-              Container(
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(); //창 닫기
-                  },
-                  child: Text("Confirm"),
-                ),
-              ),
-            ],
-          );
-        }),
-      );
-    }
-
 
     try {
       final http.Response response = await http.post(
@@ -187,9 +163,7 @@ class CrazyService {
       print("crazy_choose: ${response.body}");
       if (response.statusCode == 201) {
         print("성공");
-        // 함수 넣기
-        changeCheck();
-        changeIsChecked();
+
       } else {
         print('statusCode: ${response.statusCode}');
       }

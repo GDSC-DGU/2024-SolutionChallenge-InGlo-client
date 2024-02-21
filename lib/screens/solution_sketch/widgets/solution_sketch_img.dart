@@ -16,6 +16,7 @@ class SolutionSketchImg extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
           width: 200,
           decoration: BoxDecoration(
+            color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
             border: Border.all(
               width: 3,
