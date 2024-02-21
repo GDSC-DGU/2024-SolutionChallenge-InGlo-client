@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/hmw/widgets/check_design_paper.dart';
-import 'package:inglo/screens/problem_definition/problem_write.dart';
 import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
 import 'package:inglo/service/design/hmw_service.dart';
 import 'package:inglo/widgets/design/design_steps.dart';
+import 'package:provider/provider.dart';
 
 class HMWChoosePage extends StatefulWidget {
   final int problemId;
@@ -51,6 +52,7 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
   Widget build(BuildContext context) {
     final int problemId = widget.problemId;
     final int sdgs = widget.sdgs;
+    final token = context.watch<UserToken>().token;
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -86,7 +88,7 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
           child: Container(
             padding: EdgeInsets.fromLTRB(10, 0, 10, 50),
             child: FutureBuilder(
-              future: HMWService().getHmw(problemId),
+              future: HMWService().getHmw(problemId, token),
               builder: (context, snapshot) {
                 var data = snapshot.data!;
                 return Column(
@@ -146,7 +148,7 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: ElevatedButton(
           onPressed: () {
-            HMWService().patchHMW(sdgs, problemId, checkedId, context);
+            HMWService().patchHMW(sdgs, problemId, checkedId, context, token);
 
             // Navigator.of(context).push(
             //   MaterialPageRoute(

@@ -28,25 +28,27 @@ final List<Map<String, String>> itemData = [
 
 class IssueItem extends StatelessWidget {
   final int sdgs;
-  const IssueItem({required this.sdgs, super.key});
+  final token;
+  const IssueItem({required this.sdgs, required this.token, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      child: IssueListData(sdgs: sdgs),
+      child: IssueListData(sdgs: sdgs, token: token,),
     );
   }
 }
 
 class IssueListData extends StatelessWidget {
   final int sdgs;
-  const IssueListData({required this.sdgs, super.key});
+  final token;
+  const IssueListData({required this.sdgs, required this.token, super.key});
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: IssueSdgsService().getIssueSdgs(sdgs),
+      future: IssueSdgsService().getIssueSdgs(sdgs, token),
       builder: (context, snapshot) {
         var data = snapshot.data!;
         return Column(

@@ -6,12 +6,11 @@ import 'package:inglo/models/design/problem_definition.dart';
 import 'package:http/http.dart' as http;
 import 'package:inglo/screens/hmw/hmw_detail.dart';
 import 'package:inglo/screens/problem_definition/problem_definition.dart';
-import 'package:inglo/service/issue/issue_detail.dart';
 
 
 class ProblemDefinitionService {
   // 선택한 SDGs 관련 문제정의 조회
-  Future<List<ProblemDefinitionModel>> getProblemDefinition(int sdgs) async {
+  Future<List<ProblemDefinitionModel>> getProblemDefinition(int sdgs, String? token) async {
     List<ProblemDefinitionModel> dataInstance = [];
 
     final coreUrl =
@@ -48,7 +47,7 @@ class ProblemDefinitionService {
   }
 
   // 선택한 SDGs 관련 문제정의 작성
-  Future<void> postProblemDefinition(int sdgs, String content, BuildContext context) async {
+  Future<void> postProblemDefinition(int sdgs, String content, BuildContext context, String? token) async {
 
     final coreUrl =
     Uri.parse("https://dongkyeom.com/api/v1/sketches/$sdgs/problem/");
@@ -87,7 +86,7 @@ class ProblemDefinitionService {
   }
 
   // problem definition 선택
-  Future<void> postProblemChoose(int sdgs, int problemId, BuildContext context) async {
+  Future<void> postProblemChoose(int sdgs, int problemId, BuildContext context, String? token) async {
 
     final coreUrl =
     Uri.parse("https://dongkyeom.com/api/v1/sketches/");

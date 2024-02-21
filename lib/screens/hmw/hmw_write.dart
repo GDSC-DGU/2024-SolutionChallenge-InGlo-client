@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/service/design/hmw_service.dart';
 import 'package:inglo/widgets/design/write_card.dart';
+import 'package:provider/provider.dart';
 
 class HMWWrite extends StatefulWidget {
   final int problemId;
@@ -23,6 +25,7 @@ class _HMWWriteState extends State<HMWWrite> {
   Widget build(BuildContext context) {
     int problemId = widget.problemId;
     int sdgs = widget.sdgs;
+    final token = context.watch<UserToken>().token;
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -71,7 +74,7 @@ class _HMWWriteState extends State<HMWWrite> {
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: ElevatedButton(
                   onPressed: () {
-                    HMWService().postHMW(sdgs, problemId, content, context);
+                    HMWService().postHMW(sdgs, problemId, content, context, token);
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,

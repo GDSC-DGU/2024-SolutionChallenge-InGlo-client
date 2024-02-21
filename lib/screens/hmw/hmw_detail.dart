@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/hmw/hmw_choose.dart';
 import 'package:inglo/screens/hmw/hmw_write.dart';
 import 'package:inglo/screens/hmw/widgets/design_paper.dart';
 import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
 import 'package:inglo/service/design/hmw_service.dart';
 import 'package:inglo/widgets/design/design_steps.dart';
+import 'package:provider/provider.dart';
 
 class HMWDetailPage extends StatefulWidget {
   final int sdgs;
@@ -50,6 +52,7 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
   Widget build(BuildContext context) {
     final int sdgs = widget.sdgs;
     final int problemId = widget.problemId;
+    final token = context.watch<UserToken>().token;
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -83,7 +86,7 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
           scrollDirection: Axis.vertical,
           physics: const BouncingScrollPhysics(),
           child: FutureBuilder(
-            future: HMWService().getHmw(problemId),
+            future: HMWService().getHmw(problemId, token),
             builder: (context, snapshot) {
               print("hmw problemId: $problemId");
               var data = snapshot.data!;

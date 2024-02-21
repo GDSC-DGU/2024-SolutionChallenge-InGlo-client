@@ -4,13 +4,14 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:inglo/screens/solution_sketch/solution_drawing.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/solution_sketch/widgets/solution_sketch_btn.dart';
 import 'package:inglo/screens/solution_sketch/widgets/solution_sketch_img.dart';
 import 'package:inglo/screens/solution_sketch/widgets/solution_sketch_input.dart';
 import 'package:inglo/service/design/solution_sketch.dart';
 import 'package:inglo/widgets/design/design_steps.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 
 class SolutionSketchPage extends StatefulWidget {
   final int sdgs;
@@ -43,6 +44,7 @@ class _SolutionSketchPageState extends State<SolutionSketchPage> {
   Widget build(BuildContext context) {
     final int sdgs = widget.sdgs; // 받아온 sdgs값
     final int problemId = widget.problemId;
+    final token = context.watch<UserToken>().token;
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -127,7 +129,7 @@ class _SolutionSketchPageState extends State<SolutionSketchPage> {
                 alignment: Alignment.centerRight,
                 child: ElevatedButton(
                   onPressed: () {
-                    SolutionSketchService().patchSolutionSketch(problemId, _image!, title, description, content, context);
+                    SolutionSketchService().patchSolutionSketch(problemId, _image!, title, description, content, context, token);
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,

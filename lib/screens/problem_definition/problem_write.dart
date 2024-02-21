@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:inglo/screens/hmw/hmw_detail.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/service/design/problem_definition.dart';
 import 'package:inglo/widgets/design/write_card.dart';
+import 'package:provider/provider.dart';
 
 class ProblemWrite extends StatefulWidget {
   final int sdgs;
@@ -21,7 +22,7 @@ class _ProblemWriteState extends State<ProblemWrite> {
   @override
   Widget build(BuildContext context) {
     final int sdgs = widget.sdgs;
-    //String content = ""; // 작성글 내용
+    final token = context.watch<UserToken>().token;
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -72,7 +73,7 @@ class _ProblemWriteState extends State<ProblemWrite> {
                 child: ElevatedButton(
                   onPressed: () {
                     print(content);
-                    ProblemDefinitionService().postProblemDefinition(sdgs, content, context);
+                    ProblemDefinitionService().postProblemDefinition(sdgs, content, context, token);
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,

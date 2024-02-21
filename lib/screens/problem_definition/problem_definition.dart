@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/problem_definition/problem_choose.dart';
 import 'package:inglo/screens/problem_definition/problem_write.dart';
 import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
 import 'package:inglo/service/design/problem_definition.dart';
 import 'package:inglo/widgets/design/design_steps.dart';
+import 'package:provider/provider.dart';
 
 class ProblemDefinitionPage extends StatefulWidget {
   final int sdgs;
@@ -43,6 +45,8 @@ class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
   @override
   Widget build(BuildContext context) {
     final int sdgs = widget.sdgs;
+    final token = context.watch<UserToken>().token;
+
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
@@ -79,7 +83,7 @@ class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
             children: [
               DesignSteps(step: 1, sdgs: sdgs,),
               FutureBuilder(
-                future: ProblemDefinitionService().getProblemDefinition(sdgs),
+                future: ProblemDefinitionService().getProblemDefinition(sdgs, token),
                 builder: (context, snapshot) {
                   var data = snapshot.data!;
                   return Padding(

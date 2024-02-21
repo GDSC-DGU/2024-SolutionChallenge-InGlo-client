@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/models/design/crazy.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/crazy/widgets/check_design_cards.dart';
 import 'package:inglo/service/design/crazy_service.dart';
 import 'package:pager/pager.dart';
+import 'package:provider/provider.dart';
 
 class CrazyPagination extends StatefulWidget {
   final List<CrazyAllModel> problemList;
@@ -41,6 +42,7 @@ class _CrazyPaginationState extends State<CrazyPagination> {
     final checkedNumber = widget.checkedNumber;
     final problemId = widget.problemId;
     final changeCheckedNumber = widget.changeCheckedNumber;
+    final token = context.watch<UserToken>().token;
 
     return Center(
       child: Column(
@@ -94,7 +96,7 @@ class _CrazyPaginationState extends State<CrazyPagination> {
                           changeCheckedNumber(1);
                         }
                       });
-                    });
+                    }, token);
 
                     print(id);
                   },

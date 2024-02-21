@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:inglo/screens/crazy/crazy_voting.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/crazy/widgets/crazy_pagination.dart';
-import 'package:inglo/screens/problem_definition/problem_write.dart';
-import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
 import 'package:inglo/screens/solution_sketch/solution_sketch.dart';
 import 'package:inglo/service/design/crazy_service.dart';
 import 'package:inglo/widgets/design/design_steps.dart';
+import 'package:provider/provider.dart';
 
 class CrazyVotingPage extends StatefulWidget {
   final int sdgs;
@@ -122,6 +120,7 @@ class _CrazyVotingPageState extends State<CrazyVotingPage> {
   Widget build(BuildContext context) {
     final int sdgs = widget.sdgs; // 받아온 sdgs값
     final int problemId = widget.problemId;
+    final token = context.watch<UserToken>().token;
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -189,7 +188,7 @@ class _CrazyVotingPageState extends State<CrazyVotingPage> {
             children: [
               DesignSteps(step: 3, sdgs: sdgs,),
               FutureBuilder(
-                future: CrazyService().getCrazyAll(problemId),
+                future: CrazyService().getCrazyAll(problemId, token),
                 builder: (context, snapshot) {
                   var data = snapshot.data!;
                   return CrazyPagination(

@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_provider/flutter_provider.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/issue_detail/issue_detail.dart';
 import 'package:inglo/service/issue/issuelist.dart';
 
@@ -14,12 +16,14 @@ final List<String> imgList = [
 ];
 
 class IssueSlider extends StatelessWidget {
-  const IssueSlider({super.key});
+  final String? token;
+  const IssueSlider({required this.token, super.key});
 
   @override
   Widget build(BuildContext context) {
+
     return FutureBuilder(
-      future: IssueTop3Service().getIssueTop3(),
+      future: IssueTop3Service().getIssueTop3(token),
       builder: (context, snapshot) {
         var data = snapshot.data!;
         return CarouselSlider(

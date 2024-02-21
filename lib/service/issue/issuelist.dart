@@ -1,24 +1,26 @@
 import 'dart:convert';
 
+
 import 'package:inglo/models/issuelist/issue_sdgs.dart';
 import 'package:inglo/models/issuelist/issue_top3.dart';
 import 'package:http/http.dart' as http;
-import 'package:inglo/service/issue/issue_detail.dart';
+
 
 class IssueTop3Service {
-  Future<List<IssueTop3Model>> getIssueTop3() async {
+  Future<List<IssueTop3Model>> getIssueTop3(String? accessToken) async {
     List<IssueTop3Model> dataInstance = [];
 
     final coreUrl =
         Uri.parse("https://dongkyeom.com/api/v1/issues/recommended/");
 
+    print("accessToken: $accessToken");
     try {
       final http.Response response = await http.get(
         coreUrl,
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': 'Bearer $token',
+          'Authorization': 'Bearer $accessToken',
         },
       );
 
@@ -45,7 +47,7 @@ class IssueTop3Service {
 
 // SDGs 카테고리별 이슈
 class IssueSdgsService {
-  Future<List<IssueSdgsModel>> getIssueSdgs(int sdgs) async {
+  Future<List<IssueSdgsModel>> getIssueSdgs(int sdgs, String? token) async {
     List<IssueSdgsModel> dataInstance = [];
 
     final coreUrl = Uri.parse("https://dongkyeom.com/api/v1/issues/sdgs/$sdgs");

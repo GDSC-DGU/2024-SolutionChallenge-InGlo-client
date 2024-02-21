@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:inglo/models/design/crazy.dart';
 import 'package:http/http.dart' as http;
 import 'package:inglo/screens/crazy/crazy_8s.dart';
-import 'package:inglo/service/issue/issue_detail.dart';
 
 class CrazyService {
   // 내가 작성한 Crazy 조회
-  Future<CrazyMineModel> getCrazyMine(int problemId) async {
+  Future<CrazyMineModel> getCrazyMine(int problemId, String? token) async {
     CrazyMineModel dataInstance;
     print("getCrazyMine: $problemId");
     final coreUrl =
@@ -43,7 +42,7 @@ class CrazyService {
   }
 
   // 전체 Crazy 조회
-  Future<List<CrazyAllModel>> getCrazyAll(int problemId) async {
+  Future<List<CrazyAllModel>> getCrazyAll(int problemId, String? token) async {
     List<CrazyAllModel> dataInstance = [];
 
     final coreUrl =
@@ -81,7 +80,7 @@ class CrazyService {
   }
 
   // Crazy 작성
-  Future<void> postCrazy(int sdgs, int problemId, String content, BuildContext context) async {
+  Future<void> postCrazy(int sdgs, int problemId, String content, BuildContext context, String? token) async {
     print("postCrazy: $problemId");
     print("content: $content");
     final coreUrl =
@@ -143,7 +142,7 @@ class CrazyService {
   }
 
   // Crazy 선택
-  Future<void> postCrazyChoose(int problemId, int crazy8contentId, BuildContext context, changeIsChecked, changeCheck) async {
+  Future<void> postCrazyChoose(int problemId, int crazy8contentId, BuildContext context, changeIsChecked, changeCheck, String? token) async {
 
     final coreUrl =
     Uri.parse("https://dongkyeom.com/api/v1/sketches/$problemId/crazy8/vote/");

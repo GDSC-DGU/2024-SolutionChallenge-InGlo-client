@@ -1,17 +1,19 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:inglo/screens/postlist/post_board.dart';
-import 'package:inglo/service/issue/issue_detail.dart';
 
 class SolutionSketchService {
   // 솔루션 스케치 작성
-  Future<void> patchSolutionSketch(int problemId, File image, String title,
-      String description, String content, BuildContext context) async {
-    final coreUrl =
-        Uri.parse("https://dongkyeom.com/api/v1/sketches/$problemId");
-
+  Future<void> patchSolutionSketch(
+      int problemId,
+      File image,
+      String title,
+      String description,
+      String content,
+      BuildContext context,
+      String? token) async {
     if (image == null || title == "" || description == "" || content == "") {
       // alert창 띄워
       return showDialog(
@@ -37,28 +39,27 @@ class SolutionSketchService {
     }
 
     try {
+      final dio = Dio();
+      String fileName = image!.path.split('/').last;
 
-      var request = new http.MultipartRequest("PATCH", coreUrl);
+      FormData formData = FormData.fromMap({
+        "image": await MultipartFile.fromFile(image!.path, filename: fileName),
+        "title": title,
+        "description": description,
+        "content": content,
+      });
 
-      request.fields['title'] = title;
-      request.fields['description'] = description;
-      request.fields['content'] = content;
-      request.files.add(await http.MultipartFile.fromPath('image', image.path));
+      dio.options.headers = {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': 'Bearer $token', // 필요한 토큰이나 인증 정보를 여기에 추가
+      };
 
+      var response = await dio.patch(
+        "https://dongkyeom.com/api/v1/sketches/$problemId",
+        data: formData,
+      );
 
-      var response = await request.send();
-
-      // final http.Response response = await http.patch(coreUrl, headers: {
-      //   'Accept': 'application/json',
-      //   'Authorization': 'Bearer $token',
-      // }, body: {
-      //   "image": image,
-      //   "title": title,
-      //   "description": description,
-      //   "content": content,
-      // });
-
-      print("solution_sketch: $response");
+      print("solution_sketch: ${response.data}");
       if (response.statusCode == 201) {
         print("성공");
 

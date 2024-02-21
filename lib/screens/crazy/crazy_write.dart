@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/service/design/crazy_service.dart';
 import 'package:inglo/widgets/design/write_card.dart';
+import 'package:provider/provider.dart';
 
 class CrazyWrite extends StatefulWidget {
   final int sdgs;
@@ -24,6 +26,7 @@ class _CrazyWriteState extends State<CrazyWrite> {
   Widget build(BuildContext context) {
     final int sdgs = widget.sdgs;
     final int problemId = widget.problemId;
+    final token = context.watch<UserToken>().token;
 
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
@@ -72,7 +75,7 @@ class _CrazyWriteState extends State<CrazyWrite> {
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: ElevatedButton(
                   onPressed: () {
-                    CrazyService().postCrazy(sdgs, problemId, content, context);
+                    CrazyService().postCrazy(sdgs, problemId, content, context, token);
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,

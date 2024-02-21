@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/crazy/crazy_voting.dart';
 import 'package:inglo/screens/crazy/crazy_write.dart';
 import 'package:inglo/screens/hmw/widgets/design_paper.dart';
 import 'package:inglo/screens/problem_definition/widgets/design_card.dart';
 import 'package:inglo/service/design/crazy_service.dart';
 import 'package:inglo/widgets/design/design_steps.dart';
+import 'package:provider/provider.dart';
 
 class Crazy8sPage extends StatefulWidget {
   final int sdgs;
@@ -50,6 +52,8 @@ class _Crazy8sPageState extends State<Crazy8sPage> {
   Widget build(BuildContext context) {
     final int sdgs = widget.sdgs;
     final int problemId = widget.problemId;
+    final token = context.watch<UserToken>().token;
+
     return Scaffold(
       backgroundColor: Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
@@ -84,7 +88,7 @@ class _Crazy8sPageState extends State<Crazy8sPage> {
           child: Container(
             padding: EdgeInsets.fromLTRB(10, 0, 10, 50),
             child: FutureBuilder(
-              future: CrazyService().getCrazyMine(problemId),
+              future: CrazyService().getCrazyMine(problemId, token),
               builder: (context, snapshot) {
                 var data = snapshot.data!;
 

@@ -5,12 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:inglo/models/design/hmw_model.dart';
 import 'package:inglo/screens/crazy/crazy_8s.dart';
 import 'package:inglo/screens/hmw/hmw_detail.dart';
-import 'package:inglo/service/issue/issue_detail.dart';
 import 'package:http/http.dart' as http;
 
 class HMWService {
   // hmw 조회
-  Future<HMWModel> getHmw(int problemId) async {
+  Future<HMWModel> getHmw(int problemId, String? token) async {
     HMWModel dataInstance;
 
     final coreUrl =
@@ -46,7 +45,7 @@ class HMWService {
 
   // hmw 생성
   // 선택한 SDGs 관련 문제정의 작성
-  Future<void> postHMW(int sdgs, int problemId, String content, BuildContext context) async {
+  Future<void> postHMW(int sdgs, int problemId, String content, BuildContext context, String? token) async {
 
     final coreUrl =
     Uri.parse("https://dongkyeom.com/api/v1/sketches/$problemId/hmw/");
@@ -86,7 +85,7 @@ class HMWService {
   }
 
   // hmw 선택
-  Future<void> patchHMW(int sdgs, int problemId, int hmwId, BuildContext context) async {
+  Future<void> patchHMW(int sdgs, int problemId, int hmwId, BuildContext context, String? token) async {
 
     final coreUrl =
     Uri.parse("https://dongkyeom.com/api/v1/sketches/$problemId/hmw/");
