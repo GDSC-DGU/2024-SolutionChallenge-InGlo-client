@@ -1,11 +1,11 @@
 import 'package:comment_box/comment/comment.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:inglo/models/comment/commnet.dart';
+import 'package:inglo/models/comment/comment.dart';
 import 'package:dio/dio.dart';
+import 'package:inglo/models/comment/modified_comment.dart';
 
 import 'package:inglo/service/comment/comment_api.dart'; // api 호인스
-
 // provider
 import 'package:provider/provider.dart';
 import 'package:inglo/provider/profile/users.dart';
@@ -75,14 +75,23 @@ class _CommentsState extends State<Comments> {
     }
   }
 
+  Future<void> modifiedFeedback() async {
+    try {
+      // await 키워드를 사용하여 비동기 완료를 기다린다.
+      ModifiedComment newComment = await _CommentService.ModifiedFeedback(
+          modifiedController.text, widget.id, _feedback_id, token); // 피드백 수정
+    } catch (e) {
+      // 오류 처리
+      print("Error loading new feedback: $e");
+    }
+  }
+
   Future<void> PostFeedback() async {
     await _CommentService.postFeedback(
         widget.id, commentController.text, _parent_id, token); // 피드백 제출
   }
 
   Future<void> ModifiedFeedback() async {
-    await _CommentService.ModifiedFeedback(
-        modifiedController.text, widget.id, _feedback_id, token); // 피드백 수정
   }
 
   Future<void> DeleteFeedback() async {
@@ -127,16 +136,6 @@ class _CommentsState extends State<Comments> {
                           isDense: true, // 여백 최소화
                         ),
                         style: GoogleFonts.notoSans(fontSize: 14),
-                        // 수정 완료 후 수정 api
-                        onFieldSubmitted: (value) async {
-                            setState(() {
-                              isEditing = null;
-                            });
-                            await ModifiedFeedback(); // 수정 API 호출
-                            await loadFeedbacks(); // 피드백 목록 새로고침
-                            modifiedController.clear(); // 컨트롤러 초기화
-                            FocusScope.of(context).unfocus(); // 키보드 숨기기
-                        },
                       ),
                     )
                   : Text(data[i].content),
@@ -150,7 +149,7 @@ class _CommentsState extends State<Comments> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               GestureDetector(
-                                onTap: () {
+                                onTap: () async {
                                   print("Edit Clicked");
                                   setState(() {
                                     if (isEditing == i) {
@@ -163,7 +162,10 @@ class _CommentsState extends State<Comments> {
                                     }
                                   });
                                   if (isEditing == null) {
-                                    ModifiedFeedback();
+                                    await modifiedFeedback();
+                                    modifiedController.clear(); // 컨트롤러 초기화
+                                    FocusScope.of(context).unfocus(); // 키보드 숨기기
+                                    await loadFeedbacks();
                                   }
                                 },
                                 child: Icon(
