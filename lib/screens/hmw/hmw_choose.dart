@@ -112,13 +112,13 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
                     return MasonryGridView.count(
                       physics: BouncingScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: data.length,
+                      itemCount: data.hmws.length,
                       crossAxisCount: 2,
                       crossAxisSpacing: 5.0,
                       mainAxisSpacing: 5.0,
                       itemBuilder: (context, index) {
                         return CheckDesignPaper(
-                          id: data[index].id,
+                          id: data.hmws[index]["id"],
                           checkedId: checkedId,
                           checkCard: (id) {
                             setState(() {
@@ -131,7 +131,7 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
                             print(id);
                             print(checkedId);
                           },
-                          content: data[index].content,
+                          content: data.hmws[index]["content"],
                         );
                       },
                     );

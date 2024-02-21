@@ -98,7 +98,7 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
                   SizedBox(
                     width: 170,
                     child: DesignCard(
-                        content: data[0].problemContent ?? ""),
+                        content: data.problemContent),
                   ),
                   SizedBox(
                     height: 20,
@@ -106,7 +106,7 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
                   MasonryGridView.count(
                     physics: BouncingScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: data.length + 1,
+                    itemCount: data.hmws.length + 1,
                     crossAxisCount: 2,
                     crossAxisSpacing: 5.0,
                     mainAxisSpacing: 5.0,
@@ -144,7 +144,7 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
                       } else {
                         // return DesignCard(content: problemList[index - 1]["content"]!);
                         return DesignPaper(
-                            content: data[index - 1].content);
+                            content: data.hmws[index - 1]["content"]);
                       }
                     },
                   ),

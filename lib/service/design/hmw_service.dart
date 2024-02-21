@@ -10,8 +10,8 @@ import 'package:http/http.dart' as http;
 
 class HMWService {
   // hmw 조회
-  Future<List<HMWModel>> getHmw(int problemId) async {
-    List<HMWModel> dataInstance = [];
+  Future<HMWModel> getHmw(int problemId) async {
+    HMWModel dataInstance;
 
     final coreUrl =
     Uri.parse("https://dongkyeom.com/api/v1/sketches/$problemId/hmw/");
@@ -29,14 +29,12 @@ class HMWService {
 
       print("hmw_list: ${response.body}");
       if (response.statusCode == 200) {
-        final List<dynamic> data = jsonDecode(response.body);
-        for (var d in data) {
-          dataInstance.add(HMWModel.fromJson(d));
-        }
+        final dynamic data = jsonDecode(response.body);
+        dataInstance = HMWModel.fromJson(data);
 
         return dataInstance;
       } else {
-        print(response.body);
+        print(response.statusCode);
       }
     } catch (e) {
       // 예외 처리
