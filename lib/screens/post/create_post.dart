@@ -5,6 +5,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:dio/dio.dart';
 import 'package:inglo/screens/postlist/post_board.dart';
 
+// provider
+import 'package:provider/provider.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
+
 class CreatePost extends StatefulWidget {
   const CreatePost({super.key});
 
@@ -14,6 +18,7 @@ class CreatePost extends StatefulWidget {
 
 class _CreatePostState extends State<CreatePost> {
   final dio = Dio(); // dio instance 생성
+  String? token; // token 저장
 
   // title 입력
   final TextEditingController _titleController = TextEditingController();
@@ -24,6 +29,14 @@ class _CreatePostState extends State<CreatePost> {
     // 컨트롤러를 적절히 해제한다.
     _titleController.dispose();
     super.dispose();
+  }
+
+  // 초기 1번 실행
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      token = Provider.of<UserToken>(context, listen: false).token; // provider에서 토큰 가져오기
+    });
   }
 
   String _title = '';
@@ -61,7 +74,7 @@ class _CreatePostState extends State<CreatePost> {
       contentType: Headers.jsonContentType,
       headers: {
         "Authorization":
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTcxMDcwLCJpYXQiOjE3MDg0MjcwNzAsImp0aSI6IjNhNTJjOTkzODczNTRiNmM4NzNlYjc4MzU0NDNmOWVlIiwidXNlcl9pZCI6M30.d7lTdqfIBZuskzHKBvclwYKNeVE4-SepdmPggZghMSM',
+        'Bearer $token',
       },
     );
 

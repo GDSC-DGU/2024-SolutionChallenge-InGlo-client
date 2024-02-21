@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:inglo/models/post/post_list.dart';
 
+// provider
+
 // 선 위젯
 Widget buildDivider(BuildContext context) => Container(
       width: MediaQuery.of(context).size.width,
@@ -21,6 +23,7 @@ class PostItem extends StatefulWidget {
 }
 
 class _PostItemState extends State<PostItem> {
+
   @override
   Widget build(BuildContext context) {
     final List<Widget> itemListData = widget.listItems.map((item) {

@@ -25,6 +25,7 @@ class _StartPageState extends State<StartPage> {
   static final storage = FlutterSecureStorage(); // FlutterSecureStorage를 storage로 저장
   dynamic user_token = ''; // storage에 있는 유저 정보를 저장
 
+  /*
   //flutter_secure_storage 사용을 위한 초기화 작업
   @override
   void initState() {
@@ -44,20 +45,22 @@ class _StartPageState extends State<StartPage> {
     // user의 정보가 있다면 로그인 후 들어가는 첫 페이지로 넘어간다.
     if (user_token != null) {
       print('리프레시 인증 성공!');
-      GetNewToken(user_token); // 새 토큰 발급
+     // GetNewToken(user_token); // 새 토큰 발급
       // 여기 refresh token과 비교하여 token이 유효한지 확인한다.
     } else {
       print('로그인이 필요합니다');
     }
   }
+  */
 
 
   // 만료된 토큰 발급 함수
   Future<void> GetNewToken(String refresh_token) async {
 
-    final url = "https://dongkyeom.com/api/accounts/token/refresh/";
+    print('refresh : ${refresh_token}');
+    final url = "https://dongkyeom.com/api/v1/accounts/token/refresh/";
     Map<String, String> data = {
-      "refresh_token": refresh_token,
+      "refresh": '${refresh_token}',
     };
 
     // 요청 헤더 설정
@@ -71,15 +74,10 @@ class _StartPageState extends State<StartPage> {
       if (response.statusCode == 200 || response.statusCode == 201) {
         // 성공
         print(
-            'Success code: ${response.statusCode}, 새 토큰: ${response.data['access_token']}');
+            '리프레시 성공!: ${response.statusCode}, 새 토큰: ${response.data['access']}');
 
         // 새 토큰을 provider에 저장
-        Provider.of<UserToken>(context, listen: false).setToken(response.data['access_token']);
-
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => IssueListPage()), // 다음 페이지로 이동
-        );
+        Provider.of<UserToken>(context, listen: false).setToken(response.data['access']);
       } else {
         print('Error api code: ${response.statusCode}, response: ${response.data}');
       }
@@ -108,7 +106,7 @@ class _StartPageState extends State<StartPage> {
       if (response.statusCode == 200 || response.statusCode == 201) {
         // 성공
         print(
-            'Success code: ${response.statusCode}, response: ${response.data['refresh_token']}');
+            'Success code: ${response.statusCode}, response: ${response.data['access_token']}');
 
         // storage에 저장
         await storage.write(
@@ -120,9 +118,13 @@ class _StartPageState extends State<StartPage> {
           value: response.data['access_token'], // 토큰 직렬화 데이터 저장
         );
 
-        // 새 토큰을 provider에 저장
+        print('token을 저장합니다. ${response.data['access_token']}');
         Provider.of<UserToken>(context, listen: false).setToken(response.data['access_token']);
 
+        // 새 토큰을 provider에 저장
+       // Provider.of<UserToken>(context, listen: false).setToken(response.data['access_token']);
+
+        GetNewToken(response.data['refresh_token']);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => AccountPage()), // 다음 페이지로 이동
@@ -145,7 +147,6 @@ class _StartPageState extends State<StartPage> {
       final GoogleSignInAccount? account = await googleSignIn.signIn();
       if (account != null) {
         final GoogleSignInAuthentication googleAuth = await account.authentication;
-        print('id : ${googleAuth.idToken}'); // Google 로부터 받은 idToken
         PostApi(googleAuth.accessToken!);
       }
     } catch (error) {

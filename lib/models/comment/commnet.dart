@@ -4,15 +4,15 @@ class Comment {
   final int id;
   final User user;
   final String content;
-  final int? parentFeedback;
-  final String createdAt;
+  final int? parent_feedback;
+  final String created_at;
 
   const Comment({
     required this.id,
     required this.user,
     required this.content,
-    this.parentFeedback,
-    required this.createdAt,
+    this.parent_feedback,
+    required this.created_at,
   });
 
   factory Comment.fromJson(Map<String, dynamic> json) {
@@ -20,8 +20,8 @@ class Comment {
       id: json['id'],
       user: User.fromJson(json['user']),
       content: json['content'],
-      parentFeedback: json['parent_feedback'],
-      createdAt: json['created_at'],
+      parent_feedback: json['parent_feedback'],
+      created_at: json['created_at'],
     );
   }
 
@@ -36,19 +36,19 @@ class Comment {
 class User {
   final int id;
   final String? name;
-  final String? profileImg;
+  final String? profile_img;
 
   User({
     required this.id,
     this.name,
-    this.profileImg,
+    this.profile_img,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'],
       name: json['name'],
-      profileImg: json['profile_img'],
+      profile_img: json['profile_img'],
     );
   }
 }

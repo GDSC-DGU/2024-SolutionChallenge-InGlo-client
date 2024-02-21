@@ -12,6 +12,10 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 
+// provider
+import 'package:provider/provider.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
+
 class DetailPost extends StatefulWidget {
   final int id;
 
@@ -29,16 +33,23 @@ class _DetailPostState extends State<DetailPost> {
   final dio = Dio(); // dio instance 생성
   // final detail = DetailPostPreferences.detailPost;
 
+  String? token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs'; // token 저장
+
   final HtmlEditorController controller = HtmlEditorController();
 
   // 초기 1번 실행
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+    //  token = Provider.of<UserToken>(context, listen: false).token; // provider에서 토큰 가져오기
+    });
     getDetail();
   }
 
   // profile get 함수
   Future<void> getDetail() async {
+    print('id : ${widget.id}');
+    print('token : $token');
     setState(() {
       isLoading = true; // 데이터 요청 전 로딩 상태로 설정
     });
@@ -52,7 +63,7 @@ class _DetailPostState extends State<DetailPost> {
           responseType: ResponseType.plain,
           headers: {
             'Authorization':
-                'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs',
+                'Bearer $token',
           },
         ),
       );
@@ -97,7 +108,7 @@ class _DetailPostState extends State<DetailPost> {
       contentType: Headers.jsonContentType,
       headers: {
         "Authorization":
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTk1OTg4LCJpYXQiOjE3MDg0NTE5ODgsImp0aSI6IjIzZWZjNDQ1NmJkMDRhYTI5NTQ0OTc0MGFiNmIyMjljIiwidXNlcl9pZCI6NH0.JS6_zrhwAFH0OX9HjfRkV0CGJ8BADmKXmB3r4Gf2y7E',
+            'Bearer $token',
       },
     );
 

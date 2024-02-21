@@ -6,6 +6,11 @@ import 'package:dio/dio.dart';
 
 import 'package:inglo/service/comment/comment_api.dart'; // api 호인스
 
+// provider
+import 'package:provider/provider.dart';
+import 'package:inglo/provider/profile/users.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
+
 class Comments extends StatefulWidget {
   final int id;
 
@@ -24,6 +29,7 @@ class _CommentsState extends State<Comments> {
   final _feedback_id = null;
   List<Comment> feedbacks = []; // feedback을 저장할 변수
 
+  String? profile_img;
 
   final CommentService _CommentService = CommentService(); // instance 생성
 
@@ -34,64 +40,43 @@ class _CommentsState extends State<Comments> {
     super.dispose();
   }
 
-  // 다미 데이터
-  List filedata = [
-    {
-      'name': 'Chuks Okwuenu',
-      'pic': 'https://picsum.photos/300/30',
-      'message': 'I love to code',
-      'date': '2021-01-01 12:00:00'
-    },
-    {
-      'name': 'Biggi Man',
-      'pic': 'https://www.adeleyeayodeji.com/img/IMG_20200522_121756_834_2.jpg',
-      'message': 'Very cool',
-      'date': '2021-01-01 12:00:00'
-    },
-    {
-      'name': 'Tunde Martins',
-      'pic': 'assets/img/userpic.jpg',
-      'message': 'Very cool',
-      'date': '2021-01-01 12:00:00'
-    },
-    {
-      'name': 'Biggi Man',
-      'pic': 'https://picsum.photos/300/30',
-      'message': 'Very cool',
-      'date': '2021-01-01 12:00:00'
-    },
-  ];
+  String? token ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs'; // token 저장
 
   // 초기 1번 실행 / 피드백 조회
   @override
   void initState() {
     super.initState();
-    loadFeedbacks(); // 비동기 함수 호출
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+    profile_img = Provider.of<UserProvider>(context, listen: false).user?.profile_img ?? ''; // provider에서 토큰 가져오기
+      loadFeedbacks(); // 비동기 함수 호출
+    });
+    print('token : $token');
   }
 
   Future<void> loadFeedbacks() async {
     try {
       // await 키워드를 사용하여 비동기 완료를 기다린다.
-      List<Comment> feedbacks = await _CommentService.getFeedbacks(widget.id);
+      List<Comment> feedbacks = await _CommentService.getFeedbacks(widget.id, token);
       setState(() {
         this.feedbacks = feedbacks;
       });
-      print('데이터 받아옴 : $feedbacks');
+      print('데이터 받아옴 : ${feedbacks[0].user}');
     } catch (e) {
       // 오류 처리
       print("Error loading feedbacks: $e");
     }
   }
+
   void PostFeedback() {
-    _CommentService.postFeedback(widget.id, commentController.text, _parent_id); // 피드백 제출
+    _CommentService.postFeedback(widget.id, commentController.text, _parent_id, token); // 피드백 제출
   }
 
   void ModifiedFeedback() {
-    _CommentService.ModifiedFeedback(commentController.text, widget.id, _feedback_id); // 피드백 수정
+    _CommentService.ModifiedFeedback(commentController.text, widget.id, _feedback_id, token); // 피드백 수정
   }
 
   void DeleteFeedback() {
-    _CommentService.deleteFeedback(widget.id, _feedback_id); // 피드백 삭제
+    _CommentService.deleteFeedback(widget.id, _feedback_id, token); // 피드백 삭제
   }
 
   Widget commentChild(data) {
@@ -115,15 +100,15 @@ class _CommentsState extends State<Comments> {
                   child: CircleAvatar(
                       radius: 50,
                       backgroundImage: CommentBox.commentImageParser(
-                          imageURLorPath: data[i]['pic'])),
+                          imageURLorPath: data[i].user.profile_img)),
                 ),
               ),
               title: Text(
-                data[i]['name'],
+                data[i].user.name,
                 style: GoogleFonts.notoSans(fontWeight: FontWeight.bold),
               ),
-              subtitle: Text(data[i]['message']),
-              trailing: Text(data[i]['date'], style: GoogleFonts.notoSans(fontSize: 10)),
+              subtitle: Text(data[i].content),
+              trailing: Text(data[i].created_at, style: GoogleFonts.notoSans(fontSize: 10)),
             ),
           )
       ],
@@ -136,24 +121,16 @@ class _CommentsState extends State<Comments> {
       body: Container(
         child: CommentBox(
           userImage: CommentBox.commentImageParser(
-              imageURLorPath: "assets/img/userpic.jpg"),
-          child: commentChild(filedata),
+              imageURLorPath: profile_img),
+          child: commentChild(feedbacks),
           labelText: 'Send Feedbacks',
           errorText: 'Comment cannot be blank',
           withBorder: false,
-          sendButtonMethod: () {
+          sendButtonMethod: () async {
             if (formKey.currentState!.validate()) {
+              PostFeedback();
               print(commentController.text);
-              setState(() {
-                var value = {
-                  'name': 'New User',
-                  'pic':
-                  'https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400',
-                  'message': commentController.text,
-                  'date': '2021-01-01 12:00:00'
-                };
-                filedata.insert(0, value);
-              });
+              setState(() {});
               commentController.clear();
               FocusScope.of(context).unfocus();
             } else {
