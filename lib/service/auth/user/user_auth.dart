@@ -2,15 +2,16 @@ import 'package:dio/dio.dart';
 import 'package:inglo/screens/start/start.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:inglo/provider/profile/users.dart';
+import 'dart:convert';
 
 class UserAuthService {
   final Dio dio = Dio(); // Dio 인스턴스 생성
   static final storage = FlutterSecureStorage();
 
   // feedback 받아오기
-  Future<void> getUserAuth(String? token) async {
+  Future<void> getUserAuth(String? token, BuildContext context) async {
     final url = "https://dongkyeom.com/api/v1/accounts/info/semi/";
 
     try {
@@ -26,6 +27,13 @@ class UserAuthService {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         print('유저 인증 정보 받아오기 성공! ${response.data}');
+        Map<String, dynamic> userData = jsonDecode(response.data);
+
+        Provider.of<UserProvider>(context, listen: false).updateUserIdField(
+            id: userData['id'], // 받아온 아이디 값
+            name: userData['name'], // 받아온 이름 값
+            profile_img: userData['profile_img'] // 받아온 프로필 이미지 URL
+        );
       } else {
         print('code : ${response.statusCode} data : ${response.data}');
       }

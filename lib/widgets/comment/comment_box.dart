@@ -57,7 +57,6 @@ class _CommentsState extends State<Comments> {
       token = Provider.of<UserToken>(context, listen: false).token;
       await loadFeedbacks(); // 비동기 함수 호출
     });
-    print('token : $token');
   }
 
   Future<void> loadFeedbacks() async {
