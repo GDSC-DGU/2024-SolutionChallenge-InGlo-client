@@ -3,26 +3,32 @@ import 'package:flutter/material.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dio/dio.dart';
+import 'package:inglo/screens/post/detail_post.dart';
 import 'package:inglo/screens/postlist/post_board.dart';
+import 'package:inglo/service/post/post_api.dart';
 
 // provider
 import 'package:provider/provider.dart';
 import 'package:inglo/provider/user_token/user_token.dart';
 
-class CreatePost extends StatefulWidget {
-  const CreatePost({super.key});
+class ModifiedPost extends StatefulWidget {
+  final int id;
+
+  // 생성자를 통해 id를 전달 받는다.
+  const ModifiedPost({Key? key, required this.id}) : super(key: key);
 
   @override
-  _CreatePostState createState() => _CreatePostState();
+  _ModifiedPostState createState() => _ModifiedPostState();
 }
 
-class _CreatePostState extends State<CreatePost> {
+class _ModifiedPostState extends State<ModifiedPost> {
   final dio = Dio(); // dio instance 생성
   String? token = ''; // token 저장
 
   // title 입력
   final TextEditingController _titleController = TextEditingController();
   final HtmlEditorController controller = HtmlEditorController();
+  final PostService _PostService = PostService(); // instance 생성
 
   @override
   void dispose() {
@@ -40,67 +46,22 @@ class _CreatePostState extends State<CreatePost> {
     });
   }
 
-  String _title = '';
-  String _content = '';
-
-  // String _image = '';
-  int _sketch_id = 1; // 임시 번호
-  int _sdgs = 1; // 임시 번호
-
-  // post 생성 api
-  Future<void> _handlePost() async {
-    final url = "https://dongkyeom.com/api/v1/posts/";
-
-    String content = await controller.getText(); // 비동기 호출 적용
-    print('content : $content');
-
-    // FormData 객체를 생성하고 데이터 추가
-    Map<String, dynamic> data = {
-      "title": _titleController.text,
-      "content": content,
-      "sketch_id": int.parse('$_sketch_id'),
-      "sdgs": int.parse('$_sdgs'),
-    };
-
-    /*
-    Map<String, dynamic> data = {
-      "title": _titleController.text,
-      "content": content,
-      "image": _image,
-      "sketch_id": int.parse('$_sketch_id'),
-      "sdgs": int.parse('$_sdgs'),
-    };
-*/
-    // 요청 헤더 설정
-    Options options = Options(
-      contentType: Headers.jsonContentType,
-      headers: {
-        "Authorization": 'Bearer $token',
-      },
-    );
-
+  Future<void> modifiedPost() async {
     try {
-      final response = await dio.post(url, data: data, options: options);
-
-      print('post data : $data');
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        // 성공
-        print(
-            'Success code: ${response.statusCode}, response: ${response.data}');
-
+      String text = await controller.getText();
+      bool modified = await _PostService.ModifiedPost(
+          _titleController.text, text, widget.id, token); // 피드백 수정
+      if (modified == true) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-              builder: (context) => PostBoardPage()), // 포스트 리스트 페이지로 이동한다.
+          MaterialPageRoute(builder: (context) => PostBoardPage()),
         );
       } else {
-        // 비-200 상태 코드
-        print('Error code: ${response.statusCode}, response: ${response.data}');
+        print('수정이 실패했습니다.');
       }
     } catch (e) {
-      // 예외 처리
-      print('Exception caught: $e');
+      // 오류 처리
+      print("Error loading new feedback: $e");
     }
   }
 
@@ -113,7 +74,11 @@ class _CreatePostState extends State<CreatePost> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
-            Navigator.pop(context); // 이전 페이지로 이동
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DetailPost(id: widget.id)),
+            );
           },
         ),
         actions: [
@@ -122,9 +87,9 @@ class _CreatePostState extends State<CreatePost> {
             child: ElevatedButton(
               style:
                   ElevatedButton.styleFrom(backgroundColor: Color(0xFF233A66)),
-              onPressed: _handlePost,
+              onPressed: modifiedPost,
               child: Text(
-                'Post',
+                'Modified',
                 style: GoogleFonts.notoSans(
                   fontSize: 16, // 폰트 크기 설정
                   fontWeight: FontWeight.bold, // 폰트 굵기 설정

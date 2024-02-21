@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:inglo/screens/post/create_post.dart';
 import 'package:inglo/widgets/appbar/appbar.dart';
 import 'package:inglo/widgets/dropdown/dropdownbutton.dart';
+import 'package:inglo/screens/issuelist/widgets/issue_choose.dart';
 import 'package:inglo/screens/postlist/widgets/post_item.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/service/auth/user/user_auth.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'dart:convert';
 
@@ -22,15 +25,20 @@ class PostBoardPage extends StatefulWidget {
 }
 
 class _PostBoardPageState extends State<PostBoardPage> {
+  static final storage = FlutterSecureStorage(); // secure storage 호출
+  int sdgs = 1; // 1~17?
+
   final dio = Dio(); // dio instance 생성
   final List<PostList> _listItems = [];
   String? token = ''; // token 저장
+  String? refresh_token = '';
 
   // 초기 1번 실행
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async{
    token = Provider.of<UserToken>(context, listen: false).token; // provider에서 토큰 가져오기
+   refresh_token = await storage.read(key:'refresh_token'); // refresh token
     await getPostItems(); // API 호출
     });
   }
@@ -61,6 +69,11 @@ class _PostBoardPageState extends State<PostBoardPage> {
             _listItems.add(PostList.fromJson(item));
           }
         });
+      } else if(response.statusCode == 401) {
+        // refresh로 access Update
+         UserAuthService().GetNewToken(refresh_token, (newToken) {
+          Provider.of<UserToken>(context, listen: false).setToken(newToken);
+        }, context);
       }
     } catch (e) {
       // 요청 실패 또는 기타 에러 처리
@@ -73,16 +86,22 @@ class _PostBoardPageState extends State<PostBoardPage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),
+          padding: const EdgeInsets.fromLTRB(15, 0, 15, 20),
           child: Stack(
             // Stack 위젯을 사용하여 겹치는 효과 구현
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  IssueMenu(
+                      selectedSdgs: sdgs,
+                      onSdgsTap: (int sdgs) {
+                        setState(() {
+                          this.sdgs = sdgs;
+                        });
+                      }),
                   SizedBox(
-                    height: 70,
-                    child: CustomDropdown(),
+                    height: 10,
                   ),
                   Container(
                     child: Text(

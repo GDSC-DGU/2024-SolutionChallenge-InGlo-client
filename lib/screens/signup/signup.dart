@@ -137,16 +137,6 @@ class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // 배경 이미지를 넣기 위해 Scaffold를 Container로 감싸준다.
-      decoration: BoxDecoration(
-          image: DecorationImage(
-        fit: BoxFit.fill, // 배경이미지 fit 하게 하기
-        repeat: ImageRepeat.noRepeat,
-        image: Svg(
-          'assets/image/background/background_2.svg',
-          // size: Size(10, 10), // size 지정 하던 안 하던 동일하다.
-        ),
-      )),
       child: Scaffold(
         resizeToAvoidBottomInset: false, // 스크롤이 scaffold 영역을 건드리지 않는다.
         // 배경 이미지를 위해 Scaffold의 배경색을 투명으로 한다.

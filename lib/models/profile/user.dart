@@ -1,17 +1,17 @@
 import 'dart:convert'; // jsonDecode를 사용하기 위해 import
 
 class User {
-  final int id;
-  final String email;
-  final String name;
-  final String profile_img;
-  final int country;
-  final String language;
-  final int liked_total;
-  final int sketch_num;
-  final int feedback_total;
-  final int post_total;
-  final double global_impact;
+  final int? id;
+  final String? email;
+  final String? name;
+  final String? profile_img;
+  final int? country;
+  final String? language;
+  final int? liked_total;
+  final int? sketch_num;
+  final int? feedback_total;
+  final int? post_total;
+  final double? global_impact;
 
   const User({
     required this.id,

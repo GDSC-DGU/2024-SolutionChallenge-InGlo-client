@@ -2,11 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:inglo/models/issue/comment.dart';
 import 'package:inglo/models/issue/modified_comment.dart';
 
-class CommentService {
+class IssueCommentService {
   final Dio dio = Dio(); // Dio 인스턴스 생성
 
   // feedback 받아오기
-  Future<List<Comment>> getComments(int issueId, String? token) async {
+  Future<List<IssueComment>> getComments(int issueId, String? token) async {
     print('get id : $issueId');
     final url = "https://dongkyeom.com/api/v1/issues/${issueId}/comments/";
 
@@ -23,7 +23,7 @@ class CommentService {
 
       if(response.statusCode == 200 || response.statusCode == 201) {
         print('피드백 받아오기 성공! ${response.data}');
-        List<Comment> feedbacks = Comment.parseComments(response.data);
+        List<IssueComment> feedbacks = IssueComment.parseComments(response.data);
 
         return feedbacks;
       } else {
@@ -64,7 +64,7 @@ class CommentService {
   }
 
   // 피드백 수정
-  Future<ModifiedComment> ModifiedFeedback(String _content, int issueId, int? commentId, String? token) async {
+  Future<IssueModifiedComment> ModifiedComments(String _content, int issueId, int? commentId, String? token) async {
     final url = "https://dongkyeom.com/api/v1/issues/$issueId/comments/$commentId";
     print('post id : $issueId comment_id : $commentId');
     Map<String, dynamic> data = {
@@ -88,7 +88,7 @@ class CommentService {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         // 성공
-        ModifiedComment newComment = ModifiedComment.fromJson(response.data);
+        IssueModifiedComment newComment = IssueModifiedComment.fromJson(response.data);
         return newComment;
       } else {
         print('Error code: ${response.statusCode}, response: ${response.data}');
