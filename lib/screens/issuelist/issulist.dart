@@ -7,6 +7,7 @@ import 'package:inglo/screens/issuelist/widgets/issue_slider.dart';
 import 'package:inglo/service/auth/user/user_auth.dart';
 import 'package:inglo/widgets/appbar/appbar.dart';
 import 'package:provider/provider.dart';
+import 'package:inglo/service/profile/profile.dart';
 
 class IssueListPage extends StatefulWidget {
   // 나중에 폰트 스타일 다시 재정의!
@@ -20,11 +21,17 @@ class IssueListPage extends StatefulWidget {
 class _IssueListPageState extends State<IssueListPage> {
   int sdgs = 1; // 1~17?
   final UserAuthService _authService = UserAuthService(); // 간단한 유저 정보 조회
+  final ProfileService _profileAuthService = ProfileService();
 
   @override
   Widget build(BuildContext context) {
     final token = context.watch<UserToken>().token;
     _authService.getUserAuth(token, context);
+
+    // 프로필 받고 provider에 업데이트
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await _profileAuthService.getProfile(token, context);
+      });
 
     return Scaffold(
       body: SingleChildScrollView(
