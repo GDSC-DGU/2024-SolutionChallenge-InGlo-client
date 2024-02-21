@@ -28,8 +28,9 @@ class _CommentsState extends State<Comments> {
   int? _parent_id = null; // 부모 피드백 아이디
   int? _feedback_id = null; // 현재 선택한 feedback id
   List<Comment> feedbacks = []; // feedback을 저장할 변수
-  String _created_at = '';
+
   int? isEditing; // edit 모드 저장 변수
+  String? _modifiedController = '';
 
   final TextEditingController commentController = TextEditingController();
   final TextEditingController modifiedController =
@@ -74,18 +75,19 @@ class _CommentsState extends State<Comments> {
     }
   }
 
-  void PostFeedback() {
-    _CommentService.postFeedback(
+  Future<void> PostFeedback() async {
+    await _CommentService.postFeedback(
         widget.id, commentController.text, _parent_id, token); // 피드백 제출
   }
 
-  void ModifiedFeedback() {
-    _CommentService.ModifiedFeedback(
-        commentController.text, widget.id, _feedback_id, token); // 피드백 수정
+  Future<void> ModifiedFeedback() async {
+    await _CommentService.ModifiedFeedback(
+        modifiedController.text, widget.id, _feedback_id, token); // 피드백 수정
   }
 
-  void DeleteFeedback() {
-    _CommentService.deleteFeedback(widget.id, _feedback_id, token); // 피드백 삭제
+  Future<void> DeleteFeedback() async {
+    await _CommentService.deleteFeedback(
+        widget.id, _feedback_id, token); // 피드백 삭제
   }
 
   Widget commentChild(data, id) {
@@ -118,19 +120,24 @@ class _CommentsState extends State<Comments> {
               ),
               // edit 모드인 경우 text editor으로 전환한다.
               subtitle: isEditing == i
-                  ? TextFormField(
-                      controller: modifiedController..text = data[i].content,
-                      decoration: InputDecoration(
-                        isDense: true, // 여백 최소화
+                  ? Form(
+                      child: TextFormField(
+                        controller: modifiedController,
+                        decoration: InputDecoration(
+                          isDense: true, // 여백 최소화
+                        ),
+                        style: GoogleFonts.notoSans(fontSize: 14),
+                        // 수정 완료 후 수정 api
+                        onFieldSubmitted: (value) async {
+                            setState(() {
+                              isEditing = null;
+                            });
+                            await ModifiedFeedback(); // 수정 API 호출
+                            await loadFeedbacks(); // 피드백 목록 새로고침
+                            modifiedController.clear(); // 컨트롤러 초기화
+                            FocusScope.of(context).unfocus(); // 키보드 숨기기
+                        },
                       ),
-                      style: GoogleFonts.notoSans(fontSize: 14),
-                      // 수정 완료 후 수정 api
-                      onFieldSubmitted: (value) {
-                        setState(() {
-                          isEditing = null;
-                        });
-                        ModifiedFeedback(); // 수정 api
-                      },
                     )
                   : Text(data[i].content),
               trailing: Container(
@@ -152,6 +159,7 @@ class _CommentsState extends State<Comments> {
                                       isEditing = i; // 수정 모드로 전환
                                       _feedback_id =
                                           data[i].id; // feedback id도 변경
+                                      modifiedController.text = data[i].content;
                                     }
                                   });
                                   if (isEditing == null) {
@@ -169,8 +177,8 @@ class _CommentsState extends State<Comments> {
                                 onTap: () async {
                                   print("Delete Clicked");
                                   _feedback_id = data[i].id;
-                                  DeleteFeedback();
-                                  loadFeedbacks();
+                                  await DeleteFeedback();
+                                  await loadFeedbacks();
                                 },
                                 child: Icon(
                                   Icons.delete,
@@ -209,9 +217,9 @@ class _CommentsState extends State<Comments> {
           withBorder: false,
           sendButtonMethod: () async {
             if (formKey.currentState!.validate()) {
-              PostFeedback();
+              await PostFeedback();
+              await loadFeedbacks();
               print(commentController.text);
-              setState(() {});
               commentController.clear();
               FocusScope.of(context).unfocus();
             } else {
