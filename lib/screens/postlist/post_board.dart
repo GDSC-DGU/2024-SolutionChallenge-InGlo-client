@@ -4,6 +4,8 @@ import 'package:inglo/widgets/appbar/appbar.dart';
 import 'package:inglo/widgets/dropdown/dropdownbutton.dart';
 import 'package:inglo/screens/postlist/widgets/post_item.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/service/auth/user/user_auth.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'dart:convert';
 
@@ -22,15 +24,19 @@ class PostBoardPage extends StatefulWidget {
 }
 
 class _PostBoardPageState extends State<PostBoardPage> {
+  static final storage = FlutterSecureStorage(); // secure storage 호출
+
   final dio = Dio(); // dio instance 생성
   final List<PostList> _listItems = [];
   String? token = ''; // token 저장
+  String? refresh_token = '';
 
   // 초기 1번 실행
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async{
    token = Provider.of<UserToken>(context, listen: false).token; // provider에서 토큰 가져오기
+   refresh_token = await storage.read(key:'refresh_token'); // refresh token
     await getPostItems(); // API 호출
     });
   }
@@ -61,6 +67,11 @@ class _PostBoardPageState extends State<PostBoardPage> {
             _listItems.add(PostList.fromJson(item));
           }
         });
+      } else if(response.statusCode == 401) {
+        // refresh로 access Update
+         UserAuthService().GetNewToken(refresh_token, (newToken) {
+          Provider.of<UserToken>(context, listen: false).setToken(newToken);
+        }, context);
       }
     } catch (e) {
       // 요청 실패 또는 기타 에러 처리

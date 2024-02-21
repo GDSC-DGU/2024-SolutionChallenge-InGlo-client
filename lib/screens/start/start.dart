@@ -11,6 +11,7 @@ import 'package:dio/dio.dart';
 // provider
 import 'package:provider/provider.dart';
 import 'package:inglo/provider/user_token/user_token.dart';
+import 'package:inglo/service/auth/user/user_auth.dart';
 
 // LoginPage 클래스
 class StartPage extends StatefulWidget {
@@ -25,7 +26,6 @@ class _StartPageState extends State<StartPage> {
   static final storage = FlutterSecureStorage(); // FlutterSecureStorage를 storage로 저장
   dynamic user_token = ''; // storage에 있는 유저 정보를 저장
 
-  /*
   //flutter_secure_storage 사용을 위한 초기화 작업
   @override
   void initState() {
@@ -49,40 +49,6 @@ class _StartPageState extends State<StartPage> {
       // 여기 refresh token과 비교하여 token이 유효한지 확인한다.
     } else {
       print('로그인이 필요합니다');
-    }
-  }
-  */
-
-
-  // 만료된 토큰 발급 함수
-  Future<void> GetNewToken(String refresh_token) async {
-
-    print('refresh : ${refresh_token}');
-    final url = "https://dongkyeom.com/api/v1/accounts/token/refresh/";
-    Map<String, String> data = {
-      "refresh": '${refresh_token}',
-    };
-
-    // 요청 헤더 설정
-    Options options = Options(
-      contentType: Headers.jsonContentType,
-    );
-
-    try {
-      final response = await dio.post(url, data: data, options: options);
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        // 성공
-        print(
-            '리프레시 성공!: ${response.statusCode}, 새 토큰: ${response.data['access']}');
-
-        // 새 토큰을 provider에 저장
-        Provider.of<UserToken>(context, listen: false).setToken(response.data['access']);
-      } else {
-        print('Error api code: ${response.statusCode}, response: ${response.data}');
-      }
-    } catch (e) {
-      print('Exception caught: $e');
     }
   }
 
@@ -124,7 +90,7 @@ class _StartPageState extends State<StartPage> {
         // 새 토큰을 provider에 저장
        // Provider.of<UserToken>(context, listen: false).setToken(response.data['access_token']);
 
-        GetNewToken(response.data['refresh_token']);
+       // GetNewToken(response.data['refresh_token']);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => AccountPage()), // 다음 페이지로 이동
