@@ -63,6 +63,9 @@ class _CrazyPaginationState extends State<CrazyPagination> {
               itemBuilder: (context, index) {
                 return CheckDesignCards(
                   id: problemList[_currentPage - 1].contents[index]["id"],
+                  voteNumber : problemList[_currentPage - 1].contents[index]["vote_count"],
+                  content: problemList[_currentPage - 1].contents[index]
+                      ["content"],
                   checkCard: (id, isChecked, changeIsChecked) {
                     if (!isChecked) {
                       if (checkedNumber == 3) {
@@ -88,7 +91,8 @@ class _CrazyPaginationState extends State<CrazyPagination> {
                         );
                       }
                     }
-                    CrazyService().postCrazyChoose(problemId, id, context, changeIsChecked, () {
+                    CrazyService().postCrazyChoose(
+                        problemId, id, context, changeIsChecked, () {
                       setState(() {
                         if (!isChecked) {
                           changeCheckedNumber(0);
@@ -100,8 +104,6 @@ class _CrazyPaginationState extends State<CrazyPagination> {
 
                     print(id);
                   },
-                  content: problemList[_currentPage - 1].contents[index]
-                      ["content"],
                 );
               },
             ),

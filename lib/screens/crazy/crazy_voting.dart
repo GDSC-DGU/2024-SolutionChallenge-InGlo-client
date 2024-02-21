@@ -126,6 +126,12 @@ class _CrazyVotingPageState extends State<CrazyVotingPage> {
       backgroundColor: Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, size: 25,),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           "Crazy Voting",
           style: GoogleFonts.notoSans(
@@ -197,7 +203,7 @@ class _CrazyVotingPageState extends State<CrazyVotingPage> {
                   checkedNumber: checkedNumber,
                   changeCheckedNumber : (int type) {
                     setState(() {
-                      if(type == 0) {
+                      if(type != 0) {
                         checkedNumber = checkedNumber - 1;
                       } else {
                         checkedNumber = checkedNumber + 1;
@@ -206,21 +212,6 @@ class _CrazyVotingPageState extends State<CrazyVotingPage> {
                   }
                 ); },
               ),
-              // Padding(
-              //   padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
-              //   child: MasonryGridView.count(
-              //     physics: BouncingScrollPhysics(),
-              //     shrinkWrap: true,
-              //     itemCount: problemList.length,
-              //     crossAxisCount: 2,
-              //     crossAxisSpacing: 5.0,
-              //     mainAxisSpacing: 5.0,
-              //     itemBuilder: (context, index) {
-              //       return DesignCard(
-              //           content: problemList[index]["content"]!);
-              //     },
-              //   ),
-              // ),
             ],
           ),
         ),

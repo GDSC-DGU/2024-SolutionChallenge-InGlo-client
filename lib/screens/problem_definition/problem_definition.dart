@@ -51,6 +51,12 @@ class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
       backgroundColor: Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, size: 25,),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           "Problem definition",
           style: GoogleFonts.notoSans(

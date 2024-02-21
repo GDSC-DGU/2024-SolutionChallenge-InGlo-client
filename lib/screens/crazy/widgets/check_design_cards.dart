@@ -5,11 +5,13 @@ import 'package:google_fonts/google_fonts.dart';
 class CheckDesignCards extends StatefulWidget {
   final id;
   final checkCard;
+  final int voteNumber;
   final String content;
 
   const CheckDesignCards({
     required this.id,
     required this.checkCard,
+    required this.voteNumber,
     required this.content,
     super.key,
   });
@@ -25,6 +27,7 @@ class _CheckDesignCardsState extends State<CheckDesignCards> {
   Widget build(BuildContext context) {
     final id = widget.id;
     final checkCard = widget.checkCard;
+    final voteNumber = widget.voteNumber;
     final String content = widget.content;
 
     return Stack(
@@ -92,7 +95,7 @@ class _CheckDesignCardsState extends State<CheckDesignCards> {
                     size: 25.0,
                     color: Color(0xFFFF6280),
                   )
-                : Text(""),
+                : Text(voteNumber.toString(), style: GoogleFonts.notoSans(fontSize: 17, fontWeight: FontWeight.w600, color: Color(0xFFD7A859),),),
             padding: EdgeInsets.all(0.0),
             shape: CircleBorder(
               side: BorderSide(

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/models/my_drawing/my_drawing_model.dart';
 import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/detail_sketch/detail_sketch4.dart';
+import 'package:inglo/screens/profile/profile.dart';
 import 'package:inglo/service/my_drawing/my_drawing_service.dart';
 import 'package:inglo/util/sketch/sketchlist_preference.dart';
 import 'package:provider/provider.dart';
@@ -161,7 +162,11 @@ class _MyDrawingState extends State<MyDrawing> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
-            Navigator.pop(context); // 이전 페이지로 이동
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => ProfilePage(),
+              ),
+            );
           },
         ),
         title: Text('MY DRAWINGS'),
