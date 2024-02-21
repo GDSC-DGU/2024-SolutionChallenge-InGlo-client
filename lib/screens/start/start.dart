@@ -53,14 +53,14 @@ class _StartPageState extends State<StartPage> {
   }
   */
 
-/*
+
   // 만료된 토큰 발급 함수
   Future<void> GetNewToken(String refresh_token) async {
 
     print('refresh : ${refresh_token}');
     final url = "https://dongkyeom.com/api/v1/accounts/token/refresh/";
     Map<String, String> data = {
-      "refresh_token": 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcwODU5MDIwMywiaWF0IjoxNzA4NTAzODAzLCJqdGkiOiIzM2YwZjNmNzA5YjE0Y2E0ODMzYjViY2ZlYzNjMjIwZSIsInVzZXJfaWQiOjN9.uhfeTninED9YvaccySNljTh74oly6rMjEjwkYxlSH94',
+      "refresh": '${refresh_token}',
     };
 
     // 요청 헤더 설정
@@ -74,15 +74,10 @@ class _StartPageState extends State<StartPage> {
       if (response.statusCode == 200 || response.statusCode == 201) {
         // 성공
         print(
-            'Success code: ${response.statusCode}, 새 토큰: ${response.data['access_token']}');
+            '리프레시 성공!: ${response.statusCode}, 새 토큰: ${response.data['access']}');
 
         // 새 토큰을 provider에 저장
-        Provider.of<UserToken>(context, listen: false).setToken(response.data['access_token']);
-
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => IssueListPage()), // 다음 페이지로 이동
-        );
+        Provider.of<UserToken>(context, listen: false).setToken(response.data['access']);
       } else {
         print('Error api code: ${response.statusCode}, response: ${response.data}');
       }
@@ -90,7 +85,7 @@ class _StartPageState extends State<StartPage> {
       print('Exception caught: $e');
     }
   }
-*/
+
   // google token 전송 api(500 출력 중)
   Future<void> PostApi(String _token) async {
     print('전송 토큰 $_token');
@@ -129,6 +124,7 @@ class _StartPageState extends State<StartPage> {
         // 새 토큰을 provider에 저장
        // Provider.of<UserToken>(context, listen: false).setToken(response.data['access_token']);
 
+        GetNewToken(response.data['refresh_token']);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => AccountPage()), // 다음 페이지로 이동
