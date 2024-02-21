@@ -2,42 +2,53 @@ import 'dart:convert'; // jsonDecode를 사용하기 위해 import
 
 class Comment {
   final int id;
-  final int user_id;
-  final String user_name;
-  final String user;
+  final User user;
   final String content;
-  final String creadted_at;
-  final int post;
-  final int parent_feedback;
+  final int? parentFeedback;
+  final String createdAt;
 
   const Comment({
     required this.id,
-    required this.user_id,
-    required this.user_name,
     required this.user,
     required this.content,
-    required this.creadted_at,
-    required this.post,
-    required this.parent_feedback,
+    this.parentFeedback,
+    required this.createdAt,
   });
 
-  // JSON 데이터를 Comment 객체로 변환하는 팩토리 메서드
   factory Comment.fromJson(Map<String, dynamic> json) {
     return Comment(
       id: json['id'],
-      user_id: json['user'],
-      user_name: json['user_name'],
-      user: json['user'],
+      user: User.fromJson(json['user']),
       content: json['content'],
-      creadted_at: json['created_at'],
-      post: json['post'],
-      parent_feedback: json['parent_feedback'],
+      parentFeedback: json['parent_feedback'],
+      createdAt: json['created_at'],
     );
+  }
+
+  // comment 객체를 list로 변환한다.
+  static List<Comment> parseComments(String responseBody) {
+    final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+    return parsed.map<Comment>((json) => Comment.fromJson(json)).toList();
   }
 }
 
-// JSON 데이터를 받아서 Comment 객체로 변환하는 함수
-Comment parseUser(String responseBody) {
-  final parsed = jsonDecode(responseBody);
-  return Comment.fromJson(parsed);
+
+class User {
+  final int id;
+  final String? name;
+  final String? profileImg;
+
+  User({
+    required this.id,
+    this.name,
+    this.profileImg,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      name: json['name'],
+      profileImg: json['profile_img'],
+    );
+  }
 }

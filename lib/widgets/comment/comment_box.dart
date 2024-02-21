@@ -22,6 +22,7 @@ class _CommentsState extends State<Comments> {
   final TextEditingController commentController = TextEditingController();
   final _parent_id = null; // 부모 피드백 아이디
   final _feedback_id = null;
+  List<Comment> feedbacks = []; // feedback을 저장할 변수
 
 
   final CommentService _CommentService = CommentService(); // instance 생성
@@ -62,11 +63,25 @@ class _CommentsState extends State<Comments> {
   ];
 
   // 초기 1번 실행 / 피드백 조회
+  @override
   void initState() {
     super.initState();
-    _CommentService.getFeedbacks(widget.id); // id 전송
+    loadFeedbacks(); // 비동기 함수 호출
   }
 
+  Future<void> loadFeedbacks() async {
+    try {
+      // await 키워드를 사용하여 비동기 완료를 기다린다.
+      List<Comment> feedbacks = await _CommentService.getFeedbacks(widget.id);
+      setState(() {
+        this.feedbacks = feedbacks;
+      });
+      print('데이터 받아옴 : $feedbacks');
+    } catch (e) {
+      // 오류 처리
+      print("Error loading feedbacks: $e");
+    }
+  }
   void PostFeedback() {
     _CommentService.postFeedback(widget.id, commentController.text, _parent_id); // 피드백 제출
   }

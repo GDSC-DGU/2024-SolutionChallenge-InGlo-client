@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:inglo/models/comment/commnet.dart';
 
 class CommentService {
   final Dio dio = Dio(); // Dio 인스턴스 생성
 
   // feedback 받아오기
-  Future<void> getFeedbacks(int postId) async {
+  Future<List<Comment>> getFeedbacks(int postId) async {
     print('get id : $postId');
     final url = "https://dongkyeom.com/api/v1/posts/$postId/feedbacks/";
 
@@ -14,17 +15,22 @@ class CommentService {
         options: Options(
           responseType: ResponseType.plain,
           headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTk1OTg4LCJpYXQiOjE3MDg0NTE5ODgsImp0aSI6IjIzZWZjNDQ1NmJkMDRhYTI5NTQ0OTc0MGFiNmIyMjljIiwidXNlcl9pZCI6NH0.JS6_zrhwAFH0OX9HjfRkV0CGJ8BADmKXmB3r4Gf2y7E',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs',
           },
         ),
       );
 
       if(response.statusCode == 200 || response.statusCode == 201) {
-        print('성공!');
-        // 여기에서 응답 데이터를 처리합니다.
+        print('피드백 받아오기 성공! ${response.data}');
+        List<Comment> feedbacks = Comment.parseComments(response.data);
+
+        return feedbacks;
+      } else {
+        return [];
       }
     } catch (e) {
       print('Error fetching data: $e');
+      return [];
     }
   }
 
@@ -41,7 +47,7 @@ class CommentService {
       final response = await dio.patch(url, data: data, options: Options(
         contentType: Headers.jsonContentType,
         headers: {
-          "Authorization": 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTk1OTg4LCJpYXQiOjE3MDg0NTE5ODgsImp0aSI6IjIzZWZjNDQ1NmJkMDRhYTI5NTQ0OTc0MGFiNmIyMjljIiwidXNlcl9pZCI6NH0.JS6_zrhwAFH0OX9HjfRkV0CGJ8BADmKXmB3r4Gf2y7E',
+          "Authorization": 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs',
         },
       ));
 
@@ -67,7 +73,7 @@ class CommentService {
       contentType: Headers.jsonContentType,
       headers: {
         "Authorization":
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MzY4MTQ3LCJpYXQiOjE3MDgzNjQ1NDcsImp0aSI6IjYyNzRjY2RjZjY1MzQ4NjU5NjYzOTQxZjVmMDMwNDc2IiwidXNlcl9pZCI6M30._-R-VopbH5kIv9YkbMGuARcOF9z4E2TwQiy0kq-d6Uw',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs',
       },
     );
 
@@ -97,7 +103,7 @@ class CommentService {
       contentType: Headers.jsonContentType,
       headers: {
         "Authorization":
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MzY4MTQ3LCJpYXQiOjE3MDgzNjQ1NDcsImp0aSI6IjYyNzRjY2RjZjY1MzQ4NjU5NjYzOTQxZjVmMDMwNDc2IiwidXNlcl9pZCI6M30._-R-VopbH5kIv9YkbMGuARcOF9z4E2TwQiy0kq-d6Uw',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs',
       },
     );
 
