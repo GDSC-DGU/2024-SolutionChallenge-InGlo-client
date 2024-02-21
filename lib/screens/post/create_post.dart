@@ -18,7 +18,7 @@ class CreatePost extends StatefulWidget {
 
 class _CreatePostState extends State<CreatePost> {
   final dio = Dio(); // dio instance 생성
-  String? token; // token 저장
+  String? token = ''; // token 저장
 
   // title 입력
   final TextEditingController _titleController = TextEditingController();

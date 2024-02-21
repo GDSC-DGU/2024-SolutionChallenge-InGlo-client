@@ -33,17 +33,17 @@ class _DetailPostState extends State<DetailPost> {
   final dio = Dio(); // dio instance 생성
   // final detail = DetailPostPreferences.detailPost;
 
-  String? token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs'; // token 저장
+  String? token = ''; // token 저장
 
   final HtmlEditorController controller = HtmlEditorController();
 
   // 초기 1번 실행
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-    //  token = Provider.of<UserToken>(context, listen: false).token; // provider에서 토큰 가져오기
+    WidgetsBinding.instance.addPostFrameCallback((_) async{
+    token = Provider.of<UserToken>(context, listen: false).token; // provider에서 토큰 가져오기
+    await getDetail();
     });
-    getDetail();
   }
 
   // profile get 함수
