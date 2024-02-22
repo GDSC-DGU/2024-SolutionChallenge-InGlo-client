@@ -115,7 +115,7 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
                     if (data.problemContent != null)
                       FutureBuilder(
                         future: TranslationService()
-                            .getTranslation("ko", data.problemContent),
+                            .getTranslation(data.problemContent, context),
                         builder: (context, snapshot) {
                           var transData = snapshot.data!;
                           return SizedBox(

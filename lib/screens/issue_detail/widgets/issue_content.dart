@@ -25,7 +25,7 @@ class IssueContent extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
               child: FutureBuilder(
-                future: TranslationService().getTranslation("ko", data.content),
+                future: TranslationService().getTranslation(data.content, context),
                 builder: (context, snapshot) {
                   var transData = snapshot.data!;
                   return Text(

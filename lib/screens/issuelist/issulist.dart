@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inglo/provider/profile/users.dart';
 import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/issuelist/sdgs_select.dart';
 import 'package:inglo/screens/issuelist/widgets/issue_item.dart';
@@ -26,6 +27,7 @@ class _IssueListPageState extends State<IssueListPage> {
   @override
   Widget build(BuildContext context) {
     final token = context.watch<UserToken>().token;
+
     _authService.getUserAuth(token, context);
 
     // 프로필 받고 provider에 업데이트
@@ -62,7 +64,7 @@ class _IssueListPageState extends State<IssueListPage> {
                   child: const Text("Today's Issue",
                       style: IssueListPage.titleStyle),
                 ),
-                IssueItem(sdgs: sdgs, token: token,),
+                IssueItem(sdgs: sdgs, token: token),
               ],
             ),
           ),

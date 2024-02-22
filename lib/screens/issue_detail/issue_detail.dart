@@ -135,7 +135,7 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
                                       if (data.title != null)
                                         FutureBuilder(
                                           future: TranslationService()
-                                              .getTranslation("ko", data.title),
+                                              .getTranslation(data.title, context),
                                           builder: (context, snapshot) {
                                             var transData = snapshot.data!;
                                             return Text(

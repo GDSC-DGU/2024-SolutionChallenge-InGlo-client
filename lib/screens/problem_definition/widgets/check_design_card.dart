@@ -20,7 +20,7 @@ class CheckDesignCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: TranslationService().getTranslation("ko", content),
+      future: TranslationService().getTranslation(content, context),
       builder: (context, snapshot) {
         var transData = snapshot.data!;
         return Stack(

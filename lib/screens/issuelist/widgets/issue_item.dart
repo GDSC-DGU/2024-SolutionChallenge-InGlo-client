@@ -78,7 +78,7 @@ class IssueListData extends StatelessWidget {
                                   if (item.title != null)
                                     FutureBuilder(
                                       future: TranslationService()
-                                          .getTranslation("ko", item.title),
+                                          .getTranslation(item.title, context),
                                       builder: (context, snapshot) {
                                         var transData = snapshot.data!;
                                         return Text(
@@ -97,7 +97,7 @@ class IssueListData extends StatelessWidget {
                                     FutureBuilder(
                                       future: TranslationService()
                                           .getTranslation(
-                                              "ko", item.description),
+                                              item.description, context),
                                       builder: (context, snapshot) {
                                         var transData = snapshot.data!;
                                         return Text(

@@ -15,27 +15,14 @@ final List<String> imgList = [
   'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
 ];
 
-class IssueSlider extends StatefulWidget {
+class IssueSlider extends StatelessWidget {
   final String? token;
   const IssueSlider({required this.token, super.key});
 
   @override
-  State<IssueSlider> createState() => _IssueSliderState();
-}
-
-class _IssueSliderState extends State<IssueSlider> {
-  late Future<List<IssueTop3Model>> myFuture;
-
-  @override
-  void initState() {
-    myFuture = IssueTop3Service().getIssueTop3(widget.token);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: myFuture,
+      future: IssueTop3Service().getIssueTop3(token),
       builder: (context, snapshot) {
         var data = snapshot.data!;
         return CarouselSlider(
@@ -95,7 +82,7 @@ class _IssueSliderState extends State<IssueSlider> {
                                       if (item.title != null)
                                         FutureBuilder(
                                           future: TranslationService()
-                                              .getTranslation("ko", item.title),
+                                              .getTranslation(item.title, context),
                                           builder: (context, snapshot) {
                                             var transData = snapshot.data!;
                                             return Text(
@@ -113,7 +100,7 @@ class _IssueSliderState extends State<IssueSlider> {
                                       if (item.description != null)
                                         FutureBuilder(
                                           future: TranslationService()
-                                              .getTranslation("ko", item.description),
+                                              .getTranslation(item.description, context),
                                           builder: (context, snapshot) {
                                             var transData = snapshot.data!;
                                             return Text(

@@ -87,7 +87,7 @@ class _Crazy8sPageState extends State<Crazy8sPage> {
                     if (data.hmwContent != null)
                       FutureBuilder(
                         future: TranslationService()
-                            .getTranslation("ko", data.hmwContent),
+                            .getTranslation(data.hmwContent, context),
                         builder: (context, snapshot) {
                           var transData = snapshot.data!;
                           return SizedBox(

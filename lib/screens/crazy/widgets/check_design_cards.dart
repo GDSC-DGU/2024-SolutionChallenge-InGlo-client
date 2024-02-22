@@ -32,7 +32,7 @@ class _CheckDesignCardsState extends State<CheckDesignCards> {
     final String content = widget.content ?? "";
 
     return FutureBuilder(
-      future: TranslationService().getTranslation("ko", content),
+      future: TranslationService().getTranslation(content, context),
       builder: (context, snapshot) {
         var transData = snapshot.data!;
         return Stack(
