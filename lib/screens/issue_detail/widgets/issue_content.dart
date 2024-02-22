@@ -32,7 +32,8 @@ class IssueContent extends StatelessWidget {
                     transData,
                     style: GoogleFonts.notoSans(
                       color: Colors.black,
-                      fontSize: 15,
+                      fontSize: 17,
+                      height: 2, // 줄 간격
                     ),
                   );
                 },
