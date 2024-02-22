@@ -147,7 +147,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       onPressed: () => showPreparingModal(context),
                     ),
                     ButtonWidget(
-                      text: 'Language',
+                      text: 'Setting',
                       color: '000000',
                       bg: 'C4C4C4',
                       icon1: Icons.language_outlined,
