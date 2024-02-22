@@ -25,7 +25,7 @@ class _AccountPageState extends State<AccountPage> {
   final dio = Dio(); // dio instance 생성
 
   String _name = ''; // 사용자 이름 저장을 위한 변수
-  int _country = 2; // 국가 저장을 위한 변수
+  String _country = ''; // 국가 저장을 위한 변수
   String _language = ''; // 언어 저장을 위한 변수
 
   String? token; // token 저장
@@ -86,7 +86,7 @@ class _AccountPageState extends State<AccountPage> {
     // code 변경 함수
     userProvider.updateUserFields(
       name: _name,
-      country: _country,
+      country: int.parse(_country),
       language: _language,
     );
   }
@@ -108,6 +108,8 @@ class _AccountPageState extends State<AccountPage> {
             'Bearer $token',
       },
     );
+
+    print('보내는 데이터 : $_name $_country $_language ');
 
     try {
       final response = await dio.patch(url, data: data, options: options);

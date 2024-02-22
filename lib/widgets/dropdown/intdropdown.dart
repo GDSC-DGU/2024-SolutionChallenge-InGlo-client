@@ -4,13 +4,15 @@ import 'package:google_fonts/google_fonts.dart';
 
 class IntBorderCustomDropdown extends StatefulWidget {
   final List<Map<String, dynamic>> options; // 전달받은 데이터
-  final void Function(int?) onChanged;
+  final void Function(String?) onChanged;
+  final String? initialValue;
 
   // 매개변수로 받은 값으로 생성자 생섵
   const IntBorderCustomDropdown({
     Key? key,
     required this.options,
     required this.onChanged,
+    this.initialValue,
   }) : super(key: key);
 
   @override
@@ -19,6 +21,22 @@ class IntBorderCustomDropdown extends StatefulWidget {
 
 class _IntBorderCustomDropdownState extends State<IntBorderCustomDropdown> {
   String? selectedValue;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.options.isNotEmpty && widget.initialValue != null) {
+      final item = widget.options.firstWhere(
+            (item) => item['key'] == widget.initialValue,
+        orElse: () => {'key': '1', 'value': 'South Korea'},
+      );
+
+      if (item != null) {
+        selectedValue = item['value'];
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +50,7 @@ class _IntBorderCustomDropdownState extends State<IntBorderCustomDropdown> {
             children: [
               Expanded(
                 child: Text(
-                  'select SDGS',
+                  'select country',
                   style: GoogleFonts.notoSans(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,

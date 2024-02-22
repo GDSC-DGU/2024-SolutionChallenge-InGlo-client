@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/profile/profile.dart';
+import 'package:inglo/screens/signup/signup.dart';
 import 'package:inglo/screens/start/start.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
