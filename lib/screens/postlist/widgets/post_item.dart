@@ -153,7 +153,7 @@ class _PostItemState extends State<PostItem> {
                                     Row(
                                       children: [
                                         Icon(
-                                          Icons.favorite_border_outlined,
+                                          Icons.favorite,
                                           color: Color(0xFFD7A859),
                                           size: 12.0,
                                         ),

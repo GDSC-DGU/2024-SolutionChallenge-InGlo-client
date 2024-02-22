@@ -6,7 +6,6 @@ import 'package:dio/dio.dart';
 import 'package:inglo/models/issue/modified_comment.dart';
 
 import 'package:inglo/service/comment/issue_comment_api.dart'; // api 호인스
-
 // provider
 import 'package:provider/provider.dart';
 import 'package:inglo/provider/profile/users.dart';
@@ -27,9 +26,8 @@ class _IssueCommentsState extends State<IssueComments> {
   final dio = Dio(); // dio instance 생성
   final formKey = GlobalKey<FormState>();
   int? _parent_id = null; // 부모 피드백 아이디
-  int? _comment_id = null; // 현재 선택한 feedback id
-  List<IssueComment> comments = []; // feedback을 저장할 변수
-  IssueModifiedComment? newComment;
+  int? _feedback_id = null; // 현재 선택한 feedback id
+  List<IssueComment> feedbacks = []; // feedback을 저장할 변수
 
   int? isEditing; // edit 모드 저장 변수
   String? _modifiedController = '';
@@ -57,18 +55,17 @@ class _IssueCommentsState extends State<IssueComments> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       token = Provider.of<UserToken>(context, listen: false).token;
-      await loadComments(); // 비동기 함수 호출
+      await loadFeedbacks(); // 비동기 함수 호출
     });
-    print('token : $token');
   }
 
-  Future<void> loadComments() async {
+  Future<void> loadFeedbacks() async {
     try {
       // await 키워드를 사용하여 비동기 완료를 기다린다.
       List<IssueComment> feedbacks =
       await _IssueCommentService.getComments(widget.id, token);
       setState(() {
-        this.comments = feedbacks;
+        this.feedbacks = feedbacks;
       });
       print('데이터 받아옴 : ${feedbacks[0].user}');
     } catch (e) {
@@ -77,42 +74,25 @@ class _IssueCommentsState extends State<IssueComments> {
     }
   }
 
-  Future<void> modifiedComment() async {
-    print('수정 시작');
+  Future<void> modifiedFeedback() async {
     try {
-      print('수정 완료');
       // await 키워드를 사용하여 비동기 완료를 기다린다.
       IssueModifiedComment newComment = await _IssueCommentService.ModifiedComments(
-          modifiedController.text, widget.id, _comment_id, token); // 피드백 수정
-      setState(() {
-        this.newComment = newComment;
-      });
-      print('데이터 받아왔ㄸ따따다ㅏ다다다다ㅏㄷ다ㅏㄷ : $newComment');
+          modifiedController.text, widget.id, _feedback_id, token); // 피드백 수정
     } catch (e) {
       // 오류 처리
       print("Error loading new feedback: $e");
     }
   }
 
-  Future<void> PostComment() async {
+  Future<void> PostFeedback() async {
     await _IssueCommentService.postComment(
         widget.id, commentController.text, _parent_id, token); // 피드백 제출
   }
 
-  Future<void> modifiedContent() async {
-    try {
-      // await 키워드를 사용하여 비동기 완료를 기다린다.
-      IssueModifiedComment newComment = await _IssueCommentService.ModifiedComments(
-          modifiedController.text, widget.id, _comment_id, token); // 피드백 수정
-    } catch (e) {
-      // 오류 처리
-      print("Error loading new feedback: $e");
-    }
-  }
-
-  Future<void> DeleteComment() async {
+  Future<void> DeleteFeedback() async {
     await _IssueCommentService.deleteComment(
-        widget.id, _comment_id, token); // 피드백 삭제
+        widget.id, _feedback_id, token); // 피드백 삭제
   }
 
   Widget commentChild(data, id) {
@@ -152,15 +132,6 @@ class _IssueCommentsState extends State<IssueComments> {
                     isDense: true, // 여백 최소화
                   ),
                   style: GoogleFonts.notoSans(fontSize: 14),
-                  // 수정 완료 후 수정 api
-                  onFieldSubmitted: (value) {
-                    setState(() {
-                      isEditing = null;
-                    });
-                    modifiedComment();
-                    modifiedController.clear(); // 컨트롤러 초기화
-                    FocusScope.of(context).unfocus(); // 키보드 숨기기
-                  },
                 ),
               )
                   : Text(data[i].content),
@@ -181,16 +152,16 @@ class _IssueCommentsState extends State<IssueComments> {
                                 isEditing = null;
                               } else {
                                 isEditing = i; // 수정 모드로 전환
-                                _comment_id =
-                                    data[i].id; // feedback id도 변경
+                                _feedback_id =
+                                    data[i].id ?? 0; // feedback id도 변경
                                 modifiedController.text = data[i].content ?? '';
                               }
                             });
                             if (isEditing == null) {
-                              await modifiedComment();
+                              await modifiedFeedback();
                               modifiedController.clear(); // 컨트롤러 초기화
                               FocusScope.of(context).unfocus(); // 키보드 숨기기
-                              await loadComments();
+                              await loadFeedbacks();
                             }
                           },
                           child: Icon(
@@ -203,9 +174,9 @@ class _IssueCommentsState extends State<IssueComments> {
                         GestureDetector(
                           onTap: () async {
                             print("Delete Clicked");
-                            _comment_id = data[i].id ?? 0;
-                            await DeleteComment();
-                            await loadComments();
+                            _feedback_id = data[i].id ?? 0;
+                            await DeleteFeedback();
+                            await loadFeedbacks();
                           },
                           child: Icon(
                             Icons.delete,
@@ -217,7 +188,7 @@ class _IssueCommentsState extends State<IssueComments> {
                     ),
                     Text(
                         DateFormat('yyyy-MM-dd')
-                            .format(DateTime.parse(data[i].created_at)),
+                            .format(DateTime.parse(data[i].created_at)) ?? '0000-00-00',
                         style: GoogleFonts.notoSans(fontSize: 10)),
                   ],
                 ),
@@ -238,14 +209,14 @@ class _IssueCommentsState extends State<IssueComments> {
       body: Container(
         child: CommentBox(
           userImage: CommentBox.commentImageParser(imageURLorPath: profile_img),
-          child: commentChild(comments, id),
-          labelText: 'Send Comments',
+          child: commentChild(feedbacks, id),
+          labelText: 'Send Feedbacks',
           errorText: 'Comment cannot be blank',
           withBorder: false,
           sendButtonMethod: () async {
             if (formKey.currentState!.validate()) {
-              await PostComment();
-              await loadComments();
+              await PostFeedback();
+              await loadFeedbacks();
               print(commentController.text);
               commentController.clear();
               FocusScope.of(context).unfocus();
