@@ -6,7 +6,8 @@ import 'package:image_picker/image_picker.dart';
 class SolutionSketchImg extends StatelessWidget {
   final File? imageData;
   final deleteImage;
-  const SolutionSketchImg({required this.imageData, required this.deleteImage, super.key});
+  const SolutionSketchImg(
+      {required this.imageData, required this.deleteImage, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +18,10 @@ class SolutionSketchImg extends StatelessWidget {
           width: 200,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
             border: Border.all(
               width: 3,
-              color: Color(0xFF233A66),
+              color: const Color(0xFF233A66),
             ),
           ),
           child: ClipRRect(
@@ -37,17 +38,17 @@ class SolutionSketchImg extends StatelessWidget {
             },
             elevation: 0,
             fillColor: Colors.white,
-            child: Icon(
-              Icons.cancel,
-              size: 30.0,
-              color: Color(0xFF233A66),
-            ),
-            padding: EdgeInsets.all(0.0),
-            shape: CircleBorder(
+            padding: const EdgeInsets.all(0.0),
+            shape: const CircleBorder(
               side: BorderSide(
                 width: 3,
                 color: Color(0xFF233A66),
               ),
+            ),
+            child: const Icon(
+              Icons.cancel,
+              size: 30.0,
+              color: Color(0xFF233A66),
             ),
           ),
         ),

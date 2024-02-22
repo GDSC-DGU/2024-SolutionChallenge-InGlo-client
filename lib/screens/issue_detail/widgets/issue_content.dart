@@ -11,7 +11,7 @@ class IssueContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(
@@ -23,19 +23,28 @@ class IssueContent extends StatelessWidget {
         children: [
           if (data.content != null)
             Container(
-              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+              padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
               child: FutureBuilder(
-                future: TranslationService().getTranslation(data.content, context),
+                future:
+                    TranslationService().getTranslation(data.content, context),
                 builder: (context, snapshot) {
-                  var transData = snapshot.data!;
-                  return Text(
-                    transData,
-                    style: GoogleFonts.notoSans(
-                      color: Colors.black,
-                      fontSize: 17,
-                      height: 2, // 줄 간격
-                    ),
-                  );
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: Text("loading..."));
+                  } else {
+                    if (snapshot.hasError) {
+                      return const Center(child: Text('error')); // 에러 발생 시
+                    } else {
+                      var transData = snapshot.data!;
+                      return Text(
+                        transData,
+                        style: GoogleFonts.notoSans(
+                          color: Colors.black,
+                          fontSize: 17,
+                          height: 2, // 줄 간격
+                        ),
+                      );
+                    }
+                  }
                 },
               ),
             ),
@@ -43,7 +52,7 @@ class IssueContent extends StatelessWidget {
             right: 20,
             top: -40,
             child: ElevatedButton(
-              style: ButtonStyle(
+              style: const ButtonStyle(
                 backgroundColor: MaterialStatePropertyAll(Color(0xFFD7A859)),
               ),
               onPressed: () {
@@ -53,7 +62,7 @@ class IssueContent extends StatelessWidget {
                   ),
                 );
               },
-              child: Text(
+              child: const Text(
                 "Let's Design",
                 style: TextStyle(
                   color: Colors.white,

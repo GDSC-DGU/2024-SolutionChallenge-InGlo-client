@@ -29,11 +29,11 @@ class _CrazyWriteState extends State<CrazyWrite> {
     final token = context.watch<UserToken>().token;
 
     return Scaffold(
-      backgroundColor: Color(0xFFF7EEDE),
+      backgroundColor: const Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, size: 25,),
+          icon: const Icon(Icons.arrow_back_ios, size: 25,),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -41,11 +41,11 @@ class _CrazyWriteState extends State<CrazyWrite> {
         title: Text(
           "Write Crazy 8's",
           style: GoogleFonts.notoSans(
-              color: Color(0xFF233A66),
+              color: const Color(0xFF233A66),
               fontSize: 20,
               fontWeight: FontWeight.w700),
         ),
-        backgroundColor: Color(0xFFF7EEDE),
+        backgroundColor: const Color(0xFFF7EEDE),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
@@ -87,14 +87,14 @@ class _CrazyWriteState extends State<CrazyWrite> {
                         barrierDismissible: true,
                         builder: ((context) {
                           return AlertDialog(
-                            title: Text("Crazy 8's Write"),
-                            content: Text("Please Write Crazy 8's."),
+                            title: const Text("Crazy 8's Write"),
+                            content: const Text("Please Write Crazy 8's."),
                             actions: <Widget>[
                               ElevatedButton(
                                 onPressed: () {
                                   Navigator.of(context).pop(); //창 닫기
                                 },
-                                child: Text("Confirm"),
+                                child: const Text("Confirm"),
                               ),
                             ],
                           );
@@ -107,16 +107,16 @@ class _CrazyWriteState extends State<CrazyWrite> {
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
-                    side: BorderSide(
+                    side: const BorderSide(
                       color: Color(0xFF233A66),
                       width: 1,
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                   ),
                   child: Text(
                     'submit',
                     style: GoogleFonts.notoSans(
-                      color: Color(0xFF233A66),
+                      color: const Color(0xFF233A66),
                       fontSize: 20.0,
                       fontWeight: FontWeight.w700,
                     ),

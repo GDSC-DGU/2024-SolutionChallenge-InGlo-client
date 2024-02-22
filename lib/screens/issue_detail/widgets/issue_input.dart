@@ -9,8 +9,8 @@ class IssueInput extends StatelessWidget {
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: 90,
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        decoration: BoxDecoration(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        decoration: const BoxDecoration(
           color: Color(0xFFF7EEDE),
           border: Border(
             top: BorderSide(
@@ -30,14 +30,14 @@ class IssueInput extends StatelessWidget {
                   contentPadding: EdgeInsets.all(8),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.white,
                       width: 1.0,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.white,
                       width: 1.0,
                     ),
@@ -49,7 +49,7 @@ class IssueInput extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {},
-              icon: Icon(
+              icon: const Icon(
                 Icons.send,
                 size: 25,
                 color: Color(0xFFD7A859),

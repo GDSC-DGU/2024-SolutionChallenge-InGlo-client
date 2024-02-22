@@ -22,11 +22,14 @@ class _DetailSketch2PageState extends State<DetailSketch2Page> {
     final token = context.watch<UserToken>().token;
 
     return Scaffold(
-      backgroundColor: Color(0xFFF7EEDE),
+      backgroundColor: const Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, size: 25,),
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            size: 25,
+          ),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
@@ -38,16 +41,16 @@ class _DetailSketch2PageState extends State<DetailSketch2Page> {
         title: Text(
           "How Might Me?",
           style: GoogleFonts.notoSans(
-              color: Color(0xFF233A66),
+              color: const Color(0xFF233A66),
               fontSize: 20,
               fontWeight: FontWeight.w700),
         ),
-        backgroundColor: Color(0xFFF7EEDE),
+        backgroundColor: const Color(0xFFF7EEDE),
       ),
       body: SafeArea(
           child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        padding: EdgeInsets.fromLTRB(10, 0, 10, 30),
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -68,10 +71,10 @@ class _DetailSketch2PageState extends State<DetailSketch2Page> {
                       width: 1,
                       color: Colors.black,
                     ),
-                    borderRadius: BorderRadius.all(
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(10.0),
                     ),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         color: Color(0xFFFFD691),
                         blurRadius: 0.0,
@@ -84,27 +87,35 @@ class _DetailSketch2PageState extends State<DetailSketch2Page> {
                     future:
                         MyDrawingService().getMyDrawingDetail(sketchId, token),
                     builder: (context, snapshot) {
-                      var data = snapshot.data!;
-                      return TextFormField(
-                        readOnly: true,
-                        initialValue: data.hmw,
-                        keyboardType: TextInputType.multiline, // 여러 줄
-                        maxLines: null, // 자동 줄 바꿈
-                        minLines: 10,
-                        style: GoogleFonts.cabinSketch(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      );
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: Text("loading..."));
+                      } else {
+                        if (snapshot.hasError) {
+                          return const Center(child: Text('error')); // 에러 발생 시
+                        } else {
+                          var data = snapshot.data!;
+                          return TextFormField(
+                            readOnly: true,
+                            initialValue: data.hmw,
+                            keyboardType: TextInputType.multiline, // 여러 줄
+                            maxLines: null, // 자동 줄 바꿈
+                            minLines: 10,
+                            style: GoogleFonts.cabinSketch(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          );
+                        }
+                      }
                     },
                   ),
                 ),
                 Positioned(
                   top: 0,
                   left: 50,
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width - 120,
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Image(

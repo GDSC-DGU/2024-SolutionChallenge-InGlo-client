@@ -48,12 +48,12 @@ class _CrazyPaginationState extends State<CrazyPagination> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: 10,
               vertical: 10,
             ),
             child: MasonryGridView.count(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               shrinkWrap: true,
               itemCount: problemList[_currentPage - 1].contents.length,
               crossAxisCount: 2,
@@ -73,8 +73,8 @@ class _CrazyPaginationState extends State<CrazyPagination> {
                           barrierDismissible: true,
                           builder: ((context) {
                             return AlertDialog(
-                              title: Text("Crazy 8's Choose"),
-                              content: Text("Please Choose 1~3 Crazy 8's."),
+                              title: const Text("Crazy 8's Choose"),
+                              content: const Text("Please Choose 1~3 Crazy 8's."),
                               actions: <Widget>[
                                 Container(
                                   child: ElevatedButton(
@@ -108,7 +108,7 @@ class _CrazyPaginationState extends State<CrazyPagination> {
           Pager(
             currentPage: _currentPage,
             totalPages: problemList.length,
-            numberButtonSelectedColor: Color(0xFF233A66),
+            numberButtonSelectedColor: const Color(0xFF233A66),
             onPageChanged: (page) {
               setState(() {
                 _currentPage = page;

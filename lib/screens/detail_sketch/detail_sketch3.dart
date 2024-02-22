@@ -24,11 +24,14 @@ class _DetailSketch3PageState extends State<DetailSketch3Page> {
     final token = context.watch<UserToken>().token;
 
     return Scaffold(
-      backgroundColor: Color(0xFFF7EEDE),
+      backgroundColor: const Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, size: 25,),
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            size: 25,
+          ),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
@@ -40,16 +43,16 @@ class _DetailSketch3PageState extends State<DetailSketch3Page> {
         title: Text(
           "Crazy 8's",
           style: GoogleFonts.notoSans(
-              color: Color(0xFF233A66),
+              color: const Color(0xFF233A66),
               fontSize: 20,
               fontWeight: FontWeight.w700),
         ),
-        backgroundColor: Color(0xFFF7EEDE),
+        backgroundColor: const Color(0xFFF7EEDE),
       ),
       body: SafeArea(
           child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        padding: EdgeInsets.fromLTRB(10, 0, 10, 30),
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -60,25 +63,44 @@ class _DetailSketch3PageState extends State<DetailSketch3Page> {
             FutureBuilder(
               future: MyDrawingService().getMyDrawingDetail(sketchId, token),
               builder: (context, snapshot) {
-                var data = snapshot.data!;
-                return data.crazy8stack.length != 0 ? Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: MasonryGridView.count(
-                    physics: BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: data.crazy8stack.length,
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 5.0,
-                    mainAxisSpacing: 5.0,
-                    itemBuilder: (context, index) {
-                      return DesignCard(
-                          content: data.crazy8stack[index]["content"]!);
-                    },
-                  ),
-                ) : Container(
-                  margin: EdgeInsets.symmetric(vertical: 70),
-                  alignment: Alignment.center,
-                  child: Text("No writing has been made.", style: GoogleFonts.notoSans(fontSize: 16, color: Colors.black38, fontWeight: FontWeight.w600,),),);
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: Text("loading..."));
+                } else {
+                  if (snapshot.hasError) {
+                    return const Center(child: Text('error')); // 에러 발생 시
+                  } else {
+                    var data = snapshot.data!;
+                    return data.crazy8stack.isNotEmpty
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: MasonryGridView.count(
+                              physics: const BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: data.crazy8stack.length,
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 5.0,
+                              mainAxisSpacing: 5.0,
+                              itemBuilder: (context, index) {
+                                return DesignCard(
+                                    content: data.crazy8stack[index]
+                                        ["content"]!);
+                              },
+                            ),
+                          )
+                        : Container(
+                            margin: const EdgeInsets.symmetric(vertical: 70),
+                            alignment: Alignment.center,
+                            child: Text(
+                              "No writing has been made.",
+                              style: GoogleFonts.notoSans(
+                                fontSize: 16,
+                                color: Colors.black38,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          );
+                  }
+                }
               },
             ),
           ],
