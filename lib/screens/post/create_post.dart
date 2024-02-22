@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dio/dio.dart';
+import 'package:inglo/provider/post/post_sdgs.dart';
+import 'package:inglo/screens/post/widgets/selected_sketch.dart';
 import 'package:inglo/screens/postlist/post_board.dart';
+import 'package:inglo/util/options/sdgs_data.dart';
+import 'package:inglo/widgets/dropdown/writingdropdown.dart';
 
 // provider
 import 'package:provider/provider.dart';
@@ -19,6 +23,8 @@ class CreatePost extends StatefulWidget {
 class _CreatePostState extends State<CreatePost> {
   final dio = Dio(); // dio instance 생성
   String? token = ''; // token 저장
+  String? sdgs = '';
+  int? sketch_id = 0;
 
   // title 입력
   final TextEditingController _titleController = TextEditingController();
@@ -37,18 +43,14 @@ class _CreatePostState extends State<CreatePost> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       token = Provider.of<UserToken>(context, listen: false)
           .token; // provider에서 토큰 가져오기
+      sketch_id = Provider.of<PostSDGS>(context).sketch_id;
     });
   }
 
-  String _title = '';
-  String _content = '';
-
-  // String _image = '';
-  int _sketch_id = 1; // 임시 번호
-  int _sdgs = 1; // 임시 번호
-
   // post 생성 api
   Future<void> _handlePost() async {
+    print('선택 sdgs : $sdgs');
+    Provider.of<PostSDGS>(context, listen: false).setSDGS(int.parse('$sdgs')); // sdgs 저장
     final url = "https://dongkyeom.com/api/v1/posts/";
 
     String content = await controller.getText(); // 비동기 호출 적용
@@ -58,8 +60,8 @@ class _CreatePostState extends State<CreatePost> {
     Map<String, dynamic> data = {
       "title": _titleController.text,
       "content": content,
-      "sketch_id": int.parse('$_sketch_id'),
-      "sdgs": int.parse('$_sdgs'),
+      "sketch_id": int.parse('$sketch_id'),
+      "sdgs": int.parse('$sdgs'),
     };
 
     /*
@@ -113,7 +115,11 @@ class _CreatePostState extends State<CreatePost> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
-            Navigator.pop(context); // 이전 페이지로 이동
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => SelectedSketch(),
+              ),
+            );
           },
         ),
         actions: [
@@ -145,6 +151,23 @@ class _CreatePostState extends State<CreatePost> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              SizedBox(
+                height: 40,
+                child: WritingDropdown(
+                  options: sdgsData,
+                  onChanged: (value) {
+                    print('value = $value');
+                    setState(() {
+                      if (value != null) {
+                        sdgs = value; // _country는 널이 아닐 때만 업데이트
+                        print('language 업데이트 ! $value');
+                      } else {
+                        sdgs = '0';
+                      }
+                    });
+                  },
+                ),
+              ),
               TextFormField(
                 controller: _titleController,
                 maxLines: null,

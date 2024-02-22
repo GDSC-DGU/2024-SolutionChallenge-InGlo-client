@@ -1,62 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:inglo/screens/post/create_post.dart';
+import 'package:inglo/screens/postlist/post_board.dart';
+import 'package:provider/provider.dart';
+import 'package:inglo/provider/post/post_sdgs.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/models/my_drawing/my_drawing_model.dart';
 import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/detail_sketch/detail_sketch4.dart';
 import 'package:inglo/screens/profile/profile.dart';
 import 'package:inglo/service/my_drawing/my_drawing_service.dart';
-import 'package:inglo/util/sketch/sketchlist_preference.dart';
-import 'package:provider/provider.dart';
 import 'package:vertical_card_pager/vertical_card_pager.dart';
 
-import 'package:dio/dio.dart';
-
-class MyDrawing extends StatefulWidget {
-  const MyDrawing({super.key});
+class SelectedSketch extends StatefulWidget {
+  const SelectedSketch({super.key});
 
   @override
-  _MyDrawingState createState() => _MyDrawingState();
+  State<SelectedSketch> createState() => _SelectedSketchState();
 }
 
-class _MyDrawingState extends State<MyDrawing> {
-  // final dio = Dio(); // dio instance 생성
-  //
-  // // 초기 1번 실행
-  // void initState() {
-  //   super.initState();
-  //   getSketchs();
-  // }
-  //
-  // // profile get 함수
-  // Future<void> getSketchs() async {
-  //   final url = "https://dongkyeom.com/api/v1/sketches/";
-  //
-  //   try {
-  //     final response = await dio.get(
-  //       url,
-  //       options: Options(
-  //         responseType: ResponseType.plain,
-  //         headers: {
-  //           'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs',
-  //         },
-  //       ),
-  //     );
-  //
-  //     String responseBody = response.data;
-  //
-  //     if(response.statusCode == 200 || response.statusCode == 201) {
-  //       print('성공!');
-  //     }
-  //     print('data : $responseBody');
-  //
-  //   } catch (e) {
-  //     // 요청 실패 또는 기타 에러 처리
-  //     print('Error fetching data: $e');
-  //   }
-  // }
-
+class _SelectedSketchState extends State<SelectedSketch> {
   @override
   Widget build(BuildContext context) {
+    int selectedSketch = 0;
+    int _selectedIndex = -1;
+
+    void StartPost() {
+      Provider.of<PostSDGS>(context, listen: false).setSketch(selectedSketch);
+
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => CreatePost(),
+        ),
+      );
+    }
+
     final token = context.watch<UserToken>().token;
     titles(List<MyDrawingListModel> list) {
       return list.map((sketch) => sketch.title).toList();
@@ -119,7 +96,8 @@ class _MyDrawingState extends State<MyDrawing> {
                                 Flexible(
                                   child: Container(
                                     child: Text(
-                                      sketch.createdAt.substring(0, 10) ?? '0000-00-00',
+                                      sketch.createdAt.substring(0, 10) ??
+                                          '0000-00-00',
                                       style: GoogleFonts.notoSans(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w400,
@@ -154,7 +132,6 @@ class _MyDrawingState extends State<MyDrawing> {
           .toList();
     }
 
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -164,12 +141,29 @@ class _MyDrawingState extends State<MyDrawing> {
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => ProfilePage(),
+                builder: (context) => PostBoardPage(),
               ),
             );
           },
         ),
-        title: Text('MY DRAWINGS'),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 10),
+            child: ElevatedButton(
+              style:
+              ElevatedButton.styleFrom(backgroundColor: Color(0xFF233A66)),
+              onPressed: StartPost,
+              child: Text(
+                'Create',
+                style: GoogleFonts.notoSans(
+                  fontSize: 16, // 폰트 크기 설정
+                  fontWeight: FontWeight.bold, // 폰트 굵기 설정
+                  color: Colors.white, // 텍스트 색상 설정
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Container(
@@ -193,11 +187,10 @@ class _MyDrawingState extends State<MyDrawing> {
                       onPageChanged: (page) {},
                       align: ALIGN.CENTER,
                       onSelectedItem: (index) {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => DetailSketch4Page(sketchId: data[index].id),
-                          ),
-                        );
+                        setState(() {
+                          _selectedIndex = index; // 탭한 항목을 선택된 항목으로 설정
+                          selectedSketch = data[index].id;
+                        });
                       },
                     );
                   },

@@ -46,6 +46,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       // Provider에서 사용자 정보 가져오고, _nameController 업데이트
+      token = Provider.of<UserToken>(context, listen: false).token;
       final user = Provider.of<UserProvider>(context, listen: false).user;
       _nameController?.text = user?.name ?? ''; // 컨트롤러의 텍스트 업데이트
       _profile_img = user?.profile_img ?? '';

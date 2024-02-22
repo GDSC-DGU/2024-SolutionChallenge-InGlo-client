@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:inglo/provider/post/post_sdgs.dart';
 import 'package:inglo/provider/user_token/user_token.dart';
+import 'package:inglo/screens/issuelist/issulist.dart';
+import 'package:inglo/screens/post/create_post.dart';
+import 'package:inglo/screens/postlist/post_board.dart';
 import 'package:inglo/screens/profile/profile.dart';
 import 'package:inglo/screens/signup/signup.dart';
 import 'package:inglo/screens/start/start.dart';
@@ -24,6 +28,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => Counts()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => UserToken()),
+        ChangeNotifierProvider(create: (_) => PostSDGS()),
       ],
       child: MyApp(),
     ),

@@ -42,7 +42,7 @@ class PostService {
   }
 
   // 유저 정보 삭제 API
-  Future<void> deletePost(int postId, String? token) async {
+  Future<void> deletePost(int postId, String? token, BuildContext context) async {
     final url = "https://dongkyeom.com/api/v1/posts/$postId";
     print('post id : $postId');
 
@@ -61,6 +61,10 @@ class PostService {
         // 성공
         print(
             'Success code: ${response.statusCode}, response: ${response.data}');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => PostBoardPage()),
+        );
       } else {
         print('Error code: ${response.statusCode}, response: ${response.data}');
       }

@@ -1,10 +1,10 @@
 {
   "installed": {
-      "client_id":"401306795328-4re94p9jlpm4gjq9udm4nv1f8grsja66.apps.googleusercontent.com",
-      "project_id":"inglo-413920",
-      "auth_uri":"https://accounts.google.com/o/oauth2/auth",
-      "token_uri":"https://oauth2.googleapis.com/token",
-      "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs"
+    "client_id": "401306795328-htavllel83bd0sdq5oepu5u2jafk540d.apps.googleusercontent.com",
+    "project_id": "inglo-413920",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs"
   },
   "project_info": {
     "project_number": "780179420765",
