@@ -49,7 +49,7 @@ class _CreatePostState extends State<CreatePost> {
 
   // post 생성 api
   Future<void> _handlePost() async {
-    print('선택 sdgs : $sdgs');
+    print('선택 sdgs : $sdgs 선택 sketch : $sketch_id');
     Provider.of<PostSDGS>(context, listen: false).setSDGS(int.parse('$sdgs')); // sdgs 저장
     final url = "https://dongkyeom.com/api/v1/posts/";
 
