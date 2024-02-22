@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:inglo/provider/post/post_sdgs.dart';
 import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/issuelist/issulist.dart';
@@ -18,7 +19,8 @@ import 'package:inglo/provider/profile/users.dart';
 
 
 void main() async {
-  await WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   await Firebase.initializeApp();
   // 여러 상태를 사용하기 위해, multi provider를 사용한다.
   runApp(

@@ -1,9 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_provider/flutter_provider.dart';
-import 'package:inglo/provider/user_token/user_token.dart';
+import 'package:inglo/models/issuelist/issue_top3.dart';
 import 'package:inglo/screens/issue_detail/issue_detail.dart';
 import 'package:inglo/service/issue/issuelist.dart';
+import 'package:inglo/service/translate/translate_util.dart';
 
 // 더미데이터
 final List<String> imgList = [
@@ -21,7 +21,6 @@ class IssueSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return FutureBuilder(
       future: IssueTop3Service().getIssueTop3(token),
       builder: (context, snapshot) {
@@ -37,7 +36,9 @@ class IssueSlider extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => IssueDetailPage(itemId: item.id,),
+                          builder: (context) => IssueDetailPage(
+                            itemId: item.id,
+                          ),
                         ),
                       );
                     },
@@ -78,26 +79,42 @@ class IssueSlider extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        item.title.length >= 40
-                                            ? '${item.title.substring(0, 40)}...'
-                                            : item.title,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.bold,
+                                      if (item.title != null)
+                                        FutureBuilder(
+                                          future: TranslationService()
+                                              .getTranslation(item.title, context),
+                                          builder: (context, snapshot) {
+                                            var transData = snapshot.data!;
+                                            return Text(
+                                              transData.length >= 40
+                                                  ? '${transData.substring(0, 40)}...'
+                                                  : transData,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            );
+                                          },
                                         ),
-                                      ),
-                                      Text(
-                                        item.description.length >= 30
-                                            ? '${item.description.substring(0, 30)}...'
-                                            : item.description,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 13.0,
-                                          fontWeight: FontWeight.normal,
+                                      if (item.description != null)
+                                        FutureBuilder(
+                                          future: TranslationService()
+                                              .getTranslation(item.description, context),
+                                          builder: (context, snapshot) {
+                                            var transData = snapshot.data!;
+                                            return Text(
+                                              transData.length >= 30
+                                                  ? '${transData.substring(0, 30)}...'
+                                                  : transData,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 13.0,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                            );
+                                          },
                                         ),
-                                      ),
                                     ],
                                   ),
                                 ),
