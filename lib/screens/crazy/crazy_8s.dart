@@ -32,7 +32,7 @@ class _Crazy8sPageState extends State<Crazy8sPage> {
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             size: 25,
           ),
@@ -43,11 +43,11 @@ class _Crazy8sPageState extends State<Crazy8sPage> {
         title: Text(
           "Crazy 8's",
           style: GoogleFonts.notoSans(
-              color: Color(0xFF233A66),
+              color: const Color(0xFF233A66),
               fontSize: 20,
               fontWeight: FontWeight.w700),
         ),
-        backgroundColor: Color(0xFFF7EEDE),
+        backgroundColor: const Color(0xFFF7EEDE),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
@@ -68,92 +68,113 @@ class _Crazy8sPageState extends State<Crazy8sPage> {
           scrollDirection: Axis.vertical,
           physics: const BouncingScrollPhysics(),
           child: Container(
-            padding: EdgeInsets.fromLTRB(10, 0, 10, 50),
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 50),
             child: FutureBuilder(
               future: CrazyService().getCrazyMine(problemId, token),
               builder: (context, snapshot) {
-                var data = snapshot.data!;
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else {
+                  if (snapshot.hasError) {
+                    return const Center(child: Text('error')); // 에러 발생 시
+                  } else {
+                    var data = snapshot.data!;
 
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    DesignSteps(
-                      step: 3,
-                      sdgs: sdgs,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    if (data.hmwContent != null)
-                      FutureBuilder(
-                        future: TranslationService()
-                            .getTranslation(data.hmwContent, context),
-                        builder: (context, snapshot) {
-                          var transData = snapshot.data!;
-                          return SizedBox(
-                            width: 170,
-                            child: DesignCard(
-                              content: transData,
-                            ),
-                          );
-                        },
-                      ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    MasonryGridView.count(
-                      physics: BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: data.crazy8stack.length + 1,
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 5.0,
-                      mainAxisSpacing: 5.0,
-                      itemBuilder: (context, index) {
-                        if (index == 0) {
-                          return Container(
-                            margin: EdgeInsets.all(40),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => CrazyWrite(
-                                      sdgs: sdgs,
-                                      problemId: problemId,
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        DesignSteps(
+                          step: 3,
+                          sdgs: sdgs,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        if (data.hmwContent != null)
+                          FutureBuilder(
+                            future: TranslationService()
+                                .getTranslation(data.hmwContent, context),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(child: Text("loading..."));
+                              } else {
+                                if (snapshot.hasError) {
+                                  return const Center(
+                                      child: Text('error')); // 에러 발생 시
+                                } else {
+                                  var transData = snapshot.data!;
+
+                                  return SizedBox(
+                                    width: 170,
+                                    child: DesignCard(
+                                      content: transData,
                                     ),
+                                  );
+                                }
+                              }
+                            },
+                          ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        MasonryGridView.count(
+                          physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: data.crazy8stack.length + 1,
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 5.0,
+                          mainAxisSpacing: 5.0,
+                          itemBuilder: (context, index) {
+                            if (index == 0) {
+                              return Container(
+                                margin: const EdgeInsets.all(40),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => CrazyWrite(
+                                          sdgs: sdgs,
+                                          problemId: problemId,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    //fixedSize: Size(30, 30),
+                                    backgroundColor: Colors.white,
+                                    shape: const CircleBorder(),
+                                    // padding도 넣을 수 있음!
+                                    padding: const EdgeInsets.all(10.0),
+                                    side: const BorderSide(
+                                      color: Color(0xFF233A66),
+                                      width: 1,
+                                    ),
+                                    shadowColor: Colors.transparent,
                                   ),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                //fixedSize: Size(30, 30),
-                                backgroundColor: Colors.white,
-                                shape: CircleBorder(),
-                                // padding도 넣을 수 있음!
-                                padding: EdgeInsets.all(10.0),
-                                side: BorderSide(
-                                  color: Color(0xFF233A66),
-                                  width: 1,
+                                  child: const Icon(
+                                    Icons.edit_outlined,
+                                    size: 25,
+                                    color: Color(0xFF233A66),
+                                  ),
                                 ),
-                                shadowColor: Colors.transparent,
-                              ),
-                              child: const Icon(
-                                Icons.edit_outlined,
-                                size: 25,
-                                color: Color(0xFF233A66),
-                              ),
-                            ),
-                          );
-                        } else {
-                          // return DesignCard(content: problemList[index - 1]["content"]!);
-                          return DesignPaper(
-                              content: data.crazy8stack[index - 1]["content"] ?? "");
-                        }
-                      },
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                );
+                              );
+                            } else {
+                              // return DesignCard(content: problemList[index - 1]["content"]!);
+                              return DesignPaper(
+                                  content: data.crazy8stack[index - 1]
+                                          ["content"] ??
+                                      "");
+                            }
+                          },
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    );
+                  }
+                }
               },
             ),
           ),
@@ -162,7 +183,7 @@ class _Crazy8sPageState extends State<Crazy8sPage> {
       floatingActionButtonLocation:
           FloatingActionButtonLocation.centerDocked, // 버튼 가운데 정렬
       floatingActionButton: Container(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
         width: double.infinity,
         child: Row(
           children: [
@@ -181,7 +202,7 @@ class _Crazy8sPageState extends State<Crazy8sPage> {
                   );
                 },
                 backgroundColor: Colors.white,
-                shape: StadiumBorder(
+                shape: const StadiumBorder(
                   side: BorderSide(
                     color: Color(0xFF233A66),
                     width: 1,

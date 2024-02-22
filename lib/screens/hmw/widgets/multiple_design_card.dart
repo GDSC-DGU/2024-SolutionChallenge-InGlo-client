@@ -32,10 +32,10 @@ class MultipleDesignCard extends StatelessWidget {
                 width: 1,
                 color: Colors.black,
               ),
-              borderRadius: BorderRadius.all(
+              borderRadius: const BorderRadius.all(
                 Radius.circular(10.0),
               ),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Color(0xFF233A66),
                   blurRadius: 0.0,
@@ -66,7 +66,7 @@ class MultipleDesignCard extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
+          const Positioned(
             top: -5,
             left: -15,
             child: Image(

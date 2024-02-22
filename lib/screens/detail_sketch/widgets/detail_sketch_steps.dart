@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:inglo/screens/crazy/crazy_8s.dart';
 import 'package:inglo/screens/detail_sketch/detail_sketch1.dart';
 import 'package:inglo/screens/detail_sketch/detail_sketch2.dart';
 import 'package:inglo/screens/detail_sketch/detail_sketch3.dart';
 import 'package:inglo/screens/detail_sketch/detail_sketch4.dart';
-import 'package:inglo/screens/hmw/hmw_detail.dart';
-import 'package:inglo/screens/problem_definition/problem_definition.dart';
-import 'package:inglo/screens/solution_sketch/solution_sketch.dart';
 
 class DetailSketchSteps extends StatelessWidget {
   final int step;
@@ -28,10 +24,10 @@ class DetailSketchSteps extends StatelessWidget {
         Container(
           width: MediaQuery.of(context).size.width,
           height: 3,
-          margin: EdgeInsets.fromLTRB(30, 25, 30, 50),
+          margin: const EdgeInsets.fromLTRB(30, 25, 30, 50),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
-            color: Color(0xFFC4C4C4),
+            color: const Color(0xFFC4C4C4),
           ),
         ),
         Positioned(
@@ -39,7 +35,7 @@ class DetailSketchSteps extends StatelessWidget {
           left: -10,
           child: Container(
             width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -60,8 +56,8 @@ class DetailSketchSteps extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                         backgroundColor:
-                            step == 1 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
-                        shape: CircleBorder(),
+                            step == 1 ? const Color(0xFF233A66) : const Color(0xFFC4C4C4),
+                        shape: const CircleBorder(),
                         // padding도 넣을 수 있음!
                       ),
                       child: Text(
@@ -100,8 +96,8 @@ class DetailSketchSteps extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                         backgroundColor:
-                            step == 2 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
-                        shape: CircleBorder(),
+                            step == 2 ? const Color(0xFF233A66) : const Color(0xFFC4C4C4),
+                        shape: const CircleBorder(),
                         // padding도 넣을 수 있음!
                       ),
                       child: Text(
@@ -117,7 +113,7 @@ class DetailSketchSteps extends StatelessWidget {
                       "HMW",
                       style: GoogleFonts.notoSans(
                         color:
-                            step == 2 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
+                            step == 2 ? const Color(0xFF233A66) : const Color(0xFFC4C4C4),
                         fontSize: 13.0,
                       ),
                     ),
@@ -140,8 +136,8 @@ class DetailSketchSteps extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                         backgroundColor:
-                            step == 3 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
-                        shape: CircleBorder(),
+                            step == 3 ? const Color(0xFF233A66) : const Color(0xFFC4C4C4),
+                        shape: const CircleBorder(),
                         // padding도 넣을 수 있음!
                       ),
                       child: Text(
@@ -157,7 +153,7 @@ class DetailSketchSteps extends StatelessWidget {
                       "crazy 8's",
                       style: GoogleFonts.notoSans(
                         color:
-                            step == 3 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
+                            step == 3 ? const Color(0xFF233A66) : const Color(0xFFC4C4C4),
                         fontSize: 13.0,
                       ),
                     ),
@@ -180,8 +176,8 @@ class DetailSketchSteps extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                         backgroundColor:
-                            step == 4 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
-                        shape: CircleBorder(),
+                            step == 4 ? const Color(0xFF233A66) : const Color(0xFFC4C4C4),
+                        shape: const CircleBorder(),
                         // padding도 넣을 수 있음!
                       ),
                       child: Text(
@@ -197,7 +193,7 @@ class DetailSketchSteps extends StatelessWidget {
                       "sketch",
                       style: GoogleFonts.notoSans(
                         color:
-                            step == 4 ? Color(0xFF233A66) : Color(0xFFC4C4C4),
+                            step == 4 ? const Color(0xFF233A66) : const Color(0xFFC4C4C4),
                         fontSize: 13.0,
                       ),
                     ),

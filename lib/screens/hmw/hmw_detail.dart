@@ -21,34 +21,6 @@ class HMWDetailPage extends StatefulWidget {
 }
 
 class _HMWDetailPageState extends State<HMWDetailPage> {
-  // 더미데이터
-  final List<Map<String, String>> problemList = [
-    {"id": "1", "content": "choose 3-5 problems"},
-    {
-      "id": "2",
-      "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-    },
-    {"id": "3", "content": "choose 3-5 problems"},
-    {
-      "id": "4",
-      "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-    },
-    {"id": "5", "content": "choose 3-5 problems"},
-    {
-      "id": "6",
-      "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-    },
-    {"id": "7", "content": "choose 3-5 problems"},
-    {
-      "id": "8",
-      "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
     final int sdgs = widget.sdgs;
@@ -56,11 +28,11 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
     final token = context.watch<UserToken>().token;
 
     return Scaffold(
-      backgroundColor: Color(0xFFF7EEDE),
+      backgroundColor: const Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             size: 25,
           ),
@@ -71,11 +43,11 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
         title: Text(
           "How Might We?",
           style: GoogleFonts.notoSans(
-              color: Color(0xFF233A66),
+              color: const Color(0xFF233A66),
               fontSize: 20,
               fontWeight: FontWeight.w700),
         ),
-        backgroundColor: Color(0xFFF7EEDE),
+        backgroundColor: const Color(0xFFF7EEDE),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
@@ -98,89 +70,106 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
           child: FutureBuilder(
             future: HMWService().getHmw(problemId, token),
             builder: (context, snapshot) {
-              print("hmw problemId: $problemId");
-              var data = snapshot.data!;
-              return Container(
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 50),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    DesignSteps(
-                      step: 2,
-                      sdgs: sdgs,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    if (data.problemContent != null)
-                      FutureBuilder(
-                        future: TranslationService()
-                            .getTranslation(data.problemContent, context),
-                        builder: (context, snapshot) {
-                          var transData = snapshot.data!;
-                          return SizedBox(
-                            width: 170,
-                            child: DesignCard(content: transData),
-                          );
-                        },
-                      ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    MasonryGridView.count(
-                      physics: BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: data.hmws.length + 1,
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 5.0,
-                      mainAxisSpacing: 5.0,
-                      itemBuilder: (context, index) {
-                        if (index == 0) {
-                          return Container(
-                            margin: EdgeInsets.all(40),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => HMWWrite(
-                                      sdgs: sdgs,
-                                      problemId: problemId,
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                if (snapshot.hasError) {
+                  return const Center(child: Text('error')); // 에러 발생 시
+                } else {
+                  var data = snapshot.data!;
+                  return Container(
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 50),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        DesignSteps(
+                          step: 2,
+                          sdgs: sdgs,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        if (data.problemContent != null)
+                          FutureBuilder(
+                            future: TranslationService()
+                                .getTranslation(data.problemContent, context),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(child: Text("loading..."));
+                              } else {
+                                if (snapshot.hasError) {
+                                  return const Center(
+                                      child: Text('error')); // 에러 발생 시
+                                } else {
+                                  var transData = snapshot.data!;
+                                  return SizedBox(
+                                    width: 170,
+                                    child: DesignCard(content: transData),
+                                  );
+                                }
+                              }
+                            },
+                          ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        MasonryGridView.count(
+                          physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: data.hmws.length + 1,
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 5.0,
+                          mainAxisSpacing: 5.0,
+                          itemBuilder: (context, index) {
+                            if (index == 0) {
+                              return Container(
+                                margin: const EdgeInsets.all(40),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => HMWWrite(
+                                          sdgs: sdgs,
+                                          problemId: problemId,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    shape: const CircleBorder(),
+                                    // padding도 넣을 수 있음!
+                                    padding: const EdgeInsets.all(10.0),
+                                    side: const BorderSide(
+                                      color: Color(0xFF233A66),
+                                      width: 1,
                                     ),
+                                    shadowColor: Colors.transparent,
                                   ),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                //fixedSize: Size(30, 30),
-                                backgroundColor: Colors.white,
-                                shape: CircleBorder(),
-                                // padding도 넣을 수 있음!
-                                padding: EdgeInsets.all(10.0),
-                                side: BorderSide(
-                                  color: Color(0xFF233A66),
-                                  width: 1,
+                                  child: const Icon(
+                                    Icons.edit_outlined,
+                                    size: 25,
+                                    color: Color(0xFF233A66),
+                                  ),
                                 ),
-                                shadowColor: Colors.transparent,
-                              ),
-                              child: const Icon(
-                                Icons.edit_outlined,
-                                size: 25,
-                                color: Color(0xFF233A66),
-                              ),
-                            ),
-                          );
-                        } else {
-                          // return DesignCard(content: problemList[index - 1]["content"]!);
-                          return DesignPaper(
-                              content: data.hmws[index - 1]["content"] ?? "");
-                        }
-                      },
+                              );
+                            } else {
+                              // return DesignCard(content: problemList[index - 1]["content"]!);
+                              return DesignPaper(
+                                  content:
+                                      data.hmws[index - 1]["content"] ?? "");
+                            }
+                          },
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
-              );
+                  );
+                }
+              }
             },
           ),
         ),
@@ -188,7 +177,7 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
       floatingActionButtonLocation:
           FloatingActionButtonLocation.centerDocked, // 버튼 가운데 정렬
       floatingActionButton: Container(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
         width: double.infinity,
         child: Row(
           children: [
@@ -207,7 +196,7 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
                   );
                 },
                 backgroundColor: Colors.white,
-                shape: StadiumBorder(
+                shape: const StadiumBorder(
                   side: BorderSide(
                     color: Color(0xFF233A66),
                     width: 1,
@@ -216,7 +205,7 @@ class _HMWDetailPageState extends State<HMWDetailPage> {
                 label: Text(
                   'choose one HMW',
                   style: GoogleFonts.notoSans(
-                    color: Color(0xFF233A66),
+                    color: const Color(0xFF233A66),
                     fontSize: 20.0,
                     fontWeight: FontWeight.w700,
                   ),

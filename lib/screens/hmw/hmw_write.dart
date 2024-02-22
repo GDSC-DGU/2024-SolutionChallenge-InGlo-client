@@ -32,7 +32,7 @@ class _HMWWriteState extends State<HMWWrite> {
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, size: 25,),
+          icon: const Icon(Icons.arrow_back_ios, size: 25,),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -40,11 +40,11 @@ class _HMWWriteState extends State<HMWWrite> {
         title: Text(
           "Write HMW",
           style: GoogleFonts.notoSans(
-              color: Color(0xFF233A66),
+              color: const Color(0xFF233A66),
               fontSize: 20,
               fontWeight: FontWeight.w700),
         ),
-        backgroundColor: Color(0xFFF7EEDE),
+        backgroundColor: const Color(0xFFF7EEDE),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
@@ -84,16 +84,16 @@ class _HMWWriteState extends State<HMWWrite> {
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
-                    side: BorderSide(
+                    side: const BorderSide(
                       color: Color(0xFF233A66),
                       width: 1,
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                   ),
                   child: Text(
                     'submit',
                     style: GoogleFonts.notoSans(
-                      color: Color(0xFF233A66),
+                      color: const Color(0xFF233A66),
                       fontSize: 20.0,
                       fontWeight: FontWeight.w700,
                     ),

@@ -18,35 +18,7 @@ class HMWChoosePage extends StatefulWidget {
 }
 
 class _HMWChoosePageState extends State<HMWChoosePage> {
-  int checkedId = 0; // 나중에 int로 바꾸기!
-
-  // 더미데이터
-  final List<Map<String, String>> problemList = [
-    {"id": "1", "content": "choose 3-5 problems"},
-    {
-      "id": "2",
-      "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-    },
-    {"id": "3", "content": "choose 3-5 problems"},
-    {
-      "id": "4",
-      "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-    },
-    {"id": "5", "content": "choose 3-5 problems"},
-    {
-      "id": "6",
-      "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-    },
-    {"id": "7", "content": "choose 3-5 problems"},
-    {
-      "id": "8",
-      "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-    },
-  ];
+  int checkedId = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -55,11 +27,14 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
     final token = context.watch<UserToken>().token;
 
     return Scaffold(
-      backgroundColor: Color(0xFFF7EEDE),
+      backgroundColor: const Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, size: 25,),
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            size: 25,
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -67,11 +42,11 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
         title: Text(
           "How Might We?",
           style: GoogleFonts.notoSans(
-              color: Color(0xFF233A66),
+              color: const Color(0xFF233A66),
               fontSize: 20,
               fontWeight: FontWeight.w700),
         ),
-        backgroundColor: Color(0xFFF7EEDE),
+        backgroundColor: const Color(0xFFF7EEDE),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
@@ -92,59 +67,65 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
           scrollDirection: Axis.vertical,
           physics: const BouncingScrollPhysics(),
           child: Container(
-            padding: EdgeInsets.fromLTRB(10, 0, 10, 50),
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 50),
             child: FutureBuilder(
               future: HMWService().getHmw(problemId, token),
               builder: (context, snapshot) {
-                var data = snapshot.data!;
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    DesignSteps(
-                      step: 2,
-                      sdgs: sdgs,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    SizedBox(
-                      width: 170,
-                      child: DesignCard(content: data.problemContent),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    MasonryGridView.count(
-                      physics: BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: data.hmws.length,
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 5.0,
-                      mainAxisSpacing: 5.0,
-                      itemBuilder: (context, index) {
-                        return CheckDesignPaper(
-                          id: data.hmws[index]["id"],
-                          checkedId: checkedId,
-                          checkCard: (id) {
-                            setState(() {
-                              if (checkedId == id) {
-                                checkedId = 0;
-                              } else {
-                                checkedId = id;
-                              }
-                            });
-                            print(id);
-                            print(checkedId);
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: Text("loading..."));
+                } else {
+                  if (snapshot.hasError) {
+                    return const Center(child: Text('error')); // 에러 발생 시
+                  } else {
+                    var data = snapshot.data!;
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        DesignSteps(
+                          step: 2,
+                          sdgs: sdgs,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        SizedBox(
+                          width: 170,
+                          child: DesignCard(content: data.problemContent),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        MasonryGridView.count(
+                          physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: data.hmws.length,
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 5.0,
+                          mainAxisSpacing: 5.0,
+                          itemBuilder: (context, index) {
+                            return CheckDesignPaper(
+                              id: data.hmws[index]["id"],
+                              checkedId: checkedId,
+                              checkCard: (id) {
+                                setState(() {
+                                  if (checkedId == id) {
+                                    checkedId = 0;
+                                  } else {
+                                    checkedId = id;
+                                  }
+                                });
+                              },
+                              content: data.hmws[index]["content"],
+                            );
                           },
-                          content: data.hmws[index]["content"],
-                        );
-                      },
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                );
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    );
+                  }
+                }
               },
             ),
           ),
@@ -155,28 +136,19 @@ class _HMWChoosePageState extends State<HMWChoosePage> {
         child: ElevatedButton(
           onPressed: () {
             HMWService().patchHMW(sdgs, problemId, checkedId, context, token);
-
-            // Navigator.of(context).push(
-            //   MaterialPageRoute(
-            //     builder: (context) => const HMWListPage(),
-            //     settings: RouteSettings(
-            //       arguments: ModalRoute.of(context)!.settings.arguments,
-            //     ),
-            //   ),
-            // );
           },
           style: ElevatedButton.styleFrom(
             elevation: 0,
-            side: BorderSide(
+            side: const BorderSide(
               color: Color(0xFF233A66),
               width: 1,
             ),
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
           ),
           child: Text(
             'next',
             style: GoogleFonts.notoSans(
-              color: Color(0xFF233A66),
+              color: const Color(0xFF233A66),
               fontSize: 20.0,
               fontWeight: FontWeight.w700,
             ),

@@ -39,7 +39,7 @@ class IssueComment extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
@@ -50,7 +50,7 @@ class IssueComment extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
@@ -59,19 +59,18 @@ class IssueComment extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // 원형 이미지
-                    CircleAvatar(
+                    const CircleAvatar(
                         radius: 20,
                         backgroundColor: Colors.transparent,
                         backgroundImage: NetworkImage(
                             "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80")),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Expanded(
                       child: Container(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
-                        decoration: BoxDecoration(
-                          //color: Color(0xFFF7EEDE),
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                        decoration: const BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
                               color: Color(0xFFD7A859),
@@ -82,7 +81,7 @@ class IssueComment extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(
@@ -92,7 +91,7 @@ class IssueComment extends StatelessWidget {
                                 fontSize: 13,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(

@@ -45,132 +45,160 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
                   future:
                       IssueDetailService().getIssueDetail(widget.itemId, token),
                   builder: (context, snapshot) {
-                    var data = snapshot.data!;
-                    isLiked = data.userHasLiked;
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: data.imageUrl != ""
-                          ? BoxDecoration(
-                              color: Colors.black45,
-                              image: DecorationImage(
-                                colorFilter: ColorFilter.mode(
-                                    Colors.black54, BlendMode.darken),
-                                alignment: Alignment.topCenter,
-                                fit: BoxFit.fitHeight,
-                                image: NetworkImage(data.imageUrl),
-                              ),
-                            )
-                          : BoxDecoration(
-                              color: Color(0xFFFFD691),
-                              gradient: LinearGradient(
-                                begin: Alignment.bottomCenter,
-                                end: Alignment.topCenter,
-                                colors: [
-                                  Colors.black54,
-                                  Colors.grey,
-                                ],
-                              ),
-                            ),
-                      child: SafeArea(
-                        //backgroundColor: Colors.transparent,
-                        child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                            minHeight: constraints.maxHeight,
-                          ),
-                          child: IntrinsicHeight(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 0, horizontal: 10),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      IconButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        icon: Icon(
-                                          Icons.arrow_back_ios,
-                                          size: 30,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          IssueDetailService().postIssueLike(
-                                              data.id, onClickLike, token);
-                                        },
-                                        icon: Icon(
-                                          isLiked
-                                              ? Icons.favorite
-                                              : Icons.favorite_border_outlined,
-                                          size: 30,
-                                          color: Color(0xFFFF6280),
-                                        ),
-                                      ),
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else {
+                      if (snapshot.hasError) {
+                        return const Center(child: Text('error')); // 에러 발생 시
+                      } else {
+                        var data = snapshot.data!;
+                        isLiked = data.userHasLiked;
+                        return Container(
+                          width: MediaQuery.of(context).size.width,
+                          decoration: data.imageUrl != ""
+                              ? BoxDecoration(
+                                  color: Colors.black45,
+                                  image: DecorationImage(
+                                    colorFilter: const ColorFilter.mode(
+                                        Colors.black54, BlendMode.darken),
+                                    alignment: Alignment.topCenter,
+                                    fit: BoxFit.fitHeight,
+                                    image: NetworkImage(data.imageUrl),
+                                  ),
+                                )
+                              : const BoxDecoration(
+                                  color: Color(0xFFFFD691),
+                                  gradient: LinearGradient(
+                                    begin: Alignment.bottomCenter,
+                                    end: Alignment.topCenter,
+                                    colors: [
+                                      Colors.black54,
+                                      Colors.grey,
                                     ],
                                   ),
                                 ),
-                                Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 20),
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 20),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        data.createdAt.substring(0, 10),
-                                        style: GoogleFonts.notoSans(
-                                            color: Colors.white, fontSize: 15),
+                          child: SafeArea(
+                            //backgroundColor: Colors.transparent,
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(
+                                minHeight: constraints.maxHeight,
+                              ),
+                              child: IntrinsicHeight(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 0, horizontal: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          IconButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            icon: const Icon(
+                                              Icons.arrow_back_ios,
+                                              size: 30,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                              IssueDetailService()
+                                                  .postIssueLike(data.id,
+                                                      onClickLike, token);
+                                            },
+                                            icon: Icon(
+                                              isLiked
+                                                  ? Icons.favorite
+                                                  : Icons
+                                                      .favorite_border_outlined,
+                                              size: 30,
+                                              color: Color(0xFFFF6280),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      if (data.title != null)
-                                        FutureBuilder(
-                                          future: TranslationService()
-                                              .getTranslation(data.title, context),
-                                          builder: (context, snapshot) {
-                                            var transData = snapshot.data!;
-                                            return Text(
-                                              transData,
-                                              style: GoogleFonts.notoSans(
+                                    ),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 20),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 20),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            data.createdAt.substring(0, 10),
+                                            style: GoogleFonts.notoSans(
                                                 color: Colors.white,
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      SizedBox(
-                                        height: 10,
+                                                fontSize: 15),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          if (data.title != null)
+                                            FutureBuilder(
+                                              future: TranslationService()
+                                                  .getTranslation(
+                                                      data.title, context),
+                                              builder: (context, snapshot) {
+                                                if (snapshot.connectionState ==
+                                                    ConnectionState.waiting) {
+                                                  return const Center(
+                                                      child:
+                                                          Text("loading..."));
+                                                } else {
+                                                  if (snapshot.hasError) {
+                                                    return const Center(
+                                                        child: Text(
+                                                            'error')); // 에러 발생 시
+                                                  } else {
+                                                    var transData =
+                                                        snapshot.data!;
+                                                    return Text(
+                                                      transData,
+                                                      style:
+                                                          GoogleFonts.notoSans(
+                                                        color: Colors.white,
+                                                        fontSize: 25,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                      ),
+                                                    );
+                                                  }
+                                                }
+                                              },
+                                            ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            data.writer,
+                                            style: GoogleFonts.notoSans(
+                                              color: Colors.white,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        data.writer,
-                                        style: GoogleFonts.notoSans(
-                                          color: Colors.white,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                    Expanded(
+                                      child: IssueContent(data: data),
+                                    ),
+                                  ],
                                 ),
-                                Expanded(
-                                  child: IssueContent(data: data),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    );
+                        );
+                      }
+                    }
                   },
                 ),
               );
@@ -192,15 +220,15 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
               );
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFFF7EEDE),
+              backgroundColor: const Color(0xFFF7EEDE),
               elevation: 0,
-              side: BorderSide(
+              side: const BorderSide(
                 color: Color(0xFFD7A859),
                 width: 1,
               ),
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             ),
-            child: Icon(
+            child: const Icon(
               Icons.comment_outlined,
               size: 35,
               color: Color(0xFFD7A859),

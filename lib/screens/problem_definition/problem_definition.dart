@@ -18,41 +18,20 @@ class ProblemDefinitionPage extends StatefulWidget {
 }
 
 class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
-  // 더미데이터
-  final List<Map<String, String>> problemList = [
-    {"content": "choose 3-5 problems"},
-    {
-      "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-    },
-    {"content": "choose 3-5 problems"},
-    {
-      "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-    },
-    {"content": "choose 3-5 problems"},
-    {
-      "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-    },
-    {"content": "choose 3-5 problems"},
-    {
-      "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
     final int sdgs = widget.sdgs;
     final token = context.watch<UserToken>().token;
 
     return Scaffold(
-      backgroundColor: Color(0xFFF7EEDE),
+      backgroundColor: const Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, size: 25,),
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            size: 25,
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -60,11 +39,11 @@ class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
         title: Text(
           "Problem definition",
           style: GoogleFonts.notoSans(
-              color: Color(0xFF233A66),
+              color: const Color(0xFF233A66),
               fontSize: 20,
               fontWeight: FontWeight.w700),
         ),
-        backgroundColor: Color(0xFFF7EEDE),
+        backgroundColor: const Color(0xFFF7EEDE),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
@@ -83,61 +62,75 @@ class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 50),
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 50),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              DesignSteps(step: 1, sdgs: sdgs,),
+              DesignSteps(
+                step: 1,
+                sdgs: sdgs,
+              ),
               FutureBuilder(
-                future: ProblemDefinitionService().getProblemDefinition(sdgs, token),
+                future: ProblemDefinitionService()
+                    .getProblemDefinition(sdgs, token),
                 builder: (context, snapshot) {
-                  var data = snapshot.data!;
-                  return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: MasonryGridView.count(
-                    physics: BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: data.length + 1,
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 5.0,
-                    mainAxisSpacing: 5.0,
-                    itemBuilder: (context, index) {
-                      if (index == 0) {
-                        return Container(
-                          margin: EdgeInsets.all(40),
-                          child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => ProblemWrite(sdgs: sdgs),
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    if (snapshot.hasError) {
+                      return const Center(child: Text('error')); // 에러 발생 시
+                    } else {
+                      var data = snapshot.data!;
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: MasonryGridView.count(
+                          physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: data.length + 1,
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 5.0,
+                          mainAxisSpacing: 5.0,
+                          itemBuilder: (context, index) {
+                            if (index == 0) {
+                              return Container(
+                                margin: const EdgeInsets.all(40),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ProblemWrite(sdgs: sdgs),
+                                      ),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    shape: const CircleBorder(),
+                                    // padding도 넣을 수 있음!
+                                    padding: const EdgeInsets.all(10.0),
+                                    side: const BorderSide(
+                                      color: Color(0xFF233A66),
+                                      width: 1,
+                                    ),
+                                    shadowColor: Colors.transparent,
                                   ),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                //fixedSize: Size(30, 30),
-                                backgroundColor: Colors.white,
-                                shape: CircleBorder(),
-                                // padding도 넣을 수 있음!
-                                padding: EdgeInsets.all(10.0),
-                                side: BorderSide(
-                                  color: Color(0xFF233A66),
-                                  width: 1,
+                                  child: const Icon(
+                                    Icons.edit_outlined,
+                                    size: 25,
+                                    color: Color(0xFF233A66),
+                                  ),
                                 ),
-                                shadowColor: Colors.transparent,
-                              ),
-                              child: const Icon(
-                                Icons.edit_outlined,
-                                size: 25,
-                                color: Color(0xFF233A66),
-                              ),
-                            ),
-                        );
-                      } else {
-                        return DesignCard(content: data[index - 1].content!);
-                      }
-                    },
-                  ),
-                );},
+                              );
+                            } else {
+                              return DesignCard(
+                                  content: data[index - 1].content!);
+                            }
+                          },
+                        ),
+                      );
+                    }
+                  }
+                },
               ),
             ],
           ),
@@ -146,7 +139,7 @@ class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
       floatingActionButtonLocation:
           FloatingActionButtonLocation.centerDocked, // 버튼 가운데 정렬
       floatingActionButton: Container(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
         width: double.infinity,
         child: Row(
           children: [
@@ -157,12 +150,14 @@ class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
                   // Add your onPressed code here!
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => ProblemChoosePage(sdgs: sdgs,),
+                      builder: (context) => ProblemChoosePage(
+                        sdgs: sdgs,
+                      ),
                     ),
                   );
                 },
                 backgroundColor: Colors.white,
-                shape: StadiumBorder(
+                shape: const StadiumBorder(
                   side: BorderSide(
                     color: Color(0xFF233A66),
                     width: 1,
@@ -171,7 +166,7 @@ class _ProblemDefinitionPageState extends State<ProblemDefinitionPage> {
                 label: Text(
                   'choose one problem',
                   style: GoogleFonts.notoSans(
-                    color: Color(0xFF233A66),
+                    color: const Color(0xFF233A66),
                     fontSize: 20.0,
                     fontWeight: FontWeight.w700,
                   ),
