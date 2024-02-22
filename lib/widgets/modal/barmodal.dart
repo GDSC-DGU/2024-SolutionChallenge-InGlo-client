@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:inglo/screens/detail_sketch/detail_sketch4.dart';
+import 'package:inglo/screens/profile/widgets/detailsketch.dart';
 import 'package:inglo/widgets/comment/comment_box.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BarModal extends StatelessWidget {
   final int id;
+  final int sketch_id;
 
-  const BarModal({Key? key, required this.id}) : super(key: key);
+  const BarModal({Key? key, required this.id, required this.sketch_id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,14 @@ class BarModal extends StatelessWidget {
             height: 40,
             color: Colors.transparent,
             child: FilledButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailSketch4Page(sketchId: sketch_id), // 또는 sketchId: _selectedIndex, 를 전달
+                  ),
+                );
+              },
               child: Text(
                 'See Sketch',
                 style: GoogleFonts.notoSans(
