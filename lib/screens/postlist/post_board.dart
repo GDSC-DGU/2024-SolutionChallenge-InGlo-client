@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inglo/screens/post/create_post.dart';
+import 'package:inglo/screens/post/widgets/selected_sketch.dart';
 import 'package:inglo/widgets/appbar/appbar.dart';
 import 'package:inglo/widgets/dropdown/dropdownbutton.dart';
 import 'package:inglo/screens/issuelist/widgets/issue_choose.dart';
@@ -137,7 +138,7 @@ class _PostBoardPageState extends State<PostBoardPage> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => CreatePost(),
+                        builder: (context) => SelectedSketch(),
                       ),
                     );
                   },
