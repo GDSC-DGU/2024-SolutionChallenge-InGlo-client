@@ -76,7 +76,7 @@ class _MyDrawingState extends State<MyDrawing> {
                       decoration: BoxDecoration(
                         color: Color(0xFFF7EEDE),
                         image: DecorationImage(
-                          image: NetworkImage(sketch.imageUrl),
+                          image: NetworkImage(sketch.imageUrl ?? ''),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -107,7 +107,7 @@ class _MyDrawingState extends State<MyDrawing> {
                                 Expanded(
                                   flex: 4,
                                   child: Text(
-                                    sketch.description,
+                                    sketch.description ?? '',
                                     style: GoogleFonts.notoSans(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -119,7 +119,7 @@ class _MyDrawingState extends State<MyDrawing> {
                                 Flexible(
                                   child: Container(
                                     child: Text(
-                                      sketch.createdAt.substring(0, 10),
+                                      sketch.createdAt.substring(0, 10) ?? '0000-00-00',
                                       style: GoogleFonts.notoSans(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w400,
@@ -136,7 +136,7 @@ class _MyDrawingState extends State<MyDrawing> {
                                 padding: EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 0),
                                 child: Text(
-                                  sketch.content, // 여기에 원하는 텍스트를 추가
+                                  sketch.content ?? '', // 여기에 원하는 텍스트를 추가
                                   style: GoogleFonts.notoSans(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w400),
@@ -187,8 +187,8 @@ class _MyDrawingState extends State<MyDrawing> {
                         fontWeight: FontWeight.w400, // 폰트 두께를 bold로 변경
                         fontSize: 12, // 폰트 크기를 22로 변경
                       ),
-                      titles: titles(data),
-                      images: images(data),
+                      titles: titles(data) ?? [],
+                      images: images(data) ?? [],
                       initialPage: 0,
                       onPageChanged: (page) {},
                       align: ALIGN.CENTER,

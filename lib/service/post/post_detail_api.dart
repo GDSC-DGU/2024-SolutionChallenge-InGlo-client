@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:inglo/models/issue_detail/issue_detail.dart';
+import 'package:inglo/models/post/post_list.dart';
 
 class PostDetailService {
   final Dio dio = Dio(); // Dio 인스턴스 생성
