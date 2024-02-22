@@ -4,6 +4,7 @@ import 'package:inglo/models/issue_detail/issue_detail.dart';
 import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/issue_detail/widgets/issue_content.dart';
 import 'package:inglo/screens/issue_detail/widgets/issue_input.dart';
+import 'package:inglo/service/translate/translate_util.dart';
 import 'package:inglo/widgets/comment/issue_comment.dart';
 import 'package:inglo/service/issue/issue_detail.dart';
 import 'package:inglo/widgets/comment/comment_box.dart';
@@ -22,25 +23,15 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
   bool isBookMarked = false;
   final issue_id = 0; // issue id(임시값)
   bool isLiked = false;
-  late Future<IssueDetailModel> myFuture;
-
-  @override
-  void initState() {
-    final token = context.watch<UserToken>().token;
-    myFuture = IssueDetailService().getIssueDetail(widget.itemId, token);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
-
     onClickLike() {
       setState(() {
         isLiked = !isLiked;
       });
     }
 
-    final int itemId = widget.itemId;
     final token = context.watch<UserToken>().token;
 
     return Scaffold(
@@ -51,7 +42,8 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
               return SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: FutureBuilder(
-                  future: myFuture,
+                  future:
+                      IssueDetailService().getIssueDetail(widget.itemId, token),
                   builder: (context, snapshot) {
                     var data = snapshot.data!;
                     isLiked = data.userHasLiked;
@@ -108,7 +100,8 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
                                       ),
                                       IconButton(
                                         onPressed: () {
-                                          IssueDetailService().postIssueLike(data.id, onClickLike, token);
+                                          IssueDetailService().postIssueLike(
+                                              data.id, onClickLike, token);
                                         },
                                         icon: Icon(
                                           isLiked
@@ -139,14 +132,22 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text(
-                                        data.title,
-                                        style: GoogleFonts.notoSans(
-                                          color: Colors.white,
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.w700,
+                                      if (data.title != null)
+                                        FutureBuilder(
+                                          future: TranslationService()
+                                              .getTranslation("ko", data.title),
+                                          builder: (context, snapshot) {
+                                            var transData = snapshot.data!;
+                                            return Text(
+                                              transData,
+                                              style: GoogleFonts.notoSans(
+                                                color: Colors.white,
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            );
+                                          },
                                         ),
-                                      ),
                                       SizedBox(
                                         height: 10,
                                       ),
@@ -182,29 +183,28 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
       floatingActionButton: Container(
         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: ElevatedButton(
-          onPressed: () {
-            showBarModalBottomSheet(
-              expand: false,
-              context: context,
-              backgroundColor: Colors.transparent,
-              builder: (context) => IssueComments(id: issue_id),
-            );
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFFF7EEDE),
-            elevation: 0,
-            side: BorderSide(
-              color: Color(0xFFD7A859),
-              width: 1,
+            onPressed: () {
+              showBarModalBottomSheet(
+                expand: false,
+                context: context,
+                backgroundColor: Colors.transparent,
+                builder: (context) => IssueComments(id: issue_id),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFFF7EEDE),
+              elevation: 0,
+              side: BorderSide(
+                color: Color(0xFFD7A859),
+                width: 1,
+              ),
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             ),
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          ),
-          child: Icon(
-            Icons.comment_outlined,
-            size: 35,
-            color: Color(0xFFD7A859),
-          )
-        ),
+            child: Icon(
+              Icons.comment_outlined,
+              size: 35,
+              color: Color(0xFFD7A859),
+            )),
       ),
     );
   }

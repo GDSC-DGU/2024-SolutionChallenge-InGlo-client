@@ -32,8 +32,7 @@ class TranslationService {
 // 예외 처리
       print('Exception caught: $e');
     }
-
-    return "Failed to translate";
+    return text;
   }
 
 

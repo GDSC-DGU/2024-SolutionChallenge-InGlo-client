@@ -21,28 +21,16 @@ class IssueItem extends StatelessWidget {
   }
 }
 
-class IssueListData extends StatefulWidget {
+class IssueListData extends StatelessWidget {
   final int sdgs;
   final token;
   const IssueListData({required this.sdgs, required this.token, super.key});
 
-  @override
-  State<IssueListData> createState() => _IssueListDataState();
-}
-
-class _IssueListDataState extends State<IssueListData> {
-  late Future<List<IssueSdgsModel>> myFuture;
-
-  @override
-  void initState() {
-    myFuture = IssueSdgsService().getIssueSdgs(widget.sdgs, widget.token);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: myFuture,
+      future: IssueSdgsService().getIssueSdgs(sdgs, token),
       builder: (context, snapshot) {
         var data = snapshot.data!;
         return Column(
