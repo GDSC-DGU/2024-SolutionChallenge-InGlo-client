@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inglo/screens/post/create_post.dart';
 import 'package:inglo/screens/post/widgets/selected_sketch.dart';
 import 'package:inglo/widgets/appbar/appbar.dart';
-import 'package:inglo/widgets/dropdown/dropdownbutton.dart';
 import 'package:inglo/screens/issuelist/widgets/issue_choose.dart';
 import 'package:inglo/screens/postlist/widgets/post_item.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,6 +32,14 @@ class _PostBoardPageState extends State<PostBoardPage> {
   String? token = ''; // token 저장
   String? refresh_token = '';
 
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose(); // 컨트롤러 해제
+    super.dispose();
+  }
+
   // 초기 1번 실행
   void initState() {
     super.initState();
@@ -46,8 +52,9 @@ class _PostBoardPageState extends State<PostBoardPage> {
 
   // profile get 함수
   Future<void> getPostItems() async {
-    final url = "https://dongkyeom.com/api/v1/posts/";
+    final url = "https://dongkyeom.com/api/v1/posts/?content=${_controller.text}&username=";
 
+    print('검색 키워드dmdmdmmddmmdmddmdmmdmdmdm으으으으 :: ${_controller.text}');
     try {
       final response = await dio.get(
         url,
@@ -60,7 +67,7 @@ class _PostBoardPageState extends State<PostBoardPage> {
       );
 
       if(response.statusCode == 200 || response.statusCode == 201) {
-        print('성공!');
+        print('포스트 리스트 성공!');
         final List<dynamic> jsonResponse = jsonDecode(response.data);
         print('data : ${jsonResponse}');
 
@@ -94,13 +101,34 @@ class _PostBoardPageState extends State<PostBoardPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  IssueMenu(
-                      selectedSdgs: sdgs,
-                      onSdgsTap: (int sdgs) {
-                        setState(() {
-                          this.sdgs = sdgs;
-                        });
-                      }),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    height: 60,
+                    child: TextField(
+                      controller: _controller,
+                      decoration: InputDecoration(
+                        hintText: "Search...",
+                        prefixIcon: Icon(Icons.search),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            _controller.clear();
+                          },
+                        ),
+                      ),
+                      onSubmitted: (value) {
+                        getPostItems();
+                      },
+                    ),
+                  ),
                   SizedBox(
                     height: 10,
                   ),
