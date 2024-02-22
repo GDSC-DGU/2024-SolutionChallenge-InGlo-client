@@ -62,7 +62,7 @@ class _PostItemState extends State<PostItem> {
                                     child: Text(
                                       item.title ?? '',
                                       style: GoogleFonts.notoSans(
-                                          fontSize: 14,
+                                          fontSize: 20,
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold),
                                       maxLines: 1,
@@ -112,7 +112,7 @@ class _PostItemState extends State<PostItem> {
                                     Row(
                                       children: [
                                         Text(
-                                          '${DateFormat('yyyy-MM-dd').format(DateTime.parse(item.created_at)) ?? '0000-00-00'} | ',
+                                          '${item.created_at.substring(0, 10) ?? '0000-00-00'} | ',
                                           style: GoogleFonts.notoSans(
                                               fontSize: 12,
                                               color: Colors.grey,

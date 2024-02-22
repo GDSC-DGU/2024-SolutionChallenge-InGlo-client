@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inglo/screens/detail_sketch/detail_sketch4.dart';
+import 'package:inglo/screens/post/widgets/detail_sketch.dart';
 import 'package:inglo/screens/profile/widgets/detailsketch.dart';
 import 'package:inglo/widgets/comment/comment_box.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -26,7 +27,7 @@ class BarModal extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DetailSketch4Page(sketchId: sketch_id), // 또는 sketchId: _selectedIndex, 를 전달
+                    builder: (context) => SeeDetailSketch(sketchId: sketch_id), // 또는 sketchId: _selectedIndex, 를 전달
                   ),
                 );
               },
