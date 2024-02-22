@@ -103,6 +103,7 @@ class _DetailPostState extends State<DetailPost> {
         if (detailPost != null) {
           print('post : ${detailPost!['feedbacks']}'); // null 검사 후 값에 접근
         }
+        isLiked = jsonResponse['is_liked'];
       });
 
       // final detail = DetailPost.fromJson(jsonResponse); // 왜인지 안 된다!
