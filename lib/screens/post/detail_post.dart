@@ -123,7 +123,7 @@ class _DetailPostState extends State<DetailPost> {
       body: SafeArea(
         child: isLoading
             ? Center(
-                child: Text('로딩 중입니다... '),
+                child: Text('Loading...'),
               )
             : Container(
                 height: MediaQuery.of(context).size.height,
