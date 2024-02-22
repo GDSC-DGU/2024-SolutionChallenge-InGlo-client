@@ -188,7 +188,7 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
                 expand: false,
                 context: context,
                 backgroundColor: Colors.transparent,
-                builder: (context) => IssueComments(id: issue_id),
+                builder: (context) => IssueComments(id: widget.itemId),
               );
             },
             style: ElevatedButton.styleFrom(
