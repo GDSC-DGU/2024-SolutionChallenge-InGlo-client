@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:inglo/provider/profile/users.dart';
 import 'package:inglo/screens/post/widgets/modified_post.dart';
 import 'package:inglo/screens/post/widgets/post_user.dart';
 import 'package:inglo/screens/postlist/post_board.dart';
@@ -34,6 +35,7 @@ class _DetailPostState extends State<DetailPost> {
   // final detail = DetailPostPreferences.detailPost;
 
   String? token = ''; // token 저장
+  int? id = 0;
 
   final PostService _PostService = PostService(); // instance 생성
 
@@ -43,6 +45,8 @@ class _DetailPostState extends State<DetailPost> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       token = Provider.of<UserToken>(context, listen: false)
           .token; // provider에서 토큰 가져오기
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      id = userProvider.user?.id ?? 0; // id
       await getDetail();
     });
     setState(() {
@@ -109,7 +113,7 @@ class _DetailPostState extends State<DetailPost> {
   }
 
   Future<void> DeletePost() async {
-    await _PostService.deletePost(widget.id, token); // 피드백 삭제
+    await _PostService.deletePost(widget.id, token); // 포스트 삭제
   }
 
   @override
@@ -136,7 +140,8 @@ class _DetailPostState extends State<DetailPost> {
                                 onPressed: () {
                                   Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(builder: (context) => PostBoardPage()),
+                                    MaterialPageRoute(
+                                        builder: (context) => PostBoardPage()),
                                   );
                                 },
                               ),
@@ -168,42 +173,50 @@ class _DetailPostState extends State<DetailPost> {
                                               color: Color(0xFFFF6280),
                                             ),
                                           ),
-                                          PopupMenuButton(
-                                            color: Color(0xFFFFD691),
-                                            offset: Offset(0, 60),
-                                            onSelected: (String result) {
-                                              print(result);
-                                              if (result == 'modified') {
-                                                setState(() {
-                                                  isEditing = !isEditing;
-                                                });
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ModifiedPost(
-                                                            id: widget.id), // id 값을 전달
-                                                  ),
-                                                );
-                                              } else if (result == 'delete') {
-                                                DeletePost();
-                                              }
-                                            },
-                                            itemBuilder:
-                                                (BuildContext context) =>
-                                                    <PopupMenuEntry<String>>[
-                                              PopupMenuItem<String>(
-                                                value: 'modified',
-                                                child: _buildPopupMenuItem(
-                                                    'modified', Icons.edit),
-                                              ),
-                                              PopupMenuItem<String>(
-                                                value: 'delete',
-                                                child: _buildPopupMenuItem(
-                                                    'delete', Icons.delete),
-                                              ),
-                                            ],
-                                          )
+                                          detailPost?['user']['id'] == id
+                                              ? PopupMenuButton(
+                                                  color: Color(0xFFFFD691),
+                                                  offset: Offset(0, 60),
+                                                  onSelected: (String result) {
+                                                    print(result);
+                                                    if (result == 'modified') {
+                                                      setState(() {
+                                                        isEditing = !isEditing;
+                                                      });
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ModifiedPost(
+                                                                  id: widget
+                                                                      .id), // id 값을 전달
+                                                        ),
+                                                      );
+                                                    } else if (result ==
+                                                        'delete') {
+                                                      DeletePost();
+                                                    }
+                                                  },
+                                                  itemBuilder: (BuildContext
+                                                          context) =>
+                                                      <PopupMenuEntry<String>>[
+                                                    PopupMenuItem<String>(
+                                                      value: 'modified',
+                                                      child:
+                                                          _buildPopupMenuItem(
+                                                              'modified',
+                                                              Icons.edit),
+                                                    ),
+                                                    PopupMenuItem<String>(
+                                                      value: 'delete',
+                                                      child:
+                                                          _buildPopupMenuItem(
+                                                              'delete',
+                                                              Icons.delete),
+                                                    ),
+                                                  ],
+                                                )
+                                              : Container()
                                         ],
                                       ),
                               ],
