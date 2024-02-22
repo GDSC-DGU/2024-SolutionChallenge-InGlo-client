@@ -25,14 +25,16 @@ class _SelectedSketchState extends State<SelectedSketch> {
     int _selectedIndex = -1;
 
     void StartPost() {
+      print('sketch_id : ${selectedSketch}');
       Provider.of<PostSDGS>(context, listen: false).setSketch(selectedSketch);
-
-      Navigator.of(context).push(
+      Navigator.push(
+        context,
         MaterialPageRoute(
-          builder: (context) => CreatePost(),
+          builder: (context) => CreatePost(sketch_id: selectedSketch), // 또는 sketchId: _selectedIndex, 를 전달
         ),
       );
     }
+
 
     final token = context.watch<UserToken>().token;
     titles(List<MyDrawingListModel> list) {
@@ -191,7 +193,12 @@ class _SelectedSketchState extends State<SelectedSketch> {
                         setState(() {
                           _selectedIndex = index; // 탭한 항목을 선택된 항목으로 설정
                           selectedSketch = data[index].id;
-                          print('select : $index id : ${data[index].id}');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CreatePost(sketch_id: data[index].id), // 또는 sketchId: _selectedIndex, 를 전달
+                            ),
+                          );
                         });
                       },
                     );

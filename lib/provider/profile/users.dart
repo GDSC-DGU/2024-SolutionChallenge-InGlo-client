@@ -26,7 +26,7 @@ class UserProvider with ChangeNotifier {
         name: 'Unknown',
         profile_img: profile_img ?? '',
         country: country ?? 0,
-        language: language ?? 'en',
+        language: language ?? '0',
         liked_total: liked_total ?? 0,
         sketch_num: sketch_num ?? 0,
         feedback_total: feedback_total ?? 0,

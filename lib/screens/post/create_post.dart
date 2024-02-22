@@ -14,7 +14,9 @@ import 'package:provider/provider.dart';
 import 'package:inglo/provider/user_token/user_token.dart';
 
 class CreatePost extends StatefulWidget {
-  const CreatePost({super.key});
+  final int sketch_id;
+
+  CreatePost({Key? key, required this.sketch_id}) : super(key: key);
 
   @override
   _CreatePostState createState() => _CreatePostState();
@@ -24,7 +26,6 @@ class _CreatePostState extends State<CreatePost> {
   final dio = Dio(); // dio instance 생성
   String? token = ''; // token 저장
   String? sdgs = '';
-  int? sketch_id = 0;
 
   // title 입력
   final TextEditingController _titleController = TextEditingController();
@@ -43,13 +44,13 @@ class _CreatePostState extends State<CreatePost> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       token = Provider.of<UserToken>(context, listen: false)
           .token; // provider에서 토큰 가져오기
-      sketch_id = Provider.of<PostSDGS>(context).sketch_id;
     });
+    print('전달 : ${widget.sketch_id}');
   }
 
   // post 생성 api
   Future<void> _handlePost() async {
-    print('선택 sdgs : $sdgs 선택 sketch : $sketch_id');
+    print('선택 sdgs : $sdgs 선택 sketch : ${widget.sketch_id} title : ${_titleController.text} content : ${controller.getText()} token : $token');
     Provider.of<PostSDGS>(context, listen: false).setSDGS(int.parse('$sdgs')); // sdgs 저장
     final url = "https://dongkyeom.com/api/v1/posts/";
 
@@ -60,7 +61,7 @@ class _CreatePostState extends State<CreatePost> {
     Map<String, dynamic> data = {
       "title": _titleController.text,
       "content": content,
-      "sketch_id": int.parse('$sketch_id' ?? '0'),
+      "sketch_id": widget.sketch_id,
       "sdgs": int.parse('$sdgs'),
     };
 

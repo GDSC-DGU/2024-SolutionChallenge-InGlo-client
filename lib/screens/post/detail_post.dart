@@ -331,7 +331,7 @@ class _DetailPostState extends State<DetailPost> {
                           height: 40,
                           child: isEditing
                               ? Container()
-                              : BarModal(id: widget.id)),
+                              : BarModal(id: widget.id, sketch_id: detailPost?['sketch']['id'],)),
                     ),
                   ],
                 ),
