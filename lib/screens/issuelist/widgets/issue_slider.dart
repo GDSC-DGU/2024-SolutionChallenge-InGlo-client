@@ -1,9 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_provider/flutter_provider.dart';
-import 'package:inglo/provider/user_token/user_token.dart';
+import 'package:inglo/models/issuelist/issue_top3.dart';
 import 'package:inglo/screens/issue_detail/issue_detail.dart';
 import 'package:inglo/service/issue/issuelist.dart';
+import 'package:inglo/service/translate/translate_util.dart';
 
 // 더미데이터
 final List<String> imgList = [
@@ -15,15 +15,27 @@ final List<String> imgList = [
   'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
 ];
 
-class IssueSlider extends StatelessWidget {
+class IssueSlider extends StatefulWidget {
   final String? token;
   const IssueSlider({required this.token, super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<IssueSlider> createState() => _IssueSliderState();
+}
 
+class _IssueSliderState extends State<IssueSlider> {
+  late Future<List<IssueTop3Model>> myFuture;
+
+  @override
+  void initState() {
+    myFuture = IssueTop3Service().getIssueTop3(widget.token);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return FutureBuilder(
-      future: IssueTop3Service().getIssueTop3(token),
+      future: myFuture,
       builder: (context, snapshot) {
         var data = snapshot.data!;
         return CarouselSlider(
@@ -37,7 +49,9 @@ class IssueSlider extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => IssueDetailPage(itemId: item.id,),
+                          builder: (context) => IssueDetailPage(
+                            itemId: item.id,
+                          ),
                         ),
                       );
                     },
@@ -78,26 +92,42 @@ class IssueSlider extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        item.title.length >= 40
-                                            ? '${item.title.substring(0, 40)}...'
-                                            : item.title,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.bold,
+                                      if (item.title != null)
+                                        FutureBuilder(
+                                          future: TranslationService()
+                                              .getTranslation("ko", item.title),
+                                          builder: (context, snapshot) {
+                                            var transData = snapshot.data!;
+                                            return Text(
+                                              transData.length >= 40
+                                                  ? '${transData.substring(0, 40)}...'
+                                                  : transData,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            );
+                                          },
                                         ),
-                                      ),
-                                      Text(
-                                        item.description.length >= 30
-                                            ? '${item.description.substring(0, 30)}...'
-                                            : item.description,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 13.0,
-                                          fontWeight: FontWeight.normal,
+                                      if (item.description != null)
+                                        FutureBuilder(
+                                          future: TranslationService()
+                                              .getTranslation("ko", item.description),
+                                          builder: (context, snapshot) {
+                                            var transData = snapshot.data!;
+                                            return Text(
+                                              transData.length >= 30
+                                                  ? '${transData.substring(0, 30)}...'
+                                                  : transData,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 13.0,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                            );
+                                          },
                                         ),
-                                      ),
                                     ],
                                   ),
                                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inglo/models/issue_detail/issue_detail.dart';
 import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/issue_detail/widgets/issue_content.dart';
 import 'package:inglo/screens/issue_detail/widgets/issue_input.dart';
@@ -21,6 +22,14 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
   bool isBookMarked = false;
   final issue_id = 0; // issue id(임시값)
   bool isLiked = false;
+  late Future<IssueDetailModel> myFuture;
+
+  @override
+  void initState() {
+    final token = context.watch<UserToken>().token;
+    myFuture = IssueDetailService().getIssueDetail(widget.itemId, token);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +51,7 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
               return SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: FutureBuilder(
-                  future: IssueDetailService().getIssueDetail(itemId, token),
+                  future: myFuture,
                   builder: (context, snapshot) {
                     var data = snapshot.data!;
                     isLiked = data.userHasLiked;

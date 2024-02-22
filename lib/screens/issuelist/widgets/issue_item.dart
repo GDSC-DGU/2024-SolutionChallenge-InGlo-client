@@ -1,30 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:inglo/models/issuelist/issue_sdgs.dart';
 import 'package:inglo/screens/issue_detail/issue_detail.dart';
 import 'package:inglo/service/issue/issuelist.dart';
-
-// 더미데이터
-final List<Map<String, String>> itemData = [
-  {
-    "title": "제목1",
-    "image":
-        "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80"
-  },
-  {
-    "title": "제목2",
-    "image":
-        "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80"
-  },
-  {
-    "title": "제목3",
-    "image":
-        "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80"
-  },
-  {
-    "title": "제목4",
-    "image":
-        "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80"
-  },
-];
+import 'package:inglo/service/translate/translate_util.dart';
 
 class IssueItem extends StatelessWidget {
   final int sdgs;
@@ -35,20 +13,36 @@ class IssueItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      child: IssueListData(sdgs: sdgs, token: token,),
+      child: IssueListData(
+        sdgs: sdgs,
+        token: token,
+      ),
     );
   }
 }
 
-class IssueListData extends StatelessWidget {
+class IssueListData extends StatefulWidget {
   final int sdgs;
   final token;
   const IssueListData({required this.sdgs, required this.token, super.key});
 
   @override
+  State<IssueListData> createState() => _IssueListDataState();
+}
+
+class _IssueListDataState extends State<IssueListData> {
+  late Future<List<IssueSdgsModel>> myFuture;
+
+  @override
+  void initState() {
+    myFuture = IssueSdgsService().getIssueSdgs(widget.sdgs, widget.token);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: IssueSdgsService().getIssueSdgs(sdgs, token),
+      future: myFuture,
       builder: (context, snapshot) {
         var data = snapshot.data!;
         return Column(
@@ -57,7 +51,8 @@ class IssueListData extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => IssueDetailPage(itemId: item.id),
+                          builder: (context) =>
+                              IssueDetailPage(itemId: item.id),
                         ),
                       );
                     },
@@ -92,14 +87,38 @@ class IssueListData extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    item.title,
-                                    style: TextStyle(
-                                        fontSize: 17,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(item.description.length >= 20 ? '${item.description.substring(0, 20)}...' : item.description),
+                                  if (item.title != null)
+                                    FutureBuilder(
+                                      future: TranslationService()
+                                          .getTranslation("ko", item.title),
+                                      builder: (context, snapshot) {
+                                        var transData = snapshot.data!;
+                                        return Text(
+                                          transData.length >= 40
+                                              ? '${transData.substring(0, 40)}...'
+                                              : transData,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 17.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  if (item.description != null)
+                                    FutureBuilder(
+                                      future: TranslationService()
+                                          .getTranslation(
+                                              "ko", item.description),
+                                      builder: (context, snapshot) {
+                                        var transData = snapshot.data!;
+                                        return Text(
+                                          transData.length >= 20
+                                              ? '${transData.substring(0, 20)}...'
+                                              : transData,
+                                        );
+                                      },
+                                    ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [

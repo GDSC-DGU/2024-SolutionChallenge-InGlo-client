@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/screens/issuelist/sdgs_select.dart';
+import 'package:inglo/service/translate/translate_util.dart';
 
 class IssueContent extends StatelessWidget {
   final data;
@@ -20,16 +21,23 @@ class IssueContent extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
-            child: Text(
-              data.content,
-              style: GoogleFonts.notoSans(
-                color: Colors.black,
-                fontSize: 15,
+          if (data.content != null)
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+              child: FutureBuilder(
+                future: TranslationService().getTranslation("ko", data.cotent),
+                builder: (context, snapshot) {
+                  var transData = snapshot.data!;
+                  return Text(
+                    transData,
+                    style: GoogleFonts.notoSans(
+                      color: Colors.black,
+                      fontSize: 15,
+                    ),
+                  );
+                },
               ),
             ),
-          ),
           Positioned(
             right: 20,
             top: -40,
