@@ -149,24 +149,6 @@ class _SelectedSketchState extends State<SelectedSketch> {
           },
         ),
         title: Text('select sketch', style: GoogleFonts.notoSans(fontWeight: FontWeight.w400, fontSize: 26),),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 10),
-            child: ElevatedButton(
-              style:
-              ElevatedButton.styleFrom(backgroundColor: Color(0xFF233A66)),
-              onPressed: StartPost,
-              child: Text(
-                'Create',
-                style: GoogleFonts.notoSans(
-                  fontSize: 16, // 폰트 크기 설정
-                  fontWeight: FontWeight.bold, // 폰트 굵기 설정
-                  color: Colors.white, // 텍스트 색상 설정
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
       body: SafeArea(
         child: Container(
