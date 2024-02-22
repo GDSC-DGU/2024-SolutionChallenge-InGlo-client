@@ -25,11 +25,11 @@ class _ProblemWriteState extends State<ProblemWrite> {
     final token = context.watch<UserToken>().token;
 
     return Scaffold(
-      backgroundColor: Color(0xFFF7EEDE),
+      backgroundColor: const Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, size: 25,),
+          icon: const Icon(Icons.arrow_back_ios, size: 25,),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -37,11 +37,11 @@ class _ProblemWriteState extends State<ProblemWrite> {
         title: Text(
           "Write problems",
           style: GoogleFonts.notoSans(
-              color: Color(0xFF233A66),
+              color: const Color(0xFF233A66),
               fontSize: 20,
               fontWeight: FontWeight.w700),
         ),
-        backgroundColor: Color(0xFFF7EEDE),
+        backgroundColor: const Color(0xFFF7EEDE),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
@@ -69,7 +69,6 @@ class _ProblemWriteState extends State<ProblemWrite> {
                   setState(() {
                     content = text;
                   });
-                  print('${content}, ${text}');
                 },
               ),
               // Submit 버튼
@@ -78,21 +77,20 @@ class _ProblemWriteState extends State<ProblemWrite> {
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: ElevatedButton(
                   onPressed: () {
-                    print(content);
                     ProblemDefinitionService().postProblemDefinition(sdgs, content, context, token);
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
-                    side: BorderSide(
+                    side: const BorderSide(
                       color: Color(0xFF233A66),
                       width: 1,
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                   ),
                   child: Text(
                     'submit',
                     style: GoogleFonts.notoSans(
-                      color: Color(0xFF233A66),
+                      color: const Color(0xFF233A66),
                       fontSize: 20.0,
                       fontWeight: FontWeight.w700,
                     ),

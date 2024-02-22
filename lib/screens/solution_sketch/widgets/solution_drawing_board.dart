@@ -10,7 +10,7 @@ class SolutionDrawingBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       height: 750,
       child: Stack(
         children: [
@@ -28,11 +28,6 @@ class SolutionDrawingBoard extends StatelessWidget {
                   height: 32,
                 ),
                 _buildStrokeToolbar(context),
-                // IconButton(
-                //   icon: const Icon(Icons.save),
-                //   tooltip: "Save to Image",
-                //   onPressed: () => _saveImage(context),
-                // ),
               ],
             ),
           )

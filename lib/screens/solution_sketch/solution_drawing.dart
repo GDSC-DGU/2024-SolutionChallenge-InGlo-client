@@ -28,22 +28,14 @@ class _SolutionDrawingPageState extends State<SolutionDrawingPage> {
       final image = await notifier.renderImage();
       finishDrawing(image);
       Navigator.pop(context);
-      // Navigator.pop(context, image.buffer.asUint8List());
-      // showDialog(
-      //   context: context,
-      //   builder: (context) => AlertDialog(
-      //     title: Text("Your Image", style: GoogleFonts.notoSans(fontWeight: FontWeight.w700, fontSize: 20,),),
-      //     content: Image.memory(image.buffer.asUint8List()),
-      //   ),
-      // );
     }
 
     return Scaffold(
-      backgroundColor: Color(0xFFF7EEDE),
+      backgroundColor: const Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, size: 25,),
+          icon: const Icon(Icons.arrow_back_ios, size: 25,),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -51,11 +43,11 @@ class _SolutionDrawingPageState extends State<SolutionDrawingPage> {
         title: Text(
           "Solution Drawing",
           style: GoogleFonts.notoSans(
-              color: Color(0xFF233A66),
+              color: const Color(0xFF233A66),
               fontSize: 20,
               fontWeight: FontWeight.w700),
         ),
-        backgroundColor: Color(0xFFF7EEDE),
+        backgroundColor: const Color(0xFFF7EEDE),
         actions: <Widget>[
           Container(
             margin:
@@ -65,16 +57,16 @@ class _SolutionDrawingPageState extends State<SolutionDrawingPage> {
               onPressed: () => saveImage(context),
               style: ElevatedButton.styleFrom(
                 elevation: 0,
-                side: BorderSide(
+                side: const BorderSide(
                   color: Color(0xFF233A66),
                   width: 1,
                 ),
-                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 25),
+                padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 25),
               ),
               child: Text(
                 'finish',
                 style: GoogleFonts.notoSans(
-                  color: Color(0xFF233A66),
+                  color: const Color(0xFF233A66),
                   fontSize: 15.0,
                   fontWeight: FontWeight.w700,
                 ),
@@ -86,7 +78,7 @@ class _SolutionDrawingPageState extends State<SolutionDrawingPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 30),
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

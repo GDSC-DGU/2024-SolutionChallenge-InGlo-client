@@ -47,11 +47,11 @@ class _SolutionSketchPageState extends State<SolutionSketchPage> {
     final token = context.watch<UserToken>().token;
 
     return Scaffold(
-      backgroundColor: Color(0xFFF7EEDE),
+      backgroundColor: const Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, size: 25,),
+          icon: const Icon(Icons.arrow_back_ios, size: 25,),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -59,11 +59,11 @@ class _SolutionSketchPageState extends State<SolutionSketchPage> {
         title: Text(
           "Solution sketch",
           style: GoogleFonts.notoSans(
-              color: Color(0xFF233A66),
+              color: const Color(0xFF233A66),
               fontSize: 20,
               fontWeight: FontWeight.w700),
         ),
-        backgroundColor: Color(0xFFF7EEDE),
+        backgroundColor: const Color(0xFFF7EEDE),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
@@ -82,7 +82,7 @@ class _SolutionSketchPageState extends State<SolutionSketchPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 30),
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -91,7 +91,7 @@ class _SolutionSketchPageState extends State<SolutionSketchPage> {
                 sdgs: sdgs,
               ),
               Container(
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                 child: SolutionSketchBtn(
                   getImage: getImage,
                   finishDrawing: (img) async{
@@ -139,16 +139,16 @@ class _SolutionSketchPageState extends State<SolutionSketchPage> {
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
-                    side: BorderSide(
+                    side: const BorderSide(
                       color: Color(0xFF233A66),
                       width: 1,
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                   ),
                   child: Text(
                     'finish',
                     style: GoogleFonts.notoSans(
-                      color: Color(0xFF233A66),
+                      color: const Color(0xFF233A66),
                       fontSize: 20.0,
                       fontWeight: FontWeight.w700,
                     ),

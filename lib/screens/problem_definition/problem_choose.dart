@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/provider/user_token/user_token.dart';
-import 'package:inglo/screens/hmw/hmw_list.dart';
 import 'package:inglo/screens/problem_definition/widgets/check_design_card.dart';
 import 'package:inglo/service/design/problem_definition.dart';
 import 'package:inglo/widgets/design/design_steps.dart';
@@ -19,45 +18,20 @@ class ProblemChoosePage extends StatefulWidget {
 class _ProblemChoosePageState extends State<ProblemChoosePage> {
   int checkedId = 0; // 선택한 아이디값 (선택안될 때는 0값)
 
-  // 더미데이터
-  final List<Map<String, String>> problemList = [
-    {"id": "1", "content": "choose 3-5 problems"},
-    {
-      "id": "2",
-      "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-    },
-    {"id": "3", "content": "choose 3-5 problems"},
-    {
-      "id": "4",
-      "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-    },
-    {"id": "5", "content": "choose 3-5 problems"},
-    {
-      "id": "6",
-      "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-    },
-    {"id": "7", "content": "choose 3-5 problems"},
-    {
-      "id": "8",
-      "content":
-          "Clean Energy Technological Innovation Reshapes the Future Energy Market"
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
     final int sdgs = widget.sdgs;
     final token = context.watch<UserToken>().token;
 
     return Scaffold(
-      backgroundColor: Color(0xFFF7EEDE),
+      backgroundColor: const Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, size: 25,),
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            size: 25,
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -65,11 +39,11 @@ class _ProblemChoosePageState extends State<ProblemChoosePage> {
         title: Text(
           "Choose problems",
           style: GoogleFonts.notoSans(
-              color: Color(0xFF233A66),
+              color: const Color(0xFF233A66),
               fontSize: 20,
               fontWeight: FontWeight.w700),
         ),
-        backgroundColor: Color(0xFFF7EEDE),
+        backgroundColor: const Color(0xFFF7EEDE),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
@@ -88,46 +62,58 @@ class _ProblemChoosePageState extends State<ProblemChoosePage> {
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.fromLTRB(10, 0, 5, 50),
+          padding: const EdgeInsets.fromLTRB(10, 0, 5, 50),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              DesignSteps(step: 1, sdgs: sdgs,),
+              DesignSteps(
+                step: 1,
+                sdgs: sdgs,
+              ),
               FutureBuilder(
-                future: ProblemDefinitionService().getProblemDefinition(sdgs, token),
+                future: ProblemDefinitionService()
+                    .getProblemDefinition(sdgs, token),
                 builder: (context, snapshot) {
-                  var data = snapshot.data!;
-                  return Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 10,
-                  ),
-                  child: MasonryGridView.count(
-                    physics: BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: data.length,
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 1.0,
-                    mainAxisSpacing: 1.0,
-                    itemBuilder: (context, index) {
-                      return CheckDesignCard(
-                          id: data[index].id,
-                          checkedId: checkedId,
-                          checkCard: (id) {
-                            setState(() {
-                              if(checkedId == id) {
-                                checkedId = 0;
-                              } else {
-                                checkedId = id;
-                              }
-                            });
-                            print(id);
-                            print(checkedId);
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    if (snapshot.hasError) {
+                      return const Center(child: Text('error')); // 에러 발생 시
+                    } else {
+                      var data = snapshot.data!;
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 10,
+                        ),
+                        child: MasonryGridView.count(
+                          physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: data.length,
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 1.0,
+                          mainAxisSpacing: 1.0,
+                          itemBuilder: (context, index) {
+                            return CheckDesignCard(
+                              id: data[index].id,
+                              checkedId: checkedId,
+                              checkCard: (id) {
+                                setState(() {
+                                  if (checkedId == id) {
+                                    checkedId = 0;
+                                  } else {
+                                    checkedId = id;
+                                  }
+                                });
+                              },
+                              content: data[index].content,
+                            );
                           },
-                          content: data[index].content,);
-                    },
-                  ),
-                ); },
+                        ),
+                      );
+                    }
+                  }
+                },
               ),
               // Submit 버튼
             ],
@@ -138,20 +124,12 @@ class _ProblemChoosePageState extends State<ProblemChoosePage> {
         margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: ElevatedButton(
           onPressed: () {
-            print('checkId: $checkedId');
-            ProblemDefinitionService().postProblemChoose(sdgs, checkedId, context, token);
-            // Navigator.of(context).push(
-            //   MaterialPageRoute(
-            //     builder: (context) => HMWListPage(),
-            //     settings: RouteSettings(
-            //       arguments: ModalRoute.of(context)!.settings.arguments,
-            //     ),
-            //   ),
-            // );
+            ProblemDefinitionService()
+                .postProblemChoose(sdgs, checkedId, context, token);
           },
           style: ElevatedButton.styleFrom(
             elevation: 0,
-            side: BorderSide(
+            side: const BorderSide(
               color: Color(0xFF233A66),
               width: 1,
             ),

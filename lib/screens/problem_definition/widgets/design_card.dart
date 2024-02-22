@@ -15,53 +15,63 @@ class DesignCard extends StatelessWidget {
     return FutureBuilder(
       future: TranslationService().getTranslation(content, context),
       builder: (context, snapshot) {
-        var transData = snapshot.data!;
-        return Stack(
-          children: [
-            Container(
-              constraints: BoxConstraints(
-                minWidth: 150,
-              ),
-              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(
-                  width: 1,
-                  color: Colors.black,
-                ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10.0),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0xFFFFD691),
-                    blurRadius: 0.0,
-                    spreadRadius: 0.0,
-                    offset: Offset(6, 6),
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: Text("loading..."));
+        } else {
+          if (snapshot.hasError) {
+            return const Center(child: Text('error')); // 에러 발생 시
+          } else {
+            var transData = snapshot.data!;
+            return Stack(
+              children: [
+                Container(
+                  constraints: const BoxConstraints(
+                    minWidth: 150,
                   ),
-                ],
-              ),
-              child: Text(
-                transData,
-                style: GoogleFonts.cabinSketch(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                  // decoration: TextDecoration.underline, // 밑줄
-                  // decorationColor: Colors.grey, // 밑줄 색상
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(
+                      width: 1,
+                      color: Colors.black,
+                    ),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(10.0),
+                    ),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0xFFFFD691),
+                        blurRadius: 0.0,
+                        spreadRadius: 0.0,
+                        offset: Offset(6, 6),
+                      ),
+                    ],
+                  ),
+                  child: Text(
+                    transData,
+                    style: GoogleFonts.cabinSketch(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      // decoration: TextDecoration.underline, // 밑줄
+                      // decorationColor: Colors.grey, // 밑줄 색상
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Positioned(
-              top: -5,
-              left: -15,
-              child: Image(
-                width: 200,
-                image: Svg('assets/image/design/card_spring.svg'),
-              ),
-            )
-          ],
-        );
+                const Positioned(
+                  top: -5,
+                  left: -15,
+                  child: Image(
+                    width: 200,
+                    image: Svg('assets/image/design/card_spring.svg'),
+                  ),
+                )
+              ],
+            );
+          }
+        }
       },
     );
   }
