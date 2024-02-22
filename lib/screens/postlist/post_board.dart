@@ -121,6 +121,7 @@ class _PostBoardPageState extends State<PostBoardPage> {
                           icon: Icon(Icons.clear),
                           onPressed: () {
                             _controller.clear();
+                            getPostItems();
                           },
                         ),
                       ),
