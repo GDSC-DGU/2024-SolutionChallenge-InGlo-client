@@ -71,7 +71,7 @@ class ProfileService {
       if (response.statusCode == 200 || response.statusCode == 201) {
         // 성공
         print(
-            'Success code: ${response.statusCode}, response: ${response.data}');
+            'Success code: ${response.statusCode}, 유저 정보 성공!: ${response.data}');
       } else {
         print('Error code: ${response.statusCode}, response: ${response.data}');
       }

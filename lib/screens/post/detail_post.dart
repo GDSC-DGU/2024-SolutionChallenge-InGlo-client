@@ -113,7 +113,7 @@ class _DetailPostState extends State<DetailPost> {
   }
 
   Future<void> DeletePost() async {
-    await _PostService.deletePost(widget.id, token); // 포스트 삭제
+    await _PostService.deletePost(widget.id, token, context); // 포스트 삭제
   }
 
   @override
