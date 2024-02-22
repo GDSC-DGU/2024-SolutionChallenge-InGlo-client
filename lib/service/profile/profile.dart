@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:inglo/models/profile/user.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:inglo/screens/profile/profile.dart';
 import 'package:provider/provider.dart';
 import 'package:inglo/provider/profile/users.dart';
 
@@ -72,6 +73,10 @@ class ProfileService {
         // 성공
         print(
             'Success code: ${response.statusCode}, 유저 정보 성공!: ${response.data}');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => ProfilePage()),
+        );
       } else {
         print('Error code: ${response.statusCode}, response: ${response.data}');
       }

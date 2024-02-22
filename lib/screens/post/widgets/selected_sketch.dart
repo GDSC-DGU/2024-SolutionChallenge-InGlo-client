@@ -146,6 +146,7 @@ class _SelectedSketchState extends State<SelectedSketch> {
             );
           },
         ),
+        title: Text('select sketch', style: GoogleFonts.notoSans(fontWeight: FontWeight.w400, fontSize: 26),),
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 10),
@@ -178,8 +179,8 @@ class _SelectedSketchState extends State<SelectedSketch> {
                     return VerticalCardPager(
                       textStyle: GoogleFonts.notoSans(
                         color: Colors.white,
-                        fontWeight: FontWeight.w400, // 폰트 두께를 bold로 변경
-                        fontSize: 12, // 폰트 크기를 22로 변경
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12,
                       ),
                       titles: titles(data) ?? [],
                       images: images(data) ?? [],
@@ -190,6 +191,7 @@ class _SelectedSketchState extends State<SelectedSketch> {
                         setState(() {
                           _selectedIndex = index; // 탭한 항목을 선택된 항목으로 설정
                           selectedSketch = data[index].id;
+                          print('select : $index id : ${data[index].id}');
                         });
                       },
                     );

@@ -49,9 +49,11 @@ class _SetProfilePageState extends State<SetProfilePage> {
       token = Provider.of<UserToken>(context, listen: false).token;
       final user = Provider.of<UserProvider>(context, listen: false).user;
       _nameController?.text = user?.name ?? ''; // 컨트롤러의 텍스트 업데이트
-      _profile_img = user?.profile_img ?? '';
-      _language = user?.language ?? 'en';
-      _country = (user?.country ?? '2').toString();
+      setState(() {
+        _profile_img = user?.profile_img ?? '';
+        _language = user?.language ?? 'en';
+        _country = (user?.country ?? '2').toString();
+      });
     });
   }
 
@@ -333,11 +335,15 @@ class _SetProfilePageState extends State<SetProfilePage> {
         : Container(
             width: 200,
             height: 200,
-            decoration: BoxDecoration(
-              color: Color(0xFFFFD691),
-              borderRadius: BorderRadius.circular(200),
-              border: Border.all(color: Colors.white, width: 5),
-            ),
+      decoration: BoxDecoration(
+        color: Color(0xFFFFD691), // 백그라운드 컬러, 이미지가 전체를 커버하지 않는 경우 보일 수 있습니다.
+        borderRadius: BorderRadius.circular(200),
+        border: Border.all(color: Colors.white, width: 5),
+        image: DecorationImage(
+          image: NetworkImage(_profile_img ?? 'assets/image/sdgs/sdgs0.png'), // 네트워크 이미지 URL
+          fit: BoxFit.cover, // 이미지가 컨테이너를 어떻게 채울지 결정합니다. BoxFit.cover는 컨테이너를 꽉 채우도록 합니다.
+        ),
+      ),
           );
   }
 
