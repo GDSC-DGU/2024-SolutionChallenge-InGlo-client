@@ -5,13 +5,14 @@ import 'package:google_fonts/google_fonts.dart';
 class BorderCustomDropdown extends StatefulWidget {
   final List<Map<String, dynamic>> options; // 데이터 옵션
   final void Function(String?) onChanged;
-
+  final String? initialValue;
 
   // 매개변수로 받은 값으로 생성자 생섵
   const BorderCustomDropdown({
     Key? key,
     required this.options,
     required this.onChanged,
+    this.initialValue,
   }) : super(key: key);
 
   @override
@@ -22,9 +23,25 @@ class _BorderCustomDropdownState extends State<BorderCustomDropdown> {
   String? selectedValue;
 
   @override
+  void initState() {
+    super.initState();
+
+    if (widget.options.isNotEmpty && widget.initialValue != null) {
+      final item = widget.options.firstWhere(
+            (item) => item['key'] == widget.initialValue,
+        orElse: () => {'key': '0', 'value': 'no translate'},
+      );
+
+      if (item != null) {
+        selectedValue = item['value'];
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     Color borderColor =
-        selectedValue != null ? Color(0xFFFFD691) : Color(0xFFC4C4C4);
+    selectedValue != null ? Color(0xFFFFD691) : Color(0xFFC4C4C4);
     return Scaffold(
       body: DropdownButtonHideUnderline(
         child: DropdownButton2<String>(
@@ -33,7 +50,7 @@ class _BorderCustomDropdownState extends State<BorderCustomDropdown> {
             children: [
               Expanded(
                 child: Text(
-                  'select SDGS',
+                  'select language',
                   style: GoogleFonts.notoSans(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
@@ -46,24 +63,28 @@ class _BorderCustomDropdownState extends State<BorderCustomDropdown> {
           ),
           items: widget.options
               .map((Map<String, dynamic> item) => DropdownMenuItem<String>(
-                    value: item['value'],
-                    child: Text(
-                      item['value'],
-                      style: GoogleFonts.notoSans(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ))
+            value: item['value'],
+            child: Text(
+              item['value'],
+              style: GoogleFonts.notoSans(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: Colors.black,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ))
               .toList(),
           value: selectedValue,
           onChanged: (String? newValue) {
             setState(() {
               selectedValue = newValue; // 내부 상태 업데이트
             });
-            widget.onChanged(newValue); // 선택된 value를 부모 위젯에 전달
+            final selectedItem = widget.options.firstWhere(
+                  (element) => element['value'] == newValue,
+              orElse: () => {'key': null},
+            );
+            widget.onChanged(selectedItem['key']); // 부모 위젯에 key 전달
           },
           buttonStyleData: ButtonStyleData(
             width: MediaQuery.of(context).size.width * 1,

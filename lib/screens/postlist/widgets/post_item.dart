@@ -197,6 +197,8 @@ class _PostItemState extends State<PostItem> {
 String getSdgsImage(int index) {
   switch (index) {
     case 1:
+      return 'assets/image/sdgs/sdgs0.png';
+    case 1:
       return 'assets/image/sdgs/sdgs1.png';
     case 2:
       return 'assets/image/sdgs/sdgs2.png';

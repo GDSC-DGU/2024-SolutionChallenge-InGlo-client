@@ -5,6 +5,8 @@ import 'package:inglo/util/sketch/sketchlist_preference.dart';
 import 'package:vertical_card_pager/vertical_card_pager.dart';
 
 import 'package:dio/dio.dart';
+import 'package:provider/provider.dart';
+import 'package:inglo/provider/user_token/user_token.dart';
 
 class MyPosting extends StatefulWidget {
   @override
@@ -14,9 +16,16 @@ class MyPosting extends StatefulWidget {
 class _MyPostingState extends State<MyPosting> {
   final dio = Dio(); // dio instance 생성
 
+  // User? _user;
+  String? token = ''; // token 빈 값으로 우선 정의
+
   // 초기 1번 실행
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      token = Provider.of<UserToken>(context, listen: false)
+          .token; // provider에서 토큰 가져오기
+    });
     getPosts();
   }
 
@@ -30,7 +39,7 @@ class _MyPostingState extends State<MyPosting> {
         options: Options(
           responseType: ResponseType.plain,
           headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NTc3MDgwLCJpYXQiOjE3MDg0MzMwODAsImp0aSI6IjU1YWYyZjg2Y2I2NzQxOTFiMWQ5OWI0MjNhZmMxODEyIiwidXNlcl9pZCI6M30.ws5KsW_fBY-Kun1u3Rexkvnyjwz6_uN0PBqTnw7BKYs',
+            'Authorization': 'Bearer $token',
           },
         ),
       );

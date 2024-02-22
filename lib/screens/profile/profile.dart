@@ -9,6 +9,7 @@ import 'package:inglo/screens/profile/widgets/setting.dart';
 import 'package:inglo/service/profile/profile.dart';
 import 'package:inglo/util/profile/user_preferences.dart';
 import 'package:inglo/widgets/appbar/appbar.dart';
+import 'package:inglo/widgets/modal/alert_modal.dart';
 import 'package:inglo/widgets/profile/numbers_widget.dart';
 import 'package:inglo/widgets/profile/percent.dart';
 import 'package:inglo/widgets/profile/profile_widget.dart';
@@ -143,15 +144,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       bg: 'D4D6F5',
                       icon1: Icons.signpost,
                       icon2: Icons.arrow_forward_ios,
-                      onPressed: () {
-                        // My Sketchs 버튼이 눌렸을 때 처리할 내용
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MyPosting(),
-                          ),
-                        );
-                      },
+                      onPressed: () => showPreparingModal(context),
                     ),
                     ButtonWidget(
                       text: 'Language',
