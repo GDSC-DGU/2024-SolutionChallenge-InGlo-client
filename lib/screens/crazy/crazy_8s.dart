@@ -74,7 +74,7 @@ class _Crazy8sPageState extends State<Crazy8sPage> {
               builder: (context, snapshot) {
                 var data = snapshot.data!;
 
-                return Column(
+                if(data != null)  { return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     DesignSteps(
@@ -90,12 +90,16 @@ class _Crazy8sPageState extends State<Crazy8sPage> {
                             .getTranslation(data.hmwContent, context),
                         builder: (context, snapshot) {
                           var transData = snapshot.data!;
-                          return SizedBox(
-                            width: 170,
-                            child: DesignCard(
-                              content: transData,
-                            ),
-                          );
+                          if(transData != null) {
+                            return SizedBox(
+                              width: 170,
+                              child: DesignCard(
+                                content: transData,
+                              ),
+                            );
+                          } else {
+                            return CircularProgressIndicator();
+                          }
                         },
                       ),
                     SizedBox(
@@ -153,7 +157,9 @@ class _Crazy8sPageState extends State<Crazy8sPage> {
                       height: 20,
                     ),
                   ],
-                );
+                ); } else {
+                  return const CircularProgressIndicator();
+                }
               },
             ),
           ),
@@ -162,7 +168,7 @@ class _Crazy8sPageState extends State<Crazy8sPage> {
       floatingActionButtonLocation:
           FloatingActionButtonLocation.centerDocked, // 버튼 가운데 정렬
       floatingActionButton: Container(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
         width: double.infinity,
         child: Row(
           children: [
