@@ -19,7 +19,6 @@ class MyDrawing extends StatefulWidget {
 }
 
 class _MyDrawingState extends State<MyDrawing> {
-
   @override
   Widget build(BuildContext context) {
     final token = context.watch<UserToken>().token;
@@ -32,14 +31,14 @@ class _MyDrawingState extends State<MyDrawing> {
           .map((sketch) => Container(
                 clipBehavior:
                     Clip.antiAlias, // 모서리를 둥글게 처리한 부분을 넘어서는 내용을 잘라냅니다.
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
                 child: Stack(
                   children: <Widget>[
                     Container(
                       decoration: BoxDecoration(
-                        color: Color(0xFFF7EEDE),
+                        color: const Color(0xFFF7EEDE),
                         image: DecorationImage(
                           image: NetworkImage(sketch.imageUrl ?? ''),
                           fit: BoxFit.cover,
@@ -52,12 +51,12 @@ class _MyDrawingState extends State<MyDrawing> {
                         width: double.infinity,
                         decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.2), // 반투명한 오버레이 색상
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(10),
                             bottomRight: Radius.circular(10),
                           ),
                         ),
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: Column(
                           mainAxisSize:
                               MainAxisSize.min, // Column을 내용물 크기에 맞게 조정
@@ -84,7 +83,8 @@ class _MyDrawingState extends State<MyDrawing> {
                                 Flexible(
                                   child: Container(
                                     child: Text(
-                                      sketch.createdAt.substring(0, 10) ?? '0000-00-00',
+                                      sketch.createdAt.substring(0, 10) ??
+                                          '0000-00-00',
                                       style: GoogleFonts.notoSans(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w400,
@@ -98,7 +98,7 @@ class _MyDrawingState extends State<MyDrawing> {
                             ),
                             Expanded(
                               child: Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 0),
                                 child: Text(
                                   sketch.content ?? '', // 여기에 원하는 텍스트를 추가
@@ -119,13 +119,12 @@ class _MyDrawingState extends State<MyDrawing> {
           .toList();
     }
 
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
@@ -134,7 +133,7 @@ class _MyDrawingState extends State<MyDrawing> {
             );
           },
         ),
-        title: Text('MY DRAWINGS'),
+        title: const Text('MY DRAWINGS'),
       ),
       body: SafeArea(
         child: Container(
@@ -145,26 +144,35 @@ class _MyDrawingState extends State<MyDrawing> {
                 child: FutureBuilder(
                   future: MyDrawingService().getMyDrawingList(token),
                   builder: (context, snapshot) {
-                    var data = snapshot.data!;
-                    return VerticalCardPager(
-                      textStyle: GoogleFonts.notoSans(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400, // 폰트 두께를 bold로 변경
-                        fontSize: 12, // 폰트 크기를 22로 변경
-                      ),
-                      titles: titles(data) ?? [],
-                      images: images(data) ?? [],
-                      initialPage: 0,
-                      onPageChanged: (page) {},
-                      align: ALIGN.CENTER,
-                      onSelectedItem: (index) {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => DetailSketch4Page(sketchId: data[index].id),
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else {
+                      if (snapshot.hasError) {
+                        return const Center(child: Text('error')); // 에러 발생 시
+                      } else {
+                        var data = snapshot.data!;
+                        return VerticalCardPager(
+                          textStyle: GoogleFonts.notoSans(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w400, // 폰트 두께를 bold로 변경
+                            fontSize: 12, // 폰트 크기를 22로 변경
                           ),
+                          titles: titles(data),
+                          images: images(data),
+                          initialPage: 0,
+                          onPageChanged: (page) {},
+                          align: ALIGN.CENTER,
+                          onSelectedItem: (index) {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    DetailSketch4Page(sketchId: data[index].id),
+                              ),
+                            );
+                          },
                         );
-                      },
-                    );
+                      }
+                    }
                   },
                 ),
               ),

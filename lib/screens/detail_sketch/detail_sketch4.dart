@@ -22,11 +22,14 @@ class _DetailSketch4PageState extends State<DetailSketch4Page> {
     final token = context.watch<UserToken>().token;
 
     return Scaffold(
-      backgroundColor: Color(0xFFF7EEDE),
+      backgroundColor: const Color(0xFFF7EEDE),
       // 상단 app 바로 뒤로가기 만들기!
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, size: 25,),
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            size: 25,
+          ),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
@@ -38,50 +41,61 @@ class _DetailSketch4PageState extends State<DetailSketch4Page> {
         title: Text(
           "Solution sketch",
           style: GoogleFonts.notoSans(
-              color: Color(0xFF233A66),
+              color: const Color(0xFF233A66),
               fontSize: 20,
               fontWeight: FontWeight.w700),
         ),
-        backgroundColor: Color(0xFFF7EEDE),
+        backgroundColor: const Color(0xFFF7EEDE),
       ),
       body: SafeArea(
           child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        padding: EdgeInsets.fromLTRB(10, 0, 10, 30),
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
         child: FutureBuilder(
           future: MyDrawingService().getMyDrawingDetail(sketchId, token),
           builder: (context, snapshot) {
-            var data = snapshot.data!;
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                DetailSketchSteps(
-                  step: 4,
-                  sketchId: sketchId,
-                ),
-                if (data.imageUrl != "")
-                  Container(
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 15, horizontal: 20),
-                    //width: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      border: Border.all(
-                        width: 3,
-                        color: Color(0xFF233A66),
-                      ),
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: Text("loading..."));
+            } else {
+              if (snapshot.hasError) {
+                return const Center(child: Text('error')); // 에러 발생 시
+              } else {
+                var data = snapshot.data!;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    DetailSketchSteps(
+                      step: 4,
+                      sketchId: sketchId,
                     ),
-                    child: ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5.0)),
-                        child: Image.network(data.imageUrl,
-                            fit: BoxFit.cover, width: 150.0)),
-                  ),
-                DetailSketch4Content(data: data,),
-              ],
-            );
+                    if (data.imageUrl != "")
+                      Container(
+                        alignment: Alignment.center,
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 20),
+                        //width: 200,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10.0)),
+                          border: Border.all(
+                            width: 3,
+                            color: const Color(0xFF233A66),
+                          ),
+                        ),
+                        child: ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(5.0)),
+                            child: Image.network(data.imageUrl,
+                                fit: BoxFit.cover, width: 150.0)),
+                      ),
+                    DetailSketch4Content(
+                      data: data,
+                    ),
+                  ],
+                );
+              }
+            }
           },
         ),
       )),
