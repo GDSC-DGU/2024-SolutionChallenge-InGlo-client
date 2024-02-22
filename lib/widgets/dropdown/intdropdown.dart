@@ -16,7 +16,8 @@ class IntBorderCustomDropdown extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<IntBorderCustomDropdown> createState() => _IntBorderCustomDropdownState();
+  State<IntBorderCustomDropdown> createState() =>
+      _IntBorderCustomDropdownState();
 }
 
 class _IntBorderCustomDropdownState extends State<IntBorderCustomDropdown> {
@@ -28,7 +29,7 @@ class _IntBorderCustomDropdownState extends State<IntBorderCustomDropdown> {
 
     if (widget.options.isNotEmpty && widget.initialValue != null) {
       final item = widget.options.firstWhere(
-            (item) => item['key'] == widget.initialValue,
+        (item) => item['key'] == widget.initialValue,
         orElse: () => {'key': '1', 'value': 'South Korea'},
       );
 
@@ -41,7 +42,7 @@ class _IntBorderCustomDropdownState extends State<IntBorderCustomDropdown> {
   @override
   Widget build(BuildContext context) {
     Color borderColor =
-    selectedValue != null ? Color(0xFFFFD691) : Color(0xFFC4C4C4);
+        selectedValue != null ? Color(0xFFFFD691) : Color(0xFFC4C4C4);
     return Scaffold(
       body: DropdownButtonHideUnderline(
         child: DropdownButton2<String>(
@@ -50,7 +51,13 @@ class _IntBorderCustomDropdownState extends State<IntBorderCustomDropdown> {
             children: [
               Expanded(
                 child: Text(
-                  'select country',
+                  widget.initialValue != null && widget.initialValue != '2'
+                      ? widget.options.firstWhere(
+                          (item) => item['key'] == widget.initialValue,
+                          orElse: () =>
+                              {'key': '0', 'value': 'select language'},
+                        )['value']!
+                      : 'select language',
                   style: GoogleFonts.notoSans(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
@@ -63,17 +70,17 @@ class _IntBorderCustomDropdownState extends State<IntBorderCustomDropdown> {
           ),
           items: widget.options
               .map((Map<String, dynamic> item) => DropdownMenuItem<String>(
-            value: item['value'], // value 값을 아이템으로 표시
-            child: Text(
-              item['value'],
-              style: GoogleFonts.notoSans(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: Colors.black,
-              ),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ))
+                    value: item['value'], // value 값을 아이템으로 표시
+                    child: Text(
+                      item['value'],
+                      style: GoogleFonts.notoSans(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ))
               .toList(),
           value: selectedValue,
           onChanged: (String? newValue) {
@@ -82,7 +89,7 @@ class _IntBorderCustomDropdownState extends State<IntBorderCustomDropdown> {
             });
             // 선택된 value에 해당하는 key 찾기
             final selectedItem = widget.options.firstWhere(
-                  (element) => element['value'] == newValue,
+              (element) => element['value'] == newValue,
               orElse: () => {'key': null},
             );
             widget.onChanged(selectedItem['key']); // 부모 위젯에 key 전달
