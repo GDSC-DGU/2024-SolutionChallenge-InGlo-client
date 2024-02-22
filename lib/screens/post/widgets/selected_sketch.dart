@@ -148,7 +148,7 @@ class _SelectedSketchState extends State<SelectedSketch> {
             );
           },
         ),
-        title: Text('select sketch', style: GoogleFonts.notoSans(fontWeight: FontWeight.w400, fontSize: 26),),
+        title: Text('select your sketch', style: GoogleFonts.notoSans(fontWeight: FontWeight.w400, fontSize: 26),),
       ),
       body: SafeArea(
         child: Container(
