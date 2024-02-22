@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/models/profile/user.dart';
 import 'package:inglo/screens/profile/profile.dart';
-import 'package:inglo/util/profile/user_preferences.dart';
-import 'package:inglo/widgets/appbar/appbar.dart';
-import 'package:inglo/widgets/profile/numbers_widget.dart';
+import 'package:inglo/service/profile/profile.dart';
 import 'package:dio/dio.dart';
 import 'package:inglo/widgets/dropdown/intdropdown.dart';
 import 'package:inglo/widgets/dropdown/stringdropdown.dart';
@@ -27,23 +25,40 @@ class SetProfilePage extends StatefulWidget {
 class _SetProfilePageState extends State<SetProfilePage> {
   final dio = Dio(); // dio instance 생성
   String? token = ''; // token 빈 값으로 우선 정의
-
   XFile? _image; //이미지를 담을 변수 선언
   final ImagePicker picker = ImagePicker(); //ImagePicker 초기화
 
-  // 초기 1번 실행
+  ProfileService service = ProfileService(); //
+
+  TextEditingController? _nameController;
+
+  String? _country; // 국가
+  String? _language; // 언어
+  String? _profile_img; // 프로필 이미지 URL
+  String? _name;
+
+  User? user;
+
+  @override
   void initState() {
     super.initState();
+    _nameController = TextEditingController(text: _name);
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      token = Provider.of<UserToken>(context, listen: false)
-          .token; // provider에서 토큰 가져오기
+      // Provider에서 사용자 정보 가져오고, _nameController 업데이트
+      final user = Provider.of<UserProvider>(context, listen: false).user;
+      _nameController?.text = user?.name ?? ''; // 컨트롤러의 텍스트 업데이트
+      _profile_img = user?.profile_img ?? '';
+      _language = user?.language ?? 'en';
+      _country = (user?.country ?? '2').toString();
     });
   }
 
-  // 여기 나중에 초기값 넣기..
-  String _name = ''; // 사용자 이름 저장을 위한 변수
-  int _country = 0; // 국가 저장을 위한 변수
-  String _language = 'en'; // 언어 저장을 위한 변수
+  @override
+  void dispose() {
+    _nameController?.dispose(); // 리소스 정리
+    super.dispose();
+  }
 
   // 이미지를 가져오는 함수
   Future getImage(ImageSource imageSource) async {
@@ -52,39 +67,28 @@ class _SetProfilePageState extends State<SetProfilePage> {
       setState(() {
         _image = XFile(pickedFile.path); // 가져온 이미지를 _image에 저장
       });
-      uploadImage(); // 이미지를 서버에 전송하는 함수 호출
     }
   }
 
-  // 이미지를 서버에 전송하는 함수
-  Future<void> uploadImage() async {
-    if (_image == null) return;
-    String fileName = _image!.path.split('/').last;
-
-    try {
-      FormData formData = FormData.fromMap({
-        "image": await MultipartFile.fromFile(_image!.path, filename: fileName),
-      });
-
-      dio.options.headers = {
-        'Content-Type': 'multipart/form-data',
-        'Authorization': 'Bearer $token', // 필요한 토큰이나 인증 정보를 여기에 추가
-      };
-
-      var response = await dio.patch(
-        'https://dongkyeom.com/api/v1/accounts/info/profile-img/',
-        data: formData,
-      );
-
-      print('업로드 성공 : ${response.statusCode}');
-
-      // 이동
+  void Cancel () {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => ProfilePage()), // 다음 페이지로 이동
+    );
+  }
+  // 모두 post
+  void PostAll() {
+    if (_image != null) {
+      service.UploadImage(_image, token, context);
+      service.PostUserInfo(
+          _nameController?.text, _country, _language, token, context);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => ProfilePage()), // 프로필 페이지로 이동
+        MaterialPageRoute(builder: (context) => ProfilePage()), // 다음 페이지로 이동
       );
-    } catch (e) {
-      print('이미지 업로드 실패: $e');
+    } else {
+      service.PostUserInfo(
+          _nameController?.text, _country, _language, token, context);
     }
   }
 
@@ -196,7 +200,8 @@ class _SetProfilePageState extends State<SetProfilePage> {
                             )),
                       ),
                       TextFormField(
-                        initialValue: '은지',
+                        initialValue: user?.name,
+                        controller: _nameController,
                         decoration: InputDecoration(
                             hintText: 'name',
                             isDense: true,
@@ -205,11 +210,6 @@ class _SetProfilePageState extends State<SetProfilePage> {
                               horizontal: 10,
                             )),
                         style: GoogleFonts.notoSans(fontSize: 14),
-                        onChanged: (value) {
-                          setState(() {
-                            _name = value; // 사용자 입력에 따라 _name 변수의 값을 변경
-                          });
-                        },
                       ),
                       SizedBox(height: 15.0),
                       Padding(
@@ -227,17 +227,19 @@ class _SetProfilePageState extends State<SetProfilePage> {
                             setState(() {
                               if (value != null) {
                                 _country = value; // _country는 널이 아닐 때만 업데이트
+                                print('country 업데이트 ! $value');
                               } else {
                                 // 기본 국가 메서드
                               }
                             });
                           },
+                          initialValue: _country,
                         ),
                       ),
                       SizedBox(height: 15.0),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(7, 0, 0, 3),
-                        child: Text("language",
+                        child: Text("translate language",
                             style: GoogleFonts.notoSans(
                               color: Colors.black,
                             )),
@@ -250,30 +252,59 @@ class _SetProfilePageState extends State<SetProfilePage> {
                             setState(() {
                               if (value != null) {
                                 _language = value; // _country는 널이 아닐 때만 업데이트
+                                print('language 업데이트 ! $value');
                               } else {
                                 // 기본 언어 메서드
                               }
                             });
                           },
+                          initialValue: _language,
                         ),
                       ),
                       SizedBox(height: 50.0),
                       // Login Button
-                      FilledButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              Color(0xFFFFD691)), // 버튼 배경색
-                          minimumSize: MaterialStateProperty.all(
-                              Size(400, 40)), // 버튼 사이즈
-                        ),
-                        child: Text(
-                          "SAVE",
-                          style: GoogleFonts.notoSans(
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          FilledButton(
+                            onPressed: Cancel,
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  Colors.white), // 버튼 배경색
+                              minimumSize: MaterialStateProperty.all(
+                                  Size(160, 40)), // 버튼 사이즈
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>( // 버튼의 모양과 경계선을 정의
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(100), // 둥근 모서리의 반지름
+                                  side: BorderSide(color: Color(0xFFFFD691), width: 2), // 경계선의 색상과 두께
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              "Cancel",
+                              style: GoogleFonts.notoSans(
+                                  fontSize: 20,
+                                  color: Color(0xFFFFD691),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          FilledButton(
+                            onPressed: PostAll,
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  Color(0xFFFFD691)), // 버튼 배경색
+                              minimumSize: MaterialStateProperty.all(
+                                  Size(160, 40)), // 버튼 사이즈
+                            ),
+                            child: Text(
+                              "SAVE",
+                              style: GoogleFonts.notoSans(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
