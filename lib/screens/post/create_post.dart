@@ -60,7 +60,7 @@ class _CreatePostState extends State<CreatePost> {
     Map<String, dynamic> data = {
       "title": _titleController.text,
       "content": content,
-      "sketch_id": int.parse('$sketch_id'),
+      "sketch_id": int.parse('$sketch_id' ?? '0'),
       "sdgs": int.parse('$sdgs'),
     };
 
