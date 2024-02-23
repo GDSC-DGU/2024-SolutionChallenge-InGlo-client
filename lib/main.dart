@@ -3,12 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:inglo/provider/post/post_sdgs.dart';
 import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/issuelist/issulist.dart';
-import 'package:inglo/screens/post/create_post.dart';
-import 'package:inglo/screens/postlist/post_board.dart';
-import 'package:inglo/screens/profile/profile.dart';
-import 'package:inglo/screens/signup/signup.dart';
 import 'package:inglo/screens/start/start.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inglo/provider/test/counts.dart';
 import 'package:inglo/service/auth/google/google_sign.dart';
@@ -21,7 +16,6 @@ import 'package:inglo/provider/profile/users.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
-  await Firebase.initializeApp();
   // 여러 상태를 사용하기 위해, multi provider를 사용한다.
   runApp(
     MultiProvider(

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:inglo/models/issue_detail/issue_detail.dart';
 import 'package:inglo/provider/user_token/user_token.dart';
 import 'package:inglo/screens/issue_detail/widgets/issue_content.dart';
-import 'package:inglo/screens/issue_detail/widgets/issue_input.dart';
 import 'package:inglo/service/translate/translate_util.dart';
 import 'package:inglo/widgets/comment/issue_comment.dart';
 import 'package:inglo/service/issue/issue_detail.dart';
-import 'package:inglo/widgets/comment/comment_box.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
