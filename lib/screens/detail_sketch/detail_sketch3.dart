@@ -33,11 +33,7 @@ class _DetailSketch3PageState extends State<DetailSketch3Page> {
             size: 25,
           ),
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const MyDrawing(),
-              ),
-            );
+            Navigator.of(context).pop();
           },
         ),
         title: Text(
