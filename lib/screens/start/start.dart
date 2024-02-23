@@ -45,7 +45,7 @@ class _StartPageState extends State<StartPage> {
     // user의 정보가 있다면 로그인 후 들어가는 첫 페이지로 넘어간다.
     if (user_token != null) {
       print('리프레시 인증 성공!');
-     // GetNewToken(user_token); // 새 토큰 발급
+     GetNewToken(user_token); // 새 토큰 발급
       // 여기 refresh token과 비교하여 token이 유효한지 확인한다.
     } else {
       print('로그인이 필요합니다');
@@ -122,6 +122,41 @@ class _StartPageState extends State<StartPage> {
     return null;
   }
 
+// 만료된 토큰 발급 함수
+  Future<void> GetNewToken(String refresh_token) async {
+
+    print('refresh : ${refresh_token}');
+    final url = "https://dongkyeom.com/api/v1/accounts/token/refresh/";
+    Map<String, String> data = {
+      "refresh": '${refresh_token}',
+    };
+
+    // 요청 헤더 설정
+    Options options = Options(
+      contentType: Headers.jsonContentType,
+    );
+
+    try {
+      final response = await dio.post(url, data: data, options: options);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // 성공
+        print(
+            '리프레시 성공!: ${response.statusCode}, 새 토큰: ${response.data['access']}');
+
+        // 새 토큰을 provider에 저장
+        Provider.of<UserToken>(context, listen: false).setToken(response.data['access']);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => IssueListPage()), // 다음 페이지로 이동
+        );
+      } else {
+        print('Error api code: ${response.statusCode}, response: ${response.data}');
+      }
+    } catch (e) {
+      print('Exception caught: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

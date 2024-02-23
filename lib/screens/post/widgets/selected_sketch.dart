@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inglo/screens/post/create_post.dart';
 import 'package:inglo/screens/postlist/post_board.dart';
+import 'package:inglo/widgets/alert/alert.dart';
 import 'package:provider/provider.dart';
 import 'package:inglo/provider/post/post_sdgs.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -38,7 +39,10 @@ class _SelectedSketchState extends State<SelectedSketch> {
 
     final token = context.watch<UserToken>().token;
     titles(List<MyDrawingListModel> list) {
-      return list.map((sketch) => sketch.title).toList();
+      if(list == null || list.isEmpty || list == []) {
+      } else {
+        return list.map((sketch) => sketch.title).toList();
+      }
     }
 
     images(List<MyDrawingListModel> list) {
