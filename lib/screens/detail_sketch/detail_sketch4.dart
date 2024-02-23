@@ -31,11 +31,7 @@ class _DetailSketch4PageState extends State<DetailSketch4Page> {
             size: 25,
           ),
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const MyDrawing(),
-              ),
-            );
+            Navigator.of(context).pop();
           },
         ),
         title: Text(
