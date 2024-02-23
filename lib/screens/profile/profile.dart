@@ -6,10 +6,13 @@ import 'package:inglo/provider/profile/users.dart';
 import 'package:inglo/screens/profile/widgets/mydrawing.dart';
 import 'package:inglo/screens/profile/widgets/myposts.dart';
 import 'package:inglo/screens/profile/widgets/setting.dart';
+import 'package:inglo/screens/start/start.dart';
+import 'package:inglo/service/auth/google/google_signout.dart';
 import 'package:inglo/service/profile/profile.dart';
 import 'package:inglo/util/profile/user_preferences.dart';
 import 'package:inglo/widgets/appbar/appbar.dart';
 import 'package:inglo/widgets/modal/alert_modal.dart';
+import 'package:inglo/widgets/profile/logout_button.dart';
 import 'package:inglo/widgets/profile/numbers_widget.dart';
 import 'package:inglo/widgets/profile/percent.dart';
 import 'package:inglo/widgets/profile/profile_widget.dart';
@@ -33,6 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String? token = ''; // token 빈 값으로 우선 정의
 
   final ProfileService _authService = ProfileService();
+  final GoogleSignInService _signService = GoogleSignInService();
 
   // 초기 1번 실행
   void initState() {
@@ -159,6 +163,19 @@ class _ProfilePageState extends State<ProfilePage> {
                           MaterialPageRoute(
                             builder: (context) => SetProfilePage(),
                           ),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 170,),
+                    LogoutButtonWidget(
+                      text: 'Logout',
+                      bg: 'C4C4C4',
+                      icon1: Icons.logout,
+                      onPressed: () {
+                        GoogleSignInService.disconnect();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => StartPage()), // 다음 페이지로 이동
                         );
                       },
                     ),
