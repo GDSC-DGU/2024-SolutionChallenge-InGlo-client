@@ -5,13 +5,16 @@ import 'package:inglo/screens/signup/signup.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart'; // secure
+import 'package:flutter_svg/flutter_svg.dart' as svg;
 
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:inglo/widgets/slider/flag_slider.dart';
+
 // provider
 import 'package:provider/provider.dart';
 import 'package:inglo/provider/user_token/user_token.dart';
-import 'package:inglo/service/auth/user/user_auth.dart';
+import 'package:inglo/util/slider/flag_data.dart';
 
 // LoginPage 클래스
 class StartPage extends StatefulWidget {
@@ -23,7 +26,8 @@ class StartPage extends StatefulWidget {
 class _StartPageState extends State<StartPage> {
   final dio = Dio(); // dio instance 생성
 
-  static final storage = FlutterSecureStorage(); // FlutterSecureStorage를 storage로 저장
+  static final storage =
+      FlutterSecureStorage(); // FlutterSecureStorage를 storage로 저장
   dynamic user_token = ''; // storage에 있는 유저 정보를 저장
 
   //flutter_secure_storage 사용을 위한 초기화 작업
@@ -40,12 +44,12 @@ class _StartPageState extends State<StartPage> {
   _asyncMethod() async {
     // read 함수로 key값에 맞는 정보를 불러오고 데이터타입은 String 타입
     // 데이터가 없을때는 null을 반환
-    user_token = await storage.read(key:'refresh_token');
+    user_token = await storage.read(key: 'refresh_token');
 
     // user의 정보가 있다면 로그인 후 들어가는 첫 페이지로 넘어간다.
     if (user_token != null) {
       print('리프레시 인증 성공!');
-     GetNewToken(user_token); // 새 토큰 발급
+      GetNewToken(user_token); // 새 토큰 발급
       // 여기 refresh token과 비교하여 token이 유효한지 확인한다.
     } else {
       print('로그인이 필요합니다');
@@ -85,20 +89,21 @@ class _StartPageState extends State<StartPage> {
         );
 
         print('token을 저장합니다. ${response.data['access_token']}');
-        Provider.of<UserToken>(context, listen: false).setToken(response.data['access_token']);
+        Provider.of<UserToken>(context, listen: false)
+            .setToken(response.data['access_token']);
 
         // 새 토큰을 provider에 저장
-       // Provider.of<UserToken>(context, listen: false).setToken(response.data['access_token']);
+        // Provider.of<UserToken>(context, listen: false).setToken(response.data['access_token']);
 
-       // GetNewToken(response.data['refresh_token']);
+        // GetNewToken(response.data['refresh_token']);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => AccountPage()), // 다음 페이지로 이동
         );
-
       } else {
         // 비-200 상태 코드
-        print('Error api code: ${response.statusCode}, response: ${response.data}');
+        print(
+            'Error api code: ${response.statusCode}, response: ${response.data}');
       }
     } catch (e) {
       // 예외 처리
@@ -112,7 +117,8 @@ class _StartPageState extends State<StartPage> {
     try {
       final GoogleSignInAccount? account = await googleSignIn.signIn();
       if (account != null) {
-        final GoogleSignInAuthentication googleAuth = await account.authentication;
+        final GoogleSignInAuthentication googleAuth =
+            await account.authentication;
         PostApi(googleAuth.accessToken!);
       }
     } catch (error) {
@@ -124,7 +130,6 @@ class _StartPageState extends State<StartPage> {
 
 // 만료된 토큰 발급 함수
   Future<void> GetNewToken(String refresh_token) async {
-
     print('refresh : ${refresh_token}');
     final url = "https://dongkyeom.com/api/v1/accounts/token/refresh/";
     Map<String, String> data = {
@@ -145,13 +150,16 @@ class _StartPageState extends State<StartPage> {
             '리프레시 성공!: ${response.statusCode}, 새 토큰: ${response.data['access']}');
 
         // 새 토큰을 provider에 저장
-        Provider.of<UserToken>(context, listen: false).setToken(response.data['access']);
+        Provider.of<UserToken>(context, listen: false)
+            .setToken(response.data['access']);
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => IssueListPage()), // 다음 페이지로 이동
+          MaterialPageRoute(
+              builder: (context) => IssueListPage()), // 다음 페이지로 이동
         );
       } else {
-        print('Error api code: ${response.statusCode}, response: ${response.data}');
+        print(
+            'Error api code: ${response.statusCode}, response: ${response.data}');
       }
     } catch (e) {
       print('Exception caught: $e');
@@ -164,13 +172,13 @@ class _StartPageState extends State<StartPage> {
       // 배경 이미지를 넣기 위해 Scaffold를 Container로 감싸준다.
       decoration: BoxDecoration(
           image: DecorationImage(
-            fit: BoxFit.fill,
-            repeat: ImageRepeat.noRepeat,
-            image: Svg(
-              'assets/image/background/background.svg',
-              // size: Size(10, 10), // size 지정 하던 안 하던 동일하다.
-            ),
-          )),
+        fit: BoxFit.fill,
+        repeat: ImageRepeat.noRepeat,
+        image: Svg(
+          'assets/image/background/background.svg',
+          // size: Size(10, 10), // size 지정 하던 안 하던 동일하다.
+        ),
+      )),
       child: Scaffold(
         // 배경 이미지를 위해 Scaffold의 배경색을 투명으로 한다.
         backgroundColor: Colors.transparent,
@@ -183,20 +191,29 @@ class _StartPageState extends State<StartPage> {
             child: Center(
               child: Column(
                 children: [
-                  SizedBox(height: 160.0),
+              svg.SvgPicture.asset('assets/image/logo/logo.svg'),
+                  SizedBox(height: 80.0),
+                  InfiniteFlagSlider(
+                    flagImages: flagImageData,
+                  ),
+                  SizedBox(height: 20.0),
                   OutlinedButton(
                     onPressed: _handleSignIn,
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.white), // 버튼 배경색
-                      minimumSize: MaterialStateProperty.all(Size(400, 40)), // 버튼 사이즈
+                      backgroundColor: MaterialStateProperty.all(Colors.white),
+                      // 버튼 배경색
+                      minimumSize: MaterialStateProperty.all(Size(400, 40)),
+                      // 버튼 사이즈
                       // 테두리 색상 설정
-                      side: MaterialStateProperty.all(BorderSide(color: Color(0xFFDADCE0), width: 1)),
+                      side: MaterialStateProperty.all(
+                          BorderSide(color: Color(0xFFDADCE0), width: 1)),
                     ),
                     child: Text(
                       "SIGNIN WITH GOOGLE",
                       style: GoogleFonts.notoSans(
-                          fontSize: 16,
-                          color: Colors.black,),
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ],
