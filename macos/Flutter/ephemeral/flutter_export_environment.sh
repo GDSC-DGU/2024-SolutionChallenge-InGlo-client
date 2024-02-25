@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/eunji/fvm/versions/3.16.2"
-export "FLUTTER_APPLICATION_PATH=/Users/eunji/Desktop/github-repo/inglo"
+export "FLUTTER_ROOT=/Users/kyeom/flutter"
+export "FLUTTER_APPLICATION_PATH=/Users/kyeom/Desktop/Project/2024-SolutionChallenge-InGlo-client"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=1.0.0"

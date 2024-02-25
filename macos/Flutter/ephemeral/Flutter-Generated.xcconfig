@@ -1,6 +1,6 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/Users/eunji/fvm/versions/3.16.2
-FLUTTER_APPLICATION_PATH=/Users/eunji/Desktop/github-repo/inglo
+FLUTTER_ROOT=/Users/kyeom/flutter
+FLUTTER_APPLICATION_PATH=/Users/kyeom/Desktop/Project/2024-SolutionChallenge-InGlo-client
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_BUILD_DIR=build
 FLUTTER_BUILD_NAME=1.0.0
