@@ -45,5 +45,20 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+	    <array>
+    		<dict>
+    			<key>CFBundleTypeRole</key>
+    			<string>Editor</string>
+    			<key>CFBundleURLSchemes</key>
+    			<array>
+            		<string>com.googleusercontent.apps.401306795328-e2ehdc5lfftbc8puo5v2scmj6hh95kp8</string>
+    			</array>
+    		</dict>
+    	</array>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>이 앱은 갤러리에서 사진을 선택하기 위해 사진 라이브러리 접근 권한이 필요합니다.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>이 앱은 카메라로 사진을 찍기 위해 카메라 접근 권한이 필요합니다.</string>
 </dict>
 </plist>
