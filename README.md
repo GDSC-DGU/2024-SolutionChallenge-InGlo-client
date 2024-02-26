@@ -1,8 +1,13 @@
+<p align="center">
+  
+
 # Inglo, international awareness community flutter application
 
 <img width="194" alt="스크린샷 2024-02-26 오전 9 55 19" src="https://github.com/bianbbc87/new/assets/129590633/085aaa87-2dbe-4e7a-90e0-c3852389c04e">
 
 2023-GDSC-Solution-Challenge flutter project
+
+</p>
 
 ## Table of Contents
 
@@ -10,6 +15,10 @@
 - [Components](#components)
 - [Main_Function](#main_function)
   - [Issue](#issue)
+  - [Solution Sketch](#solution-sketch)
+    - [Problem Definition](#problem-definition)
+    - [HMW](#hmw)
+    - [Crazy'8](#crazy'8)
     - [Solution Sketch](#solution-sketch)
   - [Home](#home)
   - [Post](#post)
@@ -57,17 +66,20 @@ inglo is a combination of insight and global, and I thought that receiving and s
 
 ## Components
 
-<img src="https://user-images.githubusercontent.com/33146152/160340776-616bc1a4-dd52-40a5-8e9f-dea06cd16952.png" width="120" height="100">  <img src="https://user-images.githubusercontent.com/33146152/160340848-f25eb360-157c-4988-a2c4-7e9e9034b0f4.png" width="200" height="100">  <img width="120" height="100" alt="스크린샷 2024-02-26 오전 9 46 36" src="https://github.com/bianbbc87/new/assets/129590633/5d5c45c7-7a2e-4c5c-aa51-c81891154393"> <img src="https://user-images.githubusercontent.com/33146152/160341802-7eceab71-16af-46c9-a74f-840c030c3abc.png" width="120" height="100">
-<img width="120" heigt="100" alt="스크린샷 2024-02-26 오전 9 46 56" src="https://github.com/bianbbc87/new/assets/129590633/eb869472-047c-4327-abc2-b5e6d6686ed4">
-
+<img src="https://user-images.githubusercontent.com/33146152/160340776-616bc1a4-dd52-40a5-8e9f-dea06cd16952.png" width="120" height="100"> <img width="120" height="100" alt="스크린샷 2024-02-26 오전 9 46 36" src="https://github.com/bianbbc87/new/assets/129590633/5d5c45c7-7a2e-4c5c-aa51-c81891154393"> <img src="https://user-images.githubusercontent.com/33146152/160341802-7eceab71-16af-46c9-a74f-840c030c3abc.png" width="120" height="100"> <img width="120" height="100" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/1308405c-7702-480f-b8d0-4911c487a26a"> <img width="120" height="100" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/98a5691a-4d05-4994-8011-3a5705a4a029"> <img width="120" height="100" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/be31568b-dd21-472f-a67d-73ca315a457a"> <img width="120" height="100" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/3db7b91f-95be-4f84-8eac-49fefa7c4878"> <img width="120" height="100" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/889fecc4-bd66-4915-88e0-e3b79d5b3b19"> <img width="120" height="100" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/bd13b080-a1ae-44c9-93cb-8b5947d7c0cc"> <img width="120" heigth="100" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/6bac65aa-0551-4717-928a-850ff07806ae"> <img width="120" height="100" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/6916f22c-b6a8-4a2c-8b10-bea2fcc34ced">
 
 - **Disign**
   - [Figma](https://www.figma.com/file/raNldHw9OcIkmgKLP4JYPN/solution-challenge?type=design&node-id=193%3A2339&mode=design&t=Dke0sG6zIzpxXdOH-1))
-- **AI/ML** **(** [Python](https://www.python.org/) : `3.10.12` **)**
-  - [pytorch](https://pytorch.org/) : `2.1.0`
-- **Back**
-  - [Spring](https://firebase.google.com/?hl=ko&gclid=CjwKCAjwopWSBhB6EiwAjxmqDeP1h2srS6otlbc3_ubdqsEzdhZ7f5ZvhsOcXqbTeyyw_d9Kq2XPQxoCElgQAvD_BwE&gclsrc=aw.ds)
-  - [MySQL](https://firebase.google.com/?hl=ko&gclid=CjwKCAjwopWSBhB6EiwAjxmqDeP1h2srS6otlbc3_ubdqsEzdhZ7f5ZvhsOcXqbTeyyw_d9Kq2XPQxoCElgQAvD_BwE&gclsrc=aw.ds)
+- **AI/ML** **(** [Python](https://www.python.org/) : `3.7.12` **)**
+  - [Pytorch](https://pytorch.org/) : `2.1.0`
+  - [Albert Model](https://arxiv.org/abs/1909.11942)
+- **Back** **(** [Django](https://www.djangoproject.com/) : `4.2.6`
+  - [Django Rest Framework](https://www.django-rest-framework.org/) : `3.14.0`
+  - [Django Allauth](https://docs.allauth.org/en/latest/) : `0.61.1`
+  - [GCP Compute Engine](https://cloud.google.com/products/compute?hl=ko)
+  - [MySQL](https://www.mysql.com/)
+  - [NGinX](https://www.nginx.com/)
+  - [S3 bucket](https://aws.amazon.com/ko/s3/)
 - **Front** **(** [Dart](https://dart.dev/) : `3.3.0` **)**
   - [Flutter](https://storage.googleapis.com/flutter_infra_release/releases/stable/windows/flutter_windows_2.10.3-stable.zip) : `1.19.1`
 - **Device**
@@ -76,64 +88,54 @@ inglo is a combination of insight and global, and I thought that receiving and s
  
   2. IOS Virtual Device
     - IPhone 14
-
 # Main_Function
 
 ## PREVIEW
 
 <p align="center">
-<img width="250" alt="스크린샷 2024-02-26 오전 6 25 36" src="https://github.com/bianbbc87/new/assets/129590633/d038611d-6316-4fe1-bf6a-bccc38bbdad1">
+<img width="250" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/434b3c4d-c4e4-40b2-b137-7b80522b2237">
   &nbsp;&nbsp;
 
 ## Issue
 
 <p align="center">
-<img width="250" alt="스크린샷 2024-02-26 오전 9 35 21" src="https://github.com/bianbbc87/new/assets/129590633/a4435629-d178-4186-82a9-fda749d3b322">
+<img width="250" alt="스크린샷 2024-02-26 오전 9 35 21" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/7c134d1d-e8a1-4fbe-b589-8b29eea24bf3">
 &nbsp;&nbsp;
-<img width="250" alt="스크린샷 2024-02-26 오전 9 33 16" src="https://github.com/bianbbc87/new/assets/129590633/38c9cebf-8b7b-481a-b8a3-66ebf1c3c45c">
+<img width="250" alt="스크린샷 2024-02-26 오전 9 33 16" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/e8304d7b-b097-4c42-809b-079e5b56c9f3">
 </p>
 &nbsp;&nbsp;
  If you log in after the initial installation, you will be directed to the issue. Through the dropdown above, you can select the SDGS of the category you want to see, and you can check the news content for the issue.
 
 ## Solution-Sketch
+The issue may be identified, and solution sketching may proceed. It has steps of problem definition, how light we, crazy 8's, and solution sketch, and opinions are shared with other users.
+<hr>
 
+### Problem Definition
 <p align="center">
-<img width="250" alt="스크린샷 2024-02-26 오전 9 36 06" src="https://github.com/bianbbc87/new/assets/129590633/d32922e3-9727-4f0c-9966-540fa428db43">
+<img width="250" alt="스크린샷 2024-02-26 오전 9 36 06" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/572e3333-ff9f-43f6-bdcd-4efb05c131bf">
   &nbsp;&nbsp;
-<img width="250" alt="스크린샷 2024-02-26 오전 9 36 28" src="https://github.com/bianbbc87/new/assets/129590633/54a63af0-f6f8-4cce-9f98-9da2d9ee8cc2">
+
+You can Create and Choose one of the Problem Definition about selected SDGs.
+
+### HMW
+<p align="center">
+<img width="250" alt="스크린샷 2024-02-26 오전 9 36 06" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/904549d8-133b-4df9-a2b5-0f3dfe8c5076">
+  &nbsp;&nbsp;
+  
+<img width="250" alt="스크린샷 2024-02-26 오전 9 36 28" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/6bfe1c63-e961-4640-88c2-0d43d56d3519">
   &nbsp;&nbsp;
 </p>
 
- The issue may be identified, and solution sketching may proceed. It has steps of problem definition, how light we, crazy 8's, and solution sketch, and opinions are shared with other users.
+You can Create 'How Might We' about selected 'Problem Definition' and choose one of them.
 
-## Home
-
+### Crazy'8
 <p align="center">
-<img width="250" alt="스크린샷 2024-02-26 오전 9 37 36" src="https://github.com/bianbbc87/new/assets/129590633/c211720a-6b32-447e-8c82-4d9b1fda4e2c">
+<img width="250" alt="스크린샷 2024-02-26 오전 9 36 06" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/c60bddfc-019b-43bd-972d-79e4b7ff3538">
   &nbsp;&nbsp;
-<img width="250" alt="스크린샷 2024-02-26 오전 9 37 55" src="https://github.com/bianbbc87/new/assets/129590633/f1c64c6d-85a7-4458-aea4-086c687789fe">
+  
+<img width="250" alt="스크린샷 2024-02-26 오전 9 36 28" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/e93092ea-6afd-4590-8c14-b6a33cdda219">
   &nbsp;&nbsp;
 
-</p>
- If you are interested in a country, you can find its location by searching. With the globe, you can check the whole world at a glance.
-
-
-### Post
-<p align="center">
-<img width="250" alt="스크린샷 2024-02-26 오전 9 38 52" src="https://github.com/bianbbc87/new/assets/129590633/0fe10baf-10cd-4542-a72f-c0aa04048f02">
-<img width="250" alt="스크린샷 2024-02-26 오전 9 39 04" src="https://github.com/bianbbc87/new/assets/129590633/dadbdd0e-383c-4d8f-951d-8c70787bdf52">
-</p>
-
- Users can create posts by citing their solution sketches. Post can further express their ideas in solution sketches.
-
-
-#### Feedback
-
- <p align="center">
-<img width="250" alt="스크린샷 2024-02-26 오전 9 39 11" src="https://github.com/bianbbc87/new/assets/129590633/c1dc3ed8-8eb2-43cc-bf74-e0c7f0504763">
-     &nbsp;&nbsp;
-<img width="250" alt="스크린샷 2024-02-26 오전 9 39 17" src="https://github.com/bianbbc87/new/assets/129590633/b6426c21-4038-46a4-9d05-9d9ec349f063">
-  &nbsp;&nbsp;
 </p>
 
  For the generated post, feedback can be exchanged with each other. Users can listen to experts' opinions on the post and can also be experts. In this process, we can form a global partnership.
@@ -169,152 +171,90 @@ We built a training dataset using news datasets from osdg and sdgs datahub to tr
 
 ## Finish
 
-<p align="center">
-<img src="https://user-images.githubusercontent.com/87767242/161147414-54141552-0bcb-4a2d-ba7a-92e2e51b238a.png" alt="text" width="400"  />
-<img src="https://user-images.githubusercontent.com/87767242/161147827-f8c92a89-3f75-470a-8f0a-08edf06d042b.png" alt="text" width="400"  />
-</p>
 
-If you stop plogging and jogging is over, you can take pictures of the surrounding landscape, and if you press finish, your records are saved on the server. If you press the share button on the right, you can immediately write down your own post in the community.
-
-# Community
-
-<p align="center">
-  <img width="250" alt="post_total" src="https://user-images.githubusercontent.com/78309388/160839959-bdb0348e-6e84-437c-a475-5c59508fb72e.png">
+<img width="250" alt="스크린샷 2024-02-26 오전 9 36 28" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/b2cbc57d-e615-404f-88b8-29d469128a21">
   &nbsp;&nbsp;
-  <img width="250" alt="스크린샷 2022-03-31 오후 1 35 19" src="https://user-images.githubusercontent.com/78309388/160977541-73a8fd74-a0e5-4cb9-936e-62bfad36620d.png">
+</p>
+
+You can do 'Crazy 8s' which is a fast sketching exercise that challenges people to sketch eight distinct ideas in eight minutes. After then, you can vote three of all.
+
+### Solution Sketch
+<p align="center">
+<img width="250" alt="스크린샷 2024-02-26 오전 9 36 06" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/385b5f12-d8f4-4535-914f-764112b94811">
   &nbsp;&nbsp;
-<img width="250" alt="post_detail" src="https://user-images.githubusercontent.com/78309388/172351877-cceb5559-c9a7-439a-bec2-4ec6f1f7afa6.gif">
-</p>
-
-After the plogging activity, you can share photos of you running activities, surrounding landscapes, or your trash to the community. Check out the records of your friends or people in the same area and leave feedback! If you click the view button on the post, you can check various information such as exercise distance, time, and number of plogging.
-
-```
-Lets share and brag!
-```
-
-# Ranking
-
-<p align="center">
-  <img width="250" alt="rank_friends" src="https://user-images.githubusercontent.com/78309388/160846291-9fe27542-b8c1-4b2d-a9e7-57a8083200ee.png">
-  &nbsp;&nbsp;&nbsp;&nbsp;
-<img width="250" alt="rank_total" src="https://user-images.githubusercontent.com/78309388/160846351-9521fba7-050e-405b-9c32-e0c64b74250a.png">
-  &nbsp;&nbsp;&nbsp;&nbsp;
-<img width="250" alt="rank_region_list" src="https://user-images.githubusercontent.com/78309388/160846409-a84b736d-0b29-4283-9647-919e1f222728.png">
-
-</p>
-
-Check the rankings for your running and plogging records on the rankings page. Why not try competing while checking the overall, regional, and friend rankings respectively? Try running and plogging activities diligently to raise your ranking.
-
-# Donation
-
-<p align="center">
-  <img width="250" alt="donate" src="https://user-images.githubusercontent.com/78309388/160847056-6378ee13-279c-4af8-8330-0713cdb43939.png">
-  &nbsp;&nbsp;&nbsp;&nbsp;
-<img width="250" alt="donate" src="https://user-images.githubusercontent.com/78309388/160847209-bea54409-f45a-4d55-b197-44c90c2c2088.png">
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <img width="250" alt="donate" src="https://user-images.githubusercontent.com/78309388/161123669-a711747f-8b31-4084-8749-dc9666db10b6.gif">
-
-</p>
-
-You can donate with points collected through plogging activities. If this app is supported by the government or city, we think it will be able to support more disadvantaged neighbors. Wouldn't it be proud if you donated the points you've worked hard for running and blogging to neighbors in need? Currently, donations can be made to large-scale volunteer organizations such as UNICEF and save-the-childeren.
-
-# Sub_Function
-
-## Environment News
-
-<p align="center">
-  <img width="250" alt="news" src="https://user-images.githubusercontent.com/33146152/172305400-d68bd7bd-b7e6-4ba9-b8d3-279eedc3f1b4.png">
-&nbsp;&nbsp;&nbsp;&nbsp;
-  <img width="250" alt="news" src="https://user-images.githubusercontent.com/33146152/172304569-3f80ab0d-789f-49fa-87ee-aa97bc202c60.gif">
-&nbsp;&nbsp;&nbsp;&nbsp;
-  <img width="250" alt="news_detail" src="https://user-images.githubusercontent.com/33146152/172305120-66d98cdf-69f8-4104-b349-ee9a5285bbe8.gif">
   
-
+<img width="250" alt="스크린샷 2024-02-26 오전 9 36 28" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/f9d41e06-344e-4e34-ac81-8df5a15b5a23">
+  &nbsp;&nbsp;
 </p>
 
-You can view the latest environmental news on the News tab through the Google News Rss. Check out Google news environmental articles to get interested and join us in protecting our planet. Protecting the environment starts with a small concern for each and every one of us.
+Finally, you can drawing 'Solution Sketch' and write description and content about that. 
 
-## Cumulation of plogging activities
+### Post
+<p align="center">
+<img width="240" alt="스크린샷 2024-02-26 오전 9 38 52" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/202c6b25-c50a-4083-9627-989c56f5eedc">
+<img width="240" alt="스크린샷 2024-02-26 오전 9 38 52" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/035aae84-751e-4e1c-9cd5-a39a0e04d7a5">
+<img width="240" alt="스크린샷 2024-02-26 오전 9 39 04" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/e7cf4747-2235-4567-88c4-17fa011c23d9">
+<img width="240" alt="스크린샷 2024-02-26 오전 9 39 04" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/e5fe6064-2bcd-40c4-aef7-70768e0438c1">
+</p>
+
+ Users can create posts by citing their solution sketches. Post can further express their ideas in solution sketches.
+
+
+#### Feedback
 
 <p align="center">
-  <img width="250" alt="running_weekly" src="https://user-images.githubusercontent.com/78309388/160847933-caa85f8e-e800-4068-9fc9-ff8413a6aa1e.png">
-&nbsp;&nbsp;&nbsp;&nbsp;
-  <img width="250" alt="running_cumu" src="https://user-images.githubusercontent.com/78309388/160847969-ad74591b-6cc6-4ed3-a94b-c400ae392f62.png">
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <img width="250" alt="running_cumu" src="https://user-images.githubusercontent.com/78309388/160854223-dbb3b0bd-12da-4f98-9964-c5fc5a3a805e.gif">
-</p>
+<img width="250" alt="스크린샷 2024-02-26 오전 9 37 36" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/48b41ddf-5f96-4a40-943a-c5efbec15365">
+  &nbsp;&nbsp;
+<img width="250" alt="스크린샷 2024-02-26 오전 9 37 55" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/714e6bb6-dc8e-4364-98ac-4f95d4b00a4c">
+  &nbsp;&nbsp;
 
-You can see the progress of the accumulated plogging activity as a percentage. If you reach the challenge goal, earn points and participate in the donation! Weekly Challenges reset every week so you can earn points continuously. Many challenges that can keep users interest will be added continuosly.
+ For the generated post, feedback can be exchanged with each other. Users can listen to experts' opinions on the post and can also be experts. In this process, we can form a global partnership.
 
-## Subscription ranking
+## Home
 
 <p align="center">
-  <img width="250" alt="ranking" src="https://user-images.githubusercontent.com/78309388/160849446-46dc4f0d-db61-45f5-9a9e-839e29e0333b.gif">
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <img width="250" alt="ranking" src="https://user-images.githubusercontent.com/78309388/160979519-72dafdf7-e51f-43d8-92b7-ac7918d41468.gif">
+<img width="250" alt="스크린샷 2024-02-26 오전 9 37 36" src="https://github.com/bianbbc87/new/assets/129590633/c211720a-6b32-447e-8c82-4d9b1fda4e2c">
+  &nbsp;&nbsp;
+<img width="250" alt="스크린샷 2024-02-26 오전 9 37 55" src="https://github.com/bianbbc87/new/assets/129590633/f1c64c6d-85a7-4458-aea4-086c687789fe">
+  &nbsp;&nbsp;
+
 </p>
+ If you are interested in a country, you can find its location by searching. With the globe, you can check the whole world at a glance.
 
-You can view the cumulative subscription order for this application.
-As the number of subscribers increases, you can see how many subscribers you are on the membership screen and how many subscribers you already have on the login screen.
 
-## Communicate with developers
-<p align="center">
-  <img width="250" alt="image" src="https://user-images.githubusercontent.com/78309388/172326256-9f402331-69e1-4941-aea8-415f2b100347.png">
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <img width="250" alt="running_cumu" src="https://user-images.githubusercontent.com/78309388/172327758-a9d16767-fabb-440b-8113-4e9a6e879b0d.gif">
-</p>
+#### My
 
-When using the app, if there are points that you think are lacking or if there are features that you would like to be added, please communicate with the developers through the contact us page.
-
-# Furthermore
-
-## Map cluster
-
-<img width="500" alt="ranking" src="https://user-images.githubusercontent.com/87767242/161149750-781d53dc-168b-4cce-a838-c6633747808b.png">
-
-Map clustering makes it easier to see where garbage is concentrated visually, and we want to take action on where garbage is concentrated intensively.
-
-## Recycle Bigdata and EPR(Extended producer responsibility)
-
-<img width="300" alt="ranking" src="https://user-images.githubusercontent.com/87767242/161151267-16ecbbe9-0d13-47d1-b715-2e89e8e950d1.jpg">
-
-After collecting various data such as waste manufacturers, locations, and numbers, I want to apply EPR to manufacturers. A certain amount of recycling obligations are granted to manufacturers to recycle, and if they fail to comply with this, the producer is charged a recycling charge above the cost required for recycling.
-
-## Various profile decorations
+#### Global-impact
 
 <p align="center">
-<img width="200" alt="ranking" src="https://user-images.githubusercontent.com/87767242/161201288-221bb6c8-baf6-409c-ae84-b9604a552a32.gif">
-<img width="200" alt="ranking" src="https://user-images.githubusercontent.com/87767242/161201299-f76e2ebd-69c7-46dc-ac8e-30b5abd99588.gif">
+<img width="250" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/434b3c4d-c4e4-40b2-b137-7b80522b2237">
+  &nbsp;&nbsp;
+
+Users can promote "global impact" along with their own activities. It was inspired by github's rank system. The higher the global impact, the more users have tried to contribute to SDGS resolution.
+
+## AI part ( New Feature )
+#### Preview
+In order to increase interest in SDGs and make them more accessible, we used multi class classification to automatically classify the appropriate SDGs from news data. As shown in the figure, when news data comes in, the text is summarized through a summarization model, and then the text is fed into a classification model to be classified into the appropriate SDGs. 
+
+
+#### SDGS Classification
+<p align="center">
+  <img width="250" alt="AI_스크린샷1" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/114787723/a9f2f2ce-61d0-46e0-9c32-9af5cea68cc8">
+  &nbsp;&nbsp;
+  <img width="250" alt=AI_스크린샷3" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/114787723/218d44c1-bfab-413d-8c64-93a593a63098">
 </p>
-It's a little boring to just use points for donations. If we collect points, we will buy something that allows us to decorate our profiles with special effects that move our profiles, and show off our decorated profiles in the community. This will allow people to collect more points.
 
-## Trash can location
+We built a training dataset using news datasets from osdg and sdgs datahub to train the ALBERT model to create a classification model, and used facebook/bart-large-cnn as the limit for the maximum number of tokens in the ALBERT model so that the text can input the classification model after summarization.
 
-Picking up trash isn't the end of it. Since it has to be handled properly, users can check the location of the trash can during plogging, and other users can see the location of the trash can displayed.
-
-# Download APK
-
-[DOWNLOAD LINK](https://drive.google.com/file/d/1wTpxPK3uhqm0L2KZRvQWmqzmrr89Iket/view?usp=sharing)
-
-Please click the link to download it.
-
-# API
-
-<img width="300" alt="rss_api" src="https://user-images.githubusercontent.com/33146152/172305715-cd6c4c6c-31f1-4727-a500-eb184f26c82a.png">
-
-we used Google News Rss to continuously update new environmental news.
-
-<img width="300" alt="rss_api" src="https://user-images.githubusercontent.com/87767242/172434544-00181bc0-4b5a-4a07-abb0-a53fc16af7af.png">
-
-we used Google ML Kit to streaming object detection and image labeling.
+## Finish
 
 # Contributors
 
 <table>
   <tr>
-    <td align="center"><img src="https://avatars.githubusercontent.com/u/33146152?v=4" width="100px;" alt=""/><br /><b>Jung Eun ji</b><br/>🛠📲🇰🇷</td>
-    <td align="center"><img src="https://avatars.githubusercontent.com/u/87767242?v=4" width="100px;" alt=""/><br /><b>I Na Gyoung</b><br/>🛠📲🇰🇷</td>
-    <td align="center"><img src="https://avatars.githubusercontent.com/u/99856691?s=64&v=4" width="100px;" alt=""/><br /><b>Jang Dong Gyeom</b><br/>🛠🖼🇰🇷</td>
-    <td align="center"><img src="https://avatars.githubusercontent.com/u/78309388?v=4" width="100px;" alt=""/><br /><b>Kim Hyeon Jin</b><br/>📈📲🇰🇷</td>
+    <td align="center"><img src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/304662f1-2a52-4c75-af3c-402bc2d21416" width="100px;" alt=""/><br /><b>Jung Eun ji</b><br/>🇰🇷</td>
+    <td align="center"><img src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/d08ff443-b3c6-4382-befa-f96f7295c383" width="100px;" alt=""/><br /><b>I Na Gyoung</b><br/>🇰🇷</td>
+    <td align="center"><img src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/d20258b4-a5a2-4007-8a0c-64c18d80fb87" width="100px;" alt=""/><br /><b>Jang Dong Kyeom</b><br/>🇰🇷</td>
+    <td align="center"><img src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/0ac44273-ccd7-4f54-867c-d072cd9da6d1" width="100px;" alt=""/><br /><b>Kim Hyeon Jin</b><br/>🇰🇷</td>
   <tr>
 <table>
