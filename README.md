@@ -140,38 +140,6 @@ You can Create 'How Might We' about selected 'Problem Definition' and choose one
 
  For the generated post, feedback can be exchanged with each other. Users can listen to experts' opinions on the post and can also be experts. In this process, we can form a global partnership.
 
-#### My
-
-#### Global-impact
-
-<p align="center">
-<img width="250" alt="스크린샷 2024-02-26 오전 6 25 36" src="https://github.com/bianbbc87/new/assets/129590633/800e99b9-0570-44ea-8083-c1409368cf16">
-</p>
-
-Users can promote "global impact" along with their own activities. It was inspired by github's rank system. The higher the global impact, the more users have tried to contribute to SDGS resolution.
-
-## AI part ( New Feature )
-#### Preview
-In order to increase interest in SDGs and make them more accessible, we used multi class classification to automatically classify the appropriate SDGs from news data. As shown in the figure, when news data comes in, the text is summarized through a summarization model, and then the text is fed into a classification model to be classified into the appropriate SDGs. 
-
-
-#### SDGS Classification
-<p align="center">
-  <img width="250" alt="AI_스크린샷1" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/114787723/e1c9106f-d48a-4677-8f66-b65845ce6cf7
-">
-  &nbsp;&nbsp;
-  <img width="250" alt="AI_스크린샷2" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/114787723/52be3859-6f33-4090-84db-c01d72e7e290
-">
-  &nbsp;&nbsp;
-<img width="250" alt=AI_스크린샷3" src="!https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/114787723/c92a228b-6409-4a33-8457-c4129ed93873
-">
-</p>
-
-We built a training dataset using news datasets from osdg and sdgs datahub to train the ALBERT model to create a classification model, and used facebook/bart-large-cnn as the limit for the maximum number of tokens in the ALBERT model so that the text can input the classification model after summarization.
-
-## Finish
-
-
 <img width="250" alt="스크린샷 2024-02-26 오전 9 36 28" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/b2cbc57d-e615-404f-88b8-29d469128a21">
   &nbsp;&nbsp;
 </p>
@@ -239,9 +207,10 @@ In order to increase interest in SDGs and make them more accessible, we used mul
 
 #### SDGS Classification
 <p align="center">
-  <img width="250" alt="AI_스크린샷1" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/114787723/a9f2f2ce-61d0-46e0-9c32-9af5cea68cc8">
+  <img width="250" alt="AI_스크린샷1" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/0cbf182c-a75d-433a-873e-3cb792e08ff1">
   &nbsp;&nbsp;
-  <img width="250" alt=AI_스크린샷3" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/114787723/218d44c1-bfab-413d-8c64-93a593a63098">
+  <img width="250" alt="AI_스크린샷3" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/ae8bc5d3-40f4-45ce-9f7e-881950652ad5">
+  <img width="250" alt="AI_스크린샷3" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/e13a8aba-628d-4325-ab78-74ceaaa74ca2">
 </p>
 
 We built a training dataset using news datasets from osdg and sdgs datahub to train the ALBERT model to create a classification model, and used facebook/bart-large-cnn as the limit for the maximum number of tokens in the ALBERT model so that the text can input the classification model after summarization.
