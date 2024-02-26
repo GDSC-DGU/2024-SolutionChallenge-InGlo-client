@@ -132,15 +132,9 @@ You can Create 'How Might We' about selected 'Problem Definition' and choose one
 <p align="center">
 <img width="250" alt="스크린샷 2024-02-26 오전 9 36 06" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/c60bddfc-019b-43bd-972d-79e4b7ff3538">
   &nbsp;&nbsp;
-  
 <img width="250" alt="스크린샷 2024-02-26 오전 9 36 28" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/e93092ea-6afd-4590-8c14-b6a33cdda219">
   &nbsp;&nbsp;
-
-</p>
-
- For the generated post, feedback can be exchanged with each other. Users can listen to experts' opinions on the post and can also be experts. In this process, we can form a global partnership.
-
-<img width="250" alt="스크린샷 2024-02-26 오전 9 36 28" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/b2cbc57d-e615-404f-88b8-29d469128a21">
+<img width="250" alt="스크린샷 2024-02-26 오전 9 36 28" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/3c2a712a-9daf-4852-a4f0-c7e403fc9c29">
   &nbsp;&nbsp;
 </p>
 
