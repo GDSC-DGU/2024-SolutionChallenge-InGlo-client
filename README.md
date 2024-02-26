@@ -65,7 +65,7 @@ inglo is a combination of insight and global, and I thought that receiving and s
 - **Disign**
   - [Figma](https://www.figma.com/file/raNldHw9OcIkmgKLP4JYPN/solution-challenge?type=design&node-id=193%3A2339&mode=design&t=Dke0sG6zIzpxXdOH-1))
 - **AI/ML** **(** [Python](https://www.python.org/) : `3.10.12` **)**
-  - [pytorch](https://pytorch.org/) : '2.1.0`
+  - [pytorch](https://pytorch.org/) : `2.1.0`
 - **Back**
   - [Spring](https://firebase.google.com/?hl=ko&gclid=CjwKCAjwopWSBhB6EiwAjxmqDeP1h2srS6otlbc3_ubdqsEzdhZ7f5ZvhsOcXqbTeyyw_d9Kq2XPQxoCElgQAvD_BwE&gclsrc=aw.ds)
   - [MySQL](https://firebase.google.com/?hl=ko&gclid=CjwKCAjwopWSBhB6EiwAjxmqDeP1h2srS6otlbc3_ubdqsEzdhZ7f5ZvhsOcXqbTeyyw_d9Kq2XPQxoCElgQAvD_BwE&gclsrc=aw.ds)
@@ -154,14 +154,11 @@ Users can promote "global impact" along with their own activities. It was inspir
 In order to increase interest in SDGs and make them more accessible, we used multi class classification to automatically classify the appropriate SDGs from news data. As shown in the figure, when news data comes in, the text is summarized through a summarization model, and then the text is fed into a classification model to be classified into the appropriate SDGs. 
 
 
-We built a training dataset using news datasets from osdg and sdgs datahub to train the ALBERT model to create a classification model, and used facebook/bart-large-cnn as the limit for the maximum number of tokens in the ALBERT model so that the text can input the classification model after summarization.
-
-
-#### Doing Plogging
+#### SDGS Classification
 <p align="center">
 <img src="https://user-images.githubusercontent.com/87767242/172425780-cfa7ec25-ee23-4677-9a5d-37f9fa07c960.gif" alt="text" width="400"  />
 
-After taking a picture of trash, it automatically recognizes and sorts trash so that user can see at a glance what kind of garbage user picked up. 
+We built a training dataset using news datasets from osdg and sdgs datahub to train the ALBERT model to create a classification model, and used facebook/bart-large-cnn as the limit for the maximum number of tokens in the ALBERT model so that the text can input the classification model after summarization.
 
 ## Finish
 
