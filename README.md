@@ -1,11 +1,5 @@
 <p align="center">
-<img width="300" alt="image" src="https://user-images.githubusercontent.com/87767242/189479410-54b2b70f-0b1b-4938-81d8-3e659d03a68c.svg">
-<h3 align="center">This project was ranked in the top 10 of the 2022 <a href="https://developers.google.com/community/gdsc-solution-challenge">Google Solution Challenge.</a></h3>
-<h4 align="center">Thank you for Everyone!!</a></h4>
-
-<br/><br/><br/><br/>
-
-# Isak, green plogging flutter application
+# Inglo, international awareness community flutter application
 
 <img width="194" alt="image" src="https://user-images.githubusercontent.com/33146152/160340503-af84e553-2636-47cd-9523-317976090023.png">
 
@@ -13,20 +7,20 @@
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#Contributors)
 
-2022-GDSC-Solution-Challenge flutter project
+2023-GDSC-Solution-Challenge flutter project
 
 ## Table of Contents
 
 - [Getting_Started](#getting_started)
 - [Components](#components)
 - [Main_Function](#main_function)
-  - [Main](#main)
-  - [Start Running](#start-running)
-  - [Start Plogging](#start-plogging)
-  - [Trash Classification & Object Detection](#trash-classification-and-object-detection)
-    - [Classification](#classification-model)
-    - [Object Detection](#trash-object-detection-(-new-feature-))
-  - [Finish](#finish)
+  - [Issue](#issue)
+    - [Solution Sketch](#solution-sketch)
+  - [Home](#home)
+  - [Post](#post)
+    - [Feedback](#feedback)
+  - [My](#my)
+    - [Global Impact](#global-impact)
 - [Sub_Function](#sub_function)
 - [Futhermore](#furthermore)
 - [Download](#download-apk)
@@ -35,15 +29,14 @@
 
 ## Getting_Started
 
-### What is Plogging?
+### What is Inglo?
 
 <p align="center">
 <img width="500" alt="image" src="https://user-images.githubusercontent.com/87767242/161135838-2b728bb3-04cf-4a15-8574-3038fe0c1e91.jpg">  
 
-***`Just jogging and Just pick up the trash!`***   
-Plogging is a combination of Jogging with picking up litter merging the Swedish verbs ***plocka*** upp (pick up) and ***jogga***(jog) gives the new Swedish verb ***plogga***.
-The key to plogging is not just the concept of environmental protection of picking up trash, but approaching picking up trash as one of the health-training exercises. The advantage is that it consumes more physical strength than general jogging. While jogging normally with a garbage bag, if you encounter illegally dumped garbage, pick it up and put it in a garbage bag.
-In fact, according to a survey by Swedish fitness app Life Island, people who jog only for 30 minutes consume an average of 235kcal, but those who plogging at the same time consume 288kcal. In other words, it doubles the effectiveness of exercise.
+***`Let's find out the issues of SDGS around the world, and let's solve them all together!`*** 
+ As of 2019, aid to Africa and underdeveloped countries were on the rise before the COVID-19 outbreak, but after the COVID-19 outbreak, the UN predicted that aid to middle- and low-income countries, which are the economic lifeline of numerous poor families, would decrease. UNESCO said that 'sustainable development goals' are the last of the SDGS goals, but they are also the underlying goals for achieving other goals. 
+ Global partnership refers to cooperation between governments, private, civil society, and comprehensive partnerships at the global, regional, and national levels. Among the detailed goals of Goal 17, there is "encouraging and promoting effective public, public-private, and civil society partnerships based on the financing strategies and experiences of partnership institutions." Just as partnerships between public and private civil society in one country are important, our team thought that promoting global partnerships with citizens of other countries would eventually contribute to public partnerships. Therefore, the service was planned with the aim of achieving SDGS through global partnerships.
 
 ## What is Sustainable Development Goals?
 
@@ -54,41 +47,38 @@ As can be seen in the figure above, there are 17 goals.
 
 ### Our goal
 
-We selected several of the UN's 17 sustainable development goals to create an flutter application. And we found activities that can take care of my health and help the environment. After that, we found the actrivity "plogging", and we thought it would be nice if we could add additional features to draw interest from users.
+A flutter application was created by selecting several of the UN's 17 sustainable development goals. SDGS and sustainable development goals were thought to be a global partnership, and they planned to get to know each other by sharing issue data from around the world. In the planning process, Google's design print methodology was used, and I thought that the process of deriving a solution sketch from this methodology was good for deriving and developing ideas.
 
-#### Good Health and Well-Being
+#### Global Partners Growing Together
 
 <img width="143" alt="image" src="https://user-images.githubusercontent.com/33146152/160327288-21a43bdc-3de2-4d36-a26e-9953dc86bc4f.png">
-Plogging is an activity to pick up trash while running. App users can improve their health while using this application. Also they can do "well-being" by sharing their progress with people around the world and friends.
+Users of the app can check the news of the selected SDGS category while using this app and host a solution sketch. They can also share their opinions on the news with people and friends all over the world. In addition, they can form a global partnership by creating a post that cites their solution sketch and exchanging feedback with each other.
 
-#### Responsible consumption and production
-
-<img width="146" alt="image" src="https://user-images.githubusercontent.com/33146152/160338918-1069a764-d3ce-43cb-ae23-2f597ae0d161.png">
-As mentioned above, the positive aspects of the environment and sustainable consumption can ve derived through the action of picking up recycled waste.
-
-### The reason why we named "Isak"
+### The reason why we named "inglo"
 
 ![image](https://user-images.githubusercontent.com/33146152/160325415-8deaab92-23fd-44fe-aa66-74c3d70f5181.png)
 
-During the plogging process, you naturally bend your back. So we thought this posture was very similar to the prople from one of the famous paintings, "The Gleaners".
-In Korean, "the Gleaners" sounds like "Isak". Therefore, our team decided the logo and application name in this way.
+inglo is a combination of insight and global, and I thought that receiving and sharing SDGS news data would broaden global insight. Since we respect each other and promote global partnerships through various activities such as solution sketch, post, and feedback, our team added several national images to the cover instead of using simple words to start the app, and the logo was created in the form of a globe reminiscent of global.
 
 ## Components
 
 <img src="https://user-images.githubusercontent.com/33146152/160340776-616bc1a4-dd52-40a5-8e9f-dea06cd16952.png" width="200" height="100">  <img src="https://user-images.githubusercontent.com/33146152/160340848-f25eb360-157c-4988-a2c4-7e9e9034b0f4.png" width="200" height="100">  <img src="https://user-images.githubusercontent.com/33146152/160341014-57c3e47f-b268-40bb-bac0-b01bd03ca8c3.png" width="100" height="100">  <img src="https://user-images.githubusercontent.com/33146152/160341802-7eceab71-16af-46c9-a74f-840c030c3abc.png" width="150" height="100">
 
 - **Disign**
-  - [Adobe XD](https://www.adobe.com/products/xd.html)
-- **ML** **(** [Python](https://www.python.org/) : `3.7.12` **)**
+  - [Figma](https://www.figma.com/file/raNldHw9OcIkmgKLP4JYPN/solution-challenge?type=design&node-id=193%3A2339&mode=design&t=Dke0sG6zIzpxXdOH-1))
+- **AI/ML** **(** [Python](https://www.python.org/) : `3.7.12` **)**
   - [tensorflow](https://www.tensorflow.org/?hl=ko) & [keras](https://keras.io/) : `2.6.0`
 - **Back**
-  - [Firebase](https://firebase.google.com/?hl=ko&gclid=CjwKCAjwopWSBhB6EiwAjxmqDeP1h2srS6otlbc3_ubdqsEzdhZ7f5ZvhsOcXqbTeyyw_d9Kq2XPQxoCElgQAvD_BwE&gclsrc=aw.ds)
-- **Front** **(** [Dart](https://dart.dev/) : `2.16.1` **)**
-  - [Flutter](https://storage.googleapis.com/flutter_infra_release/releases/stable/windows/flutter_windows_2.10.3-stable.zip) : `2.10.3`
+  - [Spring](https://firebase.google.com/?hl=ko&gclid=CjwKCAjwopWSBhB6EiwAjxmqDeP1h2srS6otlbc3_ubdqsEzdhZ7f5ZvhsOcXqbTeyyw_d9Kq2XPQxoCElgQAvD_BwE&gclsrc=aw.ds)
+  - [MySQL](https://firebase.google.com/?hl=ko&gclid=CjwKCAjwopWSBhB6EiwAjxmqDeP1h2srS6otlbc3_ubdqsEzdhZ7f5ZvhsOcXqbTeyyw_d9Kq2XPQxoCElgQAvD_BwE&gclsrc=aw.ds)
+- **Front** **(** [Dart](https://dart.dev/) : `3.3.0` **)**
+  - [Flutter](https://storage.googleapis.com/flutter_infra_release/releases/stable/windows/flutter_windows_2.10.3-stable.zip) : `1.19.1`
 - **Device**
-  - Android Virtual Device
-    - Pixel 3a API 29
-  - Galaxy S8 ( Android 9 )
+  1. Android Virtual Device
+    - Pixel 7 Pro API VanillaIceCream
+ 
+  2. IOS Virtual Device
+    - IPhone 14
 
 # Main_Function
 
@@ -98,7 +88,7 @@ In Korean, "the Gleaners" sounds like "Isak". Therefore, our team decided the lo
   <img width="250" alt="스크린샷 2022-03-30 오후 10 54 04" src="https://user-images.githubusercontent.com/87767242/161129056-8fc8493f-88a9-4110-871b-d46e7c78dff2.gif">
   &nbsp;&nbsp;
 
-## Main
+## Issue
 
 <p align="center">
 <img width="250"  src="https://user-images.githubusercontent.com/87767242/161152654-1638f32f-9652-4902-b53a-fafcac1e3e53.png">
@@ -106,7 +96,7 @@ In Korean, "the Gleaners" sounds like "Isak". Therefore, our team decided the lo
 </p>
 When you first install and log in, a description of plogging appears. You can set the zoom of the camera with plus and minus buttons, and the camera always shows the user.
 
-## Start Running
+## Solution-Sketch
 
 <p align="center">
   <img width="250" alt="스크린샷 2022-03-30 오후 10 54 04" src="https://user-images.githubusercontent.com/87767242/161132789-8aec3412-cb30-47d4-91a5-015494afb22b.gif">
@@ -121,7 +111,7 @@ Press the start button to start jogging. The paths you have been running through
 Run as you long as you can!
 ```
 
-## Start Plogging
+## Home
 
 <p align="center">
   <img width="250" alt="스크린샷 2022-03-30 오후 10 54 04" src="https://user-images.githubusercontent.com/87767242/161130787-e7e3e2a1-f910-487e-ade6-62361473638a.png">
@@ -136,9 +126,8 @@ If you want to take a break from jogging, the app asks you if you want to do plo
 That's it! Let's go plogging!
 ```
 
-## Trash Classification and Object Detection
 
-### Classification Model
+### Post
 
 <p align="center">
 <img width="400" alt="assets_ml_-MMARWLU6xXHUlsfby29_-MMAYgUCxGtR2ImywRm3__2020-07-20__9 07 42" src="https://user-images.githubusercontent.com/87767242/161139376-4ebc7db6-57b0-4ea4-be68-46678d32f19d.png">
@@ -152,15 +141,16 @@ We discussed a lightweight deep learning model that can be driven on mobile thro
 
 When I tested the actual product with a test case, I was satisfied with the results.
 
-### Mobile Testing
 
-#### Success to Plogging
+#### Feedback
 
  <p align="center">
 <img src="https://user-images.githubusercontent.com/87767242/161146355-f072d75d-0bae-471e-9ac7-1fd132c3b571.gif" alt="text" width="400"  />
 </p>
 
-#### Faild to Plogging
+#### My
+
+#### Global-impact
 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/87767242/161144670-9d349d2c-b398-489e-8f3a-25d08c88e0bb.gif" alt="text" width="400"  />
@@ -172,7 +162,7 @@ After converting the model into a tflite file, the model was transplanted into a
 the application will take care of what you picked up
 ```
 
-## Trash Object Detection ( New Feature )
+## AI part ( New Feature )
 #### Preview
 The previous model was not the one we finally wanted. It was a model that classified only four things and could not be processed in real time. However, after mentoring at this gdsc, we were finally able to implement the method we wanted.
 
@@ -334,9 +324,9 @@ we used Google ML Kit to streaming object detection and image labeling.
 
 <table>
   <tr>
-    <td align="center"><img src="https://avatars.githubusercontent.com/u/33146152?v=4" width="100px;" alt=""/><br /><b>Jeong Hyeong Lee</b><br/>📈📲🇰🇷</td>
-    <td align="center"><img src="https://avatars.githubusercontent.com/u/87767242?v=4" width="100px;" alt=""/><br /><b>Chang Woo Choo</b><br/>🛠📲🇰🇷</td>
-    <td align="center"><img src="https://avatars.githubusercontent.com/u/99856691?s=64&v=4" width="100px;" alt=""/><br /><b>Hyun Wook Jang</b><br/>🛠🖼🇰🇷</td>
-    <td align="center"><img src="https://avatars.githubusercontent.com/u/78309388?v=4" width="100px;" alt=""/><br /><b>Jeong Woo Han</b><br/>🛠📲🇰🇷</td>
+    <td align="center"><img src="https://avatars.githubusercontent.com/u/33146152?v=4" width="100px;" alt=""/><br /><b>Jung Eun ji</b><br/>🛠📲🇰🇷</td>
+    <td align="center"><img src="https://avatars.githubusercontent.com/u/87767242?v=4" width="100px;" alt=""/><br /><b>I Na Gyoung</b><br/>🛠📲🇰🇷</td>
+    <td align="center"><img src="https://avatars.githubusercontent.com/u/99856691?s=64&v=4" width="100px;" alt=""/><br /><b>Jang Dong Gyeom</b><br/>🛠🖼🇰🇷</td>
+    <td align="center"><img src="https://avatars.githubusercontent.com/u/78309388?v=4" width="100px;" alt=""/><br /><b>Kim Hyeon Jin</b><br/>📈📲🇰🇷</td>
   <tr>
 <table>
