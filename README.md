@@ -1,11 +1,7 @@
 <p align="center">
 # Inglo, international awareness community flutter application
 
-<img width="194" alt="image" src="https://user-images.githubusercontent.com/33146152/160340503-af84e553-2636-47cd-9523-317976090023.png">
-
-[![license](https://img.shields.io/github/license/:user/:repo.svg)](LICENSE)
-[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#Contributors)
+<img width="194" alt="스크린샷 2024-02-26 오전 9 55 19" src="https://github.com/bianbbc87/new/assets/129590633/085aaa87-2dbe-4e7a-90e0-c3852389c04e">
 
 2023-GDSC-Solution-Challenge flutter project
 
@@ -32,7 +28,6 @@
 ### What is Inglo?
 
 <p align="center">
-<img width="500" alt="image" src="https://user-images.githubusercontent.com/87767242/161135838-2b728bb3-04cf-4a15-8574-3038fe0c1e91.jpg">  
 
 ***`Let's find out the issues of SDGS around the world, and let's solve them all together!`*** 
  As of 2019, aid to Africa and underdeveloped countries were on the rise before the COVID-19 outbreak, but after the COVID-19 outbreak, the UN predicted that aid to middle- and low-income countries, which are the economic lifeline of numerous poor families, would decrease. UNESCO said that 'sustainable development goals' are the last of the SDGS goals, but they are also the underlying goals for achieving other goals. 
@@ -51,18 +46,21 @@ A flutter application was created by selecting several of the UN's 17 sustainabl
 
 #### Global Partners Growing Together
 
-<img width="143" alt="image" src="https://user-images.githubusercontent.com/33146152/160327288-21a43bdc-3de2-4d36-a26e-9953dc86bc4f.png">
+![sdgs17](https://github.com/bianbbc87/new/assets/129590633/ee16cf29-3ebd-458f-9453-a5060d143b04)
+
 Users of the app can check the news of the selected SDGS category while using this app and host a solution sketch. They can also share their opinions on the news with people and friends all over the world. In addition, they can form a global partnership by creating a post that cites their solution sketch and exchanging feedback with each other.
 
 ### The reason why we named "inglo"
 
-![image](https://user-images.githubusercontent.com/33146152/160325415-8deaab92-23fd-44fe-aa66-74c3d70f5181.png)
+<img width="499" alt="스크린샷 2024-02-26 오전 9 45 48" src="https://github.com/bianbbc87/new/assets/129590633/4172af63-407a-44e6-9656-9ac95ba2671a">
 
 inglo is a combination of insight and global, and I thought that receiving and sharing SDGS news data would broaden global insight. Since we respect each other and promote global partnerships through various activities such as solution sketch, post, and feedback, our team added several national images to the cover instead of using simple words to start the app, and the logo was created in the form of a globe reminiscent of global.
 
 ## Components
 
-<img src="https://user-images.githubusercontent.com/33146152/160340776-616bc1a4-dd52-40a5-8e9f-dea06cd16952.png" width="200" height="100">  <img src="https://user-images.githubusercontent.com/33146152/160340848-f25eb360-157c-4988-a2c4-7e9e9034b0f4.png" width="200" height="100">  <img src="https://user-images.githubusercontent.com/33146152/160341014-57c3e47f-b268-40bb-bac0-b01bd03ca8c3.png" width="100" height="100">  <img src="https://user-images.githubusercontent.com/33146152/160341802-7eceab71-16af-46c9-a74f-840c030c3abc.png" width="150" height="100">
+<img src="https://user-images.githubusercontent.com/33146152/160340776-616bc1a4-dd52-40a5-8e9f-dea06cd16952.png" width="120" height="100">  <img src="https://user-images.githubusercontent.com/33146152/160340848-f25eb360-157c-4988-a2c4-7e9e9034b0f4.png" width="200" height="100">  <img width="120" height="100" alt="스크린샷 2024-02-26 오전 9 46 36" src="https://github.com/bianbbc87/new/assets/129590633/5d5c45c7-7a2e-4c5c-aa51-c81891154393"> <img src="https://user-images.githubusercontent.com/33146152/160341802-7eceab71-16af-46c9-a74f-840c030c3abc.png" width="120" height="100">
+<img width="120" heigt="100" alt="스크린샷 2024-02-26 오전 9 46 56" src="https://github.com/bianbbc87/new/assets/129590633/eb869472-047c-4327-abc2-b5e6d6686ed4">
+
 
 - **Disign**
   - [Figma](https://www.figma.com/file/raNldHw9OcIkmgKLP4JYPN/solution-challenge?type=design&node-id=193%3A2339&mode=design&t=Dke0sG6zIzpxXdOH-1))
@@ -85,82 +83,71 @@ inglo is a combination of insight and global, and I thought that receiving and s
 ## PREVIEW
 
 <p align="center">
-  <img width="250" alt="스크린샷 2022-03-30 오후 10 54 04" src="https://user-images.githubusercontent.com/87767242/161129056-8fc8493f-88a9-4110-871b-d46e7c78dff2.gif">
+<img width="250" alt="스크린샷 2024-02-26 오전 6 25 36" src="https://github.com/bianbbc87/new/assets/129590633/d038611d-6316-4fe1-bf6a-bccc38bbdad1">
   &nbsp;&nbsp;
 
 ## Issue
 
 <p align="center">
-<img width="250"  src="https://user-images.githubusercontent.com/87767242/161152654-1638f32f-9652-4902-b53a-fafcac1e3e53.png">
-<img width="250" alt="스크린샷 2022-03-30 오후 10 54 04" src="https://user-images.githubusercontent.com/87767242/161152663-82d12e0d-24d4-4669-8a2a-6d213143210e.png">
+<img width="250" alt="스크린샷 2024-02-26 오전 9 35 21" src="https://github.com/bianbbc87/new/assets/129590633/a4435629-d178-4186-82a9-fda749d3b322">
+&nbsp;&nbsp;
+<img width="250" alt="스크린샷 2024-02-26 오전 9 33 16" src="https://github.com/bianbbc87/new/assets/129590633/38c9cebf-8b7b-481a-b8a3-66ebf1c3c45c">
 </p>
-When you first install and log in, a description of plogging appears. You can set the zoom of the camera with plus and minus buttons, and the camera always shows the user.
+&nbsp;&nbsp;
+ If you log in after the initial installation, you will be directed to the issue. Through the dropdown above, you can select the SDGS of the category you want to see, and you can check the news content for the issue.
 
 ## Solution-Sketch
 
 <p align="center">
-  <img width="250" alt="스크린샷 2022-03-30 오후 10 54 04" src="https://user-images.githubusercontent.com/87767242/161132789-8aec3412-cb30-47d4-91a5-015494afb22b.gif">
+<img width="250" alt="스크린샷 2024-02-26 오전 9 36 06" src="https://github.com/bianbbc87/new/assets/129590633/d32922e3-9727-4f0c-9966-540fa428db43">
   &nbsp;&nbsp;
-  <img width="250" alt="스크린샷 2022-03-30 오후 10 54 04" src="https://user-images.githubusercontent.com/87767242/161132580-5004fbfa-a02c-4931-b5d9-400ae1e68963.gif">
+<img width="250" alt="스크린샷 2024-02-26 오전 9 36 28" src="https://github.com/bianbbc87/new/assets/129590633/54a63af0-f6f8-4cce-9f98-9da2d9ee8cc2">
   &nbsp;&nbsp;
 </p>
 
-Press the start button to start jogging. The paths you have been running through are marked in red, and the recording begins.
-
-```
-Run as you long as you can!
-```
+ The issue may be identified, and solution sketching may proceed. It has steps of problem definition, how light we, crazy 8's, and solution sketch, and opinions are shared with other users.
 
 ## Home
 
 <p align="center">
-  <img width="250" alt="스크린샷 2022-03-30 오후 10 54 04" src="https://user-images.githubusercontent.com/87767242/161130787-e7e3e2a1-f910-487e-ade6-62361473638a.png">
+<img width="250" alt="스크린샷 2024-02-26 오전 9 37 36" src="https://github.com/bianbbc87/new/assets/129590633/c211720a-6b32-447e-8c82-4d9b1fda4e2c">
   &nbsp;&nbsp;
-  <img width="250" alt="스크린샷 2022-03-30 오후 10 54 04" src="https://user-images.githubusercontent.com/87767242/161125239-ff4cbf61-71b7-4a7e-b0de-e76d716169ee.png">
+<img width="250" alt="스크린샷 2024-02-26 오전 9 37 55" src="https://github.com/bianbbc87/new/assets/129590633/f1c64c6d-85a7-4458-aea4-086c687789fe">
   &nbsp;&nbsp;
 
 </p>
-If you want to take a break from jogging, the app asks you if you want to do plogging. When you start plogging, the app automatically displays the route line in green and plogging starts. At this time, distance, time, and pace are not measured.
-
-```
-That's it! Let's go plogging!
-```
+ If you are interested in a country, you can find its location by searching. With the globe, you can check the whole world at a glance.
 
 
 ### Post
-
 <p align="center">
-<img width="400" alt="assets_ml_-MMARWLU6xXHUlsfby29_-MMAYgUCxGtR2ImywRm3__2020-07-20__9 07 42" src="https://user-images.githubusercontent.com/87767242/161139376-4ebc7db6-57b0-4ea4-be68-46678d32f19d.png">
-
-We discussed a lightweight deep learning model that can be driven on mobile through meetings and chose a model called MobileNetV3. Transfer learning was conducted through the data ([here](https://www.kaggle.com/datasets/jinfree/recycle-classification-dataset)), and this resulted in satisfactory accuracy.  
-
-<p align="center">
-<img width="1000" alt="assets_ml_-MMARWLU6xXHUlsfby29_-MMAYgUCxGtR2ImywRm3__2020-07-20__9 07 42" src="https://user-images.githubusercontent.com/87767242/161139901-6380cd0b-4315-4bc9-9d27-3b61b131d6f9.png">
-<img width="500" alt="assets_ml_-MMARWLU6xXHUlsfby29_-MMAYgUCxGtR2ImywRm3__2020-07-20__9 07 42" src="https://user-images.githubusercontent.com/87767242/161139890-e477e21f-8102-4259-8ec6-af04e61bf788.png">
+<img width="250" alt="스크린샷 2024-02-26 오전 9 38 52" src="https://github.com/bianbbc87/new/assets/129590633/0fe10baf-10cd-4542-a72f-c0aa04048f02">
+<img width="250" alt="스크린샷 2024-02-26 오전 9 39 04" src="https://github.com/bianbbc87/new/assets/129590633/dadbdd0e-383c-4d8f-951d-8c70787bdf52">
 </p>
 
-When I tested the actual product with a test case, I was satisfied with the results.
+ Users can create posts by citing their solution sketches. Post can further express their ideas in solution sketches.
 
 
 #### Feedback
 
  <p align="center">
-<img src="https://user-images.githubusercontent.com/87767242/161146355-f072d75d-0bae-471e-9ac7-1fd132c3b571.gif" alt="text" width="400"  />
+<img width="250" alt="스크린샷 2024-02-26 오전 9 39 11" src="https://github.com/bianbbc87/new/assets/129590633/c1dc3ed8-8eb2-43cc-bf74-e0c7f0504763">
+     &nbsp;&nbsp;
+<img width="250" alt="스크린샷 2024-02-26 오전 9 39 17" src="https://github.com/bianbbc87/new/assets/129590633/b6426c21-4038-46a4-9d05-9d9ec349f063">
+  &nbsp;&nbsp;
 </p>
+
+ For the generated post, feedback can be exchanged with each other. Users can listen to experts' opinions on the post and can also be experts. In this process, we can form a global partnership.
 
 #### My
 
 #### Global-impact
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/87767242/161144670-9d349d2c-b398-489e-8f3a-25d08c88e0bb.gif" alt="text" width="400"  />
+<img width="250" alt="스크린샷 2024-02-26 오전 6 25 36" src="https://github.com/bianbbc87/new/assets/129590633/800e99b9-0570-44ea-8083-c1409368cf16">
 </p>
 
-After converting the model into a tflite file, the model was transplanted into a mobile and tested. During plogging state, you can take a picture of the trash you picked up. Models learned with tensorflow automatically recognize garbage and automatically calssify which garbage user picked up. Then, the place where the garbage was picked up is marked with purple dots. The more trash you pick up and shoot, the more plogging points you'll get.
-
-```
-the application will take care of what you picked up
-```
+Users can promote "global impact" along with their own activities. It was inspired by github's rank system. The higher the global impact, the more users have tried to contribute to SDGS resolution.
 
 ## AI part ( New Feature )
 #### Preview
