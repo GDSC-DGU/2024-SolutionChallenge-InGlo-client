@@ -64,8 +64,8 @@ inglo is a combination of insight and global, and I thought that receiving and s
 
 - **Disign**
   - [Figma](https://www.figma.com/file/raNldHw9OcIkmgKLP4JYPN/solution-challenge?type=design&node-id=193%3A2339&mode=design&t=Dke0sG6zIzpxXdOH-1))
-- **AI/ML** **(** [Python](https://www.python.org/) : `3.7.12` **)**
-  - [tensorflow](https://www.tensorflow.org/?hl=ko) & [keras](https://keras.io/) : `2.6.0`
+- **AI/ML** **(** [Python](https://www.python.org/) : `3.10.12` **)**
+  - [pytorch](https://pytorch.org/) : '2.1.0`
 - **Back**
   - [Spring](https://firebase.google.com/?hl=ko&gclid=CjwKCAjwopWSBhB6EiwAjxmqDeP1h2srS6otlbc3_ubdqsEzdhZ7f5ZvhsOcXqbTeyyw_d9Kq2XPQxoCElgQAvD_BwE&gclsrc=aw.ds)
   - [MySQL](https://firebase.google.com/?hl=ko&gclid=CjwKCAjwopWSBhB6EiwAjxmqDeP1h2srS6otlbc3_ubdqsEzdhZ7f5ZvhsOcXqbTeyyw_d9Kq2XPQxoCElgQAvD_BwE&gclsrc=aw.ds)
@@ -151,18 +151,15 @@ Users can promote "global impact" along with their own activities. It was inspir
 
 ## AI part ( New Feature )
 #### Preview
-The previous model was not the one we finally wanted. It was a model that classified only four things and could not be processed in real time. However, after mentoring at this gdsc, we were finally able to implement the method we wanted.
+In order to increase interest in SDGs and make them more accessible, we used multi class classification to automatically classify the appropriate SDGs from news data. As shown in the figure, when news data comes in, the text is summarized through a summarization model, and then the text is fed into a classification model to be classified into the appropriate SDGs. 
 
-<p align="center">
-<img src="https://user-images.githubusercontent.com/87767242/172432196-fbbd64a9-20c5-42cd-aa6d-40e24e334c30.gif" alt="text" width="400"  />
-</p>
-Real-time object detection and image labeling functions are used to implement more effective plogging. It recognizes several objects as shown, and among them, it is possible to be plogging the target red rectangle. The implementation of this used object detection among ML kits supported by Google, and this function was recommended to us by a mentor during gdsc mentoring. It was easy to use these features during the few remaining deadlines, and the results were successful.
+
+We built a training dataset using news datasets from osdg and sdgs datahub to train the ALBERT model to create a classification model, and used facebook/bart-large-cnn as the limit for the maximum number of tokens in the ALBERT model so that the text can input the classification model after summarization.
+
 
 #### Doing Plogging
 <p align="center">
 <img src="https://user-images.githubusercontent.com/87767242/172425780-cfa7ec25-ee23-4677-9a5d-37f9fa07c960.gif" alt="text" width="400"  />
-<img src="https://user-images.githubusercontent.com/87767242/172425790-a382944e-728c-4f65-a516-ce933d659116.gif" alt="text" width="400"  />
-</p>
 
 After taking a picture of trash, it automatically recognizes and sorts trash so that user can see at a glance what kind of garbage user picked up. 
 
