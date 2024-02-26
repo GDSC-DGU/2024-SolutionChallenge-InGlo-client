@@ -1,4 +1,3 @@
-<p align="center">
 # Inglo, international awareness community flutter application
 
 <img width="194" alt="스크린샷 2024-02-26 오전 9 55 19" src="https://github.com/bianbbc87/new/assets/129590633/085aaa87-2dbe-4e7a-90e0-c3852389c04e">
@@ -156,7 +155,15 @@ In order to increase interest in SDGs and make them more accessible, we used mul
 
 #### SDGS Classification
 <p align="center">
-<img src="https://user-images.githubusercontent.com/87767242/172425780-cfa7ec25-ee23-4677-9a5d-37f9fa07c960.gif" alt="text" width="400"  />
+  <img width="250" alt="AI_스크린샷1" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/114787723/e1c9106f-d48a-4677-8f66-b65845ce6cf7
+">
+  &nbsp;&nbsp;
+  <img width="250" alt="AI_스크린샷2" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/114787723/52be3859-6f33-4090-84db-c01d72e7e290
+">
+  &nbsp;&nbsp;
+<img width="250" alt=AI_스크린샷3" src="!https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/114787723/c92a228b-6409-4a33-8457-c4129ed93873
+">
+</p>
 
 We built a training dataset using news datasets from osdg and sdgs datahub to train the ALBERT model to create a classification model, and used facebook/bart-large-cnn as the limit for the maximum number of tokens in the ALBERT model so that the text can input the classification model after summarization.
 
