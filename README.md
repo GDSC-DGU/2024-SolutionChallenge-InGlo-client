@@ -216,7 +216,7 @@ We built a training dataset using news datasets from osdg and sdgs datahub to tr
 <table>
   <tr>
     <td align="center"><img src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/304662f1-2a52-4c75-af3c-402bc2d21416" width="100px;" alt=""/><br /><b>Jung Eun ji</b><br/>🇰🇷</td>
-    <td align="center"><img src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/d08ff443-b3c6-4382-befa-f96f7295c383" width="100px;" alt=""/><br /><b>I Na Gyoung</b><br/>🇰🇷</td>
+    <td align="center"><img src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/d08ff443-b3c6-4382-befa-f96f7295c383" width="100px;" alt=""/><br /><b>Lee Na Kyoung</b><br/>🇰🇷</td>
     <td align="center"><img src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/d20258b4-a5a2-4007-8a0c-64c18d80fb87" width="100px;" alt=""/><br /><b>Jang Dong Kyeom</b><br/>🇰🇷</td>
     <td align="center"><img src="https://github.com/GDSC-DGU/2024-SolutionChallenge-InGlo-client/assets/86873281/0ac44273-ccd7-4f54-867c-d072cd9da6d1" width="100px;" alt=""/><br /><b>Kim Hyeon Jin</b><br/>🇰🇷</td>
   <tr>
